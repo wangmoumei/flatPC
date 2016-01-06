@@ -1,0 +1,41 @@
+.menu-container{
+   padding-left: 20px;
+   &>li{
+       clear: both;
+   }
+   .menu-title{
+       border-bottom: 1px solid #008cee;
+       padding-top: 20px;
+       padding-bottom: 10px;
+       color: #777;
+   }
+   .menu-list{
+       padding-top:10px;
+       li{
+           float: left;
+           margin-right: 10px;
+           width: 60px;
+           a{
+               display: block;
+               padding:10px 0;
+               font-family: Microsoft YaHei;
+               color: #777;
+               text-align: center;
+               i{
+                   display: block;
+                   margin:0 auto;
+                   width: 40px;
+                   height: 40px;
+                   line-height: 40px;
+                   border-radius: 5px;
+                   background-color: #38adff;
+                   color: #fff;
+                   margin-bottom: 10px;
+               }
+               &:hover{
+                   background: #f0f0f0;
+               }
+           }
+       }
+   }
+}

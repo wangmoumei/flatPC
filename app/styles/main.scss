@@ -1,0 +1,54 @@
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+// bower:scss
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+// endbower
+@import "framework/header.scss";
+@import "framework/aside.scss";
+@import "framework/menu.scss";
+@import "framework/list.scss";
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+body {
+  padding: 0;
+}
+ul{
+    margin:0;
+    -webkit-margin-before: 0px;
+    -webkit-margin-after: 0px;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 0px;
+}
+li{list-style: none;}
+a{cursor: pointer;}
+a,a:hover,a:active,a:visited,a:link{text-decoration: none;}
+.page-header{
+    height:50px;
+    padding: 0;margin:0;
+    border:none;
+}
+.page-aside{
+    width: 170px;
+    box-shadow: 1px 0px 1px 1px #dee0e0;
+    background-color: #e4eaf4;
+    position: fixed;
+    z-index: 2;
+    top:50px;
+    left: 0;
+    bottom: 0;
+    overflow-y: auto;
+}
+.page-container{
+    position: fixed;
+    left:170px;
+    right: 0;
+    top:50px;
+    bottom:0;
+    background-color: #f6f7f8;
+    
+}

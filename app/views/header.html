@@ -1,0 +1,35 @@
+<div class="page-navbar">
+    <div class="logo-nav">
+        <img src="images/logo-header.png">
+    </div>
+    <div class="title-nav">
+        后勤宝
+    </div>
+    <div class="top-navigation">
+        <ul>
+            <li class="active"><a>公寓管理</a></li>
+            <li><a>智能报修</a></li>
+            <li><a>缴费中心</a></li>
+        </ul>
+    </div>
+    <div class="user-nav">
+        <a>用户</a>
+        <ul>
+            <li>修改密码</li>
+            <li>退出登陆</li>
+        </ul>
+    </div>
+    <div class="menu-nav">
+        <a>test2</a>
+    </div>
+</div>
+<script>
+    //菜单点击事件
+    $(document).click(function(){
+        var a = event.target;
+        $(".user-nav").removeClass("active");
+        if(a.parentNode.className == "user-nav"){
+            $(a.parentNode).addClass("active");
+        }
+    })
+</script>

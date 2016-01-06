@@ -1,0 +1,34 @@
+.page-aside{
+    ul{
+        li{
+            height: 50px;
+            line-height: 50px;
+            padding-left: 10px;
+            
+            a{
+                display: block;
+                color: #777;
+                i{
+                    font-size: 20px;
+                    display: inline-block;
+                    padding:0 10px; 
+                }
+            }
+            &:hover{
+                background-color: #d3e7f6;
+            }
+            &.active{
+                background-color: #cce4f7;
+                border-left: 3px solid #008cee;
+                padding-left: 7px;
+                a{
+                    color: #008cee;
+                    i.icon-user:before{
+                        content: "\e62c";
+                    }
+                }
+            }
+        }
+    }
+    
+}

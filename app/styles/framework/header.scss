@@ -1,0 +1,103 @@
+
+.page-navbar {
+    height: 50px;
+	line-height:50px;
+	color:#fff;
+    width: 100%;
+    background-color: #155aba;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+}
+.page-navbar .logo-nav{
+	float: left;
+    background-color: #0e4ea9;
+    width: 50px;
+    text-align: center;
+}
+.page-navbar .logo-nav img{
+    width: 20px;
+}
+.page-navbar .title-nav{
+    float: left;
+    padding-left: 20px;
+    width: 100px;
+}
+.page-navbar .top-navigation{
+    float: left;
+    margin-left: 20px;
+}
+.page-navbar .top-navigation ul{
+    display: box;
+    display: flex;
+}
+.page-navbar .top-navigation ul li{
+    width:100px;
+    text-align:center;
+}
+.page-navbar .top-navigation ul li.active a{
+    border-bottom:4px solid #57c52c;
+    height: 50px;
+}
+.page-navbar .top-navigation ul li a{
+    display: block;
+    color: #fff;
+}
+
+.page-navbar .top-navigation ul li a:hover{
+    color: #fff;
+    text-decoration: none;
+    background-color: #0e4ea9;
+}
+.page-navbar .user-nav,.page-navbar .menu-nav{
+	float: right;
+	height: 50px;
+	width: 120px;
+	text-align: center;
+	cursor: pointer;
+	border-left:1px solid rgba(0,0,0,.2); 
+}
+.page-navbar .user-nav a,.page-navbar .menu-nav a{
+	display: block;
+	height: 50px;
+	padding: 0 10px;
+	color: #fff;
+}
+.page-navbar .user-nav a:hover,.page-navbar .menu-nav a:hover{
+	background-color: #0e4ea9;
+    text-decoration: none;
+}
+.page-navbar .user-nav a::after{
+	font-family:"ALiconfont" !important;
+	font-size:14px;
+	font-style:normal;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-stroke-width: 0.2px;
+	-moz-osx-font-smoothing: grayscale;
+	content: "\e620";
+	position: relative;top:-3px;
+}
+.page-navbar .user-nav.active a{
+	color: #155aba;
+	background-color: #fff;
+}
+.page-navbar .user-nav.active a::after{
+	content: "\e621";top:0px;
+}
+.page-navbar .user-nav ul{
+	display: none;
+	color: #155aba;
+	background-color: #fff;
+	box-shadow: 1px 1px 2px 2px rgba(0,0,0,0.075);
+    list-style: none;
+    padding-left: 0;
+}
+.page-navbar .user-nav ul li{
+	border-top:1px solid #ccc;
+}
+.page-navbar .user-nav ul li:hover{
+	background-color: rgb(245,245,245);
+}
+.page-navbar .user-nav.active ul{
+	display: block;
+}

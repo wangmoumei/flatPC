@@ -1,0 +1,14 @@
+<ul class="menu-container">
+    
+    <li ng-repeat="menu in menuList">
+        <div class="menu-title">{{menu.name}}</div>
+        <ul class="menu-list">
+            <li ng-repeat="item in menu.list">
+                <a href="{{item.href}}">
+                    <i class="ALiconfont {{item.icon}}" style="background-color:{{item.color}};font-size:{{item.iconSize}}px"></i>
+                    {{item.name}}
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>
