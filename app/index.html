@@ -25,28 +25,34 @@
     <!-- Add your site or application content here -->
     <div class="page-header"  ui-view="header">
     </div>
-    <div class="page-aside"  ui-view="aside"></div>
-    <div class="page-container">
-        <div ui-view=""></div>
+    <div class="page-aside"  ui-view="aside" ng-hide="frame"></div>
+    <div class="page-container" ng-hide="frame">
+        <div ui-view="" class="fadeIn animated"></div>
     </div>
-    <div ui-view="login"></div>
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+    <div class="page-otherwise" ui-view="otherwise" ng-show="otherwise"></div>
+    <div class="loading" ng-show="loading">
+        <div class="windows8">
+            <div class="wBall" id="wBall_1">
+                <div class="wInnerBall"></div>
             </div>
-            <div class="modal-body">
-            Add
+            <div class="wBall" id="wBall_2">
+                <div class="wInnerBall"></div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+            <div class="wBall" id="wBall_3">
+                <div class="wInnerBall"></div>
             </div>
+            <div class="wBall" id="wBall_4">
+                <div class="wInnerBall"></div>
+            </div>
+            <div class="wBall" id="wBall_5">
+                <div class="wInnerBall"></div>
             </div>
         </div>
+    </div>
+    <div class="page-frame">
+        <iframe name="page-tab" frameborder="no" scrolling="auto" allowtransparency="true" width="100%" height="100%">
+            
+        </iframe>
     </div>
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -69,7 +75,7 @@
     <script src="scripts/controllers/menu.js"></script>
     <script src="scripts/controllers/list.js"></script>
     <script src="scripts/controllers/aside.js"></script>
-    <script src="scripts/controllers/login.js"></script>
+    <script src="scripts/controllers/missing.js"></script>
     <script src="scripts/controllers/header.js"></script>
     <!-- endbuild -->
 </body>

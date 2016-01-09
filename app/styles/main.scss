@@ -6,6 +6,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "framework/aside.scss";
 @import "framework/menu.scss";
 @import "framework/list.scss";
+@import "framework/loading.scss";
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -15,6 +16,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 body {
   padding: 0;
+  font-family: 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 ul{
     margin:0;
@@ -50,5 +52,54 @@ a,a:hover,a:active,a:visited,a:link{text-decoration: none;}
     top:50px;
     bottom:0;
     background-color: #f6f7f8;
-    
+    z-index: 3;
+}
+.page-frame{
+    position: fixed;
+    background-color: #fff;
+    top:50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;   
+}
+.page-otherwise{
+    position: fixed;
+    background-color: #fff;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+}
+.loading{
+    position: fixed;
+    top:0;bottom: 0;
+    left: 0;right: 0;
+    z-index: 9000;
+    background-color: rgba(255,255,255,.1); 
+    display: -webkit-box;
+    display: flex;
+    display: -webkit-flex;
+}
+.modal-backdrop{
+    background-color: transparent;
+}
+.modal{
+    background-color: rgba(0,0,0,.4);
+}
+.modal-wrapper{ 
+    display: table; 
+    overflow: auto; 
+    overflow-y: scroll; 
+    height: 100%; 
+    -webkit-overflow-scrolling: touch; 
+    outline: 0; 
+    margin: 0px auto; 
+    padding-top: 50px;
+} 
+
+.modal-dialog{
+    display: table-cell; 
+    vertical-align: middle; 
 }

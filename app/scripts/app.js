@@ -10,10 +10,9 @@
  */
 angular
   .module('flatpcApp', [
-    'ngAnimate',
+    //'ngAnimate',
     'ngCookies',
     'ngResource',
-    'ngRoute',
     'ngSanitize',
     'ui.router',
     'ngTouch'
@@ -22,11 +21,20 @@ angular
       WEB_ROOT:'http://120.26.48.150:8089/'
       
   }).run(['$rootScope', '$location', 'AppConfig',
-		function($rootScope, $location, AppConfig, loginservice, AuthService) {
+		function($rootScope, $location, AppConfig) {
+            $rootScope.validate = function(menu){
+                
+            }
+            $rootScope.authority = '';
+            $rootScope.sysMenu = ['flat','flat',''];
 			$rootScope.$on('$stateChangeStart',
 				function(event, toState, toParams, fromState, fromParams) {
-                    
-				});
+                    $rootScope.loading = true;
+            });
+            $rootScope.$on('$stateChangeError', 
+                function(event, toState, toParams, fromState, fromParams, error){ 
+                sweetAlert("页面加载出错", "错误信息：" + error, "error");
+            });
 			
 		}
 	])
@@ -45,6 +53,7 @@ angular
             },
             "header": {
                 templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
             }
         }
     })
@@ -61,15 +70,33 @@ angular
             },
             "header": {
                 templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
             }
         }
     })
-    .state('login', {
-        url: "/login",
+    .state('list1', {
+        url: "/list1",
         views: {
-            "login": {
-                templateUrl: 'views/login.html',
-                controller: 'LoginCtrl',
+            "": {
+                templateUrl: 'views/list1.html',
+                controller: 'ListCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('404', {
+        url: "/missing",
+        views: {
+            "otherwise": {
+                templateUrl: '404.html',
+                controller: 'MissingCtrl'
             }
         }
     });

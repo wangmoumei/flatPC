@@ -11,7 +11,7 @@
 </div>
 <div class="tool-bar">
     <div>
-        <button class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-edit"></i> 添加</button>
+        <button class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-file"></i> 添加</button>
     </div>
     <div class="group-tool">
         <div class="btn-group" role="group" aria-label="...">
@@ -198,7 +198,7 @@
             }
         })
 	</script>
-    <div class="table-container">
+    <div class="table-container" style="left:225px;">
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -344,23 +344,37 @@
         </div>
     </div>
 </div>
-<script type="text/ng-template" id="myModelContent.html">  
-//创建一个局部视图，需要的时候引用它， 下面会用到
-    <div class="modal-header"> // modal头部 。body  footer 类推
-        <h3 class="modal-title">html5jq模态框</h3>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-wrapper" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
     </div>
-    <div class="modal-body">
-        <ul>
-            <li ng-repeat="item in items">
-            <a ng-click="selected.item = item">{{item}}</a> //显示当前点击的item
-            </li>
-            当前选择： <b>{{selected.item}}</b>
-        </ul>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="ok()">
-        确认
-        </button>
-        <button class="btn btn-warning" ng-click="cancel()">退出</button>
-    </div>
+  </div>
+  </div>
+</div>
+<script type="text/javascript">
+$('.modal').on('shown.bs.modal', function (e) {
+    $('.modal-backdrop').remove();
+})
 </script>

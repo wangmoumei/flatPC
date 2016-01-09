@@ -1,12 +1,217 @@
 <ul class="menu-container">
-    
-    <li ng-repeat="menu in menuList">
-        <div class="menu-title">{{menu.name}}</div>
+    <li ng-show="sysMenu[1]=='flat'">
+        <div class="menu-title">公寓住宿查询</div>
         <ul class="menu-list">
-            <li ng-repeat="item in menu.list">
-                <a href="{{item.href}}">
-                    <i class="ALiconfont {{item.icon}}" style="background-color:{{item.color}};font-size:{{item.iconSize}}px"></i>
-                    {{item.name}}
+            <li >
+                <a href="#list">
+                    <i class="ALiconfont icon-menu1" style="background-color:#38adff;font-size:20px"></i>
+                    住宿总览
+                </a>
+            </li>
+            <li >
+                <a href="#list">
+                    <i class="ALiconfont icon-menu1" style="background-color:#38adff;font-size:20px"></i>
+                    统计
+                </a>
+            </li>
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#74bef2;font-size:20px"></i>
+                    住宿学生查询
+                </a>
+            </li>
+            <li >
+                <a href="#list">
+                    <i class="ALiconfont icon-menu1" style="background-color:#66cccc;font-size:20px"></i>
+                    空房查询
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li ng-show="sysMenu[1]=='flat'">
+        <div class="menu-title">公寓设置</div>
+        <ul class="menu-list">
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
+                    公寓信息设置
+                </a>
+            </li>
+            <li >
+                <a href="#list">
+                    <i class="ALiconfont icon-menu1" style="background-color:#fc7257;font-size:px"></i>
+                    公寓户型设置
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li ng-show="sysMenu[1]=='flat'">
+        <div class="menu-title">房源设置</div>
+        <ul class="menu-list">
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
+                    学校房源分配
+                </a>
+            </li>
+            <li >
+                <a href="#list">
+                    <i class="ALiconfont icon-menu1" style="background-color:#fc7257;font-size:px"></i>
+                    院系宿舍分配
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li ng-show="sysMenu[1]=='student'">
+        <div class="menu-title">学生住宿查询</div>
+        <ul class="menu-list">
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
+                    学生住宿
+                </a>
+            </li>
+            <li >
+                <a href="#list">
+                    <i class="ALiconfont icon-menu1" style="background-color:#fc7257;font-size:px"></i>
+                    学生调宿
+                </a>
+            </li>
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#02cf97;font-size:20px"></i>
+                    学生退宿
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li ng-show="sysMenu[1]=='grade'">
+        <div class="menu-title">考评查询</div>
+        <ul class="menu-list">
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
+                    宿舍打分
+                </a>
+            </li>
+            <li >
+                <a href="#list">
+                    <i class="ALiconfont icon-menu1" style="background-color:#fc7257;font-size:px"></i>
+                    统计排行
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li ng-show="sysMenu[1]=='grade'">
+        <div class="menu-title">考评设置</div>
+        <ul class="menu-list">
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
+                    计分条目设置
+                </a>
+            </li>
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
+                    学期周数设置
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li ng-show="sysMenu[1]=='admin'">
+        <div class="menu-title">账号管理</div>
+        <ul class="menu-list">
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
+                    账号设置
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li ng-show="sysMenu[1]=='role'">
+        <div class="menu-title">角色管理</div>
+        <ul class="menu-list">
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
+                    角色设置
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li ng-show="sysMenu[1]=='data'">
+        <div class="menu-title">学生管理</div>
+        <ul class="menu-list">
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
+                    学生信息查询
+                </a>
+            </li>
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
+                    学生信息导入
+                </a>
+            </li>
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
+                    班级设置
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li ng-show="sysMenu[1]=='college'">
+        <div class="menu-title">学校信息</div>
+        <ul class="menu-list">
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
+                    学校信息设置
+                </a>
+            </li>
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
+                    校区设置
+                </a>
+            </li>
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
+                    学院设置
+                </a>
+            </li>
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
+                    生活区设置
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li ng-show="sysMenu[1]=='matter'">
+        <div class="menu-title">人事信息</div>
+        <ul class="menu-list">
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
+                    机构设置
+                </a>
+            </li>
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
+                    人事信息设置
+                </a>
+            </li>
+            <li >
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
+                    辅导员设置
                 </a>
             </li>
         </ul>

@@ -11,6 +11,7 @@
    }
    .menu-list{
        padding-top:10px;
+       overflow: hidden;
        li{
            float: left;
            margin-right: 10px;
@@ -18,7 +19,6 @@
            a{
                display: block;
                padding:10px 0;
-               font-family: Microsoft YaHei;
                color: #777;
                text-align: center;
                i{

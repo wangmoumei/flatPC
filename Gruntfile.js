@@ -178,9 +178,7 @@ module.exports = function (grunt) {
         ]
       },
       server: {
-        options: {
-          map: true
-        },
+        
         files: [{
           expand: true,
           cwd: '.tmp/styles/',

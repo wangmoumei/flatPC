@@ -1,5 +1,6 @@
 angular.module('flatpcApp')
-  .controller('MenuCtrl', function ($scope) {
+  .controller('MenuCtrl', function ($scope,$rootScope) {
+    $rootScope.loading = false;
     $scope.menuList = [
         {
             name:'公寓住宿查询',
@@ -16,14 +17,14 @@ angular.module('flatpcApp')
                     icon:'icon-menu1',
                     iconSize:20,
                     color:'#74bef2',
-                    href:'#index'
+                    href:'#list1'
                 },
                 {
                     name:'空房查询',
                     icon:'icon-menu1',
                     iconSize:20,
                     color:'#66cccc',
-                    href:'#index'
+                    href:'#list'
                 }
             ]
         },
@@ -35,21 +36,21 @@ angular.module('flatpcApp')
                     icon:'icon-menu1',
                     iconSize:20,
                     color:'#ff9c00',
-                    href:'#index'
+                    href:'#list1'
                 },
                 {
                     name:'学生调宿',
                     icon:'icon-menu1',
                     size:20,
                     color:'#fc7257',
-                    href:'#index'
+                    href:'#list'
                 },
                 {
                     name:'学生退宿',
                     icon:'icon-menu1',
                     iconSize:20,
                     color:'#02cf97',
-                    href:'#index'
+                    href:'#list1'
                 }
             ]
         }

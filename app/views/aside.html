@@ -1,82 +1,46 @@
-<ul>
-    <li class="active">
+<ul ng-show="sysMenu[0]=='flat'">
+    <li ng-class="{'active':sysMenu[1]=='flat'}" ng-click="switch('flat')">
         <a>
-            <i class="ALiconfont icon-user"></i> 首页
+            <i class="ALiconfont icon-user"></i> 公寓
         </a>
     </li>
-    <li>
+    <li ng-class="{'active':sysMenu[1]=='student'}" ng-click="switch('student')">
         <a>
-            <i class="ALiconfont icon-user"></i> 首页
+            <i class="ALiconfont icon-user"></i> 宿舍
         </a>
     </li>
-    <li>
+    <li ng-class="{'active':sysMenu[1]=='grade'}" ng-click="switch('grade')">
         <a>
-            <i class="ALiconfont icon-user"></i> 首页
+            <i class="ALiconfont icon-user"></i> 寝室考评
         </a>
     </li>
-    <li>
+</ul>
+<ul ng-show="sysMenu[0]=='admin'">
+    <li ng-class="{'active':sysMenu[1]=='admin'}" ng-click="switch('admin')">
         <a>
-            <i class="ALiconfont icon-user"></i> 首页
+            <i class="ALiconfont icon-user"></i> 账号管理
         </a>
     </li>
-    <li>
+    <li ng-class="{'active':sysMenu[1]=='role'}" ng-click="switch('role')">
         <a>
-            <i class="ALiconfont icon-user"></i> 首页
+            <i class="ALiconfont icon-user"></i> 角色管理
         </a>
     </li>
-    <li>
+</ul>
+<ul ng-show="sysMenu[0]=='data'">
+    <li ng-class="{'active':sysMenu[1]=='data'}" ng-click="switch('data')">
         <a>
-            <i class="ALiconfont icon-user"></i> 首页
+            <i class="ALiconfont icon-user"></i> 师生信息
         </a>
     </li>
-    <li>
+    <li ng-class="{'active':sysMenu[1]=='college'}" ng-click="switch('college')">
         <a>
-            <i class="ALiconfont icon-user"></i> 首页
+            <i class="ALiconfont icon-user"></i> 学校信息
         </a>
     </li>
-    <li>
+    <li ng-class="{'active':sysMenu[1]=='matter'}" ng-click="switch('matter')">
         <a>
-            <i class="ALiconfont icon-user"></i> 首页
-        </a>
-    </li>
-    <li>
-        <a>
-            <i class="ALiconfont icon-user"></i> 首页
-        </a>
-    </li>
-    <li>
-        <a>
-            <i class="ALiconfont icon-user"></i> 首页
-        </a>
-    </li><li>
-        <a>
-            <i class="ALiconfont icon-user"></i> 首页
-        </a>
-    </li>
-    <li>
-        <a>
-            <i class="ALiconfont icon-user"></i> 首页
-        </a>
-    </li>
-    
-    <li>
-        <a>
-            <i class="ALiconfont icon-user"></i> 首页
-        </a>
-    </li>
-    <li>
-        <a>
-            <i class="ALiconfont icon-user"></i> 首页
-        </a>
-    </li>
-    <li>
-        <a>
-            <i class="ALiconfont icon-user"></i> 首页
-        </a>
-    </li>
-    <li>
-        <a>
-            <i class="ALiconfont icon-user"></i> 首页
+            <i class="ALiconfont icon-user"></i> 人事信息
         </a>
     </li>
 </ul>

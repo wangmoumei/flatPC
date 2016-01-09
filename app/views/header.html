@@ -7,9 +7,12 @@
     </div>
     <div class="top-navigation">
         <ul>
-            <li class="active"><a>公寓管理</a></li>
-            <li><a>智能报修</a></li>
-            <li><a>缴费中心</a></li>
+            <li ng-class="{'active':sysMenu[0]=='flat'}" ng-click="switch(0,'flat')"><a>公寓管理</a></li>
+            <li ng-class="{'active':sysMenu[0]=='admin'}"  ng-click="switch(0,'admin')"><a>学校账号系统</a></li>
+            <li ng-class="{'active':sysMenu[0]=='data'}"  ng-click="switch(0,'data')"><a>基础数据中心</a></li>
+            <li ng-class="{'active':sysMenu[0]=='repair'}"  ng-click="switch(1,'repair')"><a href="http://baidu.com" target="page-tab">智能报修</a></li>
+            <li ng-class="{'active':sysMenu[0]=='pay'}"  ng-click="switch(1,'pay')"><a href="http://baidu.com" target="page-tab">缴费中心</a></li>
+            
         </ul>
     </div>
     <div class="user-nav">
@@ -31,5 +34,9 @@
         if(a.parentNode.className == "user-nav"){
             $(a.parentNode).addClass("active");
         }
+    })
+    $('.top-navigation li').click(function(){
+        $('.top-navigation .active').removeClass('active');
+        $(this).addClass('active');
     })
 </script>
