@@ -54,6 +54,16 @@
             
         </iframe>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-wrapper" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" ui-view="modal">
+            
+        </div>
+    </div>
+    </div>
+    </div>
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -72,11 +82,17 @@
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
+    
     <script src="scripts/controllers/menu.js"></script>
     <script src="scripts/controllers/list.js"></script>
     <script src="scripts/controllers/aside.js"></script>
     <script src="scripts/controllers/missing.js"></script>
     <script src="scripts/controllers/header.js"></script>
+    <script src="scripts/controllers/flat.js"></script>
+    
+    <script src="scripts/directives/tree.js"></script>
+    <script src="scripts/directives/header.js"></script>
+    <script src="scripts/directives/tabs.js"></script>
     <!-- endbuild -->
 </body>
 </html>

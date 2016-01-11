@@ -1,46 +1,52 @@
 <ul ng-show="sysMenu[0]=='flat'">
     <li ng-class="{'active':sysMenu[1]=='flat'}" ng-click="switch('flat')">
-        <a>
-            <i class="ALiconfont icon-user"></i> 公寓
-        </a>
-    </li>
-    <li ng-class="{'active':sysMenu[1]=='student'}" ng-click="switch('student')">
-        <a>
-            <i class="ALiconfont icon-user"></i> 宿舍
+        <a href="#index">
+            <i class="ALiconfont icon-user"></i> 公寓管理
         </a>
     </li>
     <li ng-class="{'active':sysMenu[1]=='grade'}" ng-click="switch('grade')">
-        <a>
-            <i class="ALiconfont icon-user"></i> 寝室考评
+        <a href="#index">
+            <i class="ALiconfont icon-user"></i> 宿舍考评
         </a>
     </li>
-</ul>
-<ul ng-show="sysMenu[0]=='admin'">
-    <li ng-class="{'active':sysMenu[1]=='admin'}" ng-click="switch('admin')">
-        <a>
-            <i class="ALiconfont icon-user"></i> 账号管理
-        </a>
-    </li>
-    <li ng-class="{'active':sysMenu[1]=='role'}" ng-click="switch('role')">
-        <a>
-            <i class="ALiconfont icon-user"></i> 角色管理
+    <li ng-class="{'active':sysMenu[1]=='check'}" ng-click="switch('check')">
+        <a href="#index">
+            <i class="ALiconfont icon-user"></i> 登记管理
         </a>
     </li>
 </ul>
 <ul ng-show="sysMenu[0]=='data'">
     <li ng-class="{'active':sysMenu[1]=='data'}" ng-click="switch('data')">
-        <a>
-            <i class="ALiconfont icon-user"></i> 师生信息
+        <a href="#index">
+            <i class="ALiconfont icon-user"></i> 基础设置
         </a>
     </li>
-    <li ng-class="{'active':sysMenu[1]=='college'}" ng-click="switch('college')">
-        <a>
-            <i class="ALiconfont icon-user"></i> 学校信息
+    <li ng-class="{'active':sysMenu[1]=='collect'}" ng-click="switch('collect')">
+        <a href="#index">
+            <i class="ALiconfont icon-user"></i> 数据采集
         </a>
     </li>
-    <li ng-class="{'active':sysMenu[1]=='matter'}" ng-click="switch('matter')">
-        <a>
-            <i class="ALiconfont icon-user"></i> 人事信息
+    <li ng-class="{'active':sysMenu[1]=='floor'}" ng-click="switch('floor')">
+        <a href="#index">
+            <i class="ALiconfont icon-user"></i> 楼栋数据
+        </a>
+    </li>
+    <li ng-class="{'active':sysMenu[1]=='insert'}" ng-click="switch('insert')">
+        <a href="#index">
+            <i class="ALiconfont icon-user"></i> 入住数据
         </a>
     </li>
 </ul>
+<ul ng-show="sysMenu[0]=='admin'">
+    <li ng-class="{'active':sysMenu[1]=='admin'}" ng-click="switch('admin')">
+        <a href="#index">
+            <i class="ALiconfont icon-user"></i> 账号管理
+        </a>
+    </li>
+    <li ng-class="{'active':sysMenu[1]=='role'}" ng-click="switch('role')">
+        <a href="#index">
+            <i class="ALiconfont icon-user"></i> 角色管理
+        </a>
+    </li>
+</ul>
+

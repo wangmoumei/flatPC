@@ -1,15 +1,15 @@
 <div class="page-navbar">
     <div class="logo-nav">
-        <img src="images/logo-header.png">
+        <img src="images/yeoman.png">
     </div>
     <div class="title-nav">
         后勤宝
     </div>
-    <div class="top-navigation">
+    <div class="top-navigation" top-nav>
         <ul>
-            <li ng-class="{'active':sysMenu[0]=='flat'}" ng-click="switch(0,'flat')"><a>公寓管理</a></li>
-            <li ng-class="{'active':sysMenu[0]=='admin'}"  ng-click="switch(0,'admin')"><a>学校账号系统</a></li>
-            <li ng-class="{'active':sysMenu[0]=='data'}"  ng-click="switch(0,'data')"><a>基础数据中心</a></li>
+            <li ng-class="{'active':sysMenu[0]=='flat'}" ng-click="switch(0,'flat')"><a href="#index">公寓管理</a></li>
+            <li ng-class="{'active':sysMenu[0]=='data'}"  ng-click="switch(0,'data')"><a href="#index">数据中心</a></li>
+            <li ng-class="{'active':sysMenu[0]=='admin'}"  ng-click="switch(0,'admin')"><a href="#index">权限</a></li>
             <li ng-class="{'active':sysMenu[0]=='repair'}"  ng-click="switch(1,'repair')"><a href="http://baidu.com" target="page-tab">智能报修</a></li>
             <li ng-class="{'active':sysMenu[0]=='pay'}"  ng-click="switch(1,'pay')"><a href="http://baidu.com" target="page-tab">缴费中心</a></li>
             
@@ -22,9 +22,9 @@
             <li>退出登陆</li>
         </ul>
     </div>
-    <div class="menu-nav">
+    <!--<div class="menu-nav">
         <a>test2</a>
-    </div>
+    </div>-->
 </div>
 <script>
     //菜单点击事件
@@ -34,9 +34,5 @@
         if(a.parentNode.className == "user-nav"){
             $(a.parentNode).addClass("active");
         }
-    })
-    $('.top-navigation li').click(function(){
-        $('.top-navigation .active').removeClass('active');
-        $(this).addClass('active');
     })
 </script>

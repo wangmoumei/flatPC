@@ -1,5 +1,6 @@
+@charset "utf-8";
 .history-container{
-    padding: 10px;
+    padding: 12px 10px;
     background-color:#fff;
     border-bottom:1px solid #dfe0e0;
     a.return-btn{
@@ -48,11 +49,19 @@
     }
 }
 .tool-bar{
-    padding: 10px;
+    height: 50px;
+    overflow: hidden;
+    padding:0 10px;
     display: box;
     display: -webkit-box;
     display: flex;
     display: -webkit-flex;
+    box-align:center ;
+    -webkit-box-align:center;
+    -moz-box-align:center;
+    -ms-box-align:center;
+    align-items:center ;
+    -webkit-align-items:center;
     .search-bool{
         max-width: 300px;
     }
@@ -69,20 +78,21 @@
 .page-main{
     position: absolute;
     left: 0;
-	top:102px;
+	top:100px;
 	bottom: 0;
     right: 0;
     background-color: #fff;
     border-top:1px solid #dfe0e0;
-    .table-container{
+    /*表格布局容器,tabs布局 样式*/
+    .table-container,.page-tabs{
         position: absolute;
         left: 0;
         top:0;
         bottom: 0;
         right: 0;
         overflow-y: auto;
-        padding-bottom: 35px;
     }
+    /* 页码器 样式 */
     .page-controller{
         position:absolute;
         bottom: 0;
@@ -110,6 +120,7 @@
         }
     }
 }
+/* 树结构样式 */
 .page-tree{
     background-color: #fff;
     border-right:1px solid #dfe0e0;
@@ -167,6 +178,11 @@
                             a{
                                 padding-left:100px;
                             }
+                            ul>li{
+                                a{
+                                    padding-left:120px;
+                                }
+                            }
                         }
                     }
                 }
@@ -180,6 +196,8 @@
         display: block;
     }
 }
+
+/* 表格 列排序 样式 */
 table{
     .sort,.sort-up,.sort-down{
         cursor: pointer;
@@ -204,5 +222,121 @@ table{
         content: "\e620";
         position: relative;
         bottom: 3px;
+    }
+}
+.page-tabs{
+    .page-tabs-nav{
+        display: box;
+        display: -webkit-box;
+        display: flex;
+        display: -webkit-flex;
+        border-bottom: 1px solid #dfe0e0;
+        li{
+           height: 40px;
+           line-height: 40px;
+           padding:0 30px;
+           border-right:1px solid #dfe0e0;
+           cursor: pointer;
+           &.active{
+               border-bottom:2px solid #2772ee;
+           }
+        }
+    }
+    .page-tabs-container{
+        position: absolute;
+        top:41px;
+        bottom:0;
+        left: 0;
+        right: 0;
+        overflow: auto;
+        background-color: #f6f7f8;
+        &>li{
+            display: none;
+            &.active{
+                display: block;
+            }
+            .search-bar{
+                border-bottom: 1px solid #dfe0e0;
+                position: absolute;
+                top:0;
+                width: 100%;
+                padding:8px 10px;
+                z-index: 10;
+                &>div{
+                    float: left;
+                }
+                .search-bool{
+                    width: 200px;
+                    margin-left: 10px;
+                }
+            }
+            .table-bordered th{
+                border-color: #dfe0e0;
+            }
+            .btn-link {
+                color: #337ab7;
+            }
+        }
+    }
+}
+.floor-list{
+    margin-top:-1px;
+    min-width: 1000px;
+    &>li{
+        margin-bottom: 20px;
+        border-top:1px solid #dfe0e0;
+        .floor-title{
+            display: box;
+            display: -webkit-box;
+            display: flex;
+            display: -webkit-flex;
+            border-bottom: 2px solid #2772ee;
+            background-color: #fff;
+            height: 40px;
+            line-height: 40px;
+            padding:0 10px;
+            div:first-of-type{
+                -webkit-box-flex:1;
+                box-flex:1;
+                flex:1;
+                -webkit-flex: 1;
+            }
+            &::before{
+                content: '●';
+                font-size: 20px;
+                padding-right: 10px;
+                color: #2772ee;
+            }
+        }
+        .room-list{
+            display: box;
+            display: -webkit-box;
+            display: flex;
+            display: -webkit-flex;
+            .room-item{
+                width: 100px;
+                text-align: center;
+                background-color: #fff;
+                border-top:1px solid #dfe0e0;
+                div,li{
+                    height: 30px;
+                    line-height: 30px;
+                }
+                div{
+                    background-color: #f6f7f8;
+                    border-right:1px solid #dedfdf;
+                    color: #333;
+                }
+                li{
+                    border-right: 1px solid #f6f7f8;
+                    border-bottom: 1px solid #f6f7f8;
+                    a{
+                        display: block;
+                        border-left: 1px solid #f6f7f8;
+                        margin-left: -1px;
+                    }
+                }
+            }
+        }
     }
 }

@@ -1,5 +1,5 @@
 angular.module('flatpcApp')
-.controller('ListCtrl', function($scope, $state,AppConfig,$rootScope) {
+.controller('FlatCtrl', function($scope, $state,AppConfig,$rootScope) {
     $scope.name = $state.current.name;
     $scope.tree = [
         {

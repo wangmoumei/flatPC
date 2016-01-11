@@ -33,7 +33,7 @@ angular
             });
             $rootScope.$on('$stateChangeError', 
                 function(event, toState, toParams, fromState, fromParams, error){ 
-                sweetAlert("页面加载出错", "错误信息：" + error, "error");
+                    sweetAlert("页面加载出错", "错误信息：" + error.status, "error");
             });
 			
 		}
@@ -57,11 +57,32 @@ angular
             }
         }
     })
+    .state('flat', {
+        url: "/flat",
+        views: {
+            "": {
+                templateUrl: 'views/list-flat.html',
+                controller: 'FlatCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            },
+            'modal':{
+                templateUrl: 'views/add.html',
+                controller: 'ListCtrl'
+            }
+        }
+    })
     .state('list', {
         url: "/list",
         views: {
             "": {
-                templateUrl: 'views/list.html',
+                templateUrl: 'views/list-tree.html',
                 controller: 'ListCtrl'
             },
             "aside": {
@@ -71,6 +92,10 @@ angular
             "header": {
                 templateUrl: "views/header.html",
                 controller: 'HeaderCtrl'
+            },
+            'modal':{
+                templateUrl: 'views/add.html',
+                controller: 'ListCtrl'
             }
         }
     })
@@ -78,7 +103,7 @@ angular
         url: "/list1",
         views: {
             "": {
-                templateUrl: 'views/list1.html',
+                templateUrl: 'views/list-normal.html',
                 controller: 'ListCtrl'
             },
             "aside": {
@@ -88,6 +113,10 @@ angular
             "header": {
                 templateUrl: "views/header.html",
                 controller: 'HeaderCtrl'
+            },
+            'modal':{
+                templateUrl: 'views/add.html',
+                controller: 'ListCtrl'
             }
         }
     })
