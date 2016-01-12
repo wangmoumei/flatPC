@@ -1,5 +1,5 @@
 angular.module('flatpcApp')
-.controller('ListCtrl', ['$scope', '$state','AppConfig','$rootScope',function($scope, $state,AppConfig,$rootScope) {
+.controller('CollegeCtrl', ['$scope', '$state','AppConfig','$rootScope',function($scope, $state,AppConfig,$rootScope) {
     $scope.name = $state.current.name;
     $scope.tree = [
         {
@@ -155,6 +155,9 @@ angular.module('flatpcApp')
         }
         
     ]
+    $scope.detail = function(){
+        $('.info-card').addClass('show');
+    }
     $rootScope.loading = false;
     console.log($scope.name);
 }]);

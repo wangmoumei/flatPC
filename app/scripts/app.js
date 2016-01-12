@@ -61,7 +61,7 @@ angular
         url: "/flat",
         views: {
             "": {
-                templateUrl: 'views/list-flat.html',
+                templateUrl: 'views/flat/list-selectByFlat.html',
                 controller: 'FlatCtrl'
             },
             "aside": {
@@ -71,10 +71,91 @@ angular
             "header": {
                 templateUrl: "views/header.html",
                 controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('college', {
+        url: "/college",
+        views: {
+            "": {
+                templateUrl: 'views/flat/list-selectByCollege.html',
+                controller: 'CollegeCtrl'
             },
-            'modal':{
-                templateUrl: 'views/add.html',
-                controller: 'ListCtrl'
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('live', {
+        url: "/live",
+        views: {
+            "": {
+                templateUrl: 'views/flat/live.html',
+                controller: 'LiveCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('change', {
+        url: "/change",
+        views: {
+            "": {
+                templateUrl: 'views/flat/change.html',
+                controller: 'LiveCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('quit', {
+        url: "/quit",
+        views: {
+            "": {
+                templateUrl: 'views/flat/quit.html',
+                controller: 'LiveCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('check', {
+        url: "/check",
+        views: {
+            "": {
+                templateUrl: 'views/flat/check.html',
+                controller: 'LiveCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
             }
         }
     })

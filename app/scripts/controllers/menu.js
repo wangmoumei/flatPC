@@ -1,5 +1,5 @@
 angular.module('flatpcApp')
-  .controller('MenuCtrl', function ($scope,$rootScope) {
+  .controller('MenuCtrl', ['$scope','$rootScope',function ($scope,$rootScope) {
     $rootScope.loading = false;
     $scope.menuList = [
         {
@@ -56,4 +56,4 @@ angular.module('flatpcApp')
         }
         
     ]
-  });
+  }]);
