@@ -159,6 +159,23 @@ angular
             }
         }
     })
+    .state('grade', {
+        url: "/grade",
+        views: {
+            "": {
+                templateUrl: 'views/grade/grade.html',
+                controller: 'GradeCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
     .state('list', {
         url: "/list",
         views: {

@@ -1,0 +1,365 @@
+<div class="history-container">
+    <a class="return-btn" href="javascript:history.go(-1)">
+        <i class="ALiconfont icon-sortleft"></i>
+        返回
+    </a>
+    <ul class="history-list">
+        <li><a>公寓管理</a></li>
+        <li><a>宿舍管理</a></li>
+        <li>公寓宿舍查询</li>
+    </ul>
+</div>
+<div class="date-bar">
+    <div class="term">
+        2015<br>第一学期
+    </div>
+    <div class="week-list">
+        <ul>
+            <li ng-repeat="week in weekList|limitTo : 9">
+                第{{week}}周
+            </li>
+        </ul>
+        <ul>
+            <li ng-repeat="week in weekList|limitTo : -9">
+                第{{week}}周
+            </li>
+        </ul>
+    </div>
+    <div class="term">
+        2016<br>第一学期
+    </div>
+</div>
+<div class="tool-bar" style="margin-left:225px;">
+    <div style="min-width:160px">
+        A生活区-13号楼（男）
+    </div>
+    <div class="progress-box">
+        <div class="progress progress-xs">
+            <div class="progress-bar progress-bar-success" style="width:50%"></div>
+        </div>
+    </div>
+    <div class="progress-number">
+        <span>22</span>/62
+    </div>
+    <div class="grade-number">
+        <span>98.56</span>分
+    </div>
+</div>
+<div class="page-main" style="top:150px;">
+    <div class="page-tree" tree style="top:-50px;">
+        <ul>
+            <li class="open">
+                <a class="branch">树枝</a>
+                <ul>
+                    <li class="open">
+                        <a class="branch">树枝</a>
+                        <ul>
+                            <li>
+                                <a class="leaf">叶子</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li ng-repeat="item1 in tree">
+                <a ng-class="{'branch':item1.list,'leaf':!item1.list}">{{item1.name}}</a>
+                <ul ng-show="item1.list">
+                    <li ng-repeat="item2 in item1.list||[]">
+                        <a ng-class="{'branch':item2.list,'leaf':!item2.list}">{{item2.name}}</a>
+                        <ul ng-show="item2.list">
+                            <li ng-repeat="item3 in item2.list||[]">
+                                <a ng-class="{'branch':item3.list,'leaf':!item3.list}">{{item3.name}}</a>
+                                <ul ng-show="item3.list">
+                                    <li ng-repeat="item4 in item3.list||[]">
+                                        <a ng-class="{'branch':item4.list,'leaf':!item4.list}">{{item4.name}}</a>
+                                        <ul ng-show="item4.list">
+                                            <li ng-repeat="item5 in item4.list||[]">
+                                                <a ng-class="{'branch':item5.list,'leaf':!item5.list}">{{item5.name}}</a>
+                                                <ul ng-show="item5.list">
+                                                    <li ng-repeat="item6 in item5.list||[]">
+                                                        <a class="leaf">{{item6.name}}</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="page-tabs" tabs style="left:225px">
+        <ul class="page-tabs-nav">
+            <li class="active">打分信息</li>
+            <li>打分查询</li>
+            <li>打分统计</li>
+            <li>寝室排行</li>
+            <li>楼栋排行</li>
+            <li>数据导出</li>
+        </ul>
+        <ul class="page-tabs-container">
+            <li class="fadeIn animated active">
+                <ul class="floor-list">
+                    <li>
+                        <div class="floor-title">
+                            <div>
+                                一层
+                            </div>
+                            <div class="progress-box">
+                                <div class="progress progress-xs">
+                                    <div class="progress-bar progress-bar-success" style="width:50%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-number">
+                                <span>22</span>/62
+                            </div>
+                            <div class="grade-number">
+                                <span>98.56</span>分
+                            </div>
+                        </div>
+                        <div class="room-list">
+                            <div class="room-item">
+                                <div class="graded">101</div>
+                                <ul>
+                                    <li><a ng-click="detail()">95</a></li>
+                                </ul>
+                            </div>
+                            <div class="room-item">
+                                <div class="graded">102</div>
+                                <ul>
+                                    <li><a ng-click="detail()">95</a></li>
+                                </ul>
+                            </div>
+                            <div class="room-item">
+                                <div class="graded">103</div>
+                                <ul>
+                                    <li><a ng-click="detail()">95</a></li>
+                                </ul>
+                            </div>
+                            <div class="room-item">
+                                <div class="graded">104</div>
+                                <ul>
+                                    <li class="grade-danger"><a ng-click="detail()">56</a></li>
+                                </ul>
+                            </div>
+                            <div class="room-item">
+                                <div>105</div>
+                                <ul>
+                                    <li><a ng-click="detail()">95</a></li>
+                                </ul>
+                            </div>
+                            <div class="room-item">
+                                <div>106</div>
+                                <ul>
+                                    <li><a ng-click="detail()">95</a></li>
+                                </ul>
+                            </div>
+                            <div class="room-item">
+                                <div>107</div>
+                                <ul>
+                                    <li><a ng-click="detail()">95</a></li>
+                                </ul>
+                            </div>
+                            <div class="room-item">
+                                <div>108</div>
+                                <ul>
+                                    <li><a ng-click="detail()">95</a></li>
+                                </ul>
+                            </div>
+                            <div class="room-item">
+                                <div>109</div>
+                                <div>
+                                    <a>多功能室</a>
+                                </div>
+                            </div>
+                            <div class="room-item">
+                                <div>110</div>
+                                <ul>
+                                    <li><a ng-click="detail()">95</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="room-list">
+                            <div class="room-item">
+                                <div>111</div>
+                                <ul>
+                                    <li><a ng-click="detail()">95</a></li>
+                                </ul>
+                            </div>
+                            <div class="room-item">
+                                <div>112</div>
+                                <div>
+                                    <a>多功能室</a>
+                                </div>
+                            </div>
+                            <div class="room-item">
+                                <div>113</div>
+                                <ul>
+                                    <li><a ng-click="detail()">95</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="floor-title">
+                            <div>
+                                二层
+                            </div>
+                            <div class="progress-box">
+                                <div class="progress progress-xs">
+                                    <div class="progress-bar progress-bar-success" style="width:50%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-number">
+                                <span>22</span>/62
+                            </div>
+                            <div class="grade-number">
+                                <span>98.56</span>分
+                            </div>
+                        </div>
+                        <div class="room-list">
+                            <div class="room-item">
+                                <div>201</div>
+                                <ul>
+                                    <li><a ng-click="detail()">95</a></li>
+                                </ul>
+                            </div>
+                            <div class="room-item">
+                                <div>202</div>
+                                <ul>
+                                    <li><a ng-click="detail()">95</a></li>
+                                </ul>
+                            </div>
+                            <div class="room-item">
+                                <div>203</div>
+                                <ul>
+                                    <li><a ng-click="detail()">95</a></li>
+                                </ul>
+                            </div>
+                            <div class="room-item">
+                                <div>204</div>
+                                <div><a>办公室</a></div>
+                            </div>
+                            <div class="room-item">
+                                <div>204</div>
+                                <ul>
+                                    <li><a ng-click="detail()">95</a></li>
+                                </ul>
+                            </div>
+                            <div class="room-item">
+                                <div>205</div>
+                                <ul>
+                                    <li><a ng-click="detail()">95</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li class="fadeIn animated">
+                打分查询
+            </li>
+            <li class="fadeIn animated">
+                打分统计
+            </li>
+            <li class="fadeIn animated">
+                寝室排行
+            </li>
+            <li class="fadeIn animated">
+                楼栋排行
+            </li>
+            <li class="fadeIn animated">
+                数据导出
+            </li>
+        </ul>
+    </div>
+    
+</div>
+<div class="info-card fadeIn animated" info-card>
+    <div class="info-card-wrapper">
+        <div class="info-card-dialog">
+            <div class="info-card-content">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        打分页
+                        <a class="info-card-close">x</a>
+                    </div>
+                    <div class="panel-body grade-panel">
+                        <div class="page-tabs" tabs>
+                            <ul class="page-tabs-nav">
+                                <li class="active">寝室分</li>
+                                <li>床位分</li>
+                                <li>照片</li>
+                            </ul>
+                            <ul class="page-tabs-container grade-container">
+                                <li class="fadeIn animated active">
+                                    <table class="table table-bordered bg-white">
+                                        <thead>
+                                            <tr><th>序号</th><th>打分项目</th><th>打分</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><th>厕所</th><th></th><th></th></tr>
+                                            <tr><td>1</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>2</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>3</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>4</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>5</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><th>地面</th><th></th><th></th></tr>
+                                            <tr><td>1</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>2</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>3</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>4</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>5</td><td>值日表（5）</td><td></td></tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr><td></td><td>总计</td><td class="grade-number">88</td></tr>
+                                        </tfoot>
+                                    </table>
+                                </li>
+                                <li class="fadeIn animated">
+                                    <table class="table table-bordered bg-white">
+                                        <thead>
+                                            <tr><th>序号</th><th>打分项目</th><th>打分</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><th>一号床</th><th>-徐冬（10113003433）</th><th class="grade-number">95</th></tr>
+                                            <tr><td>1</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>2</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>3</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>4</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>5</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><th>二号床</th><th>-徐冬（10113003433）</th><th class="grade-number">95</th></tr>
+                                            <tr><td>1</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>2</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>3</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>4</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>5</td><td>值日表（5）</td><td></td></tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                </li>
+                                <li class="fadeIn animated">
+                                    照片
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="grade-tool-bar">
+                            <div>
+                                <a class="btn btn-default disabled"><</a>
+                            </div>
+                            <div>
+                                <a class="btn btn-info">保存并关闭</a>
+                            </div>
+                            <div>
+                                <a class="btn btn-default btn-stroke btn-info">></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

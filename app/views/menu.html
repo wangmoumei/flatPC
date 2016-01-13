@@ -71,7 +71,7 @@
         <div class="menu-title">查宿舍</div>
         <ul class="menu-list">
             <li >
-                <a href="#list1">
+                <a href="#grade">
                     <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
                     卫生打分
                 </a>
@@ -79,13 +79,18 @@
             <li >
                 <a href="#list1">
                     <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
-                    违章登记
+                    违章
                 </a>
             </li>
+        </ul>
+    </li>
+    <li ng-show="sysMenu[1]=='grade'">
+        <div class="menu-title">设置</div>
+        <ul class="menu-list">
             <li >
-                <a href="#list">
-                    <i class="ALiconfont icon-menu1" style="background-color:#fc7257;font-size:px"></i>
-                    统计排行
+                <a href="#list1">
+                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
+                    打分设置
                 </a>
             </li>
         </ul>
@@ -120,23 +125,7 @@
         </ul>
     </li>
     
-    <li ng-show="sysMenu[1]=='grade'">
-        <div class="menu-title">考评设置</div>
-        <ul class="menu-list">
-            <li >
-                <a href="#list1">
-                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
-                    计分条目设置
-                </a>
-            </li>
-            <li >
-                <a href="#list1">
-                    <i class="ALiconfont icon-menu1" style="background-color:#ff9c00;font-size:20px"></i>
-                    学期周数设置
-                </a>
-            </li>
-        </ul>
-    </li>
+    
     <li ng-show="sysMenu[1]=='admin'">
         <div class="menu-title">账号管理</div>
         <ul class="menu-list">

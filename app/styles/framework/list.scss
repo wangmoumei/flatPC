@@ -72,11 +72,65 @@
     .group-tool{
         padding: 0 10px;
     }
-    div:first-of-type{
+    &>div:first-of-type{
         -webkit-box-flex:1;
         box-flex:1;
         flex:1;
         -webkit-flex: 1;
+    }
+    .progress-box{
+        width: 200px;
+        padding-right: 10px;
+        .progress{
+            margin-bottom: 0;
+        }
+    }
+    .progress-number{
+        padding-right: 10px;
+        span{
+            color: #4bb622;
+        }
+    }
+    .grade-number span{
+        color: #2772ee;
+    }
+}
+.date-bar{
+    height: 50px;
+    display: box;
+    display: -webkit-box;
+    display: flex;
+    display: -webkit-flex;
+    border-bottom:1px solid #dfe0e0;
+    .term{
+        padding: 5px 10px;
+        line-height: 20px;
+        text-align:center;
+    }
+    .week-list{
+        -webkit-box-flex:1;
+        box-flex:1;
+        flex:1;
+        -webkit-flex: 1;
+        border-left:1px solid #dfe0e0;
+        border-right:1px solid #dfe0e0;
+        ul{
+            display: box;
+            display: -webkit-box;
+            display: flex;
+            display: -webkit-flex;
+            li{
+                -webkit-box-flex:1;
+                box-flex:1;
+                flex:1;
+                -webkit-flex: 1;
+                text-align: center;
+                height: 25px;
+                line-height: 25px;
+                border-left:1px solid #dfe0e0;
+                border-top:1px solid #dfe0e0;
+            }
+        }
     }
 }
 .page-main{
@@ -329,6 +383,12 @@ table{
             display: -webkit-box;
             display: flex;
             display: -webkit-flex;
+            box-align:center ;
+            -webkit-box-align:center;
+            -moz-box-align:center;
+            -ms-box-align:center;
+            align-items:center ;
+            -webkit-align-items:center;
             border-bottom: 2px solid #2772ee;
             background-color: #fff;
             height: 40px;
@@ -344,6 +404,22 @@ table{
                 content: '●';
                 font-size: 20px;
                 padding-right: 10px;
+                color: #2772ee;
+            }
+            .progress-box{
+                width: 200px;
+                padding-right: 10px;
+                .progress{
+                    margin-bottom: 0;
+                }
+            }
+            .progress-number{
+                padding-right: 10px;
+                span{
+                    color: #4bb622;
+                }
+            }
+            .grade-number span{
                 color: #2772ee;
             }
         }
@@ -375,6 +451,13 @@ table{
                     background-color: #f6f7f8;
                     border-right:1px solid #dedfdf;
                     color: #333;
+                    &.graded{
+                        color: #4bb622;
+                        &::before{
+                            content: "√ ";
+                        }
+                        padding-right:10px;
+                    }
                 }
                 &>div:nth-of-type(2){
                     -webkit-box-flex:1;
@@ -408,7 +491,11 @@ table{
                         border-left: 1px solid #f6f7f8;
                         margin-left: -1px;
                     }
+                    &.grade-danger a{
+                        color:#f33;
+                    }
                 }
+                
             }
         }
     }
@@ -687,6 +774,76 @@ table{
         }
         .table{
             margin-bottom: 0;
+        }
+    }
+}
+.info-card .info-card-wrapper .info-card-dialog .panel-body .page-tabs-container.grade-container{
+    padding:0;
+    margin-bottom: 50px;
+    padding-bottom: 20px;
+    background-color: #f6f7f8;
+    table 
+    {
+        th,td{
+            vertical-align: middle;
+            &:first-of-type{
+                text-align: center;
+            }
+            &.grade-number{
+                color:#2772ee;
+                font-size: 18px;
+                text-align: center;
+            }
+        }
+        th{
+            background-color: #f6f7f8;
+            font-weight: normal;
+        }
+        tbody 
+        {
+            th{
+                padding:0;
+                border-bottom-color:#fff;
+            }
+        }
+    }
+}
+.info-card .info-card-wrapper .info-card-dialog .panel-body.grade-panel{
+    position: relative;
+    .grade-tool-bar{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 0 10px;
+        height: 50px;
+        line-height: 50px;
+        border-top:1px solid #dfe0e0;
+        background-color: #fff;
+        display: box;
+        display: -webkit-box;
+        display: flex;
+        display: -webkit-flex;
+        box-align:center ;
+        -webkit-box-align:center;
+        -moz-box-align:center;
+        -ms-box-align:center;
+        align-items:center ;
+        -webkit-align-items:center;
+        &>div:nth-of-type(2){
+            -webkit-box-flex:1;
+            box-flex:1;
+            flex:1;
+            -webkit-flex: 1;
+            text-align: center;
+            a{
+                width: 200px;
+                padding:9px 12px;
+            }
+        }
+        a{
+            display: block;
+            border-radius:5px;
+            margin:0 auto;
         }
     }
 }
