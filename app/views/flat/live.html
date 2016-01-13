@@ -11,7 +11,7 @@
 </div>
 <div class="tool-bar">
     <div>
-        <button class="btn btn-addon btn-info">
+        <button class="btn btn-addon btn-info" ng-click="resetForm(init)">
             <i class="glyphicon glyphicon-plus"></i>
             新增入住
         </button>
@@ -159,7 +159,7 @@
         </div>
     </div>
 </div>
-<div class="info-card fadeIn animated show" info-card id="setCheck">
+<div class="info-card fadeIn animated" info-card id="setCheck">
     <div class="info-card-wrapper">
         <div class="info-card-dialog">
             <div class="info-card-content">
@@ -170,11 +170,11 @@
                     </div>
                     <div class="panel-body">
                         <ul class="check-list">
-                            <li class="checked">
+                            <li class="checked submited">
                                 <div class="check-point "></div>
                                 <div class="check-info">
                                     <div class="check-info-title">
-                                        <div class="submited">计划提交</div> 
+                                        <div class="check-info-tip">计划提交</div> 
                                         <div>2015-12-12   13:56</div>
                                         <div><span>提交人：</span>管理员A</div>
                                     </div>
@@ -187,27 +187,66 @@
                                     </table>
                                 </div>
                             </li>
-                            <li>
-                                <div class="check-point checked"></div>
+                            <li class="checked passed">
+                                <div class="check-point"></div>
                                 <div class="check-info">
                                    <div class="check-info-title">
-                                        <div class="checked">审批</div>
+                                        <div class="check-info-tip">审批</div>
                                         <div>2015-12-12   13:56</div>
                                         <div><span>审批人：</span>管理员A</div>
                                     </div>
+                                    
+                                </div>
+                            </li>
+                            <li class="checked returned">
+                                <div class="check-point"></div>
+                                <div class="check-info">
+                                   <div class="check-info-title">
+                                        <div class="check-info-tip">驳回</div>
+                                        <div>2015-12-12   13:56</div>
+                                        <div><span>驳回人：</span>管理员A</div>
+                                    </div>
+                                    
+                                </div>
+                            </li>
+                            <li class="canceled">
+                                <div class="check-point"></div>
+                                <div class="check-info">
+                                   <div class="check-info-title">
+                                        <div class="check-info-tip">取消</div>
+                                        <div>2015-12-12   13:56</div>
+                                        <div><span>执行人：</span>管理员A</div>
+                                    </div>
+                                    
                                 </div>
                             </li>
                             <li>
                                 <div class="check-point"></div>
-                                <div class="check-btn-box">
-                                    <div>
-                                        <a class="btn btn-addon btn-success"><i class="glyphicon glyphicon-ok"></i>审批</a>
+                                <div>
+                                    <div class="check-btn-box" ng-hide="returnSwitch">
+                                        <div>
+                                            <a class="btn btn-addon btn-success"><i class="glyphicon glyphicon-ok"></i>审批</a>
+                                        </div>
+                                        <div>
+                                            <a class="btn btn-addon btn-warning" ng-click="returnSwitchChange()"><i class="glyphicon glyphicon-remove"></i>驳回</a>
+                                        </div>
+                                        <div>
+                                            <a class="btn btn-addon btn-default"><i class="glyphicon glyphicon-off"></i>取消</a>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <a class="btn btn-addon btn-warning"><i class="glyphicon glyphicon-remove"></i>驳回</a>
-                                    </div>
-                                    <div>
-                                        <a class="btn btn-default">取消</a>
+                                    <div class="check-input-box" ng-show="returnSwitch">
+                                        <div>
+                                            驳回理由：
+                                        </div>
+                                        <div>
+                                            <input type="text" class="form-control"/>
+                                        </div>
+                                        <div>
+                                            <a class="btn btn-warning">驳回</a>
+                                        </div>
+                                        <div>
+                                            <a class="btn btn-default" ng-click="returnSwitchChange()">取消</a>
+                                        </div>
                                     </div>
                                 </div>
                             </li>
@@ -228,7 +267,124 @@
                         <a class="info-card-close">x</a>
                     </div>
                     <div class="panel-body">
-                        
+                        <div class="form-tabs" form-tabs>
+                            <ul class="form-tabs-nav">
+                                <li class="active">
+                                    <div>
+                                        <div class="form-tabs-point"></div>
+                                        空房选择
+                                    </div>
+                                </li>
+                                <li class="tabs-nav">
+                                    <div>
+                                        <div class="form-tabs-point"></div>
+                                        学生入住
+                                    </div>
+                                </li>
+                                <li class="tabs-nav">
+                                    <div>
+                                        <div class="form-tabs-point"></div>
+                                        入住确认
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="form-tabs-container">
+                                <li class="fadeIn animated active">
+                                    <div class="form-tabs-tool-bar">
+                                        <div>
+                                            <select class="form-control">
+                                                <option value="">生活区</option>
+                                                <option value="one">First</option>
+                                                <option value="two">Second</option>
+                                                <option value="three">Third</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <select class="form-control">
+                                                <option value="">楼栋</option>
+                                                <option value="one">First</option>
+                                                <option value="two">Second</option>
+                                                <option value="three">Third</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-tabs-full">
+                                            <input class="form-control" type="text" placeholder="房间号" />
+                                        </div>
+                                        <div>
+                                            <a class="btn btn-stroke btn-info">搜索</a>
+                                        </div>
+                                    </div>
+                                    <table class="table table-bordered bg-white">
+                                        <thead>
+                                            <tr>
+                                                <th>生活区</th><th>楼栋</th><th>楼层</th><th>宿舍号</th><th>床号</th><th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><a class="btn btn-xs btn-link" data-role="next">选择</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </li>
+                                <li class="fadeIn animated">
+                                    <div class="form-tabs-info"><span>已选房间：</span>生活区 - 楼栋 - 楼层 - 房间号</div>
+                                    <div class="form-tabs-tool-bar">
+                                        <div>
+                                            <select class="form-control">
+                                                <option value="">学院</option>
+                                                <option value="one">First</option>
+                                                <option value="two">Second</option>
+                                                <option value="three">Third</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <select class="form-control">
+                                                <option value="">班级</option>
+                                                <option value="one">First</option>
+                                                <option value="two">Second</option>
+                                                <option value="three">Third</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-tabs-full">
+                                            <input class="form-control" type="text" placeholder="学号或姓名" />
+                                        </div>
+                                        <div>
+                                            <a class="btn btn-stroke btn-info">搜索</a>
+                                        </div>
+                                    </div>
+                                    <table class="table table-bordered bg-white">
+                                        <thead>
+                                            <tr>
+                                                <th>学号</th><th>姓名</th><th>学院</th><th>班级</th><th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td><a class="btn btn-xs btn-link" data-role="next">入住</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </li>
+                                <li class="fadeIn animated">
+                                    <div class="form-tabs-tool-bar">
+                                        <div class="form-tabs-full"><span>计划确认</span></div>
+                                        <div><a class="btn btn-addon btn-success" data-role="prev"><i class="glyphicon glyphicon-plus"></i>提交</a></div>
+                                    </div>
+                                    <table class="table table-bordered bg-white">
+                                        <tbody>
+                                            <tr><td>入住人员</td><td>徐冬（10113003433）</td></tr>
+                                            <tr><td>人员信息</td><td>机电学院-机械自动化专业2014本三班</td></tr>
+                                            <tr><td>入住床位</td><td>校区-生活区-楼栋-楼层-寝室-床位号</td></tr>
+                                            <tr>
+                                                <td>备注</td>
+                                                <td><textarea class="form-control" rows="3"></textarea></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

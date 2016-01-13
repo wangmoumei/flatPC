@@ -101,96 +101,50 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>1</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td>
-                        <button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button>
-                        <button type="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit"></span></button>
-                    </td>
+                    <td class="planing"><div>计划中</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
+                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
                 </tr>
                 <tr>
-                    <td>2</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
+                    <td class="checked"><div>已审批</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
+                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
                 </tr>
                 <tr>
-                    <td>3</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
+                    <td class="cancel"><div>已取消</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
+                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
                 </tr>
                 <tr>
-                    <td>4</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-                </tr>
-                <tr>
-                    <td>5</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-                </tr>
-                <tr>
-                    <td>6</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-                </tr>
-                <tr>
-                    <td>7</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-                </tr>
-                <tr>
-                    <td>8</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-                </tr>
-                <tr>
-                    <td>9</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-                </tr>
-                <tr>
-                    <td>10</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-                </tr>
-                <tr>
-                    <td>11</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-                </tr>
-                <tr>
-                    <td>12</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-                </tr>
-                <tr>
-                    <td>13</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-                </tr>
-                <tr>
-                    <td>14</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-                </tr>
-                <tr>
-                    <td>15</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-                </tr>
-                <tr>
-                    <td>16</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-                </tr>
-                <tr>
-                    <td>17</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
+                    <td class="return"><div>已驳回</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
+                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
                 </tr><tr>
-                    <td>18</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
+                    <td class="planing"><div>计划中</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
+                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
                 </tr>
                 <tr>
-                    <td>19</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
+                    <td class="checked"><div>已审批</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
+                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
                 </tr>
                 <tr>
-                    <td>20</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
+                    <td class="cancel"><div>已取消</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
+                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
                 </tr>
                 <tr>
-                    <td>21</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-                </tr>
-                <tr>
-                    <td>22</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-                </tr>
-                <tr>
-                    <td>23</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-                </tr>
-                <tr>
-                    <td>24</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-                </tr>
-                <tr>
-                    <td>25</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
+                    <td class="return"><div>已驳回</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
+                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
                 </tr><tr>
-                    <td>26</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
+                    <td class="planing"><div>计划中</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
+                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
                 </tr>
                 <tr>
-                    <td>27</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
+                    <td class="checked"><div>已审批</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
+                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
                 </tr>
                 <tr>
-                    <td>28</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
+                    <td class="cancel"><div>已取消</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
+                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
                 </tr>
                 <tr>
-                    <td>29</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
-                </tr>
-                <tr>
-                    <td>30</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></td>
+                    <td class="return"><div>已驳回</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
+                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
                 </tr>
             </tbody>
         </table>
@@ -232,7 +186,7 @@
         </div>
     </div>
 </div>
-<div class="info-card fadeIn animated show" info-card id="setCheck">
+<div class="info-card fadeIn animated" info-card id="setCheck">
     <div class="info-card-wrapper">
         <div class="info-card-dialog">
             <div class="info-card-content">
@@ -243,11 +197,11 @@
                     </div>
                     <div class="panel-body">
                         <ul class="check-list">
-                            <li class="checked">
+                            <li class="checked submited">
                                 <div class="check-point "></div>
                                 <div class="check-info">
                                     <div class="check-info-title">
-                                        <div class="submited">计划提交</div> 
+                                        <div class="check-info-tip">计划提交</div> 
                                         <div>2015-12-12   13:56</div>
                                         <div><span>提交人：</span>管理员A</div>
                                     </div>
@@ -260,27 +214,66 @@
                                     </table>
                                 </div>
                             </li>
-                            <li>
-                                <div class="check-point checked"></div>
+                            <li class="checked passed">
+                                <div class="check-point"></div>
                                 <div class="check-info">
                                    <div class="check-info-title">
-                                        <div class="checked">审批</div>
+                                        <div class="check-info-tip">审批</div>
                                         <div>2015-12-12   13:56</div>
                                         <div><span>审批人：</span>管理员A</div>
                                     </div>
+                                    
+                                </div>
+                            </li>
+                            <li class="checked returned">
+                                <div class="check-point"></div>
+                                <div class="check-info">
+                                   <div class="check-info-title">
+                                        <div class="check-info-tip">驳回</div>
+                                        <div>2015-12-12   13:56</div>
+                                        <div><span>驳回人：</span>管理员A</div>
+                                    </div>
+                                    
+                                </div>
+                            </li>
+                            <li class="canceled">
+                                <div class="check-point"></div>
+                                <div class="check-info">
+                                   <div class="check-info-title">
+                                        <div class="check-info-tip">取消</div>
+                                        <div>2015-12-12   13:56</div>
+                                        <div><span>执行人：</span>管理员A</div>
+                                    </div>
+                                    
                                 </div>
                             </li>
                             <li>
                                 <div class="check-point"></div>
-                                <div class="check-btn-box">
-                                    <div>
-                                        <a class="btn btn-addon btn-success"><i class="glyphicon glyphicon-ok"></i>审批</a>
+                                <div>
+                                    <div class="check-btn-box" ng-hide="returnSwitch">
+                                        <div>
+                                            <a class="btn btn-addon btn-success"><i class="glyphicon glyphicon-ok"></i>审批</a>
+                                        </div>
+                                        <div>
+                                            <a class="btn btn-addon btn-warning" ng-click="returnSwitchChange()"><i class="glyphicon glyphicon-remove"></i>驳回</a>
+                                        </div>
+                                        <div>
+                                            <a class="btn btn-addon btn-default"><i class="glyphicon glyphicon-off"></i>取消</a>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <a class="btn btn-addon btn-warning"><i class="glyphicon glyphicon-remove"></i>驳回</a>
-                                    </div>
-                                    <div>
-                                        <a class="btn btn-default">取消</a>
+                                    <div class="check-input-box" ng-show="returnSwitch">
+                                        <div>
+                                            驳回理由：
+                                        </div>
+                                        <div>
+                                            <input type="text" class="form-control"/>
+                                        </div>
+                                        <div>
+                                            <a class="btn btn-warning">驳回</a>
+                                        </div>
+                                        <div>
+                                            <a class="btn btn-default" ng-click="returnSwitchChange()">取消</a>
+                                        </div>
                                     </div>
                                 </div>
                             </li>

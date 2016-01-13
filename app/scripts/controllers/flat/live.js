@@ -158,6 +158,12 @@ angular.module('flatpcApp')
     $scope.setCheck = function(){
         $('#setCheck').addClass('show');
     }
+    $scope.returnSwitchChange = function(){
+        $scope.returnSwitch = !($scope.returnSwitch||false);
+    }
     $rootScope.loading = false;
-    console.log($scope.name);
+    $scope.init = function(){
+        console.log($scope.name);
+    }
+    
 }]);
