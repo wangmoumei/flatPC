@@ -3,6 +3,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
+@import "plugins/bootstrap-datetimepicker.css";
 @import "framework/header.scss";
 @import "framework/aside.scss";
 @import "framework/menu.scss";

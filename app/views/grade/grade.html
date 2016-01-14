@@ -4,9 +4,9 @@
         返回
     </a>
     <ul class="history-list">
-        <li><a>公寓管理</a></li>
-        <li><a>宿舍管理</a></li>
-        <li>公寓宿舍查询</li>
+        <li><a href="#index" ng-click="routerInit('flat')">公寓管理</a></li>
+        <li><a href="#index">宿舍考评</a></li>
+        <li>卫生打分</li>
     </ul>
 </div>
 <div class="date-bar">
@@ -15,12 +15,12 @@
     </div>
     <div class="week-list">
         <ul>
-            <li ng-repeat="week in weekList|limitTo : 9">
+            <li ng-repeat="week in weekList|limitTo : 9" ng-class="{'active':week == 5,'on':week == 7}">
                 第{{week}}周
             </li>
         </ul>
         <ul>
-            <li ng-repeat="week in weekList|limitTo : -9">
+            <li ng-repeat="week in weekList|limitTo : -9" ng-class="{'disabled':week > 12}">
                 第{{week}}周
             </li>
         </ul>
@@ -124,7 +124,7 @@
                             <div class="room-item">
                                 <div class="graded">101</div>
                                 <ul>
-                                    <li><a ng-click="detail()">95</a></li>
+                                    <li><a ng-click="showCard('#gradeCard',initCard)">95</a></li>
                                 </ul>
                             </div>
                             <div class="room-item">
@@ -278,7 +278,7 @@
     </div>
     
 </div>
-<div class="info-card fadeIn animated" info-card>
+<div class="info-card fadeIn animated grade-simple" id="gradeCard" info-card>
     <div class="info-card-wrapper">
         <div class="info-card-dialog">
             <div class="info-card-content">
@@ -302,17 +302,17 @@
                                         </thead>
                                         <tbody>
                                             <tr><th>厕所</th><th></th><th></th></tr>
-                                            <tr><td>1</td><td>值日表（5）</td><td></td></tr>
-                                            <tr><td>2</td><td>值日表（5）</td><td></td></tr>
-                                            <tr><td>3</td><td>值日表（5）</td><td></td></tr>
-                                            <tr><td>4</td><td>值日表（5）</td><td></td></tr>
-                                            <tr><td>5</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>1</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
+                                            <tr><td>2</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
+                                            <tr><td>3</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
+                                            <tr><td>4</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
+                                            <tr><td>5</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
                                             <tr><th>地面</th><th></th><th></th></tr>
-                                            <tr><td>1</td><td>值日表（5）</td><td></td></tr>
-                                            <tr><td>2</td><td>值日表（5）</td><td></td></tr>
-                                            <tr><td>3</td><td>值日表（5）</td><td></td></tr>
-                                            <tr><td>4</td><td>值日表（5）</td><td></td></tr>
-                                            <tr><td>5</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>1</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
+                                            <tr><td>2</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div class="minuses">14</div><div>+</div></div></td></tr>
+                                            <tr><td>3</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
+                                            <tr><td>4</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
+                                            <tr><td>5</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
                                         </tbody>
                                         <tfoot>
                                             <tr><td></td><td>总计</td><td class="grade-number">88</td></tr>
@@ -326,23 +326,40 @@
                                         </thead>
                                         <tbody>
                                             <tr><th>一号床</th><th>-徐冬（10113003433）</th><th class="grade-number">95</th></tr>
-                                            <tr><td>1</td><td>值日表（5）</td><td></td></tr>
-                                            <tr><td>2</td><td>值日表（5）</td><td></td></tr>
-                                            <tr><td>3</td><td>值日表（5）</td><td></td></tr>
-                                            <tr><td>4</td><td>值日表（5）</td><td></td></tr>
-                                            <tr><td>5</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>1</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
+                                            <tr><td>2</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
+                                            <tr><td>3</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
+                                            <tr><td>4</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
+                                            <tr><td>5</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
                                             <tr><th>二号床</th><th>-徐冬（10113003433）</th><th class="grade-number">95</th></tr>
-                                            <tr><td>1</td><td>值日表（5）</td><td></td></tr>
-                                            <tr><td>2</td><td>值日表（5）</td><td></td></tr>
-                                            <tr><td>3</td><td>值日表（5）</td><td></td></tr>
-                                            <tr><td>4</td><td>值日表（5）</td><td></td></tr>
-                                            <tr><td>5</td><td>值日表（5）</td><td></td></tr>
+                                            <tr><td>1</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
+                                            <tr><td>2</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
+                                            <tr><td>3</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
+                                            <tr><td>4</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
+                                            <tr><td>5</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
                                             
                                         </tbody>
                                     </table>
                                 </li>
                                 <li class="fadeIn animated">
-                                    照片
+                                    <div class="album" album>
+                                        <ul>
+                                            <li><img src="http://test.houqinbao.com/xu/images/%E5%AE%BF%E8%88%8D%E6%89%93%E5%88%86/u982.png" /></li>
+                                            <li><img src="http://test.houqinbao.com/xu/images/%E5%AE%BF%E8%88%8D%E6%89%93%E5%88%86/u491.png" /></li>
+                                            <li><img src="http://test.houqinbao.com/xu/images/%E5%AE%BF%E8%88%8D%E6%89%93%E5%88%86/u1077.png" /></li>
+                                            <li><img src="http://test.houqinbao.com/xu/images/%E5%85%A5%E4%BD%8F/u203.png" /></li>
+                                            <li><img src="http://test.houqinbao.com/xu/images/%E5%AE%BF%E8%88%8D%E7%AE%A1%E7%90%86%E9%A6%96%E5%B1%8F/u42.png" /></li>
+                                            <li><img src="http://test.houqinbao.com/xu/images/%E6%8C%89%E6%A5%BC%E6%9F%A5%E7%9C%8B-%E6%80%BB%E8%A7%88%E4%BF%A1%E6%81%AF/u77.png" /></li>
+                                            <li><img src="http://test.houqinbao.com/xu/images/%E5%85%A5%E4%BD%8F/u485.png" /></li>
+                                            <li class="album-plus"><span class="ALiconfont icon-plus3"></span><input type="file" style="display:none" /></li> 
+                                        </ul>
+                                        <div class="album-frame" style="bottom:50px;top:40px;">
+                                            <div>
+                                                <img src="http://test.houqinbao.com/xu/images/%E5%AE%BF%E8%88%8D%E6%89%93%E5%88%86/u982.png" />
+                                            </div>
+                                        </div>
+                                        <div class="album-frame-off" style="top:50px;">X</div>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -351,7 +368,7 @@
                                 <a class="btn btn-default disabled"><</a>
                             </div>
                             <div>
-                                <a class="btn btn-info">保存并关闭</a>
+                                <a class="btn btn-info" onclick="javascript:$(this).closest('.info-card').removeClass('grade-simple');">保存并关闭</a>
                             </div>
                             <div>
                                 <a class="btn btn-default btn-stroke btn-info">></a>

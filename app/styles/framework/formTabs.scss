@@ -1,0 +1,103 @@
+@charset "utf-8";
+.form-tabs{
+    background-color: #f6f7f8;
+    padding-top:30px;
+    .form-tabs-nav{
+        margin:0px 100px 50px 100px;
+        display: box;
+        display: -webkit-box;
+        display: flex;
+        display: -webkit-flex;
+        border-top:2px solid #ccc;
+        li{
+            position: relative;
+            border-top:2px solid transparent;
+            transition:border-color .5s ease-in;
+            top:-2px;
+            &.active{
+                border-color:#2772ee;
+                color: #2772ee;
+                .form-tabs-point{
+                    border-color:#2772ee;
+                }
+            }
+            &.tabs-nav{
+                -webkit-box-flex:1;
+                box-flex:1;
+                flex:1;
+                -webkit-flex: 1;
+            }
+            &>div{
+                position: absolute;
+                width: 60px;
+                text-align: center;
+                right:-30px;
+                top:-11px;
+                z-index: 2;
+                .form-tabs-point{
+                    width: 20px;
+                    height: 20px;
+                    margin: 0 auto 5px auto;
+                    border-radius: 20px;
+                    border:2px solid #ccc;
+                    background-color: #fff;
+                }
+            }
+        }
+    }
+    .form-tabs-container{
+        padding-bottom: 60px;
+        &>li{
+            display: none;
+            &.active{
+                display: block;
+            }
+        }
+        .form-tabs-info{
+            height: 40px;
+            line-height: 40px;
+            padding:0 10px;
+            border-top:1px solid #dfe0e0;
+            span{
+                color: #2772ee;
+            }
+            a{
+                float: right;
+            }
+        }
+        .form-tabs-tool-bar{
+            border-top:1px solid #dfe0e0;
+            display: box;
+            display: -webkit-box;
+            display: flex;
+            display: -webkit-flex;
+            height: 50px;
+            box-align:center ;
+            -webkit-box-align:center;
+            -moz-box-align:center;
+            -ms-box-align:center;
+            align-items:center ;
+            -webkit-align-items:center;
+            padding-left: 10px;
+            &>div{
+                padding-right: 10px;  
+            }
+            .form-tabs-full{
+                -webkit-box-flex:1;
+                box-flex:1;
+                flex:1;
+                -webkit-flex: 1;
+            }
+            a{
+                display: block;
+                width: 100px;
+            }
+            span{
+                color: #2772ee;
+            }
+        }
+        .table{
+            margin-bottom: 0;
+        }
+    }
+}

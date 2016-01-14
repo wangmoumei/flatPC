@@ -1,0 +1,60 @@
+@charset "utf-8";
+.date-bar{
+    height: 50px;
+    display: box;
+    display: -webkit-box;
+    display: flex;
+    display: -webkit-flex;
+    border-bottom:1px solid #dfe0e0;
+    .term{
+        padding: 5px 10px;
+        line-height: 20px;
+        text-align:center;
+    }
+    .week-list{
+        -webkit-box-flex:1;
+        box-flex:1;
+        flex:1;
+        -webkit-flex: 1;
+        border-left:1px solid #dfe0e0;
+        border-right:1px solid #dfe0e0;
+        ul{
+            display: box;
+            display: -webkit-box;
+            display: flex;
+            display: -webkit-flex;
+            &:first-of-type li{
+                border-top: none; 
+            }
+            li{
+                -webkit-box-flex:1;
+                box-flex:1;
+                flex:1;
+                -webkit-flex: 1;
+                text-align: center;
+                height: 25px;
+                line-height: 25px;
+                border-left:1px solid #dfe0e0;
+                border-top:1px solid #dfe0e0;
+                cursor: pointer;
+                &:first-of-type{
+                    border-left-color: transparent; 
+                }
+                &.active{
+                    background-color: #2772ee;
+                    color: #fff;
+                }
+                &.on{
+                    &::before{
+                        content: "● ";
+                        color: #2772ee;
+                    }
+                }
+                &.disabled{
+                    color:#aaa;
+                    cursor: default;
+                }
+            }
+        }
+    }
+}

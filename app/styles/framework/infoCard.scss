@@ -1,0 +1,55 @@
+@charset "utf-8";
+.info-card{
+    position: fixed;
+    top:0;bottom:0;left:0;right:0;z-index: 100;
+    background-color:#fff;
+    background-color: rgba(255,255,255,.4);
+    display: none;
+    &.show{
+        display: block;
+    }
+    .info-card-wrapper {
+        display: table;
+        overflow: auto;
+        overflow-y: scroll;
+        height: 100%;
+        -webkit-overflow-scrolling: touch;
+        outline: 0;
+        margin: 0px auto;
+        padding-top: 50px;
+        .info-card-dialog{
+            display: table-cell;
+            vertical-align: middle;
+            width: 600px;
+            margin: 30px auto;
+            .panel-heading{
+                color: #fff;
+                background-color: #155aba;
+                position: relative;
+                .info-card-close{
+                    position:absolute;
+                    right:0px;
+                    top:0;
+                    height: 40px;
+                    width: 40px;
+                    text-align: center;
+                    line-height: 40px;
+                    color: #fff;
+                    font-size: 20px;
+                }
+            }
+            .panel-body{
+                padding:0;
+                .page-tabs-container{
+                    background-color: #fff;
+                    padding: 20px;
+                    max-height: 450px;
+                    overflow: auto;
+                    .table{
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+}

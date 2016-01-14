@@ -16,19 +16,25 @@ angular
     'ngSanitize',
     'ui.router',
     'ngTouch'
-  ])
+  ],function($provide){
+      //$provide.factory('authority',function(){
+      //    return "aaaaa";
+      //});
+  })
   .constant('AppConfig',{
       WEB_ROOT:'http://120.26.48.150:8089/'
       
-  }).run(['$rootScope', '$location', 'AppConfig',
-		function($rootScope, $location, AppConfig) {
-            $rootScope.validate = function(menu){
-                
+  }).run(['$rootScope', '$location', 'AppConfig','authority',
+		function($rootScope, $location, AppConfig,authority) {
+            $rootScope.sysMenu = authority.check();
+            console.log($rootScope.sysMenu);
+            $rootScope.routerInit = function(menu){
+                $rootScope.sysMenu = [menu,menu,""];
             }
             $rootScope.authority = '';
-            $rootScope.sysMenu = ['flat','flat',''];
 			$rootScope.$on('$stateChangeStart',
 				function(event, toState, toParams, fromState, fromParams) {
+                    $rootScope.sysMenu = authority.check(toState.name);
                     $rootScope.loading = true;
             });
             $rootScope.$on('$stateChangeError', 
@@ -72,6 +78,9 @@ angular
                 templateUrl: "views/header.html",
                 controller: 'HeaderCtrl'
             }
+        },
+        data:{
+            name:'111'
         }
     })
     .state('college', {
@@ -176,6 +185,57 @@ angular
             }
         }
     })
+    .state('visit', {
+        url: "/visit",
+        views: {
+            "": {
+                templateUrl: 'views/checkIn/visit.html',
+                controller: 'VisitCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('key', {
+        url: "/key",
+        views: {
+            "": {
+                templateUrl: 'views/checkIn/key.html',
+                controller: 'VisitCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('late', {
+        url: "/late",
+        views: {
+            "": {
+                templateUrl: 'views/checkIn/late.html',
+                controller: 'VisitCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
     .state('list', {
         url: "/list",
         views: {
@@ -229,3 +289,26 @@ angular
     });
     $urlRouterProvider.otherwise('/index');
   });
+  
+Date.prototype.Format = function (format) {
+    var o = {
+        "M+": this.getMonth() + 1, //month 
+        "d+": this.getDate(), //day 
+        "h+": this.getHours(), //hour 
+        "m+": this.getMinutes(), //minute 
+        "s+": this.getSeconds(), //second 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //quarter 
+        "S": this.getMilliseconds() //millisecond 
+    }
+
+    if (/(y+)/.test(format)) {
+        format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    }
+
+    for (var k in o) {
+        if (new RegExp("(" + k + ")").test(format)) {
+            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+        }
+    }
+    return format;
+}
