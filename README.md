@@ -16,6 +16,9 @@ Running `grunt test` will run the unit tests with karma.
 
 ## update log
     
+`16.01.14 ver 0.6.0`  
+宿舍考评Demo完成,日常等级Demo完成<a target="_blank" href="http://test.houqinbao.com/wang/flatpc/#/live">Demo</a>  
+
 `16.01.13 ver 0.5.0`  
 寝室考评功能初步搭建<a target="_blank" href="http://test.houqinbao.com/wang/flatpc/#/live">Demo</a>  
 
