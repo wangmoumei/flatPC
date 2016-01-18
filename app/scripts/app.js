@@ -203,6 +203,23 @@ angular
             }
         }
     })
+    .state('gradeSetting', {
+        url: "/gradeSetting",
+        views: {
+            "": {
+                templateUrl: 'views/grade/setting.html',
+                controller: 'ListCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
     .state('visit', {
         url: "/visit",
         views: {
@@ -293,6 +310,74 @@ angular
         views: {
             "": {
                 templateUrl: 'views/floor/type.html',
+                controller: 'ListCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('class', {
+        url: "/class",
+        views: {
+            "": {
+                templateUrl: 'views/collect/tree.html',
+                controller: 'ListCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('student', {
+        url: "/student",
+        views: {
+            "": {
+                templateUrl: 'views/collect/student.html',
+                controller: 'ListCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('stay', {
+        url: "/stay",
+        views: {
+            "": {
+                templateUrl: 'views/collect/stay.html',
+                controller: 'ListCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('term', {
+        url: "/term",
+        views: {
+            "": {
+                templateUrl: 'views/grade/term.html',
                 controller: 'ListCtrl'
             },
             "aside": {

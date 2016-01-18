@@ -13,8 +13,8 @@
     <div style="min-width:160px">
         A生活区-13号楼（男）
     </div>
-    <div><a class="btn btn-success">新增楼层</a></div>
-    <div class="bar-full"><a class="btn btn-info">批量添加</a></div>
+    <div><a class="btn btn-success" ng-click="showCard('#floorAdd')">新增楼层</a></div>
+    <div class="bar-full"><a class="btn btn-info" ng-click="showCard('#multiAdd')">批量添加</a></div>
     <div>
         楼层：
 
@@ -80,7 +80,7 @@
             <li>
                 <div class="floor-title">
                     <div>一层</div>
-                    <div class="title-full"><a class="btn btn-default btn-xs">编辑</a></div>
+                    <div class="title-full"><a class="btn btn-default btn-xs" ng-click="showCard('#floorEdit')">编辑</a></div>
                     <div>
                         房间总数：床位总数：已住人数：空房间数：空床位数
                     </div>
@@ -119,7 +119,7 @@
                 </div>
                 <div class="room-list room-list-row">
                     <div class="room-item">
-                        <div>111</div>
+                        <div><a ng-click="showCard('#roomEdit')">111</a></div>
                     </div>
                     <div class="room-item">
                         <div>112</div>
@@ -160,14 +160,14 @@
                         <div>123</div>
                     </div>
                     <div class="room-item">
-                        <div><a class="room-add">新增寝室</a></div>
+                        <div><a class="room-add" ng-click="showCard('#roomAdd')">新增寝室</a></div>
                     </div>
                 </div>
             </li>
             <li>
                 <div class="floor-title">
                     <div>二层 </div>
-                    <div class="title-full"><a class="btn btn-default btn-xs">编辑</a></div>
+                    <div class="title-full"><a class="btn btn-default btn-xs" ng-click="showCard('#floorEdit')">编辑</a></div>
                     <div>
                         房间总数：床位总数：已住人数：空房间数：空床位数
                     </div>
@@ -238,5 +238,360 @@
                 </div>
             </li>
         </ul>
+    </div>
+</div>
+<div class="info-card fadeIn animated" id="multiAdd" info-card>
+    <div class="info-card-wrapper">
+        <div class="info-card-dialog">
+            <div class="info-card-content">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        批量添加宿舍号
+                        <a class="info-card-close">x</a>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table-form table-bordered bg-white">
+                            <tbody>
+                                <tr>
+                                    <td width="150">楼栋</td><td> 校区 生活区 楼栋</td>
+                                </tr>
+                                <tr>
+                                    <td class="require">层数</td><td><input type="text" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="require">每层房间数</td><td><input type="text" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="require">户型</td>
+                                    <td>
+                                        <select>
+                                            <option value="">户型</option>
+                                            <option value="one">First</option>
+                                            <option value="two">Second</option>
+                                            <option value="three">Third</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>类别</td>
+                                    <td>
+                                        <select>
+                                            <option value="">类别</option>
+                                            <option value="one">First</option>
+                                            <option value="two">Second</option>
+                                            <option value="three">Third</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="require">房间号枚举</td>
+                                    <td>
+                                        <div>
+                                            <input type="text" />
+                                        <div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <a class="btn btn-success">确认添加</a>
+                                        <a class="btn btn-default">取消</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="info-card fadeIn animated" id="floorAdd" info-card>
+    <div class="info-card-wrapper">
+        <div class="info-card-dialog">
+            <div class="info-card-content">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        添加楼层
+                        <a class="info-card-close">x</a>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table-form table-bordered bg-white">
+                            <tbody>
+                                <tr>
+                                    <td width="150">楼栋</td><td> 校区 生活区 楼栋</td>
+                                </tr>
+                                <tr>
+                                    <td class="require">楼层号</td><td><input type="text" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="require">添加位置</td>
+                                    <td>
+                                        <select>
+                                            <option value="">楼层前</option>
+                                            <option value="one">First</option>
+                                            <option value="two">Second</option>
+                                            <option value="three">Third</option>
+                                        </select>
+                                        <input type="text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="require">户型</td>
+                                    <td>
+                                        <select>
+                                            <option value="">户型</option>
+                                            <option value="one">First</option>
+                                            <option value="two">Second</option>
+                                            <option value="three">Third</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>类别</td>
+                                    <td>
+                                        <select>
+                                            <option value="">类别</option>
+                                            <option value="one">First</option>
+                                            <option value="two">Second</option>
+                                            <option value="three">Third</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>备注</td>
+                                    <td><textarea class="form-control" rows="3"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <a class="btn btn-success">确认添加</a>
+                                        <a class="btn btn-default">取消</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="info-card fadeIn animated" id="floorEdit" info-card>
+    <div class="info-card-wrapper">
+        <div class="info-card-dialog">
+            <div class="info-card-content">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        楼层编辑
+                        <a class="info-card-close">x</a>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table-form table-bordered bg-white">
+                            <tbody>
+                                <tr>
+                                    <td width="150">楼栋</td><td> 校区 生活区 楼栋</td>
+                                </tr>
+                                <tr>
+                                    <td class="require">楼层号</td><td><input type="text" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="require">添加位置</td>
+                                    <td>
+                                        <select>
+                                            <option value="">楼层前</option>
+                                            <option value="one">First</option>
+                                            <option value="two">Second</option>
+                                            <option value="three">Third</option>
+                                        </select>
+                                        <input type="text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="require">户型</td>
+                                    <td>
+                                        <select>
+                                            <option value="">户型</option>
+                                            <option value="one">First</option>
+                                            <option value="two">Second</option>
+                                            <option value="three">Third</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>类别</td>
+                                    <td>
+                                        <select>
+                                            <option value="">类别</option>
+                                            <option value="one">First</option>
+                                            <option value="two">Second</option>
+                                            <option value="three">Third</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>备注</td>
+                                    <td><textarea class="form-control" rows="3"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <a class="btn btn-info">确认修改</a>
+                                        <a class="btn btn-default">删除</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="info-card fadeIn animated" id="roomAdd" info-card>
+    <div class="info-card-wrapper">
+        <div class="info-card-dialog">
+            <div class="info-card-content">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        添加宿舍
+                        <a class="info-card-close">x</a>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table-form table-bordered bg-white">
+                            <tbody>
+                                <tr>
+                                    <td width="150">楼栋</td><td> 校区 生活区 楼栋</td>
+                                </tr>
+                                <tr>
+                                    <td class="require">寝室号</td><td><input type="text" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="require">添加位置</td>
+                                    <td>
+                                        <select>
+                                            <option value="">寝室前</option>
+                                            <option value="one">First</option>
+                                            <option value="two">Second</option>
+                                            <option value="three">Third</option>
+                                        </select>
+                                        <input type="text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="require">户型</td>
+                                    <td>
+                                        <select>
+                                            <option value="">户型</option>
+                                            <option value="one">First</option>
+                                            <option value="two">Second</option>
+                                            <option value="three">Third</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="require">类别</td>
+                                    <td>
+                                        <select>
+                                            <option value="">类别</option>
+                                            <option value="one">First</option>
+                                            <option value="two">Second</option>
+                                            <option value="three">Third</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="require">状态</td>
+                                    <td>
+                                        <select>
+                                            <option value="">开启</option>
+                                            <option value="one">开启</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <a class="btn btn-success">确认添加</a>
+                                        <a class="btn btn-default">取消</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="info-card fadeIn animated" id="roomEdit" info-card>
+    <div class="info-card-wrapper">
+        <div class="info-card-dialog">
+            <div class="info-card-content">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        编辑宿舍
+                        <a class="info-card-close">x</a>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table-form table-bordered bg-white">
+                            <tbody>
+                                <tr>
+                                    <td width="150">楼栋</td><td> 校区 生活区 楼栋</td>
+                                </tr>
+                                <tr>
+                                    <td class="require">寝室号</td><td><input type="text" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="require">添加位置</td>
+                                    <td>
+                                        <select>
+                                            <option value="">寝室前</option>
+                                            <option value="one">First</option>
+                                            <option value="two">Second</option>
+                                            <option value="three">Third</option>
+                                        </select>
+                                        <input type="text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="require">户型</td>
+                                    <td>
+                                        <select>
+                                            <option value="">户型</option>
+                                            <option value="one">First</option>
+                                            <option value="two">Second</option>
+                                            <option value="three">Third</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="require">类别</td>
+                                    <td>
+                                        <select>
+                                            <option value="">类别</option>
+                                            <option value="one">First</option>
+                                            <option value="two">Second</option>
+                                            <option value="three">Third</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="require">状态</td>
+                                    <td>
+                                        <select>
+                                            <option value="">开启</option>
+                                            <option value="one">开启</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <a class="btn btn-info">确认修改</a>
+                                        <a class="btn btn-default">取消</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

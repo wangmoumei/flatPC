@@ -47,6 +47,9 @@ angular.module('flatpcApp')
             case 'scoreStatistics':
                 return ['flat','grade','scoreStatistics'];
                 break;
+            case 'gradeSetting':
+                return ['flat','grade','gradeSetting'];
+                break;
             case 'floor':
                 return ['data','floor','floor'];
                 break;
@@ -56,7 +59,18 @@ angular.module('flatpcApp')
             case 'type':
                 return ['data','floor','type'];
                 break;
-            
+            case 'student':
+                return ['data','collect','student'];
+                break;
+            case 'stay':
+                return ['data','collect','stay'];
+                break;
+            case 'class':
+                return ['data','collect','class'];
+                break;
+            case 'term':
+                return ['data','data','term'];
+                break;
         }
     };
     var transform = function(){

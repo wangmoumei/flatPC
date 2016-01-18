@@ -1,0 +1,117 @@
+<div class="history-container">
+    <a class="return-btn" href="javascript:history.go(-1)">
+        <i class="ALiconfont icon-sortleft"></i>
+        返回
+    </a>
+    <ul class="history-list">
+        <li><a>公寓管理</a></li>
+        <li><a>宿舍管理</a></li>
+        <li>公寓宿舍查询</li>
+    </ul>
+</div>
+<div class="page-main" style="top:49px;">
+    <div class="page-tabs" tabs>
+        <ul class="page-tabs-nav">
+            <li class="active">寝室分</li>
+            <li>床位分</li>
+            <li>打分周期</li>
+        </ul>
+        <ul class="page-tabs-container">
+            <li class="fadeIn animated active">
+                <div class="page-tree" tree>
+                    <ul>
+                        <li ng-repeat="item1 in tree">
+                            <a ng-class="{'branch':item1.list,'leaf':!item1.list}">{{item1.name}}</a>
+                            <ul ng-show="item1.list">
+                                <li ng-repeat="item2 in item1.list||[]">
+                                    <a ng-class="{'branch':item2.list,'leaf':!item2.list}">{{item2.name}}</a>
+                                    <ul ng-show="item2.list">
+                                        <li ng-repeat="item3 in item2.list||[]">
+                                            <a ng-class="{'branch':item3.list,'leaf':!item3.list}">{{item3.name}}</a>
+                                        </li>
+                                        <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
+                                    </ul>
+                                </li>
+                                <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加分类</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="from-container" style="left:225px;">
+                    <table class="table-form table-bordered bg-white">
+                        <tr>
+                            <td class="require" width="200">分类</td><td><input type="text" /></td>
+                        </tr>
+                        <tr>
+                            <td class="require" width="200">打分项目</td><td><input type="text" /></td>
+                        </tr>
+                        <tr>
+                            <td class="require" width="200">分值</td><td><input type="text" /></td>
+                        </tr>
+                        <tr>
+                            <td class="require" width="200">排序</td><td><input type="text" /></td>
+                        </tr>
+                        <tr>
+                            <td></td><td>
+                                <button class="btn btn-success">提交</button>
+                                <button class="btn btn-info">保存</button>
+                                <button class="btn btn-default">取消</button>
+                                <button class="btn btn-danger">删除</button>
+                            </td>
+                        </tr>
+                        
+                    </table>
+                </div>
+            </li>
+            <li>
+                <div class="page-tree" tree>
+                    <ul>
+                        <li ng-repeat="item1 in tree">
+                            <a ng-class="{'branch':item1.list,'leaf':!item1.list}">{{item1.name}}</a>
+                            <ul ng-show="item1.list">
+                                <li ng-repeat="item2 in item1.list||[]">
+                                    <a ng-class="{'branch':item2.list,'leaf':!item2.list}">{{item2.name}}</a>
+                                    <ul ng-show="item2.list">
+                                        <li ng-repeat="item3 in item2.list||[]">
+                                            <a ng-class="{'branch':item3.list,'leaf':!item3.list}">{{item3.name}}</a>
+                                        </li>
+                                        <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
+                                    </ul>
+                                </li>
+                                <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加分类</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="from-container" style="left:225px;">
+                    <table class="table-form table-bordered bg-white">
+                        <tr>
+                            <td class="require" width="200">分类</td><td><input type="text" /></td>
+                        </tr>
+                        <tr>
+                            <td class="require" width="200">打分项目</td><td><input type="text" /></td>
+                        </tr>
+                        <tr>
+                            <td class="require" width="200">分值</td><td><input type="text" /></td>
+                        </tr>
+                        <tr>
+                            <td class="require" width="200">排序</td><td><input type="text" /></td>
+                        </tr>
+                        <tr>
+                            <td></td><td>
+                                <button class="btn btn-success">提交</button>
+                                <button class="btn btn-info">保存</button>
+                                <button class="btn btn-default">取消</button>
+                                <button class="btn btn-danger">删除</button>
+                            </td>
+                        </tr>
+                        
+                    </table>
+                </div>
+            </li>
+            <li>
+                打分周期
+            </li>
+        </ul>
+</div>
+</div>

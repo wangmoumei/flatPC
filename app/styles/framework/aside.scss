@@ -9,9 +9,14 @@
                 display: block;
                 color: #777;
                 i{
-                    font-size: 20px;
+                    font-size: 23px;
                     display: inline-block;
-                    padding:0 10px; 
+                    width:30px;
+                    height: 30px;
+                    line-height: 30px;
+                    border-radius: 30px;
+                    text-align: center;
+                    margin:0 10px;
                 }
             }
             &:hover{
@@ -22,9 +27,9 @@
                 border-left: 3px solid #008cee;
                 padding-left: 7px;
                 a{
-                    color: #008cee;
-                    i.icon-user:before{
-                        content: "\e62c";
+                    i{
+                        background-color: #008cee;
+                        color: #d3e7f6;
                     }
                 }
             }
