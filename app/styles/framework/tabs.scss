@@ -29,14 +29,38 @@
                 position: absolute;
                 top:0;
                 width: 100%;
-                padding:8px 10px;
+                display: box;
+                display: -webkit-box;
+                display: flex;
+                display: -webkit-flex;
+                box-align:center ;
+                -webkit-box-align:center;
+                -moz-box-align:center;
+                -ms-box-align:center;
+                align-items:center ;
+                -webkit-align-items:center;
+                height: 50px;
+                line-height: 50px;
+                padding:0 5px;
                 z-index: 10;
                 &>div{
-                    float: left;
+                    padding:0 5px;
+                    .form-control{
+                        float: none;
+                    }
+                    .btn-group{
+                        display: block;
+                    }
+                }
+                div.bar-full{
+                    box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;-ms-box-flex:1;
+                    flex:1;-webkit-flex:1;
                 }
                 .search-bool{
-                    width: 200px;
-                    margin-left: 10px;
+                    max-width: 200px;
+                }
+                a{
+                    display: block;
                 }
             }
             .table-bordered th{

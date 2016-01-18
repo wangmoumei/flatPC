@@ -1,0 +1,76 @@
+<div class="history-container">
+    <a class="return-btn" href="javascript:history.go(-1)">
+        <i class="ALiconfont icon-sortleft"></i>
+        返回
+    </a>
+    <ul class="history-list">
+        <li><a>公寓管理</a></li>
+        <li><a>宿舍管理</a></li>
+        <li>公寓宿舍查询</li>
+    </ul>
+</div>
+<div class="page-main" style="top:49px;">
+    <div class="page-tree" tree>
+        <ul>
+            <li ng-repeat="item1 in tree">
+                <a ng-class="{'branch':item1.list,'leaf':!item1.list}">{{item1.name}}</a>
+                <ul ng-show="item1.list">
+                    <li ng-repeat="item2 in item1.list||[]">
+                        <a ng-class="{'branch':item2.list,'leaf':!item2.list}">{{item2.name}}</a>
+                        <ul ng-show="item2.list">
+                            <li ng-repeat="item3 in item2.list||[]">
+                                <a ng-class="{'branch':item3.list,'leaf':!item3.list}">{{item3.name}}</a>
+                                <ul ng-show="item3.list">
+                                    <li ng-repeat="item4 in item3.list||[]">
+                                        <a ng-class="{'branch':item4.list,'leaf':!item4.list}">{{item4.name}}</a>
+                                        <ul ng-show="item4.list">
+                                            <li ng-repeat="item5 in item4.list||[]">
+                                                <a ng-class="{'branch':item5.list,'leaf':!item5.list}">{{item5.name}}</a>
+                                                <ul ng-show="item5.list">
+                                                    <li ng-repeat="item6 in item5.list||[]">
+                                                        <a class="leaf">{{item6.name}}</a>
+                                                    </li>
+                                                    <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加寝室</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加楼层</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加楼栋</a></li>
+                                </ul>
+                            </li>
+                            <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加生活区</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加校区</a></li>
+                </ul>
+            </li>
+            <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加学校</a></li>
+        </ul>
+    </div>
+    <div class="from-container" style="left:225px;">
+        <table class="table-form table-bordered bg-white">
+            <tr>
+                <td class="require" width="200">校区</td><td><input type="text" /></td>
+            <tr>
+            </tr>
+                <td class="require" width="200">生活区</td><td><input type="text" /></td>
+            <tr>
+            </tr>
+                <td class="require" width="200">楼栋</td><td><input type="text" /></td>
+            <tr>
+            </tr>
+                <td class="require" width="200">排序</td><td><input type="text" /></td>
+            <tr>
+            </tr>
+                <td></td><td>
+                    <button class="btn btn-success">提交</button>
+                    <button class="btn btn-info">保存</button>
+                    <button class="btn btn-default">取消</button>
+                    <button class="btn btn-danger">删除</button>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+</div>

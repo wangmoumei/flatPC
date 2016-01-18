@@ -26,7 +26,7 @@ angular
       
   }).run(['$rootScope', '$location', 'AppConfig','authority',
 		function($rootScope, $location, AppConfig,authority) {
-            $rootScope.sysMenu = authority.check();
+            $rootScope.sysMenu = ['flat','flat',''];
             console.log($rootScope.sysMenu);
             $rootScope.routerInit = function(menu){
                 $rootScope.sysMenu = [menu,menu,""];
@@ -34,6 +34,7 @@ angular
             $rootScope.authority = '';
 			$rootScope.$on('$stateChangeStart',
 				function(event, toState, toParams, fromState, fromParams) {
+                    
                     $rootScope.sysMenu = authority.check(toState.name);
                     $rootScope.loading = true;
             });
@@ -185,6 +186,23 @@ angular
             }
         }
     })
+    .state('scoreStatistics', {
+        url: "/scoreStatistics",
+        views: {
+            "": {
+                templateUrl: 'views/grade/statistics.html',
+                controller: 'GradeCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
     .state('visit', {
         url: "/visit",
         views: {
@@ -225,6 +243,57 @@ angular
             "": {
                 templateUrl: 'views/checkIn/late.html',
                 controller: 'VisitCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('floor', {
+        url: "/floor",
+        views: {
+            "": {
+                templateUrl: 'views/floor/tree.html',
+                controller: 'FloorCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('room', {
+        url: "/room",
+        views: {
+            "": {
+                templateUrl: 'views/floor/room.html',
+                controller: 'ListCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('type', {
+        url: "/type",
+        views: {
+            "": {
+                templateUrl: 'views/floor/type.html',
+                controller: 'ListCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",

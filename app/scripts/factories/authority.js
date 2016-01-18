@@ -1,12 +1,19 @@
 angular.module('flatpcApp')
-.factory('authority', ['AppConfig',function (AppConfig) {
+.factory('authority', ['$rootScope',function ($rootScope) {
     console.log('authority');
     var check = function(name){
         name = name || "";
         switch(name){
             case "index":
-                return ['flat','flat',''];
+                return $rootScope.sysMenu;
                 break;
+            case 'list':
+                return $rootScope.sysMenu;
+                break;
+            case 'list1':
+                return $rootScope.sysMenu;
+                break;
+                
             case 'flat':
                 return ['flat','flat','flat'];
                 break;
@@ -37,6 +44,19 @@ angular.module('flatpcApp')
             case 'late':
                 return ['flat','check','late'];
                 break;
+            case 'scoreStatistics':
+                return ['flat','grade','scoreStatistics'];
+                break;
+            case 'floor':
+                return ['data','floor','floor'];
+                break;
+            case 'room':
+                return ['data','floor','room'];
+                break;
+            case 'type':
+                return ['data','floor','type'];
+                break;
+            
         }
     };
     var transform = function(){

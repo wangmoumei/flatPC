@@ -50,7 +50,7 @@
 }
 .tool-bar{
     height: 50px;
-    padding:0 10px;
+    padding:0 5px;
     display: box;
     display: -webkit-box;
     display: flex;
@@ -63,20 +63,15 @@
     -webkit-align-items:center;
     position: relative;
     z-index: 10;
-    .search-option{
-        padding-right: 10px;
-    }
     .search-bool{
         max-width: 300px;
     }
-    .group-tool{
-        padding: 0 10px;
+    div.bar-full{
+        box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;-ms-box-flex:1;
+        flex:1;-webkit-flex:1;
     }
-    &>div:first-of-type{
-        -webkit-box-flex:1;
-        box-flex:1;
-        flex:1;
-        -webkit-flex: 1;
+    &>div{
+        padding:0 5px;
     }
     .progress-box{
         width: 200px;
@@ -105,7 +100,7 @@
     background-color: #fff;
     border-top:1px solid #dfe0e0;
     /*表格布局容器,tabs布局 样式*/
-    .table-container,.page-tabs{
+    .table-container,.page-tabs,.from-container{
         position: absolute;
         left: 0;
         top:0;
@@ -143,6 +138,7 @@
             box-flex:1;
             flex:1;
             -webkit-flex: 1;
+            overflow: hidden;
         }
         .page-size{
             padding-right: 10px;
@@ -230,6 +226,20 @@ table{
             }
         }
     }
+    &.table.middle tbody td{
+        vertical-align: middle;
+        padding:4px 15px;
+        &.multi{
+            padding:2px 0;
+            li{
+                padding:2px 15px;
+                border-bottom:1px solid #eeeff1;
+                &:last-of-type{
+                    border-bottom: none;
+                }
+            } 
+        }
+    }
 }
 
 .floor-list{
@@ -253,8 +263,11 @@ table{
             background-color: #fff;
             height: 40px;
             line-height: 40px;
-            padding:0 10px;
-            div:first-of-type{
+            padding:0 5px;
+            div{
+                padding:0 5px;
+            }
+            div.title-full{
                 -webkit-box-flex:1;
                 box-flex:1;
                 flex:1;
@@ -263,7 +276,7 @@ table{
             &::before{
                 content: '●';
                 font-size: 20px;
-                padding-right: 10px;
+                padding: 0 5px;
                 color: #2772ee;
             }
             .progress-box{
@@ -282,12 +295,16 @@ table{
             .grade-number span{
                 color: #2772ee;
             }
+            a.btn{
+                border-radius: 3px;
+            }
         }
         .room-list{
             display: box;
             display: -webkit-box;
             display: flex;
             display: -webkit-flex;
+            
             .room-item{
                 width: 100px;
                 text-align: center;
@@ -318,6 +335,9 @@ table{
                         }
                         padding-right:10px;
                     }
+                }
+                .room-add{
+                    color: #4bb622;
                 }
                 &>div:nth-of-type(2){
                     -webkit-box-flex:1;
@@ -356,6 +376,17 @@ table{
                     }
                 }
                 
+            }
+            &.room-list-row
+            {
+                &:nth-of-type(2n+1) .room-item>div:first-of-type{
+                    background-color: #fff;
+                }
+                .room-item
+                {
+                    border-top:none;
+                    border-bottom:1px solid #dfe0e0;
+                }
             }
         }
     }

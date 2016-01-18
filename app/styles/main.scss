@@ -3,7 +3,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
-@import "plugins/bootstrap-datetimepicker.css";
+@import "plugins/bootstrap-datetimepicker.scss";
 @import "framework/header.scss";
 @import "framework/aside.scss";
 @import "framework/menu.scss";
@@ -23,7 +23,7 @@ body {
   font-family: 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 ul{
-    margin:0;
+    margin:0;padding:0;
     -webkit-margin-before: 0px;
     -webkit-margin-after: 0px;
     -webkit-margin-start: 0px;
