@@ -16,6 +16,12 @@ Running `grunt test` will run the unit tests with karma.
 
 ## update log
     
+`16.01.18 ver 0.8`  
+师生信息模块完成，<a target="_blank" href="http://test.houqinbao.com/wang/flatpc/#/student">Demo</a>  
+
+`16.01.18 ver 0.7.0`  
+数据中心模块搭建，基础设置、楼栋数据模块<a target="_blank" href="http://test.houqinbao.com/wang/flatpc/#/room">Demo</a>  
+
 `16.01.14 ver 0.6.0`  
 宿舍考评Demo完成,日常等级Demo完成<a target="_blank" href="http://test.houqinbao.com/wang/flatpc/#/live">Demo</a>  
 
