@@ -164,5 +164,19 @@ angular.module('flatpcApp')
         console.log('do something');
     }
     $rootScope.loading = false;
+    
     console.log($scope.name);
+    /*$scope.myChart.setOption({
+        series : [
+            {
+                data:[48, 49, 57, 41, 30, 50, 39]
+            },
+            {
+                data:[67, 38, 48, 57, 49, 68, 55]
+            },
+            {
+                data:[69, 47, 55, 38, 62, 55, 37]
+            }
+        ]
+    }); */
 }]);

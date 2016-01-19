@@ -15,7 +15,7 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-    <link rel="stylesheet" href="http://7xp0c4.com2.z0.glb.qiniucdn.com/iconfont-1.22.css" />
+    <link rel="stylesheet" href="http://7xp0c4.com2.z0.glb.qiniucdn.com/iconfont-1.31.css" />
   </head>
   <body ng-app="flatpcApp">
     <!--[if lte IE 8]>
@@ -64,6 +64,7 @@
     </div>
     </div>
     </div>
+    <script src="//cdn.bootcss.com/echarts/3.0.0/echarts.common.js"></script>
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -79,11 +80,13 @@
     <script src="bower_components/sweetalert/dist/sweetalert.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
-
+    
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
     <script src="scripts/plugins/bootstrap-datetimepicker.js"></script>
     <script src="scripts/plugins/bootstrap-datetimepicker.zh-CN.js"></script>
+    
+    <script src="scripts/plugins/macarons.js"></script>
     
     <script src="scripts/controllers/menu.js"></script>
     <script src="scripts/controllers/list.js"></script>
@@ -104,6 +107,7 @@
     <script src="scripts/directives/formTabs.js"></script>
     <script src="scripts/directives/album.js"></script>
     <script src="scripts/directives/datetimepicker.js"></script>
+    <script src="scripts/directives/chart.js"></script>
     
     <script src="scripts/factories/authority.js"></script>
     <!-- endbuild -->
