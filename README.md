@@ -16,6 +16,9 @@ Running `grunt test` will run the unit tests with karma.
 
 ## update log
     
+`16.01.19 ver 0.9`  
+打分统计模块的折线图完成，采用了百度echartjs，<a target="_blank" href="http://test.houqinbao.com/wang/flatpc/#/scoreStatistics">Demo</a> 。完善了图标。  
+
 `16.01.18 ver 0.8`  
 师生信息模块完成，<a target="_blank" href="http://test.houqinbao.com/wang/flatpc/#/student">Demo</a>  
 
