@@ -15,7 +15,7 @@ angular.module('flatpcApp')
                             $(a).siblings("ul").slideDown("fast",function(){$(a.parentNode).addClass('open')});
                         }
                     }else{
-                        $("#sidebar a.active").removeClass("active");
+                        iElement.find("a.active").removeClass("active");
                         $(a).addClass("active");
                     }
                 }
