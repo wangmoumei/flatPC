@@ -1,6 +1,6 @@
 angular.module('flatpcApp')
 .factory('authority', ['$rootScope',function ($rootScope) {
-    console.log('authority');
+    //console.log('authority');
     var check = function(name){
         name = name || "";
         switch(name){
@@ -74,7 +74,7 @@ angular.module('flatpcApp')
         }
     };
     var transform = function(){
-        console.log('transform');
+        //console.log('transform');
     };
     return {
         check:check,

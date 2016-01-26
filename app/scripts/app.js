@@ -22,12 +22,13 @@ angular
       //});
   })
   .constant('AppConfig',{
-      WEB_ROOT:'http://120.26.48.150:8089/'
+      WEB_ROOT:'http://test.houqinbao.com/gyxt_api/',
+      schoolCode:10353
       
   }).run(['$rootScope', '$location', 'AppConfig','authority',
 		function($rootScope, $location, AppConfig,authority) {
             $rootScope.sysMenu = ['flat','flat',''];
-            console.log($rootScope.sysMenu);
+            //console.log($rootScope.sysMenu);
             $rootScope.routerInit = function(menu){
                 $rootScope.sysMenu = [menu,menu,""];
             }

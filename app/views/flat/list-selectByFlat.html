@@ -11,59 +11,36 @@
 </div>
 <div class="tool-bar" style="margin-left:225px;">
     <div class="bar-full" style="min-width:160px">
-        A生活区-13号楼（男）
+        {{flat.flatName}}
     </div>
     <div>
-        楼层：
+        楼层：{{flat.floorNum}}
 
-        房间总数：
+        房间总数：{{flat.roomNum}}
 
-        床位总数：
+        床位总数：{{flat.bedNum}}
 
-        已住人数：
+        已住人数：{{flat.alreadyNum}}
 
-        空房间数：
+        空房间数：{{flat.emptyRoomNum}}
 
-        空床位数：
+        空床位数：{{flat.emptyBedNum}}
     </div>
 </div>
 <div class="page-main">
     <div class="page-tree" tree style="top:-50px;">
         <ul>
             <li class="open">
-                <a class="branch">树枝</a>
-                <ul>
-                    <li class="open">
-                        <a class="branch">树枝</a>
-                        <ul>
-                            <li>
-                                <a class="leaf">叶子</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li ng-repeat="item1 in tree">
-                <a ng-class="{'branch':item1.list,'leaf':!item1.list}">{{item1.name}}</a>
-                <ul ng-show="item1.list">
-                    <li ng-repeat="item2 in item1.list||[]">
-                        <a ng-class="{'branch':item2.list,'leaf':!item2.list}">{{item2.name}}</a>
-                        <ul ng-show="item2.list">
-                            <li ng-repeat="item3 in item2.list||[]">
-                                <a ng-class="{'branch':item3.list,'leaf':!item3.list}">{{item3.name}}</a>
-                                <ul ng-show="item3.list">
-                                    <li ng-repeat="item4 in item3.list||[]">
-                                        <a ng-class="{'branch':item4.list,'leaf':!item4.list}">{{item4.name}}</a>
-                                        <ul ng-show="item4.list">
-                                            <li ng-repeat="item5 in item4.list||[]">
-                                                <a ng-class="{'branch':item5.list,'leaf':!item5.list}">{{item5.name}}</a>
-                                                <ul ng-show="item5.list">
-                                                    <li ng-repeat="item6 in item5.list||[]">
-                                                        <a class="leaf">{{item6.name}}</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
+                <a ng-class="{'branch':treeFlat.cmpusList,'leaf':!treeFlat.cmpusList}">{{treeFlat.title}}</a>
+                <ul ng-show="treeFlat.cmpusList">
+                    <li ng-repeat="campus in treeFlat.cmpusList||[]">
+                        <a ng-class="{'branch':campus.liveAreaList,'leaf':!campus.liveAreaList}">{{campus.title}}</a>
+                        <ul ng-show="campus.liveAreaList">
+                            <li ng-repeat="liveArea in campus.liveAreaList||[]">
+                                <a ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}">{{liveArea.title}}</a>
+                                <ul ng-show="liveArea.flatList">
+                                    <li ng-repeat="flat in liveArea.flatList||[]">
+                                        <a class="leaf">{{flat.title}}</a>
                                     </li>
                                 </ul>
                             </li>
@@ -84,167 +61,31 @@
         <ul class="page-tabs-container">
             <li class="fadeIn animated active">
                 <ul class="floor-list">
-                    <li>
+                    <li ng-repeat="floor in flat.floorList">
                         <div class="floor-title">
                             <div class="title-full">
-                                一层
+                                {{floor.floorName}}
                             </div>
                             <div>
-                                房间总数：床位总数：已住人数：空房间数：空床位数
+                                房间总数：{{floor.roomNum}} 
+                                床位总数：{{floor.bedNum}}
+                                已住人数：{{floor.alreadyNum}}
+                                空房间数：{{floor.emptyRoomNum}}
+                                空床位数：{{floor.emptyBedNum}}
                             </div>
                         </div>
-                        <div class="room-list">
-                            <div class="room-item">
-                                <div>101</div>
-                                <ul>
-                                    <li><a ng-click="detail()">1 王喵喵</a></li>
+                        
+                        <ul class="room-list" ng-repeat="rooms in floor.roomList">
+                            <li class="room-item" ng-repeat="room in rooms">
+                                <div>{{room.number}}</div>
+                                <ul ng-show="room.bedNum">
+                                    <li ng-repeat="bed in room.bedList || []"><a ng-click="showCard({before:loadInfo(bed.bedStatus?bed.studentKey:'')})"> {{bed.bedNum + ' ' + (bed.bedStatus?bed.studentName:'空闲')}}</a></li>
                                 </ul>
-                            </div>
-                            <div class="room-item">
-                                <div>102</div>
-                                <ul>
-                                    <li><a ng-click="detail()">1 王喵喵</a></li>
-                                    <li><a ng-click="detail()">2 王喵喵</a></li>
-                                </ul>
-                            </div>
-                            <div class="room-item">
-                                <div>103</div>
-                                <ul>
-                                    <li><a ng-click="detail()">1 王喵喵</a></li>
-                                    <li><a ng-click="detail()">2 王喵喵</a></li>
-                                    <li><a ng-click="detail()">3 王喵喵</a></li>
-                                </ul>
-                            </div>
-                            <div class="room-item">
-                                <div>104</div>
-                                <ul>
-                                    <li><a ng-click="detail()">1 王喵喵</a></li>
-                                </ul>
-                            </div>
-                            <div class="room-item">
-                                <div>105</div>
-                                <ul>
-                                    <li><a ng-click="detail()">1 王喵喵</a></li>
-                                    <li><a ng-click="detail()">2 王喵喵</a></li>
-                                    <li><a ng-click="detail()">3 王喵喵</a></li>
-                                </ul>
-                            </div>
-                            <div class="room-item">
-                                <div>106</div>
-                                <ul>
-                                    <li><a ng-click="detail()">1 王喵喵</a></li>
-                                    <li><a ng-click="detail()">2 王喵喵</a></li>
-                                    <li><a ng-click="detail()">3 王喵喵</a></li>
-                                </ul>
-                            </div>
-                            <div class="room-item">
-                                <div>107</div>
-                                <ul>
-                                    <li><a ng-click="detail()">1 王喵喵</a></li>
-                                    <li><a ng-click="detail()">2 王喵喵</a></li>
-                                    <li><a ng-click="detail()">3 王喵喵</a></li>
-                                </ul>
-                            </div>
-                            <div class="room-item">
-                                <div>108</div>
-                                <ul>
-                                    <li><a ng-click="detail()">1 王喵喵</a></li>
-                                    <li><a ng-click="detail()">2 王喵喵</a></li>
-                                    <li><a ng-click="detail()">3 王喵喵</a></li>
-                                </ul>
-                            </div>
-                            <div class="room-item">
-                                <div>109</div>
-                                <div>
-                                    <a>多功能室</a>
+                                <div ng-hide="room.bedNum">
+                                    <a>{{room.purpose}}</a>
                                 </div>
-                            </div>
-                            <div class="room-item">
-                                <div>110</div>
-                                <ul>
-                                    <li><a ng-click="detail()">1 王喵喵</a></li>
-                                    <li><a ng-click="detail()">2 王喵喵</a></li>
-                                    <li><a ng-click="detail()">3 王喵喵</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="room-list">
-                            <div class="room-item">
-                                <div>111</div>
-                                <ul>
-                                    <li><a ng-click="detail()">1 王喵喵</a></li>
-                                    <li><a ng-click="detail()">2 王喵喵</a></li>
-                                </ul>
-                            </div>
-                            <div class="room-item">
-                                <div>112</div>
-                                <div>
-                                    <a>多功能室</a>
-                                </div>
-                            </div>
-                            <div class="room-item">
-                                <div>113</div>
-                                <ul>
-                                    <li><a ng-click="detail()">1 王喵喵</a></li>
-                                    <li><a ng-click="detail()">2 王喵喵</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="floor-title">
-                            <div class="title-full">
-                                二层
-                            </div>
-                            <div>
-                                房间总数：床位总数：已住人数：空房间数：空床位数
-                            </div>
-                        </div>
-                        <div class="room-list">
-                            <div class="room-item">
-                                <div>201</div>
-                                <ul>
-                                    <li><a ng-click="detail()">1 王喵喵</a></li>
-                                </ul>
-                            </div>
-                            <div class="room-item">
-                                <div>202</div>
-                                <ul>
-                                    <li><a ng-click="detail()">1 王喵喵</a></li>
-                                    <li><a ng-click="detail()">2 王喵喵</a></li>
-                                </ul>
-                            </div>
-                            <div class="room-item">
-                                <div>203</div>
-                                <ul>
-                                    <li><a ng-click="detail()">1 王喵喵</a></li>
-                                    <li><a ng-click="detail()">2 王喵喵</a></li>
-                                    <li><a ng-click="detail()">3 王喵喵</a></li>
-                                </ul>
-                            </div>
-                            <div class="room-item">
-                                <div>204</div>
-                                <div><a>办公室</a></div>
-                            </div>
-                            <div class="room-item">
-                                <div>204</div>
-                                <ul>
-                                    <li><a ng-click="detail()">1 王喵喵</a></li>
-                                </ul>
-                            </div>
-                            <div class="room-item">
-                                <div>205</div>
-                                <ul>
-                                    <li><a ng-click="detail()">1 王喵喵</a></li>
-                                    <li><a ng-click="detail()">2 王喵喵</a></li>
-                                    <li><a ng-click="detail()">3 王喵喵</a></li>
-                                    <li><a ng-click="detail()">4 王喵喵</a></li>
-                                    <li><a ng-click="detail()">5 王喵喵</a></li>
-                                    <li><a ng-click="detail()">6 王喵喵</a></li>
-                                    
-                                </ul>
-                            </div>
-                        </div>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </li>
@@ -294,7 +135,7 @@
                         </thead>
                         <tbody class="bg-white">
                             <tr>
-                                <td>1</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><a class="btn btn-link btn-xs" ng-click="detail()">详情</a></td>
+                                <td>1</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><a class="btn btn-link btn-xs" ng-click="showCard({before:loadInfo('11481_201234005')})">详情</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -358,16 +199,16 @@
                             <ul class="page-tabs-container">
                                 <li class="fadeIn animated active">
                                     <table class="table table-bordered bg-white">
-                                        <tr><td>学号</td><td>213123123</td><td>姓名</td><td>王喵喵</td><td rowspan="7">照片</td></tr>
-                                        <tr><td>性别</td><td>男</td><td>出生日期</td><td>1988-08-08</td></tr>
-                                        <tr><td>政治面貌</td><td>团员</td><td>民族</td><td>汉族</td></tr>
-                                        <tr><td>籍贯</td><td>不告诉你</td><td>婚姻状况</td><td>你猜</td></tr>
-                                        <tr><td>身份证号</td><td colspan="2">213121231233123</td><td></td></tr>
-                                        <tr><td>院系专业</td><td colspan="3">食品工程与营养科学学院 食品质量与安全</td></tr>
-                                        <tr><td>年级</td><td>2012</td><td>类型</td><td>本科</td></tr>
-                                        <tr><td>家庭住址</td><td colspan="2">213123123</td><td>联系电话</td><td>18888888888</td></tr>
-                                        <tr><td>宿舍</td><td colspan="4">XX校区XX生活区XX栋XX单元XXX号</td></tr>
-                                        <tr><td>备注</td><td colspan="4">备注备注备注备注备注</td></tr>
+                                        <tr><td>学号</td><td>{{student.studentNmber}}</td><td>姓名</td><td>{{student.name}}</td><td rowspan="7"><img width="100" src="{{student.headImgurl}}"/></td></tr>
+                                        <tr><td>性别</td><td>{{student.sex}}</td><td>出生日期</td><td>{{student.birthDay}}</td></tr>
+                                        <tr><td>政治面貌</td><td>{{student.political}}</td><td>民族</td><td>{{student.nation}}</td></tr>
+                                        <tr><td>籍贯</td><td>{{student.origin}}</td><td>婚姻状况</td><td>{{student.marital}}</td></tr>
+                                        <tr><td>身份证号</td><td colspan="2">{{student.identityCard}}</td><td></td></tr>
+                                        <tr><td>院系专业</td><td colspan="3">{{student.collegeName}} {{student.className}}</td></tr>
+                                        <tr><td>年级</td><td>{{student.studentGrade}}</td><td>类型</td><td>{{student.studentType}}</td></tr>
+                                        <tr><td>家庭住址</td><td colspan="2">{{student.homeAddress}}</td><td>联系电话</td><td>{{student.phone}}</td></tr>
+                                        <tr><td>宿舍</td><td colspan="4">{{student.currentAddress}}</td></tr>
+                                        <tr><td>备注</td><td colspan="4">{{student.memo}}</td></tr>
                                     </table>
                                 </li>
                                 <li class="fadeIn animated">

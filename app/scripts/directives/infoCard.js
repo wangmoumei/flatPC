@@ -6,17 +6,25 @@ angular.module('flatpcApp')
             iElement.find('.info-card-close').click(function(){
                 iElement.removeClass('show');
             });
-            scope.showCard = function(str,fun){
-                if(str){
-                    if(typeof str == "string"){
-                        $(str).addClass('show');
-                    }else if(typeof str == 'function')
-                        str(iElement);
+            scope.showCard = scope.showCard || function(str,fun){
+                var node = typeof str == "string" || (typeof str == 'object' && str.selecter)?$(str):$('.info-card').eq(0);
+                function show(){node.addClass('show');}
+                if(typeof str == 'object'){
+                    if(str.before){
+                        if(str.before.then){
+                            str.before.then(function(){
+                                show();
+                            })
+                        }
+                    }
                 }else{
-                    $('.info-card').eq(0).addClass('show');
+                    show();
+                    if(typeof str == 'function'){
+                        str(node);
+                    }
                 }
                 if(fun && typeof fun == 'function')
-                    fun(iElement);
+                    fun(node);
             };
         }
     };

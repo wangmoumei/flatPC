@@ -1,163 +1,37 @@
 angular.module('flatpcApp')
-.controller('FlatCtrl', ['$scope', '$state','AppConfig','$rootScope',function($scope, $state,AppConfig,$rootScope) {
-    $scope.name = $state.current.name;
-    $scope.tree = [
-        {
-            name:'树枝1',
-            list:[
-                {
-                    name:'树枝2',
-                    list:[
-                        {
-                            name:"树枝3",
-                            list:[
-                                {
-                                    name:'树枝4',
-                                    list:[
-                                        {
-                                            name:'树枝5',
-                                            list:[
-                                                {
-                                                    name:'叶子6'
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            name:'叶子5'
-                                        }
-                                    ]
-                                },
-                                {
-                                    name:'叶子4'
-                                }
-                            ]
-                        },
-                        {
-                            name:"叶子3"
-                        },
-                        {
-                            name:"叶子3"
-                        }
-                    ]
-                },
-                {
-                    name:'树枝',
-                    list:[
-                        {
-                            name:"叶子"
-                        },
-                        {
-                            name:"叶子"
-                        }
-                    ]
-                },
-                {
-                    name:'树枝',
-                    list:[
-                        {
-                            name:"叶子"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            name:'树枝',
-            list:[
-                {
-                    name:'树枝',
-                    list:[
-                        {
-                            name:"叶子"
-                        }
-                    ]
-                },
-                {
-                    name:'树枝',
-                    list:[
-                        {
-                            name:"叶子"
-                        }
-                    ]
-                },
-                {
-                    name:'树枝',
-                    list:[
-                        {
-                            name:"叶子"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            name:'树枝',
-            list:[
-                {
-                    name:'叶子'
-                }
-            ]
-        },
-        {
-            name:'叶子'
-        },
-        {
-            name:'树枝',
-            list:[
-                {
-                    name:'树枝',
-                    list:[
-                        {
-                            name:"叶子"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            name:'树枝',
-            list:[
-                {
-                    name:'树枝',
-                    list:[
-                        {
-                            name:"叶子"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            name:'树枝',
-            list:[
-                {
-                    name:'树枝',
-                    list:[
-                        {
-                            name:"叶子"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            name:'树枝',
-            list:[
-                {
-                    name:'树枝',
-                    list:[
-                        {
-                            name:"叶子"
-                        }
-                    ]
-                }
-            ]
-        }
-        
-    ]
-    $scope.detail = function(){
-        $('.info-card').addClass('show');
+.controller('FlatCtrl', ['$scope', 'AppConfig','$rootScope','StudentService','FlatService','$filter',
+function($scope,AppConfig,$rootScope,StudentService,FlatService,$filter) {
+    if(!$rootScope.treeFlat){
+        FlatService.getList(AppConfig.schoolCode).success(function(data){
+            //console.log(data);
+            $rootScope.treeFlat = data.data;
+            refresh('11481_1_1_1_1_1');
+        });
     }
-    $rootScope.loading = false;
-    console.log($scope.name);
-}]);
+    else {
+        refresh('11481_1_1_1_1_1');
+    }
+    $scope.loadInfo = function(studentid){
+        if(studentid.length<1) 
+            return null;
+        $rootScope.loading = true;
+        return StudentService.getStudent('11481_201234005').success(function(data){
+            console.log(data);
+            $scope.student = data.data;
+            $rootScope.loading = false;
+        }).error(function(){
+            $rootScope.loading = false;
+        })
+    }
+    
+    function refresh(flatid){
+        FlatService.getFlat(flatid).success(function(data){
+            data.list.floorList.forEach(function(list){
+                list.roomList =  $filter('sliceArray')(list.roomList);
+            });
+            $scope.flat = data.list;
+            console.log(data.list);
+            $rootScope.loading = false;
+        })
+    }
+}])

@@ -36,27 +36,17 @@
 <div class="page-main">
     <div class="page-tree" tree>
         <ul>
-            <li ng-repeat="item1 in tree">
-                <a ng-class="{'branch':item1.list,'leaf':!item1.list}">{{item1.name}}</a>
-                <ul ng-show="item1.list">
-                    <li ng-repeat="item2 in item1.list||[]">
-                        <a ng-class="{'branch':item2.list,'leaf':!item2.list}">{{item2.name}}</a>
-                        <ul ng-show="item2.list">
-                            <li ng-repeat="item3 in item2.list||[]">
-                                <a ng-class="{'branch':item3.list,'leaf':!item3.list}">{{item3.name}}</a>
-                                <ul ng-show="item3.list">
-                                    <li ng-repeat="item4 in item3.list||[]">
-                                        <a ng-class="{'branch':item4.list,'leaf':!item4.list}">{{item4.name}}</a>
-                                        <ul ng-show="item4.list">
-                                            <li ng-repeat="item5 in item4.list||[]">
-                                                <a ng-class="{'branch':item5.list,'leaf':!item5.list}">{{item5.name}}</a>
-                                                <ul ng-show="item5.list">
-                                                    <li ng-repeat="item6 in item5.list||[]">
-                                                        <a class="leaf">{{item6.name}}</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
+            <li class="open">
+                <a ng-class="{'branch':treeFlat.cmpusList,'leaf':!treeFlat.cmpusList}">{{treeFlat.title}}</a>
+                <ul ng-show="treeFlat.cmpusList">
+                    <li ng-repeat="campus in treeFlat.cmpusList||[]">
+                        <a ng-class="{'branch':campus.liveAreaList,'leaf':!campus.liveAreaList}">{{campus.title}}</a>
+                        <ul ng-show="campus.liveAreaList">
+                            <li ng-repeat="liveArea in campus.liveAreaList||[]">
+                                <a ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}">{{liveArea.title}}</a>
+                                <ul ng-show="liveArea.flatList">
+                                    <li ng-repeat="flat in liveArea.flatList||[]">
+                                        <a class="leaf">{{flat.title}}</a>
                                     </li>
                                 </ul>
                             </li>
