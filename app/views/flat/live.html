@@ -11,7 +11,7 @@
 </div>
 <div class="tool-bar">
     <div class="bar-full">
-        <button class="btn btn-addon btn-info" ng-click="resetForm(init)">
+        <button class="btn btn-addon btn-info" ng-click="resetForm(dataInit)">
             <i class="glyphicon glyphicon-plus"></i>
             新增入住
         </button>
@@ -241,19 +241,21 @@
                                 <li class="fadeIn animated active">
                                     <div class="form-tabs-tool-bar">
                                         <div>
-                                            <select class="form-control">
-                                                <option value="">生活区</option>
-                                                <option value="one">First</option>
-                                                <option value="two">Second</option>
-                                                <option value="three">Third</option>
+                                            <select class="form-control" ng-change="selecter.campusSelecter()" ng-model="selecter.campusId">
+                                                <option value="">选择校区</option>
+                                                <option ng-repeat="campus in treeFlat.cmpusList" value="{{campus.campusId}}">{{campus.title}}</option>
                                             </select>
                                         </div>
                                         <div>
-                                            <select class="form-control">
-                                                <option value="">楼栋</option>
-                                                <option value="one">First</option>
-                                                <option value="two">Second</option>
-                                                <option value="three">Third</option>
+                                            <select class="form-control" ng-change="selecter.liveAreaSelecter()" ng-model="selecter.liveAreaId">
+                                                <option value="">选择生活区</option>
+                                                <option ng-repeat="liveArea in selecter.liveAreaList" value="{{liveArea.liveAreaId}}">{{liveArea.title}}</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <select class="form-control" ng-model="selecter.flatId">
+                                                <option value="">选择楼栋</option>
+                                                <option ng-repeat="flat in selecter.flatList" value="{{flat.flatId}}">{{flat.title}}</option>
                                             </select>
                                         </div>
                                         <div class="form-tabs-full">
@@ -271,7 +273,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><a class="btn btn-xs btn-link" data-role="next">选择</a></td>
+                                                <td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><a ng-click="chooseStudent()" class="btn btn-xs btn-link" data-role="next">选择</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -280,19 +282,15 @@
                                     <div class="form-tabs-info"><span>已选房间：</span>生活区 - 楼栋 - 楼层 - 房间号</div>
                                     <div class="form-tabs-tool-bar">
                                         <div>
-                                            <select class="form-control">
-                                                <option value="">学院</option>
-                                                <option value="one">First</option>
-                                                <option value="two">Second</option>
-                                                <option value="three">Third</option>
+                                            <select class="form-control" ng-change="selecter.collegeSelecter()" ng-model="selecter.collegeId">
+                                                <option value="">请选择学院</option>
+                                                <option ng-repeat="college in treeCollege[0].collegeList || []" value="{{college.collegeId}}" ng-selected="selecter.collegeId == college.collegeId">{{college.collegeName}}</option>
                                             </select>
                                         </div>
                                         <div>
-                                            <select class="form-control">
-                                                <option value="">班级</option>
-                                                <option value="one">First</option>
-                                                <option value="two">Second</option>
-                                                <option value="three">Third</option>
+                                            <select class="form-control" ng-model="selecter.classId">
+                                                <option value="">请选择班级</option>
+                                                <option ng-repeat="cla in selecter.classList || []" value="{{cla.classId}}" ng-selected="selecter.classId == cla.classId">{{cla.className}}</option>
                                             </select>
                                         </div>
                                         <div class="form-tabs-full">

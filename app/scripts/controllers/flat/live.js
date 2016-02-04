@@ -1,6 +1,6 @@
 angular.module('flatpcApp')
-.controller('LiveCtrl', ['$scope','AppConfig','$rootScope', 'FlatService','DailyService','$filter',
-function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter) {
+.controller('LiveCtrl', ['$scope','AppConfig','$rootScope', 'FlatService','DailyService','$filter','CollegeService',
+function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeService) {
     //基础的页码、排序等等选项
     $scope.media = {
         epage:1,
@@ -158,11 +158,48 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter) {
                 }
             }
         },
+        campusId:'',
+        liveAreaId:'',
+        liveAreaList:[],
+        flatId:'',
+        flatList:[],
+        campusSelecter : function(){
+            //用liveAreaId获取liveAreaList
+            this.liveAreaId = '';
+            this.flatId = '';
+            this.flatList = [];
+            var campus = this.campusId?$filter('filter')($rootScope.treeFlat.cmpusList,{campusId:this.campusId}):[];
+            this.liveAreaList = (campus.length>0 && campus[0].liveAreaList)?campus[0].liveAreaList : [];
+        },
+        liveAreaSelecter : function(){
+            //用liveAreaId获取flatList
+            this.flatId = '';
+            var liveArea = this.liveAreaId?$filter('filter')(this.liveAreaList,{liveAreaId:this.liveAreaId}):[];
+            this.flatList = (liveArea.length>0 && liveArea[0].flatList)?liveArea[0].flatList : [];
+            //console.log(this.flatList);
+        },
+        
         init : function(){
             //将select置空
             this.collegeId = "";
             this.classId = "";
             this.classList = [];
+            this.campusId = $scope.media.campusid || '';
+            this.liveAreaId = $scope.media.liveareaid || "";
+            this.liveAreaList = [];
+            this.flatId = $scope.media.flatid || '';
+            this.flatList=[];
         }
+    }
+    $scope.dataInit = function(){
+        $scope.selecter.init();
+    }
+    $scope.chooseStudent = function(){
+        if(!$rootScope.treeCollege)
+            CollegeService.getList(AppConfig.schoolCode).success(function(data){
+                $rootScope.treeCollege = data.data;
+                $scope.media.title = data.data[0].name;
+                refresh();
+            });
     }
 }]);
