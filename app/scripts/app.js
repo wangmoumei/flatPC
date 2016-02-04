@@ -15,7 +15,8 @@ angular
     'ngResource',
     'ngSanitize',
     'ui.router',
-    'ngTouch'
+    'ngTouch',
+    'frapontillo.bootstrap-switch'
   ],function($provide){
       //$provide.factory('authority',function(){
       //    return "aaaaa";
@@ -23,7 +24,8 @@ angular
   })
   .constant('AppConfig',{
       WEB_ROOT:'http://test.houqinbao.com/gyxt_api/',
-      schoolCode:10353
+      schoolCode:10353,
+	  token:''
       
   }).run(['$rootScope', '$location', 'AppConfig','authority',
 		function($rootScope, $location, AppConfig,authority) {
@@ -294,7 +296,7 @@ angular
         views: {
             "": {
                 templateUrl: 'views/floor/room.html',
-                controller: 'ListCtrl'
+                controller: 'RoomCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",
@@ -311,7 +313,7 @@ angular
         views: {
             "": {
                 templateUrl: 'views/floor/type.html',
-                controller: 'ListCtrl'
+                controller: 'TypeCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",
@@ -328,7 +330,7 @@ angular
         views: {
             "": {
                 templateUrl: 'views/collect/tree.html',
-                controller: 'ListCtrl'
+                controller: 'SchoolCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",
@@ -345,7 +347,7 @@ angular
         views: {
             "": {
                 templateUrl: 'views/collect/student.html',
-                controller: 'ListCtrl'
+                controller: 'StudentCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",
@@ -362,7 +364,7 @@ angular
         views: {
             "": {
                 templateUrl: 'views/collect/stay.html',
-                controller: 'ListCtrl'
+                controller: 'FlatCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",
@@ -378,8 +380,8 @@ angular
         url: "/term",
         views: {
             "": {
-                templateUrl: 'views/grade/term.html',
-                controller: 'ListCtrl'
+                templateUrl: 'views/setting/term.html',
+                controller: 'TermCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",

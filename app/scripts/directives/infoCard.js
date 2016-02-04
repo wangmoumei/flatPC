@@ -7,7 +7,7 @@ angular.module('flatpcApp')
                 iElement.removeClass('show');
             });
             scope.showCard = scope.showCard || function(str,fun){
-                var node = typeof str == "string" || (typeof str == 'object' && str.selecter)?$(str):$('.info-card').eq(0);
+                var node = typeof str == "string" ?$(str) : ((typeof str == 'object' && str.selecter)?$(str.selecter):$('.info-card').eq(0));
                 function show(){node.addClass('show');}
                 if(typeof str == 'object'){
                     if(str.before){
@@ -19,6 +19,7 @@ angular.module('flatpcApp')
                     }
                 }else{
                     show();
+					console.log(str);
                     if(typeof str == 'function'){
                         str(node);
                     }

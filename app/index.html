@@ -8,6 +8,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" />
     <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
     <link rel="stylesheet" href="bower_components/sweetalert/dist/sweetalert.css" />
     <!-- endbower -->
@@ -77,6 +78,8 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+    <script src="bower_components/angular-bootstrap-switch/dist/angular-bootstrap-switch.js"></script>
     <script src="bower_components/sweetalert/dist/sweetalert.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
@@ -95,9 +98,18 @@
     <script src="scripts/controllers/flat/selectByFlat.js"></script>
     <script src="scripts/controllers/flat/selectByCollege.js"></script>
     <script src="scripts/controllers/flat/live.js"></script>
+    <script src="scripts/controllers/flat/quit.js"></script>
+    <script src="scripts/controllers/flat/check.js"></script>
+    <script src="scripts/controllers/flat/change.js"></script>
     <script src="scripts/controllers/grade/grade.js"></script>
     <script src="scripts/controllers/checkIn/visit.js"></script>
     <script src="scripts/controllers/floor/floor.js"></script>
+    <script src="scripts/controllers/floor/room.js"></script>
+    <script src="scripts/controllers/floor/type.js"></script>
+    <script src="scripts/controllers/collect/college.js"></script>
+    <script src="scripts/controllers/collect/student.js"></script>
+    <script src="scripts/controllers/collect/flat.js"></script>
+    <script src="scripts/controllers/setting/term.js"></script>
     
     <script src="scripts/directives/tree.js"></script>
     <script src="scripts/directives/header.js"></script>
@@ -107,12 +119,16 @@
     <script src="scripts/directives/album.js"></script>
     <script src="scripts/directives/datetimepicker.js"></script>
     <script src="scripts/directives/chart.js"></script>
+    <script src="scripts/directives/inputFile.js"></script>
+    
     
     <script src="scripts/factories/authority.js"></script>
     <script src="scripts/factories/room.js"></script>
     <script src="scripts/factories/flat.js"></script>
     <script src="scripts/factories/student.js"></script>
     <script src="scripts/factories/college.js"></script>
+    <script src="scripts/factories/term.js"></script>
+    <script src="scripts/factories/daily.js"></script>
     
     <script src="scripts/filters/roomList.js"></script>
     <!-- endbuild -->

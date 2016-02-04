@@ -4,10 +4,11 @@ angular.module('flatpcApp')
         CollegeService.getList(AppConfig.schoolCode).success(function(data){
             console.log(data);
             $rootScope.treeCollege = data.data;
+            $rootScope.loading = false;
         });
     }
     else {
-        
+        $rootScope.loading = false;
     }
-    $rootScope.loading = false;
+    
 }]);

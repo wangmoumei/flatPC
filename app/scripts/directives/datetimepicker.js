@@ -30,4 +30,21 @@ angular.module('flatpcApp')
             });
         }
     };
+})
+.directive('yearpicker', function() {
+    return {
+        restrict: 'A',
+        link:function(scope,iElement,iAttrs){
+            iElement.val(new Date().getFullYear() );
+            iElement.datetimepicker({
+                format: "yyyy",
+                language:'zh-CN',
+                autoclose: true,
+                todayBtn: true,
+                startView:'decade',
+                minView:'decade',
+                pickerPosition:'top-right'
+            });
+        }
+    };
 });

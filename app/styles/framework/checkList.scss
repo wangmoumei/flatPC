@@ -52,7 +52,7 @@
                 color: #d7d7d7;
             }
         }
-        &>div:nth-of-type(2){
+        &>div:nth-of-type(2),&>div:nth-of-type(3){
             -webkit-box-flex:1;
             box-flex:1;
             flex:1;

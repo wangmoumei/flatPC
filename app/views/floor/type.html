@@ -12,13 +12,13 @@
 <div class="page-main" style="top:49px;">
     <div class="page-tree" tree>
         <ul>
-            <li ng-repeat="item1 in tree">
-                <a ng-class="{'branch':item1.list,'leaf':!item1.list}">{{item1.name}}</a>
-                <ul ng-show="item1.list">
-                    <li ng-repeat="item2 in item1.list||[]">
-                        <a ng-class="{'branch':item2.list,'leaf':!item2.list}">{{item2.name}}</a>
+            <li class="open">
+                <a class="branch">所有</a>
+                <ul>
+                    <li ng-repeat="item in treeType||[]">
+                        <a class='leaf' ng-click="show(item)">{{item.title}}</a>
                     </li>
-                    <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加户型</a></li>
+                    <li><a class="add" ng-click="add()"><i class="ALiconfont icon-plus1"></i> 添加户型</a></li>
                 </ul>
             </li>
         </ul>
@@ -26,35 +26,65 @@
     <div class="from-container" style="left:225px;">
         <table class="table-form table-bordered bg-white">
             <tr>
-                <td class="require" width="200">户型名称</td><td><input type="text" /></td>
+                <td class="require" width="200">户型名称</td><td><input type="text" ng-model="roomType.title" /></td>
             </tr>
             <tr>
-                <td class="require" width="200">床位数</td><td><input type="text" /></td>
+                <td class="require" width="200">床位数</td>
+                <td>
+                    <select ng-model="roomType.bedNum">
+                        <option value="1" ng-selected="roomType.bedNum == 1">1</option>
+                        <option value="2" ng-selected="roomType.bedNum == 2">2</option>
+                        <option value="3" ng-selected="roomType.bedNum == 3">3</option>
+                        <option value="4" ng-selected="roomType.bedNum == 4">4</option>
+                        <option value="5" ng-selected="roomType.bedNum == 5">5</option>
+                        <option value="6" ng-selected="roomType.bedNum == 6">6</option>
+                        <option value="7" ng-selected="roomType.bedNum == 7">7</option>
+                        <option value="8" ng-selected="roomType.bedNum == 8">8</option>
+                        <option value="9" ng-selected="roomType.bedNum == 9">9</option>
+                        <option value="10" ng-selected="roomType.bedNum == 10">10</option>
+                        <option value="0" ng-selected="roomType.bedNum == 0">其他用途</option>
+                    </select>
+                </td>
+            </tr>
+            <tr ng-show="roomType.bedNum == 0">
+                <td class="require" width="200">用途</td><td><input type="text" ng-model="roomType.purpose" /></td>
             </tr>
             <tr>
-                <td width="200">朝向</td><td><input type="text" /></td>
+                <td width="200">朝向</td><td><input type="text" ng-model="roomType.direction" /></td>
             </tr>
             <tr>
-                <td width="200">收费标准</td><td><input type="text" /></td>
+                <td width="200">收费标准</td><td><input type="text" ng-model="roomType.fee" /></td>
+            </tr>
+            <tr ng-show="roomType.bedNum > 0">
+                <td width="200">床位类型</td>
+                <td>
+                    <select ng-model="roomType.bedStyle">
+                        <option value="">请选择</option>
+                        <option value="上下铺" ng-selected="roomType.bedStyle == '上下铺'">上下铺</option>
+                        <option value="上铺下桌" ng-selected="roomType.bedStyle == '上铺下桌'">上铺下桌</option>
+                    </select>
+                </td>
             </tr>
             <tr>
-                <td width="200">床位类型</td><td><input type="text" /></td>
+                <td width="200">面积</td><td><input type="text" ng-model="roomType.area" /></td>
             </tr>
             <tr>
-                <td width="200">面积</td><td><input type="text" /></td>
+                <td width="200">户型照片</td>
+                <td>
+                    <img src="{{roomType.roomPic}}"/>
+                    <div class="btn btn-primary btn-sm" input-file change="uploadImg()">上传照片</div>
+                </td>
             </tr>
             <tr>
-                <td width="200">户型照片</td><td></td>
-            </tr>
-            <tr>
-                <td width="200">备注</td><td><textarea></textarea></td>
+                <td width="200">备注</td><td><textarea rows="4" ng-model="roomType.memo"></textarea></td>
             </tr>
             <tr>
                 <td></td><td>
-                    <button class="btn btn-success">提交</button>
-                    <button class="btn btn-info">保存</button>
-                    <button class="btn btn-default">取消</button>
-                    <button class="btn btn-danger">删除</button>
+                    <div class="btn-box">
+                    <button class="btn btn-success" ng-show="!roomType.type" ng-click="addSave()">提交</button>
+                    <button class="btn btn-info" ng-show="roomType.type" ng-click="editSave()">保存</button>
+                    <button class="btn btn-danger" ng-show="roomType.type" ng-click="delete()">删除</button>
+                    </div>
                 </td>
             </tr>
         </table>

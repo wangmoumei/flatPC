@@ -148,7 +148,7 @@
 
 /* 表格相关样式调整 */
 table{
-    .sort,.sort-up,.sort-down{
+    .sort{
         cursor: pointer;
         &::after{
             font-family: "ALiconfont" !important;
@@ -157,15 +157,19 @@ table{
             -webkit-font-smoothing: antialiased;
             -webkit-text-stroke-width: 0.2px;
             -moz-osx-font-smoothing: grayscale;
-            color: #666;
+            color: #ccc;
+            content: "\e622";
         }
-    }
-    .sort::after{
-        content: "\e622";
-        color: #ccc;
-    }
-    .sort-up::after{
-        content: "\e621";
+        &.sort-up::after{
+            color: #666;
+            content: "\e621";
+        }
+        &.sort-down::after{
+            color: #666;
+            content: "\e620";
+            position: relative;
+            bottom: 3px;
+        }
     }
     .sort-down::after{
         content: "\e620";
@@ -238,6 +242,12 @@ table{
                     border-bottom: none;
                 }
             } 
+        }
+    }
+    .btn-box{
+        word-spacing: 20px;
+        .btn{
+            width: 90px;
         }
     }
 }
@@ -386,6 +396,7 @@ table{
                 {
                     border-top:none;
                     border-bottom:1px solid #dfe0e0;
+					cursor:pointer;
                 }
             }
         }

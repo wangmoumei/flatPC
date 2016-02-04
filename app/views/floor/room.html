@@ -16,56 +16,33 @@
     <div><a class="btn btn-success" ng-click="showCard('#floorAdd')">新增楼层</a></div>
     <div class="bar-full"><a class="btn btn-info" ng-click="showCard('#multiAdd')">批量添加</a></div>
     <div>
-        楼层：
+        楼层：{{flat.floorNum}}
 
-        房间总数：
+        房间总数：{{flat.roomNum}}
 
-        床位总数：
+        床位总数：{{flat.bedNum}}
 
-        已住人数：
+        已住人数：{{flat.alreadyNum}}
 
-        空房间数：
+        空房间数：{{flat.emptyRoomNum}}
 
-        空床位数：
+        空床位数：{{flat.emptyBedNum}}
     </div>
 </div>
 <div class="page-main">
     <div class="page-tree" tree style="top:-50px;">
         <ul>
             <li class="open">
-                <a class="branch">树枝</a>
-                <ul>
-                    <li class="open">
-                        <a class="branch">树枝</a>
-                        <ul>
-                            <li>
-                                <a class="leaf">叶子</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li ng-repeat="item1 in tree">
-                <a ng-class="{'branch':item1.list,'leaf':!item1.list}">{{item1.name}}</a>
-                <ul ng-show="item1.list">
-                    <li ng-repeat="item2 in item1.list||[]">
-                        <a ng-class="{'branch':item2.list,'leaf':!item2.list}">{{item2.name}}</a>
-                        <ul ng-show="item2.list">
-                            <li ng-repeat="item3 in item2.list||[]">
-                                <a ng-class="{'branch':item3.list,'leaf':!item3.list}">{{item3.name}}</a>
-                                <ul ng-show="item3.list">
-                                    <li ng-repeat="item4 in item3.list||[]">
-                                        <a ng-class="{'branch':item4.list,'leaf':!item4.list}">{{item4.name}}</a>
-                                        <ul ng-show="item4.list">
-                                            <li ng-repeat="item5 in item4.list||[]">
-                                                <a ng-class="{'branch':item5.list,'leaf':!item5.list}">{{item5.name}}</a>
-                                                <ul ng-show="item5.list">
-                                                    <li ng-repeat="item6 in item5.list||[]">
-                                                        <a class="leaf">{{item6.name}}</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
+                <a ng-class="{'branch':treeFlat.cmpusList,'leaf':!treeFlat.cmpusList}">{{treeFlat.title}}</a>
+                <ul ng-show="treeFlat.cmpusList">
+                    <li ng-repeat="campus in treeFlat.cmpusList||[]">
+                        <a ng-class="{'branch':campus.liveAreaList,'leaf':!campus.liveAreaList}">{{campus.title}}</a>
+                        <ul ng-show="campus.liveAreaList">
+                            <li ng-repeat="liveArea in campus.liveAreaList||[]">
+                                <a ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}">{{liveArea.title}}</a>
+                                <ul ng-show="liveArea.flatList">
+                                    <li ng-repeat="flat in liveArea.flatList||[]">
+                                        <a class="leaf">{{flat.title}}</a>
                                     </li>
                                 </ul>
                             </li>
@@ -77,165 +54,23 @@
     </div>
     <div class="page-tabs" tabs style="background-color: #f6f7f8;left:225px">
         <ul class="floor-list">
-            <li>
+            <li ng-repeat="floor in flat.floorList">
                 <div class="floor-title">
-                    <div>一层</div>
+                    <div>{{floor.floorName}}</div>
                     <div class="title-full"><a class="btn btn-default btn-xs" ng-click="showCard('#floorEdit')">编辑</a></div>
                     <div>
-                        房间总数：床位总数：已住人数：空房间数：空床位数
+                        房间总数：{{floor.roomNum}} 
+                        床位总数：{{floor.bedNum}}
+                        已住人数：{{floor.alreadyNum}}
+                        空房间数：{{floor.emptyRoomNum}}
+                        空床位数：{{floor.emptyBedNum}}
                     </div>
                 </div>
-                <div class="room-list room-list-row">
-                    <div class="room-item">
-                        <div>101</div>
-                    </div>
-                    <div class="room-item">
-                        <div>102</div>
-                    </div>
-                    <div class="room-item">
-                        <div>103</div>
-                    </div>
-                    <div class="room-item">
-                        <div>104</div>
-                    </div>
-                    <div class="room-item">
-                        <div>105</div>
-                    </div>
-                    <div class="room-item">
-                        <div>106</div>
-                    </div>
-                    <div class="room-item">
-                        <div>107</div>
-                    </div>
-                    <div class="room-item">
-                        <div>108</div>
-                    </div>
-                    <div class="room-item">
-                        <div>109</div>
-                    </div>
-                    <div class="room-item">
-                        <div>110</div>
-                    </div>
-                </div>
-                <div class="room-list room-list-row">
-                    <div class="room-item">
-                        <div><a ng-click="showCard('#roomEdit')">111</a></div>
-                    </div>
-                    <div class="room-item">
-                        <div>112</div>
-                    </div>
-                    <div class="room-item">
-                        <div>113</div>
-                    </div>
-                    <div class="room-item">
-                        <div>114</div>
-                    </div>
-                    <div class="room-item">
-                        <div>115</div>
-                    </div>
-                    <div class="room-item">
-                        <div>116</div>
-                    </div>
-                    <div class="room-item">
-                        <div>117</div>
-                    </div>
-                    <div class="room-item">
-                        <div>118</div>
-                    </div>
-                    <div class="room-item">
-                        <div>119</div>
-                    </div>
-                    <div class="room-item">
-                        <div>120</div>
-                    </div>
-                </div>
-                <div class="room-list room-list-row">
-                    <div class="room-item">
-                        <div>121</div>
-                    </div>
-                    <div class="room-item">
-                        <div>122</div>
-                    </div>
-                    <div class="room-item">
-                        <div>123</div>
-                    </div>
-                    <div class="room-item">
-                        <div><a class="room-add" ng-click="showCard('#roomAdd')">新增寝室</a></div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="floor-title">
-                    <div>二层 </div>
-                    <div class="title-full"><a class="btn btn-default btn-xs" ng-click="showCard('#floorEdit')">编辑</a></div>
-                    <div>
-                        房间总数：床位总数：已住人数：空房间数：空床位数
-                    </div>
-                </div>
-                <div class="room-list room-list-row">
-                    <div class="room-item">
-                        <div>201</div>
-                    </div>
-                    <div class="room-item">
-                        <div>202</div>
-                    </div>
-                    <div class="room-item">
-                        <div>203</div>
-                    </div>
-                    <div class="room-item">
-                        <div>204</div>
-                    </div>
-                    <div class="room-item">
-                        <div>205</div>
-                    </div>
-                    <div class="room-item">
-                        <div>206</div>
-                    </div>
-                    <div class="room-item">
-                        <div>207</div>
-                    </div>
-                    <div class="room-item">
-                        <div>208</div>
-                    </div>
-                    <div class="room-item">
-                        <div>209</div>
-                    </div>
-                    <div class="room-item">
-                        <div>210</div>
-                    </div>
-                </div>
-                <div class="room-list room-list-row">
-                    <div class="room-item">
-                        <div>211</div>
-                    </div>
-                    <div class="room-item">
-                        <div>212</div>
-                    </div>
-                    <div class="room-item">
-                        <div>213</div>
-                    </div>
-                    <div class="room-item">
-                        <div>214</div>
-                    </div>
-                    <div class="room-item">
-                        <div>215</div>
-                    </div>
-                    <div class="room-item">
-                        <div>216</div>
-                    </div>
-                    <div class="room-item">
-                        <div>217</div>
-                    </div>
-                    <div class="room-item">
-                        <div>218</div>
-                    </div>
-                    <div class="room-item">
-                        <div>219</div>
-                    </div>
-                    <div class="room-item">
-                        <div>220</div>
-                    </div>
-                </div>
+                <ul class="room-list room-list-row" ng-repeat="rooms in floor.roomList">
+                    <li class="room-item" ng-repeat="room in rooms">
+                        <div ng-click="showCard('#roomEdit')">{{room.roomName}}</div>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>

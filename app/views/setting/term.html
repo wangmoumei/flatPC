@@ -1,0 +1,90 @@
+<div class="history-container">
+    <a class="return-btn" href="javascript:history.go(-1)">
+        <i class="ALiconfont icon-sortleft"></i>
+        返回
+    </a>
+    <ul class="history-list">
+        <li><a href="#index" ng-click="routerInit('data')">公寓管理</a></li>
+        <li><a href="#index">基础设置</a></li>
+        <li>学期周数设置</li>
+    </ul>
+</div>
+<div class="page-main" style="top:49px;">
+    <div class="page-tree" tree>
+        <ul>
+            <li class="open">
+                <a class='branch'>所有</a>
+                <ul>
+                    <li ng-repeat="year in treeTerm||[]">
+                        <a class="branch" ng-click="show(0,year)">{{year.schoolYearName }}</a>
+                        <ul ng-show="year.semesterList">
+                            <li ng-repeat="term in year.semesterList||[]">
+                                <a class="leaf" ng-click="show(1,term,year.schoolYearName)">{{term.semesterName}}</a>
+                            </li>
+                            <li><a class="add" ng-click="add(1,year)"><i class="ALiconfont icon-plus1"></i> 添加学期</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="add" ng-click="add(0,year)"><i class="ALiconfont icon-plus1"></i> 添加学年</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="from-container" style="left:225px;">
+        <table class="table-form table-bordered bg-white">
+            <tr ng-show="media.type == 0">
+                <td class="require" width="200">学年</td><td><input type="text" yearpicker ng-model="media.year" /></td>
+            </tr>
+            <tr ng-show="media.type == 0">
+                <td class="require" width="200">学年名称</td><td><input type="text" ng-model="media.schoolYearName" /></td>
+            </tr>
+            <tr ng-show="media.type == 1">
+                <td class="require" width="200">学年</td><td><input type="text" ng-model="media.schoolYearName" disabled="disabled" /></td>
+            </tr>
+            <tr ng-show="media.type == 1">
+                <td class="require" width="200">学期</td><td><input type="text" ng-model="media.semesterName" /></td>
+            </tr>
+            <tr ng-show="media.type == 1">
+                <td class="require" width="200">学期时间</td><td><input type="text" datepicker ng-model="media.startTime" ng-change="media.autoComplete()" /> 至 <input datepicker type="text" ng-model="media.endTime" ng-change="media.autoComplete()" /> </td>
+            </tr>
+            <tr ng-show="media.type == 1">
+                <td class="require" width="200">学期类型</td>
+                <td>
+                    <label>
+                        <input type="radio" name="semesterType" value="春季学期" ng-model="media.semesterType" ng-checked="media.semesterType == '春季学期'" />  春季学期
+                    </label>
+                    <label>
+                        <input type="radio" name="semesterType" value="秋季学期" ng-model="media.semesterType" ng-checked="media.semesterType == '秋季学期'" />  秋季学期
+                    </label>
+                    <label>
+                        <input type="radio" name="semesterType" value="其他" ng-model="media.semesterType" ng-checked="media.semesterType == '其他'" />  其它
+                    </label>
+                </td>
+            </tr>
+            <tr ng-show="media.type == 1">
+                <td class="require" width="200">总周数</td><td><input type="text" ng-model="media.countweek"/></td>
+            </tr>
+            <tr ng-show="media.type == 1">
+                <td class="require" width="200">当前周</td><td><input type="text" ng-model="media.currentWeek"/></td>
+            </tr>
+            <tr ng-show="media.type == 1">
+                <td class="require" width="200">当前学期</td>
+                <td>
+                    <label>
+                        <input type="radio" name="isCurrent" value="1" ng-model="media.isCurrent" ng-checked="media.isCurrent==1" />  是
+                    </label>
+                    <label>
+                        <input type="radio" name="isCurrent" value="0" ng-model="media.isCurrent" ng-checked="media.isCurrent==0" />  否
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td></td><td>
+                    <button class="btn btn-success" ng-show="media.status==1" ng-click="addSave()">提交</button>
+                    <button class="btn btn-info" ng-show="media.status==0" ng-click="editSave()">保存</button>
+                    <button class="btn btn-danger" ng-show="media.status==0" ng-click="delete()">删除</button>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+</div>

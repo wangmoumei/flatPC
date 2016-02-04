@@ -12,62 +12,53 @@
 <div class="page-main" style="top:49px;">
     <div class="page-tree" tree>
         <ul>
-            <li ng-repeat="item1 in tree">
-                <a ng-class="{'branch':item1.list,'leaf':!item1.list}">{{item1.name}}</a>
-                <ul ng-show="item1.list">
-                    <li ng-repeat="item2 in item1.list||[]">
-                        <a ng-class="{'branch':item2.list,'leaf':!item2.list}">{{item2.name}}</a>
-                        <ul ng-show="item2.list">
-                            <li ng-repeat="item3 in item2.list||[]">
-                                <a ng-class="{'branch':item3.list,'leaf':!item3.list}">{{item3.name}}</a>
-                                <ul ng-show="item3.list">
-                                    <li ng-repeat="item4 in item3.list||[]">
-                                        <a ng-class="{'branch':item4.list,'leaf':!item4.list}">{{item4.name}}</a>
-                                        <ul ng-show="item4.list">
-                                            <li ng-repeat="item5 in item4.list||[]">
-                                                <a ng-class="{'branch':item5.list,'leaf':!item5.list}">{{item5.name}}</a>
-                                                <ul ng-show="item5.list">
-                                                    <li ng-repeat="item6 in item5.list||[]">
-                                                        <a class="leaf">{{item6.name}}</a>
-                                                    </li>
-                                                    <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加寝室</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加楼层</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加楼栋</a></li>
-                                </ul>
+            <li class="open" ng-repeat="list in treeCollege">
+                <a ng-class="{'branch':list.collegeList,'leaf':!list.collegeList}">{{list.name}}</a>
+                <ul ng-show="list.collegeList">
+                    <li ng-repeat="college in list.collegeList||[]" >
+                        <a ng-class="{'branch':college.classList,'leaf':!college.classList}" ng-click="show(1,college)">{{college.collegeName}}</a>
+                        <ul ng-show="college.classList">
+                            <li ng-repeat="cla in college.classList||[]" >
+                                <a class="leaf" ng-click="show(2,cla)">{{cla.className}}</a>
                             </li>
-                            <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加生活区</a></li>
+                            <li><a class="add" ng-click="add(2,college)"><i class="ALiconfont icon-plus1"></i> 添加班级</a></li>
                         </ul>
                     </li>
-                    <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加校区</a></li>
+                    <li><a class="add" ng-click="add(1,list)"><i class="ALiconfont icon-plus1"></i> 添加学院</a></li>
                 </ul>
             </li>
-            <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加学校</a></li>
         </ul>
     </div>
-    <div class="from-container" style="left:225px;">
+    <div class="from-container" style="left:225px;"  ng-show="media.type > 0 ">
         <table class="table-form table-bordered bg-white">
-            <tr>
-                <td class="require" width="200">学院</td><td><input type="text" /></td>
+            <tr ng-show="media.type == 1 ">
+                <td class="require" width="200">学院</td><td><input type="text" ng-model="media.collegeName" /></td>
             </tr>
-            <tr>
-                <td class="require" width="200">班级</td><td><input type="text" /></td>
+            <tr ng-show="media.type == 2 ">
+                <td class="require" width="200">班级</td><td><input type="text" ng-model="media.className" /></td>
             </tr>
-            <tr>
-                <td class="require" width="200">年级</td><td><input type="text" /></td>
+            <tr ng-show="media.type == 2">
+                <td class="require" width="200">年级</td>
+                <td>
+                    <select ng-model="media.grade">
+                        <option value="">请选择</option>
+                        <option ng-repeat="grade in grades" value="{{grade}}" ng-selected="grade == media.grade">{{grade}}</option>
+                    </select>
+                </td>
             </tr>
-            <tr>
-                <td class="require" width="200">排序</td><td><input type="text" /></td>
+            <tr ng-show="media.type == 2">
+                <td class="require" width="200">毕业</td><td><input bs-switch ng-model="media.history" type="checkbox" switch-size="mini" switch-on-text="已毕业" switch-off-text="在籍"></td>
+            </tr>
+            <tr ng-show="media.type > 0">
+                <td class="require" width="200">排序</td><td><input type="text" ng-model="media.listOrder" /></td>
             </tr>
             <tr>
                 <td></td><td>
-                    <button class="btn btn-success">提交</button>
-                    <button class="btn btn-info">保存</button>
-                    <button class="btn btn-default">取消</button>
-                    <button class="btn btn-danger">删除</button>
+                    <div class="btn-box">
+                        <button ng-show="media.status == 1" ng-click="addSave()" class="btn btn-success">提交</button>
+                        <button ng-show="media.status == 0" ng-click="editSave()" class="btn btn-info">保存</button>
+                        <button ng-show="media.status == 0" ng-click="delete()" class="btn btn-danger">删除</button>
+                    </div>
                 </td>
             </tr>
             
