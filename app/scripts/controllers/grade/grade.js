@@ -1,15 +1,42 @@
 angular.module('flatpcApp')
-.controller('GradeCtrl', ['$scope','AppConfig','$rootScope', 'FlatService',function($scope,AppConfig,$rootScope,FlatService) {
-    if(!$rootScope.treeFlat){
-        FlatService.getList(AppConfig.schoolCode).success(function(data){
+.controller('GradeCtrl', ['$scope','AppConfig','$rootScope', 'FlatService','TermService',
+function($scope,AppConfig,$rootScope,FlatService,TermService) {
+    
+    $scope.media = {
+        flatid:'',
+        yearIndex:0,
+        termIndex:0,
+        week:0
+    }
+    
+    if(!$rootScope.treeTerm)
+        TermService.getList().success(function(data){
             console.log(data);
-            $rootScope.treeFlat = data.data;
-            $rootScope.loading = false;
-        });
-    }
+            $rootScope.treeTerm = data.data;
+            getFlat();
+        }); 
     else {
-        $rootScope.loading = false;
+        getFlat();
     }
+    
+    function getFlat() {
+       if(!$rootScope.treeFlat){
+            FlatService.getList(AppConfig.schoolCode).success(function(data){
+                console.log(data);
+                $rootScope.treeFlat = data.data;
+                init();
+            });
+        }
+        else
+        {
+            init();
+        }
+    }
+    
+    function init() {
+        
+    }
+
     $scope.weekList = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
     $scope.detail = function(){
         $('.info-card').addClass('show');

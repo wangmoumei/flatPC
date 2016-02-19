@@ -17,7 +17,7 @@ angular.module('flatpcApp')
                     }
                 }
             });
-            scope.resetForm = function(fun){
+            scope.resetForm = scope.resetForm || function(fun){
                 iElement.closest('.info-card').addClass('show');
                 iElement.find('.form-tabs-container>li').eq(0).addClass('active').siblings().removeClass('active');
                 iElement.find('.form-tabs-nav>li').eq(0).addClass('active').siblings().removeClass('active');

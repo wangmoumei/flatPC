@@ -26,7 +26,9 @@ function($scope,AppConfig,$rootScope,StudentService,FlatService,$filter) {
     
     function refresh(flatid){
         FlatService.getFlat(flatid).success(function(data){
+            data.list.floorList = data.list.floorList || [];
             data.list.floorList.forEach(function(list){
+                list.roomList = list.roomList || [];
                 list.roomList =  $filter('sliceArray')(list.roomList);
             });
             $scope.flat = data.list;

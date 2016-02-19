@@ -11,34 +11,36 @@
 </div>
 <div class="tool-bar">
     <div class="bar-full">
-        <button class="btn btn-addon btn-info"  ng-click="resetForm(init)">
+        <button class="btn btn-addon btn-info"  ng-click="resetForm(dataInit)">
             <i class="glyphicon glyphicon-plus"></i>
             新增调宿
         </button>
     </div>
     <div class="group-tool">
         <div class="btn-group">
-            <button type="button" class="btn btn-info">全部</button>
-            <button type="button" class="btn btn-stroke btn-info">计划中</button>
-            <button type="button" class="btn btn-stroke btn-info">已审批</button>
+            <button type="button" class="btn btn-info" ng-click="setStatus(0)" ng-class="{'btn-stroke':media.status>0}">全部</button>
+            <button type="button" class="btn btn-info" ng-click="setStatus(1)" ng-class="{'btn-stroke':media.status!=1}">计划中</button>
+            <button type="button" class="btn btn-info" ng-click="setStatus(2)" ng-class="{'btn-stroke':media.status!=2}">已审批</button>
+            <button type="button" class="btn btn-info" ng-click="setStatus(3)" ng-class="{'btn-stroke':media.status!=3}">已取消</button>
+            <button type="button" class="btn btn-info" ng-click="setStatus(4)" ng-class="{'btn-stroke':media.status!=4}">已驳回</button>
         </div>
     </div>
     <div class="search-option">
         <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                学号 <span class="caret"></span>
+                {{media.search?'学号':'姓名'}} <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu">
-                <li><a>学号</a></li>
-                <li><a>姓名</a></li>
+            <ul class="dropdown-menu" style="min-width:66px">
+                <li ng-click="media.search=0"><a>姓名</a></li>
+                <li ng-click="media.search=1"><a>学号</a></li>
             </ul>
         </div>
     </div>
-    <div class="search-bool">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="检索">
+    <div>
+        <div class="input-group search-bool">
+            <input type="text" class="form-control" ng-model="searchText" placeholder="检索">
             <span class="input-group-btn">
-                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                <button ng-click="search(searchText)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
             </span>
         </div>
     </div>
@@ -47,16 +49,16 @@
     <div class="page-tree" tree>
         <ul>
             <li class="open">
-                <a ng-class="{'branch':treeFlat.cmpusList,'leaf':!treeFlat.cmpusList}">{{treeFlat.title}}</a>
+                <a ng-class="{'branch':treeFlat.cmpusList,'leaf':!treeFlat.cmpusList}" ng-click="show(0,treeFlat)">{{treeFlat.title}}</a>
                 <ul ng-show="treeFlat.cmpusList">
                     <li ng-repeat="campus in treeFlat.cmpusList||[]">
-                        <a ng-class="{'branch':campus.liveAreaList,'leaf':!campus.liveAreaList}">{{campus.title}}</a>
+                        <a ng-class="{'branch':campus.liveAreaList,'leaf':!campus.liveAreaList}" ng-click="show(1,campus)">{{campus.title}}</a>
                         <ul ng-show="campus.liveAreaList">
                             <li ng-repeat="liveArea in campus.liveAreaList||[]">
-                                <a ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}">{{liveArea.title}}</a>
+                                <a ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}" ng-click="show(2,liveArea)">{{liveArea.title}}</a>
                                 <ul ng-show="liveArea.flatList">
                                     <li ng-repeat="flat in liveArea.flatList||[]">
-                                        <a class="leaf">{{flat.title}}</a>
+                                        <a class="leaf" ng-click="show(3,flat)">{{flat.title}}</a>
                                     </li>
                                 </ul>
                             </li>
@@ -71,105 +73,23 @@
             <thead>
                 <tr>
                     <th>状态</th>
-                    <th class="sort">日期</th>
-                    <th class="sort-up">人员信息</th>
-                    <th class="sort-down">公寓楼</th>
-                    <th>宿舍号</th>
-                    <th>床号</th>
+                    <th class="sort" ng-class="{'sort-up':media.orderfield=='addTime' && media.ordertype=='asc','sort-down':media.orderfield=='addTime' && media.ordertype=='desc'}" ng-click="setOrder('addTime')">日期</th>
+                    <th class="sort" ng-class="{'sort-up':media.orderfield=='name' && media.ordertype=='asc','sort-down':media.orderfield=='name' && media.ordertype=='desc'}" ng-click="setOrder('name')">姓名</th>
+                    <th class="sort" ng-class="{'sort-up':media.orderfield=='studentNumber' && media.ordertype=='asc','sort-down':media.orderfield=='studentNumber' && media.ordertype=='desc'}" ng-click="setOrder('studentNumber')">学号</th>
+                    <th>入住床位</th>
+                    <th>备注</th>
                     <th>操作</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="planing"><div>计划中</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr>
-                <tr>
-                    <td class="checked"><div>已审批</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr>
-                <tr>
-                    <td class="cancel"><div>已取消</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr>
-                <tr>
-                    <td class="return"><div>已驳回</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr><tr>
-                    <td class="planing"><div>计划中</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr>
-                <tr>
-                    <td class="checked"><div>已审批</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr>
-                <tr>
-                    <td class="cancel"><div>已取消</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr>
-                <tr>
-                    <td class="return"><div>已驳回</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr><tr>
-                    <td class="planing"><div>计划中</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr>
-                <tr>
-                    <td class="checked"><div>已审批</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr>
-                <tr>
-                    <td class="cancel"><div>已取消</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr>
-                <tr>
-                    <td class="return"><div>已驳回</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr><tr>
-                    <td class="planing"><div>计划中</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr>
-                <tr>
-                    <td class="checked"><div>已审批</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr>
-                <tr>
-                    <td class="cancel"><div>已取消</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr>
-                <tr>
-                    <td class="return"><div>已驳回</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr><tr>
-                    <td class="planing"><div>计划中</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr>
-                <tr>
-                    <td class="checked"><div>已审批</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr>
-                <tr>
-                    <td class="cancel"><div>已取消</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr>
-                <tr>
-                    <td class="return"><div>已驳回</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr><tr>
-                    <td class="planing"><div>计划中</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr>
-                <tr>
-                    <td class="checked"><div>已审批</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr>
-                <tr>
-                    <td class="cancel"><div>已取消</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
-                </tr>
-                <tr>
-                    <td class="return"><div>已驳回</div></td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="setCheck()">查看详情</button></td>
+                <tr ng-repeat="live in list">
+                    <td ng-class="{'planing':live.status==0,'checked':live.status==1,'cancel':live.status==2,'return':live.status==3}">
+                        <div>
+                            {{live.status==0?'计划中':(live.status==1?'已审批':(live.status==2?'已取消':'已驳回'))}}
+                        </div>
+                    </td>
+                    <td>{{live.addTime}}</td><td>{{live.name}}</td><td>{{live.studentNumber}}</td><td>{{live.roomPath}}</td><td>{{live.memo}}</td>
+                    <td><button type="button" class="btn btn-link btn-xs" ng-click="showCard('#setCheck',detail(live))">查看详情</button></td>
                 </tr>
             </tbody>
         </table>
@@ -178,34 +98,34 @@
     <div class="page-controller" style="left:225px;">
         <div class="page-number">
             <ul class="pagination">
-                <li class="disabled">
-                    <a aria-label="Previous">
+                <li ng-class="{disabled:media.epage<2}">
+                    <a aria-label="Previous" ng-click="setPage(-1)">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="active"><a>1</a></li>
-                <li><a>2</a></li>
-                <li><a>3</a></li>
-                <li><a>4</a></li>
-                <li><a>5</a></li>
-                <li>
-                    <a aria-label="Next">
+                <li ng-show="media.epage-2>0"><a ng-click="setPage(-2)">{{media.epage-2}}</a></li>
+                <li ng-show="media.epage-1>0"><a ng-click="setPage(-1)">{{media.epage-1}}</a></li>
+                <li class="active"><a>{{media.epage}}</a></li>
+                <li ng-show="media.epage+1<=media.pageCount"><a ng-click="setPage(1)">{{media.epage+1}}</a></li>
+                <li ng-show="media.epage+2<=media.pageCount"><a ng-click="setPage(2)">{{media.epage+2}}</a></li>
+                <li ng-class="{disabled:media.epage>=media.pageCount}">
+                    <a aria-label="Next" ng-click="setPage(1)">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
             </ul>
         </div>
         <div class="page-size">
-            共100条记录，每页显示
+            共{{media.recordCount}}条记录，每页显示
             <div class="btn-group dropup">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    30 <span class="caret"></span>
+                    {{media.pagesize}} <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu">
-                    <li><a>10</a></li>
-                    <li><a>20</a></li>
-                    <li><a>30</a></li>
-                    <li><a>50</a></li>
+                <ul class="dropdown-menu" style="min-width:54px">
+                    <li ng-click="setPageSize(10)"><a>10</a></li>
+                    <li ng-click="setPageSize(20)"><a>20</a></li>
+                    <li ng-click="setPageSize(30)"><a>30</a></li>
+                    <li ng-click="setPageSize(50)"><a>50</a></li>
                 </ul>
             </div>
         </div>
@@ -222,68 +142,45 @@
                     </div>
                     <div class="panel-body">
                         <ul class="check-list">
-                            <li class="checked submited">
+                            <li class="submited" ng-class="{'checked':work.status>0}">
                                 <div class="check-point "></div>
                                 <div class="check-info">
                                     <div class="check-info-title">
                                         <div class="check-info-tip">计划提交</div> 
-                                        <div>2015-12-12   13:56</div>
-                                        <div><span>提交人：</span>管理员A</div>
+                                        <div>{{work.addTime}}</div>
+                                        <div><span>提交人：</span>{{work.addAdminName}}</div>
                                     </div>
                                     <table class="table table-bordered bg-white">
-                                        <tr><td>业务类型</td><td>入住</td></tr>
-                                        <tr><td>人员</td><td>徐冬（10113003433）</td></tr>
-                                        <tr><td>人员信息</td><td> 机电学院-机械自动化专业2014本三班</td></tr>
-                                        <tr><td>入住床位</td><td>校区-生活区-楼栋-楼层-寝室-床位号</td></tr>
-                                        <tr><td>备注</td><td>备注备注备注备注</td></tr>
+                                        <tr><td>业务类型</td><td>{{work.businessType}}</td></tr>
+                                        <tr><td>人员</td><td>{{work.name + '(' + work.studentNumber + ')'}}</td></tr>
+                                        <tr><td>人员信息</td><td>{{work.classPath}}</td></tr>
+                                        <tr><td>入住床位</td><td>{{work.roomPath}}</td></tr>
+                                        <tr><td>备注</td><td>{{work.memo}}</td></tr>
                                     </table>
                                 </div>
                             </li>
-                            <li class="checked passed">
+                            <li ng-class="{'passed':work.status==1,'canceled':work.status==2,'returned':work.status==3}">
                                 <div class="check-point"></div>
-                                <div class="check-info">
+                                <div class="check-info"  ng-if="work.status > 0">
                                    <div class="check-info-title">
-                                        <div class="check-info-tip">审批</div>
-                                        <div>2015-12-12   13:56</div>
-                                        <div><span>审批人：</span>管理员A</div>
+                                        <div class="check-info-tip">{{work.status==1?'审批':(work.status==2?'取消':'驳回')}}</div>
+                                        <div>{{work.backTime||work.cancelTime||work.passTime}}</div>
+                                        <div><span>{{work.status==1?'审批':(work.status==2?'执行':'驳回')}}人：</span>{{work.backAdminName||work.passAdminName||work.cancelAdminName}}</div>
                                     </div>
-                                    
+                                    <table class="table table-bordered bg-white" ng-show="work.status == 3">
+                                        <tr><td width="100">驳回理由</td><td>{{work.backMessage}}</td></tr>
+                                    </table>
                                 </div>
-                            </li>
-                            <li class="checked returned">
-                                <div class="check-point"></div>
-                                <div class="check-info">
-                                   <div class="check-info-title">
-                                        <div class="check-info-tip">驳回</div>
-                                        <div>2015-12-12   13:56</div>
-                                        <div><span>驳回人：</span>管理员A</div>
-                                    </div>
-                                    
-                                </div>
-                            </li>
-                            <li class="canceled">
-                                <div class="check-point"></div>
-                                <div class="check-info">
-                                   <div class="check-info-title">
-                                        <div class="check-info-tip">取消</div>
-                                        <div>2015-12-12   13:56</div>
-                                        <div><span>执行人：</span>管理员A</div>
-                                    </div>
-                                    
-                                </div>
-                            </li>
-                            <li>
-                                <div class="check-point"></div>
-                                <div>
+                                <div ng-if="work.status == 0">
                                     <div class="check-btn-box" ng-hide="returnSwitch">
                                         <div>
-                                            <a class="btn btn-addon btn-success"><i class="glyphicon glyphicon-ok"></i>审批</a>
+                                            <a class="btn btn-addon btn-success" ng-click="passWork()"><i class="glyphicon glyphicon-ok"></i>审批</a>
                                         </div>
                                         <div>
                                             <a class="btn btn-addon btn-warning" ng-click="returnSwitchChange()"><i class="glyphicon glyphicon-remove"></i>驳回</a>
                                         </div>
                                         <div>
-                                            <a class="btn btn-addon btn-default"><i class="glyphicon glyphicon-off"></i>取消</a>
+                                            <a class="btn btn-addon btn-default" ng-click="cancelWork()"><i class="glyphicon glyphicon-off"></i>取消</a>
                                         </div>
                                     </div>
                                     <div class="check-input-box" ng-show="returnSwitch">
@@ -291,10 +188,10 @@
                                             驳回理由：
                                         </div>
                                         <div>
-                                            <input type="text" class="form-control"/>
+                                            <input type="text" class="form-control" ng-model="work.returnMessage"/>
                                         </div>
                                         <div>
-                                            <a class="btn btn-warning">驳回</a>
+                                            <a class="btn btn-warning" ng-click="returnWork()">驳回</a>
                                         </div>
                                         <div>
                                             <a class="btn btn-default" ng-click="returnSwitchChange()">取消</a>
@@ -342,81 +239,96 @@
                             </ul>
                             <ul class="form-tabs-container">
                                 <li class="fadeIn animated active">
-                                    
                                     <div class="form-tabs-tool-bar">
                                         <div>
-                                            <select class="form-control">
-                                                <option value="">学院</option>
-                                                <option value="one">First</option>
-                                                <option value="two">Second</option>
-                                                <option value="three">Third</option>
+                                            <select class="form-control" ng-change="selecter.collegeSelecter()" ng-model="selecter.collegeId">
+                                                <option value="">请选择学院</option>
+                                                <option ng-repeat="college in treeCollege[0].collegeList || []" value="{{college.collegeId}}" ng-selected="selecter.collegeId == college.collegeId">{{college.collegeName}}</option>
                                             </select>
                                         </div>
                                         <div>
-                                            <select class="form-control">
-                                                <option value="">班级</option>
-                                                <option value="one">First</option>
-                                                <option value="two">Second</option>
-                                                <option value="three">Third</option>
+                                            <select class="form-control" ng-model="selecter.classId">
+                                                <option value="">请选择班级</option>
+                                                <option ng-repeat="cla in selecter.classList || []" value="{{cla.classId}}" ng-selected="selecter.classId == cla.classId">{{cla.className}}</option>
                                             </select>
                                         </div>
                                         <div class="form-tabs-full">
-                                            <input class="form-control" type="text" placeholder="学号或姓名" />
+                                            <input class="form-control" type="text" placeholder="学号或姓名" ng-model="form.studentName" />
                                         </div>
                                         <div>
-                                            <a class="btn btn-stroke btn-info">搜索</a>
+                                            <a class="btn btn-stroke btn-info" ng-click="form.studentSearch()">搜索</a>
                                         </div>
                                     </div>
                                     <table class="table table-bordered bg-white">
                                         <thead>
                                             <tr>
-                                                <th>学号</th><th>姓名</th><th>学院</th><th>班级</th><th>操作</th>
+                                                <th>姓名</th><th>校区</th><th>生活区</th><th>楼栋</th><th>宿舍号</th><th>操作</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td><a class="btn btn-xs btn-link" data-role="next">入住</a></td>
+                                            <tr ng-repeat="student in form.studentList || []">
+                                                <td>{{student.name + "（" + student.studentNumber + "）"}}</td><td>{{student.campusName}}</td><td>{{student.liveAreaName}}</td><td>{{student.flatName}}</td><td>{{student.roomName}}</td>
+                                                <td><a class="btn btn-xs btn-link" data-role="next" ng-click="form.studentChoose(student)">入住</a></td>
                                             </tr>
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="10" ng-hide="form.studentList" class="start">搜索一下</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10" ng-show="form.studentList && form.studentList.length < 1" class="empty">没有检索到空床位</td>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </li>
                                 <li class="fadeIn animated ">
                                     <div class="form-tabs-info"><span>已选学生：</span>生活区-楼栋-寝室号：床号</div>
                                     <div class="form-tabs-tool-bar">
                                         <div>
-                                            <select class="form-control">
-                                                <option value="">生活区</option>
-                                                <option value="one">First</option>
-                                                <option value="two">Second</option>
-                                                <option value="three">Third</option>
+                                            <select class="form-control" ng-change="selecter.campusSelecter()" ng-model="selecter.campusId">
+                                                <option value="">选择校区</option>
+                                                <option ng-repeat="campus in treeFlat.cmpusList" value="{{campus.campusId}}">{{campus.title}}</option>
                                             </select>
                                         </div>
                                         <div>
-                                            <select class="form-control">
-                                                <option value="">楼栋</option>
-                                                <option value="one">First</option>
-                                                <option value="two">Second</option>
-                                                <option value="three">Third</option>
+                                            <select class="form-control" ng-change="selecter.liveAreaSelecter()" ng-model="selecter.liveAreaId">
+                                                <option value="">选择生活区</option>
+                                                <option ng-repeat="liveArea in selecter.liveAreaList" value="{{liveArea.liveAreaId}}">{{liveArea.title}}</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <select class="form-control" ng-model="selecter.flatId">
+                                                <option value="">选择楼栋</option>
+                                                <option ng-repeat="flat in selecter.flatList" value="{{flat.flatId}}">{{flat.title}}</option>
                                             </select>
                                         </div>
                                         <div class="form-tabs-full">
-                                            <input class="form-control" type="text" placeholder="房间号" />
+                                            <input class="form-control" type="text" placeholder="房间号" ng-model="form.bedName" />
                                         </div>
                                         <div>
-                                            <a class="btn btn-stroke btn-info">搜索</a>
+                                            <a class="btn btn-stroke btn-info" ng-click="form.bedSearch()">搜索</a>
                                         </div>
                                     </div>
                                     <table class="table table-bordered bg-white">
                                         <thead>
                                             <tr>
-                                                <th>生活区</th><th>楼栋</th><th>楼层</th><th>宿舍号</th><th>床号</th><th>操作</th>
+                                                <th>校区</th><th>生活区</th><th>楼栋</th><th>宿舍号</th><th>床号</th><th>操作</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><a class="btn btn-xs btn-link" data-role="next">选择</a></td>
+                                            <tr ng-repeat="bed in form.bedList || []">
+                                                <td>{{bed.campusName}}</td><td>{{bed.liveAreaName}}</td><td>{{bed.flatName}}</td><td>{{bed.roomNum}}</td><td>{{bed.bedName || bed.bedNum}}</td>
+                                                <td><a ng-click="form.bedChoose(bed)" class="btn btn-xs btn-link" data-role="next">选择</a></td>
                                             </tr>
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="10" ng-hide="form.bedList" class="start">搜索一下</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10" ng-show="form.bedList && form.bedList.length < 1" class="empty">没有检索到空床位</td>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </li>
                                 
@@ -427,13 +339,13 @@
                                     </div>
                                     <table class="table table-bordered bg-white">
                                         <tbody>
-                                            <tr><td>调宿人员</td><td>徐冬（10113003433）</td></tr>
-                                            <tr><td>人员信息</td><td>机电学院-机械自动化专业2014本三班</td></tr>
-                                            <tr><td>旧床位</td><td>校区-生活区-楼栋-楼层-寝室-床位号</td></tr>
-                                            <tr><td>新床位</td><td>校区-生活区-楼栋-楼层-寝室-床位号</td></tr>
+                                            <tr><td>调宿人员</td><td>{{form.student.name + "（" + form.student.studentNumber + "）"}}</td></tr>
+                                            <tr><td>人员信息</td><td>{{form.student.collegeName + " - " + form.student.grade + form.student.className}}</td></tr>
+                                            <tr><td>旧床位</td><td>{{form.student.campusName + " - " + form.student.liveAreaName + " - " +form.student.flatName + " - " +form.student.roomName + " - " + (form.student.bedName || form.student.bedNum)}}</td></tr>
+                                            <tr><td>新床位</td><td>{{form.bed.campusName}} - {{form.bed.liveAreaName}} - {{form.bed.flatName}} - {{form.bed.roomNum}} - {{form.bed.bedName || form.bed.bedNum}}</td></tr>
                                             <tr>
                                                 <td>备注</td>
-                                                <td><textarea class="form-control" rows="3"></textarea></td>
+                                                <td><textarea class="form-control" rows="3" ng-model="form.memo"></textarea></td>
                                             </tr>
                                         </tbody>
                                     </table>

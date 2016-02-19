@@ -1,6 +1,6 @@
 angular.module('flatpcApp')
-.controller('LiveCtrl', ['$scope','AppConfig','$rootScope', 'FlatService','DailyService','$filter','CollegeService',
-function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeService) {
+.controller('LiveCtrl', ['$scope','AppConfig','$rootScope', 'FlatService','DailyService','$filter','CollegeService','RoomService',"StudentService",
+function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeService,RoomService,StudentService) {
     //基础的页码、排序等等选项
     $scope.media = {
         epage:1,
@@ -45,6 +45,27 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         $scope.media.campusid = item.campusId || "";
         $scope.media.liveareaid = item.liveAreaId || "";
         $scope.media.flatid = item.flatId || "";
+        
+        switch(type){
+            case 0:
+                $scope.selecter.campusId = "";
+                $scope.selecter.liveAreaId = "";
+                $scope.selecter.flatId = "";
+                break;
+            case 1:
+                $scope.selecter.campusId = item.campusId;
+                $scope.selecter.liveAreaId = "";
+                $scope.selecter.flatId = "";
+                break;
+            case 2:
+                $scope.selecter.liveAreaId = item.liveAreaId;
+                $scope.selecter.flatId = "";
+                break;
+            case 3:
+                $scope.selecter.flatId = item.flatId;
+                break;
+        }
+        
         refresh();
     };
     //调整查询规则，计划中、已审批、已取消、已驳回
@@ -73,10 +94,10 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
     function refresh(){
         $rootScope.loading = true;
         DailyService.getLiveList($scope.media).success(function(data){
-            $scope.liveList = data.data.list;
+            $scope.list = data.data.list;
             $scope.media.recordCount = data.data.recordCount;
             $scope.media.pageCount = data.data.pageCount;
-            console.log(data.data);
+            //console.log(data.data);
             $rootScope.loading = false;
         })
     }
@@ -141,10 +162,13 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         classId:'',
         collegeSelecter : function(){
             //用collegeId获取classList
-            this.classId = '';
-            var college = this.collegeId?$filter('filter')($rootScope.treeCollege[0].collegeList,{collegeId:this.collegeId}):[];
-            this.classList = (college.length>0 && college[0].classList)?college[0].classList : [];
-            console.log(this.classList);
+            if(this.collegeId){
+                this.classId = '';
+                var college = this.collegeId?$filter('filter')($rootScope.treeCollege[0].collegeList,{collegeId:this.collegeId}):[];
+                this.classList = (college.length>0 && college[0].classList)?college[0].classList : [];
+                
+                //console.log(this.classList);
+            }
         },
         classSelecter : function(){
             //用classId反向获取collegeId和classList
@@ -164,19 +188,22 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         flatId:'',
         flatList:[],
         campusSelecter : function(){
-            //用liveAreaId获取liveAreaList
-            this.liveAreaId = '';
-            this.flatId = '';
-            this.flatList = [];
-            var campus = this.campusId?$filter('filter')($rootScope.treeFlat.cmpusList,{campusId:this.campusId}):[];
-            this.liveAreaList = (campus.length>0 && campus[0].liveAreaList)?campus[0].liveAreaList : [];
+            //用campusId获取liveAreaList
+            if(this.campusId){
+                //this.liveAreaId = '';
+                //this.flatId = '';
+                this.flatList = [];
+                var campus = this.campusId?$filter('filter')($rootScope.treeFlat.cmpusList,{campusId:this.campusId}):[];
+                this.liveAreaList = (campus.length>0 && campus[0].liveAreaList) ? campus[0].liveAreaList : [];
+            }
         },
         liveAreaSelecter : function(){
             //用liveAreaId获取flatList
-            this.flatId = '';
-            var liveArea = this.liveAreaId?$filter('filter')(this.liveAreaList,{liveAreaId:this.liveAreaId}):[];
-            this.flatList = (liveArea.length>0 && liveArea[0].flatList)?liveArea[0].flatList : [];
-            //console.log(this.flatList);
+            if(this.liveAreaId){
+                //this.flatId = '';
+                var liveArea = this.liveAreaId?$filter('filter')(this.liveAreaList,{liveAreaId:this.liveAreaId}):[];
+                this.flatList = (liveArea.length>0 && liveArea[0].flatList)?liveArea[0].flatList : [];
+            }
         },
         
         init : function(){
@@ -184,22 +211,78 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
             this.collegeId = "";
             this.classId = "";
             this.classList = [];
-            this.campusId = $scope.media.campusid || '';
-            this.liveAreaId = $scope.media.liveareaid || "";
+            
             this.liveAreaList = [];
-            this.flatId = $scope.media.flatid || '';
             this.flatList=[];
+            this.campusSelecter();
+            this.liveAreaSelecter();
+            
+            
         }
     }
     $scope.dataInit = function(){
-        $scope.selecter.init();
-    }
-    $scope.chooseStudent = function(){
-        if(!$rootScope.treeCollege)
+        if(!$rootScope.treeCollege){
             CollegeService.getList(AppConfig.schoolCode).success(function(data){
                 $rootScope.treeCollege = data.data;
-                $scope.media.title = data.data[0].name;
-                refresh();
             });
+        }
+        $scope.selecter.init();
+        
+    }
+    $scope.form = {
+        bed:null,
+        bedList:null,
+        bedName:'',
+        bedSearch:function () {
+            var that = this;
+            $rootScope.loading = true;
+            RoomService.getListByName({
+                token:AppConfig.token,
+                roomname:this.bedName,
+                flatid:$scope.selecter.flatId
+            }).success(function (data) {
+                //console.log(data);
+                $rootScope.loading = false;
+                that.bedList = data.data;
+            })
+        },
+        bedChoose:function (bed) {
+            this.bed = bed;
+        },
+        student:null,
+        studentName:'',
+        studentList:null,
+        studentSearch:function () {
+            var that = this;
+            $rootScope.loading = true;
+            StudentService.getListByName({
+                keyword:this.studentName,
+                collegeid:$scope.selecter.collegeId,
+                classid:$scope.selecter.classId
+            }).success(function (data) {
+                //console.log(data);
+                $rootScope.loading = false;
+                that.studentList = data.list;
+            })
+        },
+        studentChoose:function (student) {
+            this.student = student;
+        },
+        sub:function () {
+            $rootScope.loading = true;
+            DailyService.addLive({
+                token:AppConfig.token,
+                schoolcode:AppConfig.schoolCode,
+                bedid:this.bed.bedId,
+                studentkey:this.student.studentKey,
+                adminid:'',
+                memo:this.memo
+            }).success(function (data) {
+                $rootScope.loading = false;
+                console.log(data);
+                swal("提示", "提交成功！", "success"); 
+                refresh();
+            })
+        }
     }
 }]);

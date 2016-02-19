@@ -48,6 +48,11 @@ angular.module('flatpcApp')
         var url = AppConfig.WEB_ROOT + '/flatdata/types/del_type/';
         return $http.get(url);
     }
+    var getListByName = function(param){
+        var url = AppConfig.WEB_ROOT + 'flatdata/rooms/get_empty_beds/?flatid=' + (param.flatid || "") 
+        + '&token=' + (param.token || AppConfig.token) + '&roomname=' + (param.flatid || "");
+        return $http.get(url);
+    }
     return {
         getList:getList,  //寝室列表
         addFloor:addFloor,
@@ -60,6 +65,7 @@ angular.module('flatpcApp')
         getTypeList:getTypeList,
         addType:addType,
         editType:editType,
-        delType:delType
+        delType:delType,
+        getListByName:getListByName
     }
 }]);

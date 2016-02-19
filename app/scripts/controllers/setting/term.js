@@ -162,13 +162,14 @@ angular.module('flatpcApp')
                 
         });
     }
-    refresh();
+    if(!$rootScope.treeTerm)
+        refresh();
     function refresh(){
         $rootScope.loading = true;
         return TermService.getList().success(function(data){
             console.log(data);
             $rootScope.loading = false;
-            $scope.treeTerm = data.data;
+            $rootScope.treeTerm = data.data;
         });
     }
 }]);

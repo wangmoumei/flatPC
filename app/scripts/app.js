@@ -126,7 +126,7 @@ angular
         views: {
             "": {
                 templateUrl: 'views/flat/change.html',
-                controller: 'LiveCtrl'
+                controller: 'ChangeCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",
@@ -143,7 +143,7 @@ angular
         views: {
             "": {
                 templateUrl: 'views/flat/quit.html',
-                controller: 'LiveCtrl'
+                controller: 'QuitCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",
@@ -160,7 +160,7 @@ angular
         views: {
             "": {
                 templateUrl: 'views/flat/check.html',
-                controller: 'LiveCtrl'
+                controller: 'CheckCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",

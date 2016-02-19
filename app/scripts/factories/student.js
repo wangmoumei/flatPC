@@ -60,6 +60,18 @@ angular.module('flatpcApp')
         param.token = param.token || '213';
         return $http.get(url,param);
     }
+    var getListByName = function (param) {
+        var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/search_list/?'
+        + 'schoolcode='+ AppConfig.schoolCode + '&token=123'
+        + '&keyword=' + (param.keyword || "") + '&collegeid=' + (param.collegeid || "") + '&classid=' + (param.classid || "");
+        return $http.get(url);
+    }
+    var getListWithBed = function (param) {
+        var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/search_bed_list/?'
+        + 'schoolcode='+ AppConfig.schoolCode + '&token=123'
+        + '&keyword=' + (param.keyword || "") + '&collegeid=' + (param.collegeid || "") + '&classid=' + (param.classid || "");
+        return $http.get(url);
+    }
     return {
         getStudent:getStudent,//获取学生详细信息
         getList:getList,//获取学生列表
@@ -70,6 +82,8 @@ angular.module('flatpcApp')
         downloadStudent:downloadStudent,//下载学生数据
         getImport:getImport,//获取导入数据列表
         downloadImport:downloadImport, //下载错误数据
-        uploadImg:uploadImg
+        uploadImg:uploadImg,
+        getListByName:getListByName,
+        getListWithBed:getListWithBed
     }
 }]);

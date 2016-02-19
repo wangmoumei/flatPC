@@ -28,11 +28,11 @@
     <div class="search-option">
         <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{media.search?'姓名':'学号'}} <span class="caret"></span>
+                {{media.search?'学号':'姓名'}} <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" style="min-width:66px">
-                <li ng-click="media.search=0"><a>学号</a></li>
-                <li ng-click="media.search=1"><a>姓名</a></li>
+                <li ng-click="media.search=0"><a>姓名</a></li>
+                <li ng-click="media.search=1"><a>学号</a></li>
             </ul>
         </div>
     </div>
@@ -82,7 +82,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="live in liveList">
+                <tr ng-repeat="live in list">
                     <td ng-class="{'planing':live.status==0,'checked':live.status==1,'cancel':live.status==2,'return':live.status==3}">
                         <div>
                             {{live.status==0?'计划中':(live.status==1?'已审批':(live.status==2?'已取消':'已驳回'))}}
@@ -225,7 +225,7 @@
                                     </div>
                                 </li>
                                 <li class="tabs-nav">
-                                    <div>
+                                    <div data-role="prev">
                                         <div class="form-tabs-point"></div>
                                         学生入住
                                     </div>
@@ -259,27 +259,36 @@
                                             </select>
                                         </div>
                                         <div class="form-tabs-full">
-                                            <input class="form-control" type="text" placeholder="房间号" />
+                                            <input class="form-control" type="text" placeholder="房间号" ng-model="form.bedName" />
                                         </div>
                                         <div>
-                                            <a class="btn btn-stroke btn-info">搜索</a>
+                                            <a class="btn btn-stroke btn-info" ng-click="form.bedSearch()">搜索</a>
                                         </div>
                                     </div>
                                     <table class="table table-bordered bg-white">
                                         <thead>
                                             <tr>
-                                                <th>生活区</th><th>楼栋</th><th>楼层</th><th>宿舍号</th><th>床号</th><th>操作</th>
+                                                <th>校区</th><th>生活区</th><th>楼栋</th><th>宿舍号</th><th>床号</th><th>操作</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><a ng-click="chooseStudent()" class="btn btn-xs btn-link" data-role="next">选择</a></td>
+                                            <tr ng-repeat="bed in form.bedList || []">
+                                                <td>{{bed.campusName}}</td><td>{{bed.liveAreaName}}</td><td>{{bed.flatName}}</td><td>{{bed.roomNum}}</td><td>{{bed.bedName || bed.bedNum}}</td>
+                                                <td><a ng-click="form.bedChoose(bed)" class="btn btn-xs btn-link" data-role="next">选择</a></td>
                                             </tr>
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="10" ng-hide="form.bedList" class="start">搜索一下</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10" ng-show="form.bedList && form.bedList.length < 1" class="empty">没有检索到空床位</td>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </li>
                                 <li class="fadeIn animated">
-                                    <div class="form-tabs-info"><span>已选房间：</span>生活区 - 楼栋 - 楼层 - 房间号</div>
+                                    <div class="form-tabs-info"><span>已选房间：</span>{{form.bed.campusName}} - {{form.bed.liveAreaName}} - {{form.bed.flatName}} - {{form.bed.roomNum}} - {{form.bed.bedName || form.bed.bedNum}}</div>
                                     <div class="form-tabs-tool-bar">
                                         <div>
                                             <select class="form-control" ng-change="selecter.collegeSelecter()" ng-model="selecter.collegeId">
@@ -294,10 +303,10 @@
                                             </select>
                                         </div>
                                         <div class="form-tabs-full">
-                                            <input class="form-control" type="text" placeholder="学号或姓名" />
+                                            <input class="form-control" type="text" placeholder="学号或姓名" ng-model="form.studentName" />
                                         </div>
                                         <div>
-                                            <a class="btn btn-stroke btn-info">搜索</a>
+                                            <a class="btn btn-stroke btn-info" ng-click="form.studentSearch()">搜索</a>
                                         </div>
                                     </div>
                                     <table class="table table-bordered bg-white">
@@ -307,25 +316,34 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td><a class="btn btn-xs btn-link" data-role="next">入住</a></td>
+                                            <tr ng-repeat="student in form.studentList || []">
+                                                <td>{{student.studentNumber}}</td><td>{{student.name}}</td><td>{{student.collegeName}}</td><td>{{student.className}}</td>
+                                                <td><a class="btn btn-xs btn-link" data-role="next" ng-click="form.studentChoose(student)">入住</a></td>
                                             </tr>
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="10" ng-hide="form.studentList" class="start">搜索一下</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10" ng-show="form.studentList && form.studentList.length < 1" class="empty">没有检索到空床位</td>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </li>
                                 <li class="fadeIn animated">
                                     <div class="form-tabs-tool-bar">
                                         <div class="form-tabs-full"><span>计划确认</span></div>
-                                        <div><a class="btn btn-addon btn-success" data-role="prev"><i class="glyphicon glyphicon-plus"></i>提交</a></div>
+                                        <div><a class="btn btn-addon btn-success" ng-click="form.sub()"><i class="glyphicon glyphicon-plus"></i>提交</a></div>
                                     </div>
                                     <table class="table table-bordered bg-white">
                                         <tbody>
-                                            <tr><td>入住人员</td><td>徐冬（10113003433）</td></tr>
-                                            <tr><td>人员信息</td><td>机电学院-机械自动化专业2014本三班</td></tr>
-                                            <tr><td>入住床位</td><td>校区-生活区-楼栋-楼层-寝室-床位号</td></tr>
+                                            <tr><td>入住人员</td><td>{{form.student.name}}（{{form.student.studentNumber}}）</td></tr>
+                                            <tr><td>人员信息</td><td>{{form.student.collegeName}} - {{form.student.grade + form.student.className}} </td></tr>
+                                            <tr><td>入住床位</td><td>{{form.bed.campusName}} - {{form.bed.liveAreaName}} - {{form.bed.flatName}} - {{form.bed.roomNum}} - {{form.bed.bedName || form.bed.bedNum}}</td></tr>
                                             <tr>
                                                 <td>备注</td>
-                                                <td><textarea class="form-control" rows="3"></textarea></td>
+                                                <td><textarea class="form-control" rows="3" ng-model="form.memo"></textarea></td>
                                             </tr>
                                         </tbody>
                                     </table>
