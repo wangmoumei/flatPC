@@ -12,7 +12,8 @@
     "angular-touch": "^1.4.0",
     "angular-ui-router": "~0.2.15",
     "animate.css": "^3.4.0",
-    "sweetalert": "~1.1.0"
+    "sweetalert": "~1.1.0",
+    "angular-bootstrap-switch":""
   },
   "devDependencies": {
     "angular-mocks": "^1.4.0"
