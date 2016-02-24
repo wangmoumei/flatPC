@@ -4,6 +4,28 @@ This project is generated with [yo angular generator](https://github.com/yeoman/
 version 0.14.0.
 
 ## Install
+
+环境搭建 for Max OS X     
+先在app store安装xcode    
+接着百度搜索nodejs官网，下载并安装    
+打开命令行，安装grunt    
+sudo npm install grunt-cli -g    
+    
+检测是否安装ruby    
+gem  -v    
+若已安装，则修改source地址    
+gem sources --remove https://rubygems.org/    
+gem sources -a https://ruby.taobao.org/    
+gem sources -l    
+*** CURRENT SOURCES ***    
+
+https://ruby.taobao.org    
+显示没问题，接着安装sass和compass    
+sudo gem install sass    
+sudo gem install compass    
+
+以上为环境搭建    
+项目搭建：    
 Run `npm install` and `bower install` for install.
 
 ## Build & development
