@@ -1,6 +1,6 @@
 angular.module('flatpcApp')
-.controller('VisitCtrl', ['$scope','AppConfig','$rootScope', 'FlatService','CheckInService',
-function($scope,AppConfig,$rootScope,FlatService,CheckInService) {
+.controller('VisitCtrl', ['$scope','AppConfig','$rootScope', 'FlatService','CheckInService','$filter','StudentService',
+function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentService) {
     //基础的页码、排序等等选项
     $scope.media = {
         epage:1,
@@ -75,5 +75,92 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService) {
             console.log(data.data);
             $rootScope.loading = false;
         })
+    }
+    
+    //查看详情
+    $scope.work = {};
+    $scope.detail = function(work){
+        $scope.work = work;
+        return null;
+    }
+    
+    $scope.dataInit = function () {
+        $scope.selecter.init();
+    }
+    
+    //二级连选的select
+    $scope.selecter = {
+        campusId:'',
+        liveAreaId:'',
+        liveAreaList:[],
+        flatId:'',
+        flatList:[],
+        campusSelecter : function(){
+            //用campusId获取liveAreaList
+            if(this.campusId){
+                //this.liveAreaId = '';
+                //this.flatId = '';
+                this.flatList = [];
+                var campus = this.campusId?$filter('filter')($rootScope.treeFlat.cmpusList,{campusId:this.campusId}):[];
+                this.liveAreaList = (campus.length>0 && campus[0].liveAreaList) ? campus[0].liveAreaList : [];
+            }
+        },
+        liveAreaSelecter : function(){
+            //用liveAreaId获取flatList
+            if(this.liveAreaId){
+                //this.flatId = '';
+                var liveArea = this.liveAreaId?$filter('filter')(this.liveAreaList,{liveAreaId:this.liveAreaId}):[];
+                this.flatList = (liveArea.length>0 && liveArea[0].flatList)?liveArea[0].flatList : [];
+            }
+        },
+        
+        init : function(){
+
+            
+            this.liveAreaList = [];
+            this.flatList=[];
+            this.campusSelecter();
+            this.liveAreaSelecter();
+            
+            
+        }
+    }
+    
+    $scope.form = {
+        student:null,
+        studentName:'',
+        studentList:null,
+        studentSearch:function () {
+            var that = this;
+            $rootScope.loading = true;
+            StudentService.getListByName({
+                keyword:this.studentName,
+                collegeid:$scope.selecter.collegeId,
+                classid:$scope.selecter.classId
+            }).success(function (data) {
+                //console.log(data);
+                $rootScope.loading = false;
+                that.studentList = data.list;
+            })
+        },
+        studentChoose:function (student) {
+            this.student = student;
+        },
+        sub:function () {
+            $rootScope.loading = true;
+            CheckInService.addLive({
+                token:AppConfig.token,
+                schoolcode:AppConfig.schoolCode,
+                bedid:this.bed.bedId,
+                studentkey:this.student.studentKey,
+                adminid:'',
+                memo:this.memo
+            }).success(function (data) {
+                $rootScope.loading = false;
+                console.log(data);
+                swal("提示", "提交成功！", "success"); 
+                refresh();
+            })
+        }
     }
 }]);

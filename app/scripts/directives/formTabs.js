@@ -5,15 +5,25 @@ angular.module('flatpcApp')
         link:function(scope,iElement,iAttrs){
             iElement.click(function(){
                 var e = event.target;
+                if(e.className == 'form-tabs-point') e = e.parentNode;
                 if($(e).attr('data-role')){
-                    if($(e).attr('data-role') == 'next'){
-                        var i = $(e).closest('li.active').index();
+                    var i = 0,role = $(e).attr('data-role');
+                    if(role == 'next'){
+                        i = $(e).closest('li.active').index();
                         iElement.find('.form-tabs-container>li').eq(i+1).addClass('active').siblings().removeClass('active');
                         iElement.find('.form-tabs-nav>li').eq(i+1).addClass('active');
-                    }else{
-                        var i = $(e).closest('li.active').index();
+                    }else if(role == 'prev'){
+                        i = $(e).closest('li.active').index();
                         iElement.find('.form-tabs-container>li').eq(i-1).addClass('active').siblings().removeClass('active');
                         iElement.find('.form-tabs-nav>li').eq(i).removeClass('active');
+                    }else if(role == 'transfer'){
+                        if($(e).attr('data-transfer')){
+                            if(scope.$eval($(e).attr('data-transfer'))){
+                               i = $(e.parentNode).index();
+                               iElement.find('.form-tabs-container>li').eq(i).addClass('active').siblings().removeClass('active');
+                               
+                            }
+                        }
                     }
                 }
             });
@@ -23,6 +33,7 @@ angular.module('flatpcApp')
                 iElement.find('.form-tabs-nav>li').eq(0).addClass('active').siblings().removeClass('active');
                 if(fun && typeof fun == 'function') fun();
             }
+            
         }
     };
 });

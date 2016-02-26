@@ -164,6 +164,7 @@ angular.module('flatpcApp')
     }
     if(!$rootScope.treeTerm)
         refresh();
+    else $rootScope.loading = false;
     function refresh(){
         $rootScope.loading = true;
         return TermService.getList().success(function(data){

@@ -219,19 +219,19 @@
                         <div class="form-tabs" form-tabs>
                             <ul class="form-tabs-nav">
                                 <li class="active">
-                                    <div>
+                                    <div data-role="transfer" data-transfer="1">
                                         <div class="form-tabs-point"></div>
                                         空房选择
                                     </div>
                                 </li>
                                 <li class="tabs-nav">
-                                    <div data-role="prev">
+                                    <div data-role="transfer" data-transfer="form.bed">
                                         <div class="form-tabs-point"></div>
                                         学生入住
                                     </div>
                                 </li>
                                 <li class="tabs-nav">
-                                    <div>
+                                    <div data-role="transfer" data-transfer="form.bed && form.student">
                                         <div class="form-tabs-point"></div>
                                         入住确认
                                     </div>
@@ -326,7 +326,7 @@
                                                 <td colspan="10" ng-hide="form.studentList" class="start">搜索一下</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="10" ng-show="form.studentList && form.studentList.length < 1" class="empty">没有检索到空床位</td>
+                                                <td colspan="10" ng-show="form.studentList && form.studentList.length < 1" class="empty">没有检索到相关学生</td>
                                             </tr>
                                         </tfoot>
                                     </table>

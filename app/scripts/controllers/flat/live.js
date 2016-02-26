@@ -227,7 +227,12 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
             });
         }
         $scope.selecter.init();
-        
+        $scope.form.bed = null;
+        $scope.form.bedList = null;
+        $scope.form.bedName = '';
+        $scope.form.student = null;
+        $scope.form.studentName = '';
+        $scope.form.studentList = null;
     }
     $scope.form = {
         bed:null,

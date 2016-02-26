@@ -154,7 +154,8 @@
                                         <tr><td>业务类型</td><td>{{work.businessType}}</td></tr>
                                         <tr><td>人员</td><td>{{work.name + '(' + work.studentNumber + ')'}}</td></tr>
                                         <tr><td>人员信息</td><td>{{work.classPath}}</td></tr>
-                                        <tr><td>入住床位</td><td>{{work.roomPath}}</td></tr>
+                                        <tr><td>原床位</td><td>{{work.roomPath}}</td></tr>
+                                        <tr><td>新床位</td><td>{{work.newRoomPath}}</td></tr>
                                         <tr><td>备注</td><td>{{work.memo}}</td></tr>
                                     </table>
                                 </div>
@@ -219,19 +220,19 @@
                         <div class="form-tabs" form-tabs>
                             <ul class="form-tabs-nav">
                                 <li class="active">
-                                    <div>
+                                    <div data-role="transfer" data-transfer="1">
                                         <div class="form-tabs-point"></div>
                                         人员选择
                                     </div>
                                 </li>
                                 <li class="tabs-nav">
-                                    <div>
+                                    <div data-role="transfer" data-transfer="form.student">
                                         <div class="form-tabs-point"></div>
                                         调宿
                                     </div>
                                 </li>
                                 <li class="tabs-nav">
-                                    <div>
+                                    <div data-role="transfer" data-transfer="form.bed">
                                         <div class="form-tabs-point"></div>
                                         调宿确认
                                     </div>
@@ -268,7 +269,7 @@
                                         <tbody>
                                             <tr ng-repeat="student in form.studentList || []">
                                                 <td>{{student.name + "（" + student.studentNumber + "）"}}</td><td>{{student.campusName}}</td><td>{{student.liveAreaName}}</td><td>{{student.flatName}}</td><td>{{student.roomName}}</td>
-                                                <td><a class="btn btn-xs btn-link" data-role="next" ng-click="form.studentChoose(student)">入住</a></td>
+                                                <td><a class="btn btn-xs btn-link" data-role="next" ng-click="form.studentChoose(student)">选择</a></td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
@@ -276,13 +277,13 @@
                                                 <td colspan="10" ng-hide="form.studentList" class="start">搜索一下</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="10" ng-show="form.studentList && form.studentList.length < 1" class="empty">没有检索到空床位</td>
+                                                <td colspan="10" ng-show="form.studentList && form.studentList.length < 1" class="empty">没有检索到相关学生</td>
                                             </tr>
                                         </tfoot>
                                     </table>
                                 </li>
                                 <li class="fadeIn animated ">
-                                    <div class="form-tabs-info"><span>已选学生：</span>生活区-楼栋-寝室号：床号</div>
+                                    <div class="form-tabs-info"><span>已选学生：</span>{{form.student.campusName + " - " + form.student.liveAreaName + " - " +form.student.flatName + " - " +form.student.roomName + " - " + (form.student.bedName || form.student.bedNum)}}</div>
                                     <div class="form-tabs-tool-bar">
                                         <div>
                                             <select class="form-control" ng-change="selecter.campusSelecter()" ng-model="selecter.campusId">
@@ -318,7 +319,7 @@
                                         <tbody>
                                             <tr ng-repeat="bed in form.bedList || []">
                                                 <td>{{bed.campusName}}</td><td>{{bed.liveAreaName}}</td><td>{{bed.flatName}}</td><td>{{bed.roomNum}}</td><td>{{bed.bedName || bed.bedNum}}</td>
-                                                <td><a ng-click="form.bedChoose(bed)" class="btn btn-xs btn-link" data-role="next">选择</a></td>
+                                                <td><a ng-click="form.bedChoose(bed)" class="btn btn-xs btn-link" data-role="next">调宿</a></td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
@@ -335,7 +336,7 @@
                                 <li class="fadeIn animated">
                                     <div class="form-tabs-tool-bar">
                                         <div class="form-tabs-full"><span>计划确认</span></div>
-                                        <div><a class="btn btn-addon btn-success" data-role="prev"><i class="glyphicon glyphicon-plus"></i>提交</a></div>
+                                        <div><a class="btn btn-addon btn-success" ng-click="form.sub()"><i class="glyphicon glyphicon-plus"></i>提交</a></div>
                                     </div>
                                     <table class="table table-bordered bg-white">
                                         <tbody>

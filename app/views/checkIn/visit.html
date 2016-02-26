@@ -11,7 +11,7 @@
 </div>
 <div class="tool-bar">
     <div class="bar-full">
-        <button class="btn btn-addon btn-success"  ng-click="resetForm()"><i class="glyphicon glyphicon-plus"></i>新增登记</button>
+        <button class="btn btn-addon btn-success"  ng-click="resetForm(dataInit)"><i class="glyphicon glyphicon-plus"></i>新增登记</button>
     </div>
     <div class="group-tool">
         <div class="btn-group">
@@ -72,8 +72,8 @@
                 <tr ng-repeat="item in list">
                     <td>{{item.startTime}}</td><td>{{item.peopleName}}</td><td>{{item.name}}</td><td>{{item.roomPath}}</td><td>{{item.phone}}</td>
                     <td>
-                        <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#visitEdit')">编辑</button>
-                        <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#visitDetail')">查看</button>
+                        <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#visitEdit',detail(item))">编辑</button>
+                        <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#visitDetail',detail(item))">查看</button>
                     </td>
                 </tr>
             </tbody>
@@ -90,7 +90,7 @@
                 </li>
                 <li ng-show="media.epage-2>0"><a ng-click="setPage(-2)">{{media.epage-2}}</a></li>
                 <li ng-show="media.epage-1>0"><a ng-click="setPage(-1)">{{media.epage-1}}</a></li>
-                <li class="active"><a>{{media.epage}}</a></li>
+                <li class="active" ng-show="media.epage>0"><a>{{media.epage}}</a></li>
                 <li ng-show="media.epage+1<=media.pageCount"><a ng-click="setPage(1)">{{media.epage+1}}</a></li>
                 <li ng-show="media.epage+2<=media.pageCount"><a ng-click="setPage(2)">{{media.epage+2}}</a></li>
                 <li ng-class="{disabled:media.epage>=media.pageCount}">
@@ -131,88 +131,84 @@
                                 <li class="active">
                                     <div>
                                         <div class="form-tabs-point"></div>
-                                        访客信息
+                                        受访信息
                                     </div>
                                 </li>
                                 <li class="tabs-nav">
                                     <div>
                                         <div class="form-tabs-point"></div>
-                                        来访登记
+                                        访客登记
                                     </div>
                                 </li>
                             </ul>
                             <ul class="form-tabs-container">
                                 <li class="fadeIn animated active">
+                                    <div class="form-tabs-tool-bar">
+                                        <div>
+                                            <select class="form-control" ng-change="selecter.campusSelecter()" ng-model="selecter.campusId">
+                                                <option value="">选择校区</option>
+                                                <option ng-repeat="campus in treeFlat.cmpusList" value="{{campus.campusId}}">{{campus.title}}</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <select class="form-control" ng-change="selecter.liveAreaSelecter()" ng-model="selecter.liveAreaId">
+                                                <option value="">选择生活区</option>
+                                                <option ng-repeat="liveArea in selecter.liveAreaList" value="{{liveArea.liveAreaId}}">{{liveArea.title}}</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <select class="form-control" ng-model="selecter.flatId">
+                                                <option value="">选择楼栋</option>
+                                                <option ng-repeat="flat in selecter.flatList" value="{{flat.flatId}}">{{flat.title}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-tabs-full">
+                                            <input class="form-control" type="text" placeholder="房间号" ng-model="form.bedName" />
+                                        </div>
+                                        <div>
+                                            <a class="btn btn-stroke btn-info" ng-click="form.bedSearch()">搜索</a>
+                                        </div>
+                                    </div>
+                                    <table class="table table-bordered bg-white">
+                                        <thead>
+                                            <tr>
+                                                <th>校区</th><th>生活区</th><th>楼栋</th><th>宿舍号</th><th>床号</th><th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="bed in form.bedList || []">
+                                                <td>{{bed.campusName}}</td><td>{{bed.liveAreaName}}</td><td>{{bed.flatName}}</td><td>{{bed.roomNum}}</td><td>{{bed.bedName || bed.bedNum}}</td>
+                                                <td><a ng-click="form.bedChoose(bed)" class="btn btn-xs btn-link" data-role="next">选择</a></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="10" ng-hide="form.bedList" class="start">搜索一下</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10" ng-show="form.bedList && form.bedList.length < 1" class="empty">没有检索到空床位</td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </li>
+                                <li class="fadeIn animated ">
                                     <table class="table-bordered bg-white table-form">
                                         <tbody>
                                             <tr>
                                                 <td width="150" class="require">来访人姓名</td><td><input type="text" /></td>
                                             </tr>
                                             <tr>
-                                                <td class="require">来访人证件</td><td><input type="text" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="require">联系方式</td><td><input type="text" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2"><a class="btn btn-info" data-role="next">下一步</a></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </li>
-                                <li class="fadeIn animated">
-                                    <table class="table-form table-bordered bg-white">
-                                        <tbody>
-                                            <tr>
-                                                <td class="require">被访人学号</td><td><input type="text" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="require">被访人姓名</td><td><input type="text" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="require">被访人宿舍</td>
+                                                <td class="require">来访人证件</td>
                                                 <td>
                                                     <select>
-                                                        <option value="">学院</option>
-                                                        <option value="one">First</option>
-                                                        <option value="two">Second</option>
-                                                        <option value="three">Third</option>
+                                                        <option value="">学生证</option>
+                                                        <option value="one">身份证</option>
                                                     </select>
-                                                    <select>
-                                                        <option value="">学院</option>
-                                                        <option value="one">First</option>
-                                                        <option value="two">Second</option>
-                                                        <option value="three">Third</option>
-                                                    </select>
-                                                    <select>
-                                                        <option value="">学院</option>
-                                                        <option value="one">First</option>
-                                                        <option value="two">Second</option>
-                                                        <option value="three">Third</option>
-                                                    </select>
+                                                    <input type="text" />
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td></td><td>
-                                                    <select>
-                                                        <option value="">学院</option>
-                                                        <option value="one">First</option>
-                                                        <option value="two">Second</option>
-                                                        <option value="three">Third</option>
-                                                    </select>
-                                                    <select>
-                                                        <option value="">学院</option>
-                                                        <option value="one">First</option>
-                                                        <option value="two">Second</option>
-                                                        <option value="three">Third</option>
-                                                    </select>
-                                                    <select>
-                                                        <option value="">学院</option>
-                                                        <option value="one">First</option>
-                                                        <option value="two">Second</option>
-                                                        <option value="three">Third</option>
-                                                    </select>
-                                                    </td>
+                                                <td class="require">联系方式</td><td><input type="text" /></td>
                                             </tr>
                                             <tr>
                                                 <td class="require">进楼时间</td>
@@ -227,11 +223,15 @@
                                                 <td><textarea class="form-control" rows="3"></textarea></td>
                                             </tr>
                                             <tr>
+                                                <td colspan="2"><a class="btn btn-info" data-role="next">下一步</a></td>
+                                            </tr>
+                                            <tr>
                                                 <td colspan="2"><a class="btn btn-success" data-role="prev">完成登记</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </li>
+                                
                             </ul>
                         </div>
                     </div>
@@ -256,15 +256,14 @@
                                 <div class="check-info">
                                     <div class="check-info-title">
                                         <div class="check-info-tip">进楼</div> 
-                                        <div>2015-12-12   13:56</div>
-                                        <div><span>提交人：</span>管理员A</div>
+                                        <div>{{work.startTime}}</div>
+                                        <div><span>登记人：</span>{{work.spersonnelName}}</div>
                                     </div>
                                     <table class="table table-bordered bg-white">
-                                        <tr><td>业务类型</td><td>入住</td></tr>
-                                        <tr><td>人员</td><td>徐冬（10113003433）</td></tr>
-                                        <tr><td>人员信息</td><td> 机电学院-机械自动化专业2014本三班</td></tr>
-                                        <tr><td>入住床位</td><td>校区-生活区-楼栋-楼层-寝室-床位号</td></tr>
-                                        <tr><td>备注</td><td>备注备注备注备注</td></tr>
+                                        <tr><td>访客</td><td>{{work.peopleName}}</td></tr>
+                                        <tr><td>被访人员</td><td>{{work.name + '（' + work.studentNumber + '）'}}</td></tr>
+                                        <tr><td>被访寝室</td><td>{{work.roomPath}}</td></tr>
+                                        <tr><td>备注</td><td>{{work.memo}}</td></tr>
                                     </table>
                                 </div>
                             </li>
@@ -273,8 +272,8 @@
                                 <div class="check-info">
                                    <div class="check-info-title">
                                         <div class="check-info-tip">出楼</div>
-                                        <div>2015-12-12   13:56</div>
-                                        <div><span>登记人：</span>管理员A</div>
+                                        <div>{{work.endTime}}</div>
+                                        <div><span>登记人：</span>{{work.epersonnelName}}</div>
                                     </div>
                                     
                                 </div>

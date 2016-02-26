@@ -119,7 +119,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         $rootScope.loading = true;
         DailyService.passQuit({
             token:'',
-            occupancyid:$scope.work.occupancyId || '',
+            exitroomid:$scope.work.exitRoomId || '',
             adminid:''
         }).success(function(data){
             swal("提示", "审批成功！", "success"); 
@@ -132,7 +132,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         $rootScope.loading = true;
         DailyService.backQuit({
             token:'',
-            occupancyid:$scope.work.occupancyId || '',
+            exitroomid:$scope.work.exitRoomId || '',
             backmessage:$scope.work.returnMessage,
             adminid:''
         }).success(function(data){
@@ -146,7 +146,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         $rootScope.loading = true;
         DailyService.cancelQuit({
             token:'',
-            occupancyid:$scope.work.occupancyId || '',
+            exitroomid:$scope.work.exitRoomId || '',
             adminid:''
         }).success(function(data){
             swal("提示", "已取消！", "success"); 
@@ -185,7 +185,9 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
             });
         }
         $scope.selecter.init();
-        
+        $scope.form.student = null;
+        $scope.form.studentName = '';
+        $scope.form.studentList = null;
     }
     $scope.form = {
         student:null,
@@ -212,7 +214,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
             DailyService.addQuit({
                 token:AppConfig.token,
                 schoolcode:AppConfig.schoolCode,
-                bedid:this.bed.bedId,
+                bedid:this.student.bedId,
                 studentkey:this.student.studentKey,
                 adminid:'',
                 memo:this.memo

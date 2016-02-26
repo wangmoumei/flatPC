@@ -45,7 +45,7 @@ angular.module('flatpcApp')
         return $http.get(url);
     }
     var addChange = function(param){
-        var url = AppConfig.WEB_ROOT + 'apartment/transfer/add_occupancy/';
+        var url = AppConfig.WEB_ROOT + 'apartment/transfer/add_transfer/';
         return $http.get(url,param);
     }
     var backChange = function(param){
@@ -75,7 +75,7 @@ angular.module('flatpcApp')
         return $http.get(url);
     }
     var addQuit = function(param){
-        var url = AppConfig.WEB_ROOT + 'apartment/exitroom/add_occupancy/';
+        var url = AppConfig.WEB_ROOT + 'apartment/exitroom/add_exitroom/';
         return $http.get(url,param);
     }
     var backQuit = function(param){

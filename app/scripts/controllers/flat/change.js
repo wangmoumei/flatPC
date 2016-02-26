@@ -119,7 +119,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         $rootScope.loading = true;
         DailyService.passChange({
             token:'',
-            occupancyid:$scope.work.occupancyId || '',
+            transferid:$scope.work.transferId || '',
             adminid:''
         }).success(function(data){
             swal("提示", "审批成功！", "success"); 
@@ -132,7 +132,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         $rootScope.loading = true;
         DailyService.backChange({
             token:'',
-            occupancyid:$scope.work.occupancyId || '',
+            transferid:$scope.work.transferId || '',
             backmessage:$scope.work.returnMessage,
             adminid:''
         }).success(function(data){
@@ -146,7 +146,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         $rootScope.loading = true;
         DailyService.cancelChange({
             token:'',
-            occupancyid:$scope.work.occupancyId || '',
+            transferid:$scope.work.transferId || '',
             adminid:''
         }).success(function(data){
             swal("提示", "已取消！", "success"); 
@@ -227,7 +227,12 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
             });
         }
         $scope.selecter.init();
-        
+        $scope.form.bed = null;
+        $scope.form.bedList = null;
+        $scope.form.bedName = '';
+        $scope.form.student = null;
+        $scope.form.studentName = '';
+        $scope.form.studentList = null;
     }
     $scope.form = {
         bed:null,
@@ -273,7 +278,8 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
             DailyService.addChange({
                 token:AppConfig.token,
                 schoolcode:AppConfig.schoolCode,
-                bedid:this.bed.bedId,
+                bedid:this.student.bedId,
+                newbedid:this.bed.bedId,
                 studentkey:this.student.studentKey,
                 adminid:'',
                 memo:this.memo

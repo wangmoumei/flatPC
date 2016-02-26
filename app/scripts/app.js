@@ -245,7 +245,7 @@ angular
         views: {
             "": {
                 templateUrl: 'views/checkIn/key.html',
-                controller: 'VisitCtrl'
+                controller: 'KeyCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",
@@ -262,7 +262,7 @@ angular
         views: {
             "": {
                 templateUrl: 'views/checkIn/late.html',
-                controller: 'VisitCtrl'
+                controller: 'LateCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",
