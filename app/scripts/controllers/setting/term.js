@@ -56,7 +56,7 @@ angular.module('flatpcApp')
     $scope.add = function(type,item){
         $scope.media.status = 1;
         $scope.media.type = type;
-        $scope.media.schoolYearName = '';
+        $scope.media.schoolYearName = item.schoolYearName || '';
         $scope.media.schoolYearId = item.schoolYearId || '';
         $scope.media.year = new Date().getFullYear();
         

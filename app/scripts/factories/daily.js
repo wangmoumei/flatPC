@@ -2,7 +2,7 @@ angular.module('flatpcApp')
 .factory('DailyService',['$http', 'AppConfig',function($http, AppConfig){
     var getLiveList = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/occupancy/get_list/?'
-        + 'schoolcode=' + AppConfig.schoolCode + '&token=123'
+        + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
         + '&epage=' + (param.epage || 1) + '&pagesize=' + (param.pagesize || 10)
         + (param.name?('&name='+param.name):'')
         + (param.studentnumber?('&studentnumber='+param.studentnumber):'')
@@ -32,7 +32,7 @@ angular.module('flatpcApp')
     }
     var getChangeList = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/transfer/get_list/?'
-        + 'schoolcode=' + AppConfig.schoolCode + '&token=123'
+        + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
         + '&epage=' + (param.epage || 1) + '&pagesize=' + (param.pagesize || 10)
         + (param.name?('&name='+param.name):'')
         + (param.studentnumber?('&studentnumber='+param.studentnumber):'')
@@ -62,7 +62,7 @@ angular.module('flatpcApp')
     }
     var getQuitList = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/exitroom/get_list/?'
-        + 'schoolcode=' + AppConfig.schoolCode + '&token=123'
+        + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
         + '&epage=' + (param.epage || 1) + '&pagesize=' + (param.pagesize || 10)
         + (param.name?('&name='+param.name):'')
         + (param.studentnumber?('&studentnumber='+param.studentnumber):'')
@@ -92,7 +92,7 @@ angular.module('flatpcApp')
     }
     var getCheckList = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/occupancy/get_list/?'
-        + 'schoolcode=' + AppConfig.schoolCode + '&token=123'
+        + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
         + '&epage=' + (param.epage || 1) + '&pagesize=' + (param.pagesize || 10)
         + (param.name?('&name='+param.name):'')
         + (param.studentnumber?('&studentnumber='+param.studentnumber):'')

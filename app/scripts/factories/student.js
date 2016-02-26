@@ -6,7 +6,7 @@ angular.module('flatpcApp')
     }
     var getList = function(param){
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/get_list/?'
-        + 'schoolcode=' + AppConfig.schoolCode + '&token=123'
+        + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
         + '&epage=' + (param.epage || 1) + '&pagesize=' + (param.pagesize || 10)
         + (param.name?('&name='+param.name):'')
         + (param.studentnumber?('&studentnumber='+param.studentnumber):'')
@@ -34,7 +34,7 @@ angular.module('flatpcApp')
     }
     var downloadStudent = function(param){
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/download_student_data/?'
-        + 'schoolcode='+ AppConfig.schoolCode + '&token=123'
+        + 'schoolcode='+ AppConfig.schoolCode + '&token=' + AppConfig.token
         + '&epage=' + (param.epage || 1) + '&pagesize=' + (param.pagesize || 10)
         + (param.name?('&name='+param.name):'')
         + (param.studentnumber?('&studentnumber='+param.studentnumber):'')
@@ -44,7 +44,7 @@ angular.module('flatpcApp')
     }
     var getImport = function(param){
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/get_import_list/?'
-        + 'schoolcode='+ AppConfig.schoolCode + '&token=123'
+        + 'schoolcode='+ AppConfig.schoolCode + '&token=' + AppConfig.token
         + '&epage=' + (param.epage || 1) + '&pagesize=' + (param.pagesize || 10)
         + (param.orderfield?('&orderfield='+param.orderfield):'')
         + (param.ordertype?('&ordertype='+param.ordertype):'');
@@ -52,7 +52,7 @@ angular.module('flatpcApp')
     }
     var downloadImport = function(param){
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/export_error/?importId = ' + param
-        + "&token=123";
+        + "&token=" + AppConfig.token;
         return $http.get(url);
     }
     var uploadImg = function(param){
@@ -62,13 +62,13 @@ angular.module('flatpcApp')
     }
     var getListByName = function (param) {
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/search_list/?'
-        + 'schoolcode='+ AppConfig.schoolCode + '&token=123'
+        + 'schoolcode='+ AppConfig.schoolCode + '&token=' + AppConfig.token
         + '&keyword=' + (param.keyword || "") + '&collegeid=' + (param.collegeid || "") + '&classid=' + (param.classid || "");
         return $http.get(url);
     }
     var getListWithBed = function (param) {
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/search_bed_list/?'
-        + 'schoolcode='+ AppConfig.schoolCode + '&token=123'
+        + 'schoolcode='+ AppConfig.schoolCode + '&token=' + AppConfig.token
         + '&keyword=' + (param.keyword || "") + '&collegeid=' + (param.collegeid || "") + '&classid=' + (param.classid || "");
         return $http.get(url);
     }

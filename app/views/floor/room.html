@@ -197,6 +197,10 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td>备注</td>
+                                    <td><textarea class="form-control" rows="3" ng-model="media.room.memo"></textarea></td>
+                                </tr>
+                                <tr>
                                     <td colspan="2">
                                         <a ng-hide="media.room.type == 1" ng-click="room.addSave()" class="btn btn-success">确认添加</a>
                                         <a ng-show="media.room.type == 1" ng-click="room.editSave()" class="btn btn-info">确认修改</a>
