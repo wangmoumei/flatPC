@@ -12,8 +12,11 @@ version 0.14.0.
 sudo npm install grunt-cli -g    
     
 检测是否安装ruby    
+```bash   
 gem  -v    
-若已安装，则修改source地址    
+```   
+若已安装，则修改source地址   
+```bash   
 gem sources --remove https://rubygems.org/    
 gem sources -a https://ruby.taobao.org/    
 gem sources -l    
@@ -23,7 +26,7 @@ https://ruby.taobao.org
 显示没问题，接着安装sass和compass    
 sudo gem install sass    
 sudo gem install compass    
-
+```   
 以上为环境搭建    
 项目搭建：    
 Run `npm install` and `bower install` for install.
