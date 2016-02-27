@@ -25,7 +25,9 @@ gem sources -l
 *** CURRENT SOURCES ***    
 
 https://ruby.taobao.org    
-显示没问题，接着安装sass和compass    
+```   
+显示没问题的话，接着安装sass和compass    
+```   
 sudo gem install sass    
 sudo gem install compass    
 ```   
