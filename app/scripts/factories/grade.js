@@ -94,6 +94,29 @@ angular.module('flatpcApp')
         var url = AppConfig.WEB_ROOT + 'evaluation/hygienegrade/score_search_export/';
         return $http.get(url,param);
     };
+    var getSettingList = function(param){
+        var url = AppConfig.WEB_ROOT + 'evaluation/setups/get_type_list/?'
+        + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token;
+        return $http.get(url);
+    };
+    var addSetting = function (param) {
+        param.token = param.token || AppConfig.token;
+        param.schoolcode = param.schoolcode || AppConfig.schoolcode;
+        var url = AppConfig.WEB_ROOT + 'evaluation/setups/add_type/';
+        return $http.get(url,param);
+    };
+    var editSetting = function (param) {
+        param.token = param.token || AppConfig.token;
+        param.schoolcode = param.schoolcode || AppConfig.schoolcode;
+        var url = AppConfig.WEB_ROOT + 'evaluation/setups/edit_type/';
+        return $http.get(url,param);
+    };
+    var delSetting = function (param) {
+        param.token = param.token || AppConfig.token;
+        param.schoolcode = param.schoolcode || AppConfig.schoolcode;
+        var url = AppConfig.WEB_ROOT + 'evaluation/setups/del_type/';
+        return $http.get(url,param);
+    };
     return {
         getListByFlat:getListByFlat,
         setGrade:setGrade,
@@ -107,6 +130,10 @@ angular.module('flatpcApp')
         getList:getList,
         download:download,
         getTopList:getTopList,
-        downloadTopList:downloadTopList
+        downloadTopList:downloadTopList,
+        getSettingList:getSettingList,
+        addSetting:addSetting,
+        editSetting:editSetting,
+        delSetting:delSetting
     }
 }]);

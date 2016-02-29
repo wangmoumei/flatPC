@@ -12,27 +12,27 @@
 <div class="page-main" style="top:49px;">
     <div class="page-tabs" tabs>
         <ul class="page-tabs-nav">
-            <li class="active">寝室分</li>
-            <li>床位分</li>
+            <li class="active" ng-click="media.setTab(0)">寝室分</li>
+            <li ng-click="media.setTab(1)">床位分</li>
             <li>打分周期</li>
         </ul>
         <ul class="page-tabs-container">
             <li class="fadeIn animated active">
                 <div class="page-tree" tree>
                     <ul>
-                        <li ng-repeat="item1 in tree">
-                            <a ng-class="{'branch':item1.list,'leaf':!item1.list}">{{item1.name}}</a>
-                            <ul ng-show="item1.list">
-                                <li ng-repeat="item2 in item1.list||[]">
-                                    <a ng-class="{'branch':item2.list,'leaf':!item2.list}">{{item2.name}}</a>
-                                    <ul ng-show="item2.list">
-                                        <li ng-repeat="item3 in item2.list||[]">
-                                            <a ng-class="{'branch':item3.list,'leaf':!item3.list}">{{item3.name}}</a>
+                        <li class="open">
+                            <a class="branch">{{treeGrade[0].title}}</a>
+                            <ul ng-show="treeGrade[0].subNodes">
+                                <li ng-repeat="category in treeGrade[0].subNodes||[]">
+                                    <a ng-click="show(1,category)" ng-class="{'branch':category.subNodes,'leaf':!category.subNodes}">{{category.title}}</a>
+                                    <ul ng-show="category.subNodes">
+                                        <li ng-repeat="option in category.subNodes||[]">
+                                            <a ng-click="show(2,option,category.title)" ng-class="{'branch':option.subNodes,'leaf':!option.subNodes}">{{option.title}}</a>
                                         </li>
-                                        <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
+                                        <li><a class="add" ng-click="add(2,category,category.title)"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
                                     </ul>
                                 </li>
-                                <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加分类</a></li>
+                                <li><a class="add" ng-click="add(1,treeGrade[0])"><i class="ALiconfont icon-plus1"></i> 添加分类</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -40,45 +40,47 @@
                 <div class="from-container" style="left:225px;">
                     <table class="table-form table-bordered bg-white">
                         <tr>
-                            <td class="require" width="200">分类</td><td><input type="text" /></td>
+                            <td class="require" width="200">分类</td><td><input ng-disabled="media.type>1" type="text" ng-model="media.parentTitle" /></td>
+                        </tr>
+                        <tr ng-show="media.type>1">
+                            <td class="require" width="200">打分项目</td><td><input type="text" ng-model="media.title" /></td>
                         </tr>
                         <tr>
-                            <td class="require" width="200">打分项目</td><td><input type="text" /></td>
+                            <td class="require" width="200">分值</td><td><input type="text" ng-model="media.value" /></td>
                         </tr>
                         <tr>
-                            <td class="require" width="200">分值</td><td><input type="text" /></td>
+                            <td class="require" width="200">排序</td><td><input type="text" ng-model="media.listOrder" /></td>
                         </tr>
                         <tr>
-                            <td class="require" width="200">排序</td><td><input type="text" /></td>
-                        </tr>
-                        <tr>
-                            <td></td><td>
-                                <button class="btn btn-success">提交</button>
-                                <button class="btn btn-info">保存</button>
-                                <button class="btn btn-default">取消</button>
-                                <button class="btn btn-danger">删除</button>
+                            <td></td>
+                            <td>
+                                <div class="btn-box">
+                                    <button ng-show="media.status" ng-click="addSave()" class="btn btn-success">提交</button>
+                                    <button ng-hide="media.status" ng-click="editSave()" class="btn btn-info">保存</button>
+                                    <button ng-hide="media.status" ng-click="delete()" class="btn btn-danger">删除</button>
+                                </div>
                             </td>
                         </tr>
                         
                     </table>
                 </div>
             </li>
-            <li>
+            <li class="fadeIn animated">
                 <div class="page-tree" tree>
                     <ul>
-                        <li ng-repeat="item1 in tree">
-                            <a ng-class="{'branch':item1.list,'leaf':!item1.list}">{{item1.name}}</a>
-                            <ul ng-show="item1.list">
-                                <li ng-repeat="item2 in item1.list||[]">
-                                    <a ng-class="{'branch':item2.list,'leaf':!item2.list}">{{item2.name}}</a>
-                                    <ul ng-show="item2.list">
-                                        <li ng-repeat="item3 in item2.list||[]">
-                                            <a ng-class="{'branch':item3.list,'leaf':!item3.list}">{{item3.name}}</a>
+                        <li class="open">
+                            <a class="branch">{{treeGrade[1].title}}</a>
+                            <ul ng-show="treeGrade[1].subNodes">
+                                <li ng-repeat="category in treeGrade[1].subNodes||[]">
+                                    <a ng-click="show(1,category)" ng-class="{'branch':category.subNodes,'leaf':!category.subNodes}">{{category.title}}</a>
+                                    <ul ng-show="category.subNodes">
+                                        <li ng-repeat="option in category.subNodes||[]">
+                                            <a ng-click="show(2,option,category.title)" ng-class="{'branch':option.subNodes,'leaf':!option.subNodes}">{{option.title}}</a>
                                         </li>
-                                        <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
+                                        <li><a class="add" ng-click="add(2,category,category.title)"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
                                     </ul>
                                 </li>
-                                <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加分类</a></li>
+                                <li><a class="add" ng-click="add(1,treeGrade[1])"><i class="ALiconfont icon-plus1"></i> 添加分类</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -86,31 +88,50 @@
                 <div class="from-container" style="left:225px;">
                     <table class="table-form table-bordered bg-white">
                         <tr>
-                            <td class="require" width="200">分类</td><td><input type="text" /></td>
+                            <td class="require" width="200">分类</td><td><input ng-disabled="media.type>1" type="text" ng-model="media.parentTitle1" /></td>
+                        </tr>
+                        <tr ng-show="media.type>1">
+                            <td class="require" width="200">打分项目</td><td><input type="text" ng-model="media.title1" /></td>
                         </tr>
                         <tr>
-                            <td class="require" width="200">打分项目</td><td><input type="text" /></td>
+                            <td class="require" width="200">分值</td><td><input type="text" ng-model="media.value1" /></td>
                         </tr>
                         <tr>
-                            <td class="require" width="200">分值</td><td><input type="text" /></td>
+                            <td class="require" width="200">排序</td><td><input type="text" ng-model="media.listOrder1" /></td>
                         </tr>
                         <tr>
-                            <td class="require" width="200">排序</td><td><input type="text" /></td>
-                        </tr>
-                        <tr>
-                            <td></td><td>
-                                <button class="btn btn-success">提交</button>
-                                <button class="btn btn-info">保存</button>
-                                <button class="btn btn-default">取消</button>
-                                <button class="btn btn-danger">删除</button>
+                            <td></td>
+                            <td>
+                                <div class="btn-box">
+                                    <button ng-show="media.status" ng-click="addSave()" class="btn btn-success">提交</button>
+                                    <button ng-hide="media.status" ng-click="editSave()" class="btn btn-info">保存</button>
+                                    <button ng-hide="media.status" ng-click="delete()" class="btn btn-danger">删除</button>
+                                </div>
                             </td>
                         </tr>
-                        
                     </table>
                 </div>
             </li>
-            <li>
-                打分周期
+            <li class="fadeIn animated">
+                <div class="from-container">
+                    <table class="table-form table-bordered bg-white">
+                        <tr>
+                            <td width="200">考评周期</td>
+                            <td>
+                                <input type="checkbox" />周
+                                <input type="checkbox" />月
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <div class="btn-box">
+                                    <button class="btn btn-info">保存</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </li>
         </ul>
 </div>

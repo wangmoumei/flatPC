@@ -211,7 +211,7 @@ angular
         views: {
             "": {
                 templateUrl: 'views/grade/setting.html',
-                controller: 'ListCtrl'
+                controller: 'GradeSettingCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",

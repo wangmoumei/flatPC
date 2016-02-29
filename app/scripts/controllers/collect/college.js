@@ -131,11 +131,14 @@ angular.module('flatpcApp')
         
     }
     
-    $rootScope.loading = false;
+    
     if(!$rootScope.treeCollege)
         refresh().then(function(){$scope.show(1,$rootScope.treeCollege[0].collegeList[0]);});
-    else
+    else{
         $scope.show(1,$rootScope.treeCollege[0].collegeList[0]);
+        $rootScope.loading = false;
+    }
+        
     function refresh(){
         $rootScope.loading = true;
         return CollegeService.getList(AppConfig.schoolCode).success(function(data){

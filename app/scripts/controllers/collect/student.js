@@ -70,7 +70,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
         classSelecter : function(){
             //用classId反向获取collegeId和classList
             var college = $rootScope.treeCollege[0].collegeList;
-            for(var i=0;i<college.length;i++){
+            for(var i=0 ; i < college.length;i++){
                 var list = this.classId?$filter('filter')(college[i].classList,{classId:this.classId}):[];
                 if(list.length > 0){
                     this.collegeId = college[i].collegeId;

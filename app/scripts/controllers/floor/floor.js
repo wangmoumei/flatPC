@@ -159,12 +159,13 @@ angular.module('flatpcApp')
         
     }
     
-    $rootScope.loading = false;
+    
     if(!$rootScope.treeFlat){
         refresh().then(function(){$scope.show(1,$rootScope.treeFlat.cmpusList[0])});
     }
     else {
-        $scope.show(1,$rootScope.treeFlat.cmpusList[0])
+        $scope.show(1,$rootScope.treeFlat.cmpusList[0]);
+        $rootScope.loading = false;
     }
     function refresh(){
         return FlatService.getList(AppConfig.schoolCode).success(function(data){

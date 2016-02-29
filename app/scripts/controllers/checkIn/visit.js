@@ -63,6 +63,7 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
     }
     else {
         refresh();
+        $rootScope.loading = false;
     }
     //渲染list
     function refresh(){
