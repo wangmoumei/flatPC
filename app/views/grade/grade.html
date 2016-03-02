@@ -99,7 +99,7 @@
                             <li class="room-item" ng-repeat="room in rooms">
                                 <div ng-class="{'graded':room.roomScoreId}">{{room.roomNum}}</div>
                                 <ul ng-if="!room.isLive">
-                                    <li><a ng-click="showCard('#gradeCard',dataInit($index))">{{room.roomScoreId?room.score:'尚未打分'}}</a></li>
+                                    <li><a ng-click="showCard('#gradeCard',cardMedia.dataInit(room))">{{room.roomScoreId?room.score:'尚未打分'}}</a></li>
                                 </ul>
                                 <div>
                                     <a>{{room.purpose}}</a>
@@ -176,7 +176,7 @@
                                     <li ng-repeat="bed in room.bedList">{{bed.bedScore}}</li>  
                                 </ul></td>
                                 <td>{{room.score}}</td>
-                                <td><a class="btn btn-link btn-xs" ng-click="showCard('#gradeCard',dataInit($index))">详情</a></td>
+                                <td><a class="btn btn-link btn-xs" ng-click="showCard('#gradeCard',cardMedia.dataInit(room))">详情</a></td>
                             </tr>
                             
                         </tbody>
@@ -244,7 +244,7 @@
                                 <td ng-show="media.tobed">{{item.roomName}}</td>
                                 <td ng-show="media.tobed">{{item.bedName}}</td>
                                 <td>{{item.score}}</td>
-                                <td><a class="btn btn-link btn-xs" ng-click="showCard('#gradeCard',dataInit($index))">详情</a></td></tr>
+                                <td><a class="btn btn-link btn-xs" ng-click="showCard('#gradeCard',cardMedia.dataInit(item))">详情</a></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -294,102 +294,104 @@
             <div class="info-card-content">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        打分页
+                        打分页 {{cardMedia.item.roomNum}}
                         <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
                     </div>
                     <div class="panel-body grade-panel">
                         <div class="page-tabs" tabs>
                             <ul class="page-tabs-nav">
-                                <li class="active">寝室分</li>
-                                <li>床位分</li>
-                                <li>照片</li>
+                                <li ng-click="cardMedia.setTab(1)" ng-class="{'active':cardMedia.tab ==1}">寝室分</li>
+                                <li ng-click="cardMedia.setTab(2)" ng-class="{'active':cardMedia.tab ==2}">床位分</li>
+                                <li ng-click="cardMedia.setTab(3)" ng-class="{'active':cardMedia.tab ==3}">照片</li>
                             </ul>
-                            <ul class="page-tabs-container grade-container">
-                                <li class="fadeIn animated active">
+                            <ul class="page-tabs-container grade-container" ng-class="{'grade-tool-on':media.tab==1}">
+                                <li class="fadeIn animated" ng-class="{'active':cardMedia.tab ==1}">
                                     <table class="table table-bordered bg-white">
                                         <thead>
                                             <tr><th>序号</th><th>打分项目</th><th>打分</th></tr>
                                         </thead>
-                                        <tbody>
-                                            <tr><th>厕所</th><th></th><th></th></tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>值日表（5）</td>
+                                        <tbody ng-repeat="category in cardMedia.room || []">
+                                            <tr><th>{{category.typeName}}</th><th></th><th></th></tr>
+                                            <tr ng-repeat="item in category.itemList">
+                                                <td>{{$index + 1}}</td>
+                                                <td>{{item.title + '（' +  item.maxScore + '）'}}</td>
                                                 <td class="grade-handle">
                                                     <div>
                                                         <div>-</div>
-                                                        <div>15</div>
+                                                        <div ng-class="{'minuses':item.score<item.maxScore}">{{item.score}}</div>
                                                         <div>+</div>
                                                     </div>
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td colspan="10" ng-show="category.itemList.length < 1" class="empty">没有打分记录</td>
+                                            </tr>
                                         </tbody>
                                         <tbody>
-                                            <tr><th>地面</th><th></th><th></th></tr>
-                                            <tr><td>1</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
-                                            <tr><td>2</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div class="minuses">14</div><div>+</div></div></td></tr>
-                                            <tr><td>3</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
-                                            <tr><td>4</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
-                                            <tr><td>5</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
+                                            <tr>
+                                                <td colspan="10" ng-hide="cardMedia.room" class="start" style="height:300px">加载中..</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10" ng-show="cardMedia.room && cardMedia.room.length < 1" class="empty">没有记录</td>
+                                            </tr>
                                         </tbody>
-                                        <tfoot>
-                                            <tr><td></td><td>总计</td><td class="grade-number">88</td></tr>
+                                        <tfoot ng-show="cardMedia.room">
+                                            <tr><td></td><td>总计</td><td class="grade-number">{{cardMedia.getSum()}}</td></tr>
                                         </tfoot>
                                     </table>
                                 </li>
-                                <li class="fadeIn animated">
+                                <li class="fadeIn animated" ng-class="{'active':cardMedia.tab ==2}">
                                     <table class="table table-bordered bg-white">
                                         <thead>
                                             <tr><th>序号</th><th>打分项目</th><th>打分</th></tr>
                                         </thead>
+                                        <tbody ng-repeat="bed in cardMedia.bed">
+                                            <tr><th>{{bed.bedName}}</th><th>{{bed.sutdentName + '（' + bed.sutdentName + '）'}}</th><th class="grade-number">{{bed.totalScore}}</th></tr>
+                                            <tr ng-repeat="item in bed.itemList">
+                                                <td>{{$index + 1}}</td><td>{{item.title + '（' + item.maxScore + '）'}}</td>
+                                                <td class="grade-handle">
+                                                    <div><div>-</div><div ng-class="{'minuses':item.score<item.maxScore}">{{item.score}}</div><div>+</div></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10" ng-show="bed.itemList.length < 1" class="empty">没有打分记录</td>
+                                            </tr>
+                                        </tbody>
                                         <tbody>
-                                            <tr><th>一号床</th><th>-徐冬（10113003433）</th><th class="grade-number">95</th></tr>
-                                            <tr><td>1</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
-                                            <tr><td>2</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
-                                            <tr><td>3</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
-                                            <tr><td>4</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
-                                            <tr><td>5</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
-                                            <tr><th>二号床</th><th>-徐冬（10113003433）</th><th class="grade-number">95</th></tr>
-                                            <tr><td>1</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
-                                            <tr><td>2</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
-                                            <tr><td>3</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
-                                            <tr><td>4</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
-                                            <tr><td>5</td><td>值日表（5）</td><td class="grade-handle"><div><div>-</div><div>15</div><div>+</div></div></td></tr>
-                                            
+                                            <tr>
+                                                <td colspan="10" ng-hide="cardMedia.bed" class="start" style="height:300px">加载中..</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10" ng-show="cardMedia.bed && cardMedia.bed.length < 1" class="empty">没有记录</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </li>
-                                <li class="fadeIn animated">
+                                <li class="fadeIn animated" ng-class="{'active':cardMedia.tab ==3}">
                                     <div class="album" album>
                                         <ul>
-                                            <li><img src="http://test.houqinbao.com/xu/images/%E5%AE%BF%E8%88%8D%E6%89%93%E5%88%86/u982.png" /></li>
-                                            <li><img src="http://test.houqinbao.com/xu/images/%E5%AE%BF%E8%88%8D%E6%89%93%E5%88%86/u491.png" /></li>
-                                            <li><img src="http://test.houqinbao.com/xu/images/%E5%AE%BF%E8%88%8D%E6%89%93%E5%88%86/u1077.png" /></li>
-                                            <li><img src="http://test.houqinbao.com/xu/images/%E5%85%A5%E4%BD%8F/u203.png" /></li>
-                                            <li><img src="http://test.houqinbao.com/xu/images/%E5%AE%BF%E8%88%8D%E7%AE%A1%E7%90%86%E9%A6%96%E5%B1%8F/u42.png" /></li>
-                                            <li><img src="http://test.houqinbao.com/xu/images/%E6%8C%89%E6%A5%BC%E6%9F%A5%E7%9C%8B-%E6%80%BB%E8%A7%88%E4%BF%A1%E6%81%AF/u77.png" /></li>
-                                            <li><img src="http://test.houqinbao.com/xu/images/%E5%85%A5%E4%BD%8F/u485.png" /></li>
+                                            <li ng-repeat="img in cardMedia.img"><img src="{{img.picUrl}}" /></li>
                                             <li class="album-plus"><span class="ALiconfont icon-plus3"></span><input type="file" style="display:none" /></li> 
                                         </ul>
                                         <div class="album-frame" style="bottom:50px;top:40px;">
                                             <div>
-                                                <img src="http://test.houqinbao.com/xu/images/%E5%AE%BF%E8%88%8D%E6%89%93%E5%88%86/u982.png" />
+                                                <i class="ALiconfont icon-info"></i>
                                             </div>
                                         </div>
-                                        <div class="album-frame-off" style="top:50px;">X</div>
+                                        <div class="album-frame-off" style="top:50px;"><i class="ALiconfont icon-close"></i></div>
                                     </div>
                                 </li>
                             </ul>
                         </div>
-                        <div class="grade-tool-bar">
+                        <div class="grade-tool-bar" ng-if="media.tab==1">
                             <div>
-                                <a class="btn btn-default disabled"><</a>
+                                <a class="btn" ng-click="cardMedia.setData(0)" ng-class="{'btn-default disabled':!cardMedia.getPrev(),'btn-stroke btn-info':cardMedia.getPrev()}"><i class="ALiconfont icon-sortleft"></i></a>
                             </div>
                             <div>
                                 <a class="btn btn-info" onclick="javascript:$(this).closest('.info-card').removeClass('grade-simple');">保存并关闭</a>
                             </div>
                             <div>
-                                <a class="btn btn-default btn-stroke btn-info">></a>
+                                <a class="btn" ng-click="cardMedia.setData(1)" ng-class="{'disabled btn-default':!cardMedia.getNext(),'btn-stroke btn-info':cardMedia.getNext()}"><i class="ALiconfont icon-sortright"></i></a>
                             </div>
                         </div>
                     </div>
