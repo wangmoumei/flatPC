@@ -11,24 +11,24 @@
 </div>
 <div class="tool-bar">
     <div class="bar-full">
-        <button class="btn btn-addon btn-success" ng-click="showCard('#keyAdd')"><i class="glyphicon glyphicon-plus"></i>新增登记</button>
+        <button class="btn btn-addon btn-success" ng-click="resetForm(dataInit)"><i class="glyphicon glyphicon-plus"></i>新增登记</button>
     </div>
     <div class="group-tool">
         <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                学号 <span class="caret"></span>
+                {{media.search?'学号':'姓名'}} <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu">
-                <li><a>学号</a></li>
-                <li><a>姓名</a></li>
+            <ul class="dropdown-menu" style="min-width:66px">
+                <li ng-click="media.search=0"><a>姓名</a></li>
+                <li ng-click="media.search=1"><a>学号</a></li>
             </ul>
         </div>
     </div>
     <div class="search-bool">
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="检索">
+            <input type="text" class="form-control" ng-model="searchText" placeholder="检索">
             <span class="input-group-btn">
-                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                <button ng-click="search(searchText)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
             </span>
         </div>
     </div>
@@ -37,16 +37,16 @@
     <div class="page-tree" tree>
         <ul>
             <li class="open">
-                <a ng-class="{'branch':treeFlat.cmpusList,'leaf':!treeFlat.cmpusList}">{{treeFlat.title}}</a>
+                <a ng-class="{'branch':treeFlat.cmpusList,'leaf':!treeFlat.cmpusList}" ng-click="show(0,treeFlat)">{{treeFlat.title}}</a>
                 <ul ng-show="treeFlat.cmpusList">
                     <li ng-repeat="campus in treeFlat.cmpusList||[]">
-                        <a ng-class="{'branch':campus.liveAreaList,'leaf':!campus.liveAreaList}">{{campus.title}}</a>
+                        <a ng-class="{'branch':campus.liveAreaList,'leaf':!campus.liveAreaList}" ng-click="show(1,campus)">{{campus.title}}</a>
                         <ul ng-show="campus.liveAreaList">
                             <li ng-repeat="liveArea in campus.liveAreaList||[]">
-                                <a ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}">{{liveArea.title}}</a>
+                                <a ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}" ng-click="show(2,liveArea)">{{liveArea.title}}</a>
                                 <ul ng-show="liveArea.flatList">
                                     <li ng-repeat="flat in liveArea.flatList||[]">
-                                        <a class="leaf">{{flat.title}}</a>
+                                        <a class="leaf" ng-click="show(3,flat)">{{flat.title}}</a>
                                     </li>
                                 </ul>
                             </li>
@@ -60,27 +60,19 @@
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th>日期</th>
-                    <th class="sort">访客信息</th>
-                    <th class="sort-up">被访人信息</th>
-                    <th class="sort-down">宿舍号</th>
-                    <th class="sort-down">联系方式</th>
+                    <th class="sort" ng-class="{'sort-up':media.orderfield=='startTime' && media.ordertype=='asc','sort-down':media.orderfield=='startTime' && media.ordertype=='desc'}" ng-click="setOrder('startTime')">出借日期</th>
+                    <th class="sort" ng-class="{'sort-up':media.orderfield=='name' && media.ordertype=='asc','sort-down':media.orderfield=='name' && media.ordertype=='desc'}" ng-click="setOrder('name')">学生</th>
+                    <th class="sort" ng-class="{'sort-up':media.orderfield=='roomPath' && media.ordertype=='asc','sort-down':media.orderfield=='roomPath' && media.ordertype=='desc'}" ng-click="setOrder('roomPath')">宿舍号</th>
+                    <th class="sort">联系方式</th>
                     <th>操作</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ccc</td>
+                <tr ng-repeat="item in list">
+                    <td>{{item.startTime}}</td><td>{{item.name + '（' + item.studentNumber + '）'}}</td><td>{{item.roomPath}}</td><td>{{item.phone}}</td>
                     <td>
-                        <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#keyEdit')">编辑</button>
-                        <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#keyDetail')">查看</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ccc</td>
-                    <td>
-                        <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#keyEdit')">编辑</button>
-                        <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#keyDetail')">查看</button>
+                        <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#keyEdit',detail(item))">编辑</button>
+                        <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#keyDetail',detail(item))">查看</button>
                     </td>
                 </tr>
             </tbody>
@@ -89,36 +81,147 @@
     </div>
     <div class="page-controller" style="left:225px;">
         <div class="page-number">
-            <ul class="pagination">
-                <li class="disabled">
-                    <a aria-label="Previous">
+             <ul class="pagination">
+                <li ng-class="{disabled:media.epage<2}">
+                    <a aria-label="Previous" ng-click="setPage(-1)">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="active"><a>1</a></li>
-                <li><a>2</a></li>
-                <li><a>3</a></li>
-                <li><a>4</a></li>
-                <li><a>5</a></li>
-                <li>
-                    <a aria-label="Next">
+                <li ng-show="media.epage-2>0"><a ng-click="setPage(-2)">{{media.epage-2}}</a></li>
+                <li ng-show="media.epage-1>0"><a ng-click="setPage(-1)">{{media.epage-1}}</a></li>
+                <li class="active" ng-show="media.epage>0"><a>{{media.epage}}</a></li>
+                <li ng-show="media.epage+1<=media.pageCount"><a ng-click="setPage(1)">{{media.epage+1}}</a></li>
+                <li ng-show="media.epage+2<=media.pageCount"><a ng-click="setPage(2)">{{media.epage+2}}</a></li>
+                <li ng-class="{disabled:media.epage>=media.pageCount}">
+                    <a aria-label="Next" ng-click="setPage(1)">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
             </ul>
         </div>
         <div class="page-size">
-            共100条记录，每页显示
+            共{{media.recordCount}}条记录，每页显示
             <div class="btn-group dropup">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    30 <span class="caret"></span>
+                    {{media.pagesize}} <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu">
-                    <li><a>10</a></li>
-                    <li><a>20</a></li>
-                    <li><a>30</a></li>
-                    <li><a>50</a></li>
+                <ul class="dropdown-menu" style="min-width:54px">
+                    <li ng-click="setPageSize(10)"><a>10</a></li>
+                    <li ng-click="setPageSize(20)"><a>20</a></li>
+                    <li ng-click="setPageSize(30)"><a>30</a></li>
+                    <li ng-click="setPageSize(50)"><a>50</a></li>
                 </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="info-card fadeIn animated" info-card id="keyAdd">
+    <div class="info-card-wrapper">
+        <div class="info-card-dialog">
+            <div class="info-card-content">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        钥匙出借
+                        <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-tabs" form-tabs>
+                            <ul class="form-tabs-nav" style="margin-left:200px;margin-right:200px;">
+                                <li class="active">
+                                    <div data-role="transfer" data-transfer="1">
+                                        <div class="form-tabs-point"></div>
+                                        学生登记
+                                    </div>
+                                </li>
+                                <li class="tabs-nav">
+                                    <div data-role="transfer" data-transfer="form.student">
+                                        <div class="form-tabs-point"></div>
+                                        出借信息
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="form-tabs-container">
+                                <li class="fadeIn animated active">
+                                    <div class="form-tabs-tool-bar">
+                                        <div>
+                                            <select class="form-control" ng-change="selecter.campusSelecter()" ng-model="selecter.campusId">
+                                                <option value="">选择校区</option>
+                                                <option ng-repeat="campus in treeFlat.cmpusList" value="{{campus.campusId}}">{{campus.title}}</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <select class="form-control" ng-change="selecter.liveAreaSelecter()" ng-model="selecter.liveAreaId">
+                                                <option value="">选择生活区</option>
+                                                <option ng-repeat="liveArea in selecter.liveAreaList" value="{{liveArea.liveAreaId}}">{{liveArea.title}}</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <select class="form-control" ng-model="selecter.flatId">
+                                                <option value="">选择楼栋</option>
+                                                <option ng-repeat="flat in selecter.flatList" value="{{flat.flatId}}">{{flat.title}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-tabs-full">
+                                            <input class="form-control" type="text" placeholder="姓名或学号" ng-model="form.bedName" />
+                                        </div>
+                                        <div>
+                                            <a class="btn btn-stroke btn-info" ng-click="form.studentSearch()">搜索</a>
+                                        </div>
+                                    </div>
+                                    <table class="table table-bordered bg-white">
+                                        <thead>
+                                            <tr>
+                                                <th>校区</th><th>生活区</th><th>楼栋</th><th>宿舍号</th><th>学生</th><th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="student in form.studentList || []">
+                                                <td>{{student.campusName}}</td><td>{{student.liveAreaName}}</td><td>{{student.flatName}}</td><td>{{student.roomName}}</td>
+                                                <td>{{student.name + '(' + student.studentNumber + ')'}}</td><td><a ng-click="form.studentChoose(student)" class="btn btn-xs btn-link" data-role="next">选择</a></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="10" ng-hide="form.studentList" class="start">搜索一下</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10" ng-show="form.studentList && form.studentList.length < 1" class="empty">没有检索到学生信息</td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </li>
+                                <li class="fadeIn animated ">
+                                    <table class="table-bordered bg-white table-form">
+                                        <tbody>
+                                            <tr>
+                                                <td width="150">学生</td><td>{{form.student.name + '（' + form.student.studentNumber +'）'}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td width="150">寝室</td><td>{{form.student.campusName}} - {{form.student.liveAreaName}} - {{form.student.flatName}} - {{form.student.roomName}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="require">联系方式</td><td><input type="text" ng-model="form.phone" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="require">时间</td>
+                                                <td>
+                                                    <input datetimepicker type="text" ng-model="form.starttime" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>备注</td>
+                                                <td><textarea class="form-control" rows="3" ng-model="form.memo"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td><td class="td-btn-box"><a class="btn btn-success" ng-click="form.sub()">完成登记</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -139,138 +242,47 @@
                                 <div class="check-info">
                                     <div class="check-info-title">
                                         <div class="check-info-tip">借出</div> 
-                                        <div>2015-12-12   13:56</div>
-                                        <div><span>提交人：</span>管理员A</div>
+                                        <div>{{work.rpersonnelName}}</div>
+                                        <div><span>提交人：</span>{{work.rpersonnelName}}</div>
                                     </div>
                                     <table class="table table-bordered bg-white">
-                                        <tr><td>业务类型</td><td>入住</td></tr>
-                                        <tr><td>人员</td><td>徐冬（10113003433）</td></tr>
-                                        <tr><td>人员信息</td><td> 机电学院-机械自动化专业2014本三班</td></tr>
-                                        <tr><td>入住床位</td><td>校区-生活区-楼栋-楼层-寝室-床位号</td></tr>
-                                        <tr><td>备注</td><td>备注备注备注备注</td></tr>
+                                        <tr><td>学生</td><td>{{work.name + '（' + work.studentNumber + '）'}}</td></tr>
+                                        <tr><td>宿舍</td><td> {{work.roomPath}}</td></tr>
+                                        <tr><td>备注</td><td>{{work.memo}}</td></tr>
                                     </table>
                                 </div>
                             </li>
-                            <li class="checked passed">
+                            <li class="checked passed" ng-if="work.endTime">
                                 <div class="check-point"></div>
                                 <div class="check-info">
                                    <div class="check-info-title">
                                         <div class="check-info-tip">归还</div>
-                                        <div>2015-12-12   13:56</div>
-                                        <div><span>登记人：</span>管理员A</div>
+                                        <div>{{work.endTime}}</div>
+                                        <div><span>登记人：</span>{{work.rpersonnelName}}</div>
                                     </div>
                                     
                                 </div>
                             </li>
-                            <li>
+                            <li ng-if="!work.endTime">
                                 <div class="check-point"></div>
                                 <div>
                                     <div class="check-btn-box" ng-hide="returnSwitch">
                                         <div>
-                                            <input type="text" datetimepicker class="form-control"/>
+                                            <input type="text" datetimepicker class="form-control" ng-model="endTime" />
                                         </div>
                                         <div>
-                                            <a class="btn btn-addon btn-success"><i class="glyphicon glyphicon-ok"></i>归还</a>
+                                            <a class="btn btn-addon btn-success" ng-click="deal(endTime,closeCard('#keyDetail'))"><i class="glyphicon glyphicon-ok"></i>归还</a>
                                         </div>
                                         <div>
-                                            <a class="btn btn-addon btn-danger"><i class="glyphicon glyphicon-trash"></i>删除</a>
+                                            <a class="btn btn-stroke btn-danger" ng-click="delete(closeCard('#keyDetail'))">删除</a>
                                         </div>
                                         <div>
-                                            <a class="btn btn-addon btn-info"><i class="glyphicon glyphicon-edit"></i>编辑</a>
+                                            <a class="btn btn-stroke btn-info" ng-click="closeCard('#keyDetail')();showCard('#keyEdit')">编辑</a>
                                         </div>
                                     </div>
                                 </div>
                             </li>
                         </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="info-card fadeIn animated" info-card id="keyAdd">
-    <div class="info-card-wrapper">
-        <div class="info-card-dialog">
-            <div class="info-card-content">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        钥匙出借
-                        <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
-                    </div>
-                    <div class="panel-body">
-                        <table class="table-form table-bordered bg-white">
-                            <tbody>
-                                <tr>
-                                    <td width="150" class="require">学号</td><td><input type="text" /></td>
-                                </tr>
-                                <tr>
-                                    <td class="require">姓名</td><td><input type="text" /></td>
-                                </tr>
-                                <tr>
-                                    <td class="require">联系方式</td><td><input type="text" /></td>
-                                </tr>
-                                <tr>
-                                    <td class="require">宿舍</td>
-                                    <td>
-                                        <select>
-                                            <option value="">学院</option>
-                                            <option value="one">First</option>
-                                            <option value="two">Second</option>
-                                            <option value="three">Third</option>
-                                        </select>
-                                        <select>
-                                            <option value="">学院</option>
-                                            <option value="one">First</option>
-                                            <option value="two">Second</option>
-                                            <option value="three">Third</option>
-                                        </select>
-                                        <select>
-                                            <option value="">学院</option>
-                                            <option value="one">First</option>
-                                            <option value="two">Second</option>
-                                            <option value="three">Third</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td><td>
-                                        <select>
-                                            <option value="">学院</option>
-                                            <option value="one">First</option>
-                                            <option value="two">Second</option>
-                                            <option value="three">Third</option>
-                                        </select>
-                                        <select>
-                                            <option value="">学院</option>
-                                            <option value="one">First</option>
-                                            <option value="two">Second</option>
-                                            <option value="three">Third</option>
-                                        </select>
-                                        <select>
-                                            <option value="">学院</option>
-                                            <option value="one">First</option>
-                                            <option value="two">Second</option>
-                                            <option value="three">Third</option>
-                                        </select>
-                                        </td>
-                                </tr>
-                                <tr>
-                                    <td class="require">时间</td>
-                                    <td>
-                                        <div>
-                                        <input datetimepicker type="text" />
-                                        <div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>备注</td>
-                                    <td><textarea class="form-control" rows="3"></textarea></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"><a class="btn btn-success">完成登记</a></td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>
@@ -290,73 +302,32 @@
                         <table class="table-form table-bordered bg-white">
                             <tbody>
                                 <tr>
-                                    <td width="150" class="require">学号</td><td><input type="text" /></td>
+                                    <td>学生</td><td>{{work.peopleName + '（'+work.studentNumber+'）'}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="require">姓名</td><td><input type="text" /></td>
+                                    <td>宿舍</td><td>{{work.roomPath}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="require">联系方式</td><td><input type="text" /></td>
-                                </tr>
-                                <tr>
-                                    <td class="require">宿舍</td>
-                                    <td>
-                                        <select>
-                                            <option value="">学院</option>
-                                            <option value="one">First</option>
-                                            <option value="two">Second</option>
-                                            <option value="three">Third</option>
-                                        </select>
-                                        <select>
-                                            <option value="">学院</option>
-                                            <option value="one">First</option>
-                                            <option value="two">Second</option>
-                                            <option value="three">Third</option>
-                                        </select>
-                                        <select>
-                                            <option value="">学院</option>
-                                            <option value="one">First</option>
-                                            <option value="two">Second</option>
-                                            <option value="three">Third</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td><td>
-                                        <select>
-                                            <option value="">学院</option>
-                                            <option value="one">First</option>
-                                            <option value="two">Second</option>
-                                            <option value="three">Third</option>
-                                        </select>
-                                        <select>
-                                            <option value="">学院</option>
-                                            <option value="one">First</option>
-                                            <option value="two">Second</option>
-                                            <option value="three">Third</option>
-                                        </select>
-                                        <select>
-                                            <option value="">学院</option>
-                                            <option value="one">First</option>
-                                            <option value="two">Second</option>
-                                            <option value="three">Third</option>
-                                        </select>
-                                        </td>
+                                    <td class="require">联系方式</td><td><input type="text" ng-model="work.phone" /></td>
                                 </tr>
                                 <tr>
                                     <td class="require">时间</td>
                                     <td>
-                                        <div>
-                                        <input datetimepicker type="text" />
-                                        <div>
+                                        <input datetimepicker type="text" ng-model="work.startTime" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>备注</td>
-                                    <td><textarea class="form-control" rows="3"></textarea></td>
+                                    <td><textarea class="form-control" rows="3" ng-model="work.memo"></textarea></td>
+                                </tr>
+                                <tr ng-show="work.endTime">
+                                    <td class="require">归还时间</td>
+                                    <td>
+                                        <input datetimepicker type="text" ng-model="work.endTime" />
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2"><a class="btn btn-info">确认修改</a></td>
+                                    <td></td><td class="td-btn-box"><a class="btn btn-info">确认修改</a></td>
                                 </tr>
                             </tbody>
                         </table>

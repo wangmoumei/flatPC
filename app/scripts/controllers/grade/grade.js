@@ -152,10 +152,14 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
         }
     }
     
+    
+    $scope.cardMedia = {
+        tab:1
+    }
     //打分初始化相关
     $scope.dataInit = function (item) {
         console.log(item);
-        
+        $scope.cardMedia.tab = 1;
     }
     
     
@@ -266,25 +270,5 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             })
         }
     };
-    $scope.detail = function(){
-        $('.info-card').addClass('show');
-    }
-    $scope.initCard = function(e){
-        //$rootScope.loading = true;
-        console.log('do something');
-    }
     
-    /*$scope.myChart.setOption({
-        series : [
-            {
-                data:[48, 49, 57, 41, 30, 50, 39]
-            },
-            {
-                data:[67, 38, 48, 57, 49, 68, 55]
-            },
-            {
-                data:[69, 47, 55, 38, 62, 55, 37]
-            }
-        ]
-    }); */
 }]);

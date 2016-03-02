@@ -1,6 +1,6 @@
 angular.module('flatpcApp')
-.controller('KeyCtrl', ['$scope','AppConfig','$rootScope', 'FlatService','CheckInService',
-function($scope,AppConfig,$rootScope,FlatService,CheckInService) {
+.controller('KeyCtrl', ['$scope','AppConfig','$rootScope', 'FlatService','CheckInService','StudentService','$filter',
+function($scope,AppConfig,$rootScope,FlatService,CheckInService,StudentService,$filter) {
     //基础的页码、排序等等选项
     $scope.media = {
         epage:1,
@@ -63,6 +63,7 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService) {
     }
     else {
         refresh();
+        $rootScope.loading = false;
     }
     //渲染list
     function refresh(){
@@ -75,5 +76,149 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService) {
             console.log(data.data);
             $rootScope.loading = false;
         })
+    }
+    
+    //查看详情
+    $scope.work = {};
+    $scope.detail = function(work){
+        $scope.work = work;
+        $scope.endTime = new Date().Format("yyyy-MM-dd hh:mm");
+        return null;
+    };
+    $scope.editSave = function () {
+        $rootScope.loading = true;
+        CheckInService.editKey({
+            token:AppConfig.token,
+            borrowkeyid:$scope.work.borrowkeyid,
+            starttime:$scope.work.starttime,
+            phone:$scope.work.phone,
+            memo:$scope.work.memo
+        }).success(function (data) {
+            $rootScope.loading = false;
+            console.log(data);
+            swal("提示", "修改成功！", "success"); 
+            refresh();
+        })
+    }
+    $scope.delete = function(fun){       
+        swal({   
+            title: "确认删除",   
+            text: "真的要删除吗？",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "删除",   
+            cancelButtonText: "取消",   
+            closeOnConfirm: false 
+        }, 
+        function(){   
+            $rootScope.loading = true;
+            return CheckInService.delKey({
+                token:AppConfig.token,
+                borrowkeyid:$scope.work.borrowkeyid
+            }).success(function(){
+                $rootScope.loading = false;
+                swal("提示", "删除成功！", "success"); 
+                if(fun && typeof fun == 'function') fun();
+                refresh();
+            });
+        });
+    }
+    $scope.deal = function (time,fun) {
+        $rootScope.loading = true;
+        return CheckInService.dealKey({
+            token:AppConfig.token,
+            borrowkeyid:$scope.work.borrowkeyid,
+            endtime:time,
+            adminid:''
+        }).success(function(){
+            $rootScope.loading = false;
+            swal("提示", "处理成功！", "success"); 
+            if(fun && typeof fun == 'function') fun();
+            refresh();
+        });
+    }
+    //新增登记表单中的二级连选的select
+    $scope.selecter = {
+        campusId:'',
+        liveAreaId:'',
+        liveAreaList:[],
+        flatId:'',
+        flatList:[],
+        campusSelecter : function(){
+            //用campusId获取liveAreaList
+            if(this.campusId){
+                //this.liveAreaId = '';
+                //this.flatId = '';
+                this.flatList = [];
+                var campus = this.campusId?$filter('filter')($rootScope.treeFlat.cmpusList,{campusId:this.campusId}):[];
+                this.liveAreaList = (campus.length>0 && campus[0].liveAreaList) ? campus[0].liveAreaList : [];
+            }
+        },
+        liveAreaSelecter : function(){
+            //用liveAreaId获取flatList
+            if(this.liveAreaId){
+                //this.flatId = '';
+                var liveArea = this.liveAreaId?$filter('filter')(this.liveAreaList,{liveAreaId:this.liveAreaId}):[];
+                this.flatList = (liveArea.length>0 && liveArea[0].flatList)?liveArea[0].flatList : [];
+            }
+        },
+        
+        init : function(){
+            this.liveAreaList = [];
+            this.flatList=[];
+            this.campusSelecter();
+            this.liveAreaSelecter();
+        }
+    }
+    $scope.dataInit = function () {
+        $scope.selecter.init();
+        $scope.form.student = null;
+        $scope.form.studentName = '';
+        $scope.form.studentList = null;
+        $scope.form.starttime = new Date().Format("yyyy-MM-dd hh:mm");
+        $scope.form.memo = '';
+        $scope.form.phone = '';
+    }
+    $scope.form = {
+        student:null,
+        studentName:'',
+        studentList:null,
+        phone:'',
+        memo:'',
+        studentSearch:function () {
+            var that = this;
+            $rootScope.loading = true;
+            StudentService.getListWithBedByFlat({
+                keyword:this.studentName,
+                flatid:$scope.selecter.flatId
+            }).success(function (data) {
+                //console.log(data);
+                $rootScope.loading = false;
+                that.studentList = data.list;
+            })
+        },
+        studentChoose:function (student) {
+            this.student = student;
+        },
+        sub:function () {
+            $rootScope.loading = true;
+            CheckInService.addKey({
+                token:AppConfig.token,
+                schoolcode:AppConfig.schoolCode,
+                bedid:this.student.bedId,
+                studentkey:this.student.studentKey,
+                name:this.student.name,
+                starttime:this.starttime,
+                phone:this.phone,
+                adminid:'',
+                memo:this.memo
+            }).success(function (data) {
+                $rootScope.loading = false;
+                console.log(data);
+                swal("提示", "提交成功！", "success"); 
+                refresh();
+            })
+        }
     }
 }]);

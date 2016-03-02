@@ -72,6 +72,12 @@ angular.module('flatpcApp')
         + '&keyword=' + (param.keyword || "") + '&collegeid=' + (param.collegeid || "") + '&classid=' + (param.classid || "");
         return $http.get(url);
     }
+    var getListWithBedByFlat = function (param) {
+        var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/student_room_message/?'
+        + 'schoolcode='+ AppConfig.schoolCode + '&token=' + AppConfig.token
+        + '&keyword=' + (param.keyword || "") + '&flatid=' + (param.flatid || "");
+        return $http.get(url);
+    }
     return {
         getStudent:getStudent,//获取学生详细信息
         getList:getList,//获取学生列表
@@ -84,6 +90,7 @@ angular.module('flatpcApp')
         downloadImport:downloadImport, //下载错误数据
         uploadImg:uploadImg,
         getListByName:getListByName,
-        getListWithBed:getListWithBed
+        getListWithBed:getListWithBed,
+        getListWithBedByFlat:getListWithBedByFlat
     }
 }]);

@@ -61,16 +61,15 @@
             <thead>
                 <tr>
                     <th class="sort" ng-class="{'sort-up':media.orderfield=='startTime' && media.ordertype=='asc','sort-down':media.orderfield=='startTime' && media.ordertype=='desc'}" ng-click="setOrder('startTime')">日期</th>
-                    <th class="sort" ng-class="{'sort-up':media.orderfield=='peopleName' && media.ordertype=='asc','sort-down':media.orderfield=='peopleName' && media.ordertype=='desc'}" ng-click="setOrder('peopleName')">访客信息</th>
+                    <th>访客信息</th>
                     <th class="sort" ng-class="{'sort-up':media.orderfield=='name' && media.ordertype=='asc','sort-down':media.orderfield=='name' && media.ordertype=='desc'}" ng-click="setOrder('name')">被访人信息</th>
                     <th class="sort" ng-class="{'sort-up':media.orderfield=='roomPath' && media.ordertype=='asc','sort-down':media.orderfield=='roomPath' && media.ordertype=='desc'}" ng-click="setOrder('roomPath')">宿舍号</th>
-                    <th>联系方式</th>
                     <th>操作</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="item in list">
-                    <td>{{item.startTime}}</td><td>{{item.peopleName}}</td><td>{{item.name}}</td><td>{{item.roomPath}}</td><td>{{item.phone}}</td>
+                    <td>{{item.startTime}}</td><td>{{item.peopleName}}</td><td>{{item.name + '（'+ item.studentNumber +'）'}}</td><td>{{item.roomPath}}</td>
                     <td>
                         <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#visitEdit',detail(item))">编辑</button>
                         <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#visitDetail',detail(item))">查看</button>
@@ -129,13 +128,13 @@
                         <div class="form-tabs" form-tabs>
                             <ul class="form-tabs-nav" style="margin-left:200px;margin-right:200px;">
                                 <li class="active">
-                                    <div>
+                                    <div data-role="transfer" data-transfer="1">
                                         <div class="form-tabs-point"></div>
                                         受访信息
                                     </div>
                                 </li>
                                 <li class="tabs-nav">
-                                    <div>
+                                    <div data-role="transfer" data-transfer="form.student">
                                         <div class="form-tabs-point"></div>
                                         访客登记
                                     </div>
@@ -166,27 +165,27 @@
                                             <input class="form-control" type="text" placeholder="姓名或学号" ng-model="form.bedName" />
                                         </div>
                                         <div>
-                                            <a class="btn btn-stroke btn-info" ng-click="form.bedSearch()">搜索</a>
+                                            <a class="btn btn-stroke btn-info" ng-click="form.studentSearch()">搜索</a>
                                         </div>
                                     </div>
                                     <table class="table table-bordered bg-white">
                                         <thead>
                                             <tr>
-                                                <th>校区</th><th>生活区</th><th>楼栋</th><th>宿舍号</th><th>床号</th><th>操作</th>
+                                                <th>校区</th><th>生活区</th><th>楼栋</th><th>宿舍号</th><th>学生</th><th>操作</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="bed in form.bedList || []">
-                                                <td>{{bed.campusName}}</td><td>{{bed.liveAreaName}}</td><td>{{bed.flatName}}</td><td>{{bed.roomNum}}</td><td>{{bed.bedName || bed.bedNum}}</td>
-                                                <td><a ng-click="form.bedChoose(bed)" class="btn btn-xs btn-link" data-role="next">选择</a></td>
+                                            <tr ng-repeat="student in form.studentList || []">
+                                                <td>{{student.campusName}}</td><td>{{student.liveAreaName}}</td><td>{{student.flatName}}</td><td>{{student.roomName}}</td>
+                                                <td>{{student.name + '(' + student.studentNumber + ')'}}</td><td><a ng-click="form.studentChoose(student)" class="btn btn-xs btn-link" data-role="next">选择</a></td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <td colspan="10" ng-hide="form.bedList" class="start">搜索一下</td>
+                                                <td colspan="10" ng-hide="form.studentList" class="start">搜索一下</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="10" ng-show="form.bedList && form.bedList.length < 1" class="empty">没有检索到空床位</td>
+                                                <td colspan="10" ng-show="form.studentList && form.studentList.length < 1" class="empty">没有检索到空床位</td>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -195,38 +194,39 @@
                                     <table class="table-bordered bg-white table-form">
                                         <tbody>
                                             <tr>
-                                                <td width="150" class="require">来访人姓名</td><td><input type="text" /></td>
+                                                <td width="150">被访人</td><td>{{form.student.name + '（' + form.student.studentNumber +'）'}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td width="150">被访寝室</td><td>{{form.student.campusName}} - {{form.student.liveAreaName}} - {{form.student.flatName}} - {{form.student.roomName}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td width="150" class="require">来访人姓名</td><td><input type="text" ng-model="form.name" /></td>
                                             </tr>
                                             <tr>
                                                 <td class="require">来访人证件</td>
                                                 <td>
-                                                    <select>
-                                                        <option value="">学生证</option>
-                                                        <option value="one">身份证</option>
+                                                    <select ng-model="form.credentialtype">
+                                                        <option value="0" ng-selected="form.credentialtype == 0">学生证</option>
+                                                        <option value="1" ng-selected="form.credentialtype">身份证</option>
                                                     </select>
-                                                    <input type="text" />
+                                                    <input type="text" ng-model="form.credential" />
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="require">联系方式</td><td><input type="text" /></td>
+                                                <td class="require">联系方式</td><td><input type="text" ng-model="form.phone" /></td>
                                             </tr>
                                             <tr>
                                                 <td class="require">进楼时间</td>
                                                 <td>
-                                                    <div>
-                                                    <input datetimepicker type="text" />
-                                                    <div>
+                                                    <input datetimepicker type="text" ng-model="form.starttime" />
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>备注</td>
-                                                <td><textarea class="form-control" rows="3"></textarea></td>
+                                                <td><textarea class="form-control" rows="3" ng-model="form.memo"></textarea></td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2"><a class="btn btn-info" data-role="next">下一步</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2"><a class="btn btn-success" data-role="prev">完成登记</a></td>
+                                                <td></td><td class="td-btn-box"><a class="btn btn-success" ng-click="form.sub()">完成登记</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -261,13 +261,16 @@
                                     </div>
                                     <table class="table table-bordered bg-white">
                                         <tr><td>访客</td><td>{{work.peopleName}}</td></tr>
+                                        <tr><td>联系方式</td><td>{{work.phone}}</td></tr>
+                                        <tr ng-show="work.credentialType"><td>访客身份证</td><td>{{work.credential}}</td></tr>
+                                        <tr ng-hide="work.credentialType"><td>访客学号</td><td>{{work.credential}}</td></tr>
                                         <tr><td>被访人员</td><td>{{work.name + '（' + work.studentNumber + '）'}}</td></tr>
                                         <tr><td>被访寝室</td><td>{{work.roomPath}}</td></tr>
                                         <tr><td>备注</td><td>{{work.memo}}</td></tr>
                                     </table>
                                 </div>
                             </li>
-                            <li class="checked passed">
+                            <li class="checked passed" ng-if="work.endTime">
                                 <div class="check-point"></div>
                                 <div class="check-info">
                                    <div class="check-info-title">
@@ -278,21 +281,21 @@
                                     
                                 </div>
                             </li>
-                            <li>
+                            <li ng-if="!work.endTime">
                                 <div class="check-point"></div>
                                 <div>
                                     <div class="check-btn-box" ng-hide="returnSwitch">
                                         <div>
-                                            <input type="text" datetimepicker class="form-control"/>
+                                            <input type="text" datetimepicker class="form-control" ng-model="endTime" />
                                         </div>
                                         <div>
-                                            <a class="btn btn-addon btn-success"><i class="glyphicon glyphicon-ok"></i>出楼</a>
+                                            <a class="btn btn-addon btn-success" ng-click="deal(endTime,closeCard('#visitDetail'))"><i class="glyphicon glyphicon-ok"></i>出楼</a>
                                         </div>
                                         <div>
-                                            <a class="btn btn-addon btn-danger"><i class="glyphicon glyphicon-trash"></i>删除</a>
+                                            <a class="btn btn-stroke btn-danger" ng-click="delete(closeCard('#visitDetail'))">删除</a>
                                         </div>
                                         <div>
-                                            <a class="btn btn-addon btn-info"><i class="glyphicon glyphicon-edit"></i>编辑</a>
+                                            <a class="btn btn-stroke btn-info" ng-click="closeCard('#visitDetail')();showCard('#visitEdit')">编辑</a>
                                         </div>
                                     </div>
                                 </div>
@@ -317,79 +320,46 @@
                         <table class="table-form table-bordered bg-white">
                             <tbody>
                                 <tr>
-                                    <td width="150" class="require">来访人姓名</td><td><input type="text" /></td>
+                                    <td>被访人</td><td>{{work.peopleName + '（'+work.studentNumber+'）'}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="require">来访人证件</td><td><input type="text" /></td>
+                                    <td>被访寝室</td><td>{{work.roomPath}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="require">联系方式</td><td><input type="text" /></td>
+                                    <td width="150" class="require">来访人姓名</td><td><input type="text" ng-model="work.name" /></td>
                                 </tr>
                                 <tr>
-                                    <td class="require">被访人学号</td><td><input type="text" /></td>
-                                </tr>
-                                <tr>
-                                    <td class="require">被访人姓名</td><td><input type="text" /></td>
-                                </tr>
-                                <tr>
-                                    <td class="require">被访人宿舍</td>
+                                    <td class="require">来访人证件</td>
                                     <td>
-                                        <select>
-                                            <option value="">学院</option>
-                                            <option value="one">First</option>
-                                            <option value="two">Second</option>
-                                            <option value="three">Third</option>
+                                        <select ng-model="work.credentialType">
+                                            <option value="0" ng-selected="work.credentialType == 0">学生证</option>
+                                            <option value="1" ng-selected="work.credentialType">身份证</option>
                                         </select>
-                                        <select>
-                                            <option value="">学院</option>
-                                            <option value="one">First</option>
-                                            <option value="two">Second</option>
-                                            <option value="three">Third</option>
-                                        </select>
-                                        <select>
-                                            <option value="">学院</option>
-                                            <option value="one">First</option>
-                                            <option value="two">Second</option>
-                                            <option value="three">Third</option>
-                                        </select>
+                                        <input type="text" ng-model="work.credential" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td></td><td>
-                                        <select>
-                                            <option value="">学院</option>
-                                            <option value="one">First</option>
-                                            <option value="two">Second</option>
-                                            <option value="three">Third</option>
-                                        </select>
-                                        <select>
-                                            <option value="">学院</option>
-                                            <option value="one">First</option>
-                                            <option value="two">Second</option>
-                                            <option value="three">Third</option>
-                                        </select>
-                                        <select>
-                                            <option value="">学院</option>
-                                            <option value="one">First</option>
-                                            <option value="two">Second</option>
-                                            <option value="three">Third</option>
-                                        </select>
-                                        </td>
+                                    <td class="require">联系方式</td><td><input type="text" ng-model="work.phone" /></td>
                                 </tr>
+
                                 <tr>
                                     <td class="require">进楼时间</td>
                                     <td>
-                                        <div>
-                                        <input datetimepicker type="text" />
-                                        <div>
+                                        <input datetimepicker type="text" ng-model="work.startTime" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>备注</td>
-                                    <td><textarea class="form-control" rows="3"></textarea></td>
+                                    <td><textarea class="form-control" rows="3" ng-model="work.memo"></textarea></td>
+                                </tr>
+                                <tr ng-show="work.endTime">
+                                    <td class="require">出楼时间</td>
+                                    <td>
+                                        <input datetimepicker type="text" ng-model="work.endTime" />
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2"><a class="btn btn-info">确认修改</a></td>
+                                    <td></td><td class="td-btn-box"><a class="btn btn-info" ng-click="editSave(closeCard('#visitEdit'))">确认修改</a></td>
                                 </tr>
                             </tbody>
                         </table>

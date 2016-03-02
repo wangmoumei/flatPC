@@ -27,12 +27,15 @@ angular.module('flatpcApp')
                 if(fun && typeof fun == 'function')
                     fun(node);
             };
-            scope.closeCard = scope.closeCard || function (str) {
+            scope.closeCard = scope.closeCard || function (str,fun) {
                 return function () {
                     if(str)
                         $(str).removeClass('show');
                     else
                         $('.info-card').removeClass('show');
+                    if(fun && typeof fun == 'function'){
+                        fun();
+                    }
                 }
             }
         }

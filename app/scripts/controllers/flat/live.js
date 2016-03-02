@@ -118,7 +118,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
     $scope.passWork = function(){
         $rootScope.loading = true;
         DailyService.passLive({
-            token:'',
+            token:AppConfig.token,
             occupancyid:$scope.work.occupancyId || '',
             adminid:''
         }).success(function(data){
@@ -131,7 +131,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
     $scope.returnWork = function(){
         $rootScope.loading = true;
         DailyService.backLive({
-            token:'',
+            token:AppConfig.token,
             occupancyid:$scope.work.occupancyId || '',
             backmessage:$scope.work.returnMessage,
             adminid:''
@@ -143,16 +143,29 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
     }
     //取消
     $scope.cancelWork = function(){
-        $rootScope.loading = true;
-        DailyService.cancelLive({
-            token:'',
-            occupancyid:$scope.work.occupancyId || '',
-            adminid:''
-        }).success(function(data){
-            swal("提示", "已取消！", "success"); 
-            refresh();
-            $rootScope.loading = false;
+        swal({   
+            title: "确认关闭",   
+            text: "确定要取消掉这条申请吗？",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "确定",   
+            cancelButtonText: "取消",   
+            closeOnConfirm: false 
+        }, 
+        function(){   
+            $rootScope.loading = true;
+            return DailyService.cancelLive({
+                token:AppConfig.token,
+                occupancyid:$scope.work.occupancyId || '',
+                adminid:''
+            }).success(function(data){
+                swal("提示", "已取消！", "success"); 
+                refresh();
+                $rootScope.loading = false;
+            });
         });
+        
     }
     
     //二级连选的select

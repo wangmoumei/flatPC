@@ -82,14 +82,66 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
     $scope.work = {};
     $scope.detail = function(work){
         $scope.work = work;
+        $scope.endTime = new Date().Format("yyyy-MM-dd hh:mm");
         return null;
+    };
+    $scope.editSave = function () {
+        $rootScope.loading = true;
+        CheckInService.editVisit({
+            token:AppConfig.token,
+            visitid:$scope.work.visitid,
+            starttime:$scope.work.starttime,
+            name:$scope.work.name,
+            credentialtype:$scope.work.credentialtype,
+            credential:$scope.work.credential,
+            phone:$scope.work.phone,
+            memo:$scope.work.memo
+        }).success(function (data) {
+            $rootScope.loading = false;
+            console.log(data);
+            swal("提示", "修改成功！", "success"); 
+            refresh();
+        })
     }
-    
-    $scope.dataInit = function () {
-        $scope.selecter.init();
+    $scope.delete = function(fun){       
+        swal({   
+            title: "确认删除",   
+            text: "真的要删除吗？",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "删除",   
+            cancelButtonText: "取消",   
+            closeOnConfirm: false 
+        }, 
+        function(){   
+            $rootScope.loading = true;
+            return CheckInService.delVisit({
+                token:AppConfig.token,
+                visitid:$scope.work.visitid
+            }).success(function(){
+                $rootScope.loading = false;
+                swal("提示", "删除成功！", "success"); 
+                if(fun && typeof fun == 'function') fun();
+                refresh();
+            });
+        });
     }
-    
-    //二级连选的select
+    $scope.deal = function (time,fun) {
+        $rootScope.loading = true;
+        return CheckInService.dealVisit({
+            token:AppConfig.token,
+            visitid:$scope.work.visitid,
+            endtime:time,
+            adminid:''
+        }).success(function(){
+            $rootScope.loading = false;
+            swal("提示", "处理成功！", "success"); 
+            if(fun && typeof fun == 'function') fun();
+            refresh();
+        });
+    }
+    //新增登记表单中的二级连选的select
     $scope.selecter = {
         campusId:'',
         liveAreaId:'',
@@ -126,18 +178,34 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
             
         }
     }
-    
+    $scope.dataInit = function () {
+        $scope.selecter.init();
+        $scope.form.student = null;
+        $scope.form.studentName = '';
+        $scope.form.studentList = null;
+        $scope.form.starttime = new Date().Format("yyyy-MM-dd hh:mm");
+        $scope.form.name = '';
+        $scope.form.credentialtype = 0;
+        $scope.form.credential = '';
+        $scope.form.phone = '';
+        $scope.form.memo = '';
+    }
     $scope.form = {
         student:null,
         studentName:'',
         studentList:null,
+        starttime:'',
+        name:'',
+        credentialtype:0,
+        credential:'',
+        phone:'',
+        memo:'',
         studentSearch:function () {
             var that = this;
             $rootScope.loading = true;
-            StudentService.getListByName({
+            StudentService.getListWithBedByFlat({
                 keyword:this.studentName,
-                collegeid:$scope.selecter.collegeId,
-                classid:$scope.selecter.classId
+                flatid:$scope.selecter.flatId
             }).success(function (data) {
                 //console.log(data);
                 $rootScope.loading = false;
@@ -149,11 +217,17 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
         },
         sub:function () {
             $rootScope.loading = true;
-            CheckInService.addLive({
+            CheckInService.addVisit({
                 token:AppConfig.token,
                 schoolcode:AppConfig.schoolCode,
-                bedid:this.bed.bedId,
+                bedid:this.student.bedId,
                 studentkey:this.student.studentKey,
+                peoplename:this.student.name,
+                starttime:this.starttime,
+                name:this.name,
+                credentialtype:this.credentialtype,
+                credential:this.credential,
+                phone:this.phone,
                 adminid:'',
                 memo:this.memo
             }).success(function (data) {
