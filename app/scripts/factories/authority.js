@@ -71,6 +71,15 @@ angular.module('flatpcApp')
             case 'term':
                 return ['data','data','term'];
                 break;
+            case 'user':
+                return ['admin','admin','user'];
+                break;
+            case 'admin':
+                return ['admin','admin','admin'];
+                break;
+            case 'group':
+                return ['admin','admin','group'];
+                break;
         }
     };
     var transform = function(){

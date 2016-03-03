@@ -37,7 +37,7 @@ angular
             $rootScope.authority = '';
 			$rootScope.$on('$stateChangeStart',
 				function(event, toState, toParams, fromState, fromParams) {
-                    
+                    // alert(toState.name);
                     $rootScope.sysMenu = authority.check(toState.name);
                     $rootScope.loading = true;
             });
@@ -382,6 +382,57 @@ angular
             "": {
                 templateUrl: 'views/setting/term.html',
                 controller: 'TermCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('user', {
+        url: "/user",
+        views: {
+            "": {
+                templateUrl: 'views/admin/user.html',
+                controller: 'UserCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('admin', {
+        url: "/admin",
+        views: {
+            "": {
+                templateUrl: 'views/admin/admin.html',
+                controller: 'AdminCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('group', {
+        url: "/group",
+        views: {
+            "": {
+                templateUrl: 'views/admin/group.html',
+                controller: 'GroupCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",

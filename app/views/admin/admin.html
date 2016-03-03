@@ -1,0 +1,75 @@
+<div class="history-container">
+    <a class="return-btn" href="javascript:history.go(-1)">
+        <i class="ALiconfont icon-sortleft"></i>
+        返回
+    </a>
+    <ul class="history-list">
+        <li><a href="#index" ng-click="routerInit('admin')">权限</a></li>
+        <li><a href="#index">帐号管理</a></li>
+        <li>超级管理员</li>
+    </ul>
+</div>
+<div class="page-main" style="top:49px;">
+    <div class="page-tree" tree>
+        <ul>
+            <li class="open">
+                <a class="branch">所有</a>
+                <ul>
+                    <li ng-repeat="admin in admins||[]" >
+                        <a ng-class="{'branch':admin.adminList,'leaf':!admin.adminList}" ng-click="show(1,admin)">{{admin.adminTypeName}}</a>
+                        <ul ng-show="admin.adminList">
+                            <li ng-repeat="item in admin.adminList||[]" >
+                                <a class="leaf" ng-click="show(2,item)">{{item.userName}}</a>
+                            </li>
+                            <li><a class="add" ng-click="add(2,admin)"><i class="ALiconfont icon-plus1"></i> 添加帐号</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="from-container" style="left:225px;">
+        <table class="table-form table-bordered bg-white">
+            <tr>
+                <td class="require" width="200">分类</td><td><input type="text" ng-model="media.collegeName" /></td>
+            </tr>
+            <tr>
+                <td width="200">学校类型</td>
+                <td>
+                    <select ng-model="media.schooltype">
+                        <option value="">请选择</option>
+                        <option ng-repeat="item in dic[1].values" value="{{item.title}}">{{item.title}}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="require" width="200">学校</td><td><input type="text" ng-model="media.username" /></td>
+            </tr>
+            <tr>
+                <td width="200">学校人数</td>
+                <td>
+                    <select ng-model="media.schooltype">
+                        <option value="">请选择</option>
+                        <option ng-repeat="item in dic[0].values" value="{{item.title}}">{{item.title}}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="require" width="200">帐号</td><td><input type="text" ng-model="media.useraccount" /></td>
+            </tr>
+            <tr>
+                <td class="require" width="200">密码</td><td><input type="text" ng-model="media.password" /></td>
+            </tr>
+            <tr>
+                <td></td><td>
+                    <div class="btn-box">
+                        <button ng-show="media.status == 1" ng-click="addSave()" class="btn btn-success">提交</button>
+                        <button ng-show="media.status == 0" ng-click="editSave()" class="btn btn-info">保存</button>
+                        <button ng-show="media.status == 0" ng-click="delete()" class="btn btn-danger">删除</button>
+                    </div>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+</div>

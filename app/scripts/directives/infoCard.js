@@ -19,7 +19,7 @@ angular.module('flatpcApp')
                     }
                 }else{
                     show();
-					console.log(str);
+					// console.log(str);
                     if(typeof str == 'function'){
                         str(node);
                     }

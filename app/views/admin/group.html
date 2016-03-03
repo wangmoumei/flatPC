@@ -1,0 +1,54 @@
+<div class="history-container">
+    <a class="return-btn" href="javascript:history.go(-1)">
+        <i class="ALiconfont icon-sortleft"></i>
+        返回
+    </a>
+    <ul class="history-list">
+        <li><a href="#index" ng-click="routerInit('admin')">权限</a></li>
+        <li><a href="#index">帐号管理</a></li>
+        <li>超级管理员</li>
+    </ul>
+</div>
+<div class="page-main" style="top:49px;">
+    <div class="page-tree" tree>
+        <ul>
+            <li class="open">
+                <a class="branch">所有</a>
+                <ul>
+                    <li ng-repeat="group in groups||[]" >
+                        <a class="leaf" ng-click="show(1,group)">{{group.title}}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="from-container" style="left:225px;">
+        <table class="table-form table-bordered bg-white">
+            <tr>
+                <td class="require" width="200">账号组名称</td><td><input type="text" ng-model="media.title" /></td>
+            </tr>
+            <tr>
+                <td class="require" width="200">排序</td><td><input type="text" ng-model="media.listorder" /></td>
+            </tr>
+            <tr>
+                <td width="200">可创建账号数</td><td><input type="text" ng-model="media.maxaccount" /></td>
+            </tr>
+            <tr>
+                <td class="require" width="200">可分配角色</td>
+                <td>
+                    
+                </td>
+            </tr>
+            <tr>
+                <td></td><td>
+                    <div class="btn-box">
+                        <button ng-show="media.status == 1" ng-click="addSave()" class="btn btn-success">提交</button>
+                        <button ng-show="media.status == 0" ng-click="editSave()" class="btn btn-info">保存</button>
+                        <button ng-show="media.status == 0" ng-click="delete()" class="btn btn-danger">删除</button>
+                    </div>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+</div>
