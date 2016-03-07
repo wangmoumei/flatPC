@@ -16,7 +16,7 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-    <link rel="stylesheet" href="http://7xp0c4.com2.z0.glb.qiniucdn.com/iconfont-1.32.css" />
+    <link rel="stylesheet" href="http://7xp0c4.com2.z0.glb.qiniucdn.com/iconfont-1.34.css" />
   </head>
   <body ng-app="flatpcApp">
     <!--[if lte IE 8]>
@@ -54,16 +54,6 @@
         <iframe name="page-tab" frameborder="no" scrolling="auto" allowtransparency="true" width="100%" height="100%">
             
         </iframe>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-wrapper" >
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" ui-view="modal">
-            
-        </div>
-    </div>
-    </div>
     </div>
     <script src="http://cdn.bootcss.com/echarts/3.0.0/echarts.common.js"></script>
     <!-- build:js(.) scripts/vendor.js -->
@@ -103,6 +93,7 @@
     <script src="scripts/controllers/flat/change.js"></script>
     <script src="scripts/controllers/grade/grade.js"></script>
     <script src="scripts/controllers/grade/setting.js"></script>
+    <script src="scripts/controllers/grade/statistics.js"></script>
     <script src="scripts/controllers/checkIn/visit.js"></script>
     <script src="scripts/controllers/checkIn/key.js"></script>
     <script src="scripts/controllers/checkIn/late.js"></script>
@@ -143,6 +134,7 @@
     
     <script src="scripts/filters/roomList.js"></script>
     <script src="scripts/filters/sliceWeek.js"></script>
+    <script src="scripts/filters/ObjToArray.js"></script>
     <!-- endbuild -->
 </body>
 </html>

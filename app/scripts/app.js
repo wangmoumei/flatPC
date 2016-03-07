@@ -194,7 +194,7 @@ angular
         views: {
             "": {
                 templateUrl: 'views/grade/statistics.html',
-                controller: 'GradeCtrl'
+                controller: 'StatisticsCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",
@@ -458,10 +458,6 @@ angular
             "header": {
                 templateUrl: "views/header.html",
                 controller: 'HeaderCtrl'
-            },
-            'modal':{
-                templateUrl: 'views/add.html',
-                controller: 'ListCtrl'
             }
         }
     })
@@ -479,10 +475,6 @@ angular
             "header": {
                 templateUrl: "views/header.html",
                 controller: 'HeaderCtrl'
-            },
-            'modal':{
-                templateUrl: 'views/add.html',
-                controller: 'ListCtrl'
             }
         }
     })

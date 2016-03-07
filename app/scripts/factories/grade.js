@@ -117,6 +117,28 @@ angular.module('flatpcApp')
         var url = AppConfig.WEB_ROOT + 'evaluation/setups/del_type/';
         return $http.get(url,param);
     };
+    var getStatistics = function(param){
+        var url = AppConfig.WEB_ROOT + 'evaluation/scorecount/get_list/?'
+        + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
+        + '&schoolyearid=' + (param.schoolyearid || '') 
+        + (param.semesterid?('&semesterid='+param.semesterid):'')
+        + (param.flatid?('&flatid='+param.flatid):'')
+        + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
+        + (param.campusid?('&campusid='+param.campusid):'');
+        
+        return $http.get(url);
+    };
+    var downloadStatistics = function(param){
+        var url = AppConfig.WEB_ROOT + 'evaluation/scorecount/get_list_export/?'
+        + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
+        + '&schoolyearid=' + (param.schoolyearid || '') 
+        + (param.semesterid?('&semesterid='+param.semesterid):'')
+        + (param.flatid?('&flatid='+param.flatid):'')
+        + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
+        + (param.campusid?('&campusid='+param.campusid):'');
+        
+        return $http.get(url);
+    };
     return {
         getListByFlat:getListByFlat,
         setGrade:setGrade,
@@ -134,6 +156,8 @@ angular.module('flatpcApp')
         getSettingList:getSettingList,
         addSetting:addSetting,
         editSetting:editSetting,
-        delSetting:delSetting
+        delSetting:delSetting,
+        getStatistics:getStatistics,
+        downloadStatistics:downloadStatistics
     }
 }]);
