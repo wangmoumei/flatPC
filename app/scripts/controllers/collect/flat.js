@@ -33,7 +33,12 @@ function($scope,$rootScope,FlatService,AppConfig) {
         $rootScope.loading = true;
         FlatService.downloadImport(id).success(function(data){
             console.log(data.data.fileUrl);
-            location.href=data.data.fileUrl;
+            if(data.code == 0){
+                location.href=data.data.fileUrl;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            
             $rootScope.loading = false;
         })
         
@@ -60,6 +65,11 @@ function($scope,$rootScope,FlatService,AppConfig) {
         console.log($scope.uploadExcel);
         $rootScope.loading = true;
         return FlatService.importFlat($scope.uploadExcel).success(function(data){
+            if(data.code == 0){
+ 
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             console.log(data);
             $rootScope.loading = false;
         })
@@ -68,9 +78,14 @@ function($scope,$rootScope,FlatService,AppConfig) {
     function refresh(){
         $rootScope.loading = true;
         FlatService.getImport($scope.media).success(function(data){
-            $scope.importList = data.data.list;
-            $scope.media.recordCount = data.data.recordCount;
-            $scope.media.pageCount = data.data.pageCount;
+            if(data.code == 0){
+                $scope.importList = data.data.list;
+                $scope.media.recordCount = data.data.recordCount;
+                $scope.media.pageCount = data.data.pageCount;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+
             $rootScope.loading = false;
         })
     }

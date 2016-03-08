@@ -49,6 +49,28 @@
                         margin-bottom: 0;
                     }
                 }
+                &.menu-setting{
+                    position:relative;
+                    height:500px;
+                    .btn-tool{
+                        position: absolute;
+                        bottom:0px;
+                        height: 50px;
+                        line-height: 50px;
+                        width: 100%;
+                        border-top: 1px solid #dfe0e0;
+                        text-align: center;
+                        word-spacing: 20px;
+                        background-color: #f6f7f8;
+                    }
+                    .menu-setting-container{
+                        position: absolute;
+                        top:0;
+                        bottom:50px;
+                        left:225px;
+                        right: 0px;
+                    }
+                }
             }
         }
     }

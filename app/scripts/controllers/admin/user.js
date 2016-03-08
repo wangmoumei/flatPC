@@ -42,15 +42,24 @@ angular.module('flatpcApp')
     $scope.addSave = function () {
         $rootScope.loading = true;
         UserService.addUser($scope.form).success(function (data) {
-            swal("提示", "添加成功！", "success"); 
-            refresh();
+            
+            if(data.code == 0){
+                swal("提示", "添加成功！", "success"); 
+                refresh();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })
     }
     $scope.editSave = function () {
         $rootScope.loading = true;
         UserService.editUser($scope.form).success(function (data) {
-            swal("提示", "保存成功！", "success"); 
-            refresh();
+            if(data.code == 0){
+                swal("提示", "保存成功！", "success"); 
+                refresh();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })
     }
     $scope.delete = function () {
@@ -69,8 +78,12 @@ angular.module('flatpcApp')
                 return UserService.delUser({
                     adminid:$scope.media.adminid
                 }).success(function (data) {
-                    swal("提示", "删除成功！", "success"); 
-                    refresh();
+                    if(data.code == 0){
+                        swal("提示", "删除成功！", "success"); 
+                        refresh();
+                    }
+                    else
+                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                 })
         });
         
@@ -122,8 +135,14 @@ angular.module('flatpcApp')
         refresh();
     }else{
         UserService.getGroupList().success(function (data) {
-            $rootScope.treeGroup = data.list;
-            refresh();
+            
+            if(data.code == 0){
+                $rootScope.treeGroup = data.list;
+                refresh();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            
         })
     }
     function refresh() {
@@ -131,7 +150,12 @@ angular.module('flatpcApp')
         UserService.getList({
             groupid:$scope.media.groupid
         }).success(function (data) {
-            $scope.list = data.list;
+            if(data.code == 0){
+                $scope.list = data.list;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            
             $rootScope.loading = false;
         })
     }

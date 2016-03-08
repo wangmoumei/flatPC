@@ -1,6 +1,6 @@
 angular.module('flatpcApp')
-.controller('StudentCtrl', ['$scope', 'AppConfig','$rootScope','StudentService','CollegeService','$filter',
-function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
+.controller('StudentCtrl', ['$scope', 'AppConfig','$rootScope','StudentService','CollegeService','$filter','PublicService',
+function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,PublicService) {
     
     //基础的页码、排序等等选项
     $scope.media = {
@@ -93,9 +93,15 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
     $scope.studentList = [];
     if(!$rootScope.treeCollege){
         CollegeService.getList(AppConfig.schoolCode).success(function(data){
-            $rootScope.treeCollege = data.data;
-            $scope.media.title = data.data[0].name;
-            refresh();
+            if(data.code == 0){
+                $rootScope.treeCollege = data.data;
+                $scope.media.title = data.data[0].name;
+                refresh();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            
+            
         });
     }else refresh();
     
@@ -118,6 +124,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
         $scope.student.phone = "";
         $scope.student.currentAddress = "";
         $scope.student.memo = "";
+        $scope.student.fileid = '';
         if($scope.media.classid){
             $scope.selecter.classId = $scope.media.classid;
             $scope.selecter.classSelecter(); 
@@ -135,13 +142,16 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
         $rootScope.loading = true;
         return StudentService.getStudent('11481_201234005').success(function(data){
             console.log(data);
-            $scope.student = data.data;
-            $scope.student.type = 1;
-            $scope.selecter.collegeId = data.data.collegeId;
-            $scope.selecter.collegeSelecter();
-            $scope.selecter.classId =  data.data.classId;
-            $rootScope.loading = false;
-        }).error(function(){
+            if(data.code == 0){
+                $scope.student = data.data;
+                $scope.student.fileid = data.data.fileId;
+                $scope.student.type = 1;
+                $scope.selecter.collegeId = data.data.collegeId;
+                $scope.selecter.collegeSelecter();
+                $scope.selecter.classId =  data.data.classId;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             $rootScope.loading = false;
         })
     }
@@ -153,7 +163,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
             schoolcode:AppConfig.schoolCode,
             studentnumber:$scope.student.studentNumber,
             name:$scope.student.name,
-            img:$scope.student.headImgurl,
+            fileid:$scope.student.fileid,
             sex:$scope.student.sex,
             birthday:$scope.student.birthday,
             political:$scope.student.political,
@@ -161,18 +171,22 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
             origin:$scope.student.origin,
             marital:$scope.student.marital,
             identitycard:$scope.student.identityCard,
-            collegeid:$scope.student.studentNumber,
-            classid:$scope.student.studentNumber,
+            collegeid:$scope.selecter.collegeId,
+            classid:$scope.selecter.classId,
             readtype:$scope.student.studentType,
             homeaddress:$scope.student.homeAddress,
             phone:$scope.student.phone,
             memo:$scope.student.memo
         }).success(function(data){
-            $scope.student.studentKey = data.data.studentKey;
-            $scope.student.type = 1;
             $rootScope.loading = false;
-            swal("提示", "添加成功！", "success"); 
-            refresh();
+            if(data.code == 0){
+                $scope.student.studentKey = data.data.studentKey;
+                $scope.student.type = 1;
+                swal("提示", "添加成功！", "success"); 
+                refresh();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })
     }
     //修改学生信息
@@ -183,7 +197,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
             studentkey:$scope.student.studentKey,
             studentnumber:$scope.student.studentNumber,
             name:$scope.student.name,
-            img:$scope.student.headImgurl,
+            fileid:$scope.student.fileid,
             sex:$scope.student.sex,
             birthday:$scope.student.birthday,
             political:$scope.student.political,
@@ -191,16 +205,21 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
             origin:$scope.student.origin,
             marital:$scope.student.marital,
             identitycard:$scope.student.identityCard,
-            collegeid:$scope.student.studentNumber,
-            classid:$scope.student.studentNumber,
+            collegeid:$scope.selecter.collegeId,
+            classid:$scope.selecter.classId,
             readtype:$scope.student.studentType,
             homeaddress:$scope.student.homeAddress,
             phone:$scope.student.phone,
             memo:$scope.student.memo
-        }).success(function(){
+        }).success(function(data){
             $rootScope.loading = false;
-            swal("提示", "修改成功！", "success"); 
-            refresh();
+            
+            if(data.code == 0){
+                swal("提示", "修改成功！", "success"); 
+                refresh();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })
     }
     //删除学生信息
@@ -220,10 +239,15 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
                 return StudentService.delStudent({
                     token:AppConfig.token,
                     studentkey:$scope.student.studentkey
-                }).success(function(){
+                }).success(function(data){
                     $rootScope.loading = false;
-                    swal("提示", "删除成功！", "success"); 
-                    refresh();
+                    
+                    if(data.code == 0){
+                        swal("提示", "删除成功！", "success"); 
+                        refresh();
+                    }
+                    else
+                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                 });
         });
     }
@@ -237,11 +261,19 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
         }
         var fdata = new FormData();
         if (!fdata) { swal('提示', '你的浏览器不支持文件上传！', 'error'); return false; };
-        fdata.append('file', files[0]);
+        fdata.append('img', files[0]);
+        
+        fdata.append('token', AppConfig.token);
+        fdata.append('schoolcode', AppConfig.schoolCode);
         $rootScope.loading = true;
-        return StudentService.uploadImg(fdata).success(function(data){
+        return PublicService.imgUpload(fdata).success(function(data){
             $rootScope.loading = false;
-            $scope.student.headImgurl = data.data.headImgurl;
+            if(data.code == 0){
+                $scope.student.headImgurl = data.data.serverPath;
+                $scope.student.fileid = data.data.fileId;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })
         
     }
@@ -250,8 +282,13 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
         $rootScope.loading = true;
         StudentService.downloadStudent($scope.media).success(function(data){
             console.log(data.data.fileUrl);
-            location.href=data.data.fileUrl;
+            
             $rootScope.loading = false;
+            if(data.code == 0){
+                location.href=data.data.fileUrl;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })
         
     }
@@ -260,9 +297,14 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
     function refresh(){
         $rootScope.loading = true;
         StudentService.getList($scope.media).success(function(data){
-            $scope.studentList = data.data.list;
-            $scope.media.recordCount = data.data.recordCount;
-            $scope.media.pageCount = data.data.pageCount;
+            if(data.code == 0){
+                $scope.studentList = data.data.list;
+                $scope.media.recordCount = data.data.recordCount;
+                $scope.media.pageCount = data.data.pageCount;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            
             console.log(data.data);
             $rootScope.loading = false;
         })
@@ -302,7 +344,11 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
         $rootScope.loading = true;
         StudentService.downloadImport(id).success(function(data){
             console.log(data.data.fileUrl);
-            location.href=data.data.fileUrl;
+            if(data.code == 0){
+                location.href=data.data.fileUrl;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             $rootScope.loading = false;
         })
         
@@ -335,9 +381,14 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
     function refresh(){
         $rootScope.loading = true;
         StudentService.getImport($scope.media).success(function(data){
-            $scope.importList = data.data.list;
-            $scope.media.recordCount = data.data.recordCount;
-            $scope.media.pageCount = data.data.pageCount;
+            if(data.code == 0){
+                $scope.importList = data.data.list;
+                $scope.media.recordCount = data.data.recordCount;
+                $scope.media.pageCount = data.data.pageCount;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            
             console.log(data.data);
             $rootScope.loading = false;
         })

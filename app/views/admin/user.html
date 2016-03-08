@@ -91,17 +91,17 @@
             <div class="info-card-content">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        {{form.status?'编辑学生':'新增学生'}}
+                        {{form.status?'编辑帐号':'新增帐号'}}
                         <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
                     </div>
-                    <div class="panel-body" ng-controller="StudentImportCtrl">
+                    <div class="panel-body">
                         <table class="table-form table-bordered bg-white">
                             <tbody>
                                 <tr>
-                                    <td class="require">账号组</td>
+                                    <td class="require">帐号组</td>
                                     <td>
                                         <select ng-model="form.groupid" ng-change="groupSelect()">
-                                            <option value="">请选择账号组</option>
+                                            <option value="">请选择帐号组</option>
                                             <option ng-repeat="group in treeGroup" value="{{group.groupId}}" ng-selected="form.groupid == group.groupId">{{group.title}}</option>
                                         </select>
                                     </td>
@@ -136,7 +136,8 @@
                                     <td><input type="text" ng-model="form.password" /></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">
+                                    <td></td>
+                                    <td class="td-btn-box">
                                         <a ng-hide="form.status" class="btn btn-success" ng-click="addSave()">提交</a>
                                         <a ng-show="form.status" class="btn btn-primary" ng-click="editSave()">保存</a>
                                         <a ng-show="form.status" class="btn btn-danger" ng-click="delete()">删除</a>

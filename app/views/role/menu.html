@@ -1,0 +1,94 @@
+<div class="history-container">
+    <a class="return-btn" href="javascript:history.go(-1)">
+        <i class="ALiconfont icon-sortleft"></i>
+        返回
+    </a>
+    <ul class="history-list">
+        <li><a href="#index" ng-click="routerInit('role')">权限</a></li>
+        <li><a href="#index">角色管理</a></li>
+        <li>功能设置</li>
+    </ul>
+</div>
+<div class="page-main" style="top:49px;">
+    <div class="page-tree" tree style="width:256px;">
+        <ul>
+            <li class="open" ng-repeat="item in list">
+                <a ng-click="show(0,item,0)" class="branch">{{item.remark}}</a>
+                <ul>
+                    <li ng-repeat="item1 in item.subNodes || []" >
+                        <a class="branch" ng-click="show(1,item1,item.nodeId,item.remark)">{{item1.remark}}</a>
+                        <ul>
+                            <li ng-repeat="item2 in item1.subNodes||[]" >
+                                <a class="branch" ng-click="show(2,item2,item1.nodeId,item.remark,item1.remark)">{{item2.remark}}</a>
+                                <ul>
+                                    <li ng-repeat="item3 in item2.subNodes||[]" >
+                                        <a class="branch" ng-click="show(3,item3,item2.nodeId,item.remark,item1.remark,item2.remark)">{{item3.remark}}</a>
+                                        <ul>
+                                            <li ng-repeat="item4 in item3.subNodes||[]" >
+                                                <a class="branch" ng-click="show(4,item4,item3.nodeId,item.remark,item1.remark,item2.remark,item3.remark)">{{item4.remark}}</a>
+                                                <ul>
+                                                    <li ng-repeat="item5 in item4.subNodes||[]" >
+                                                        <a class="leaf" ng-click="show(5,item5,item4.nodeId,item.remark,item1.remark,item2.remark,item3.remark,item4.remark)">{{item5.remark}}</a>
+                                                    </li>
+                                                    <li><a class="add" ng-click="add(5,item4.nodeId,item.remark,item1.remark,item2.remark,item3.remark,item4.remark)"><i class="ALiconfont icon-plus1"></i> 添加子功能</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a class="add" ng-click="add(4,item3.nodeId,item.remark,item1.remark,item2.remark,item3.remark)"><i class="ALiconfont icon-plus1"></i> 添加功能</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a class="add" ng-click="add(3,item2.nodeId,item.remark,item1.remark,item2.remark)"><i class="ALiconfont icon-plus1"></i> 添加模块</a></li>
+                                </ul>
+                            </li>
+                            <li><a class="add" ng-click="add(2,item1.nodeId,item.remark,item1.remark)"><i class="ALiconfont icon-plus1"></i> 添加模块分类</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="add" ng-click="add(1,item.nodeId,item.remark)"><i class="ALiconfont icon-plus1"></i> 添加应用</a></li>
+                </ul>
+            </li>
+            <li><a class="add" ng-click="add(0,0)"><i class="ALiconfont icon-plus1"></i> 添加系统</a></li>
+        </ul>
+    </div>
+    <div class="from-container" style="left:255px;top:-1px;">
+        <table class="table-form table-bordered bg-white">
+            <tr ng-hide="media.type < 1">
+                <td width="200">系统</td><td><input type="text" disabled ng-model="media.title0" /></td>
+            </tr>
+            <tr ng-hide="media.type < 2">
+                <td width="200">应用</td><td><input type="text" disabled ng-model="media.title1" /></td>
+            </tr>
+            <tr ng-hide="media.type < 3">
+                <td width="200">模块分类</td><td><input type="text" disabled ng-model="media.title2" /></td>
+            </tr>
+            <tr ng-hide="media.type < 4">
+                <td width="200">模块</td><td><input type="text" disabled ng-model="media.title3" /></td>
+            </tr>
+            <tr ng-hide="media.type < 5">
+                <td width="200">功能</td><td><input type="text" disabled ng-model="media.title4" /></td>
+            </tr>
+            <tr>
+                <td class="require" width="200">{{media.type==0?'系统':media.type==1?'应用':media.type==2?'模块分类':media.type==3?'模块':media.type==4?'功能':media.type==5?'子功能':''}}描述</td><td><input type="text" ng-model="media.remark" /></td>
+            </tr>
+            <tr>
+                <td class="require" width="200">
+                    {{media.type==0?'系统':media.type==1?'应用':media.type==2?'模块分类':media.type==3?'模块':media.type==4?'功能':media.type==5?'子功能':''}}名称
+                </td><td><input type="text" ng-model="media.title" /></td>
+            </tr>
+            <tr>
+                <td class="require" width="200">是否开启</td><td><input bs-switch ng-model="media.status" type="checkbox" switch-size="mini" switch-on-text="开启" switch-off-text="关闭"></td>
+            </tr>
+            <tr>
+                <td class="require" width="200">排序</td><td><input type="text" ng-model="media.listorder" /></td>
+            </tr>
+            <tr>
+                <td></td><td>
+                    <div class="btn-box">
+                        <button ng-show="media.status1 == 1" ng-click="addSave()" class="btn btn-success">提交</button>
+                        <button ng-show="media.status1 == 0" ng-click="editSave()" class="btn btn-info">保存</button>
+                        <button ng-show="media.status1 == 0" ng-click="delete()" class="btn btn-danger">删除</button>
+                    </div>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+</div>

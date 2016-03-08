@@ -1,6 +1,6 @@
 angular.module('flatpcApp')
-.controller('TypeCtrl', ['$scope', 'AppConfig','$rootScope','RoomService',
-function($scope,AppConfig,$rootScope,RoomService) {
+.controller('TypeCtrl', ['$scope', 'AppConfig','$rootScope','RoomService','PublicService',
+function($scope,AppConfig,$rootScope,RoomService,PublicService) {
     
     $scope.roomType={};
     $scope.show = function(item){
@@ -13,6 +13,7 @@ function($scope,AppConfig,$rootScope,RoomService) {
         $scope.roomType.bedStyle = item.bedStyle;
         $scope.roomType.area = item.area;
         $scope.roomType.roomPic = item.roomPic;
+        $scope.roomType.fileid = item.fileId;
         $scope.roomType.purpose = item.purpose;
         $scope.roomType.type = 1;
     }
@@ -27,10 +28,31 @@ function($scope,AppConfig,$rootScope,RoomService) {
         $scope.roomType.roomPic = "";
         $scope.roomType.purpose = "";
         $scope.roomType.type = 0;
+        $scope.roomType.fileid = 0;
     }
     $scope.uploadImg = function(){
+        var files = event.target.files;
+        var s = files[0].name.split(".").pop();
+        if(s != "jpg" && s != "png" && s != "jpeg"){
+            swal('提示', '文件格式不正确！请上传*.jpg或*.png文件', 'error'); 
+            return false;
+        }
+        var fdata = new FormData();
+        if (!fdata) { swal('提示', '你的浏览器不支持文件上传！', 'error'); return false; };
+        fdata.append('img', files[0]);
         
-        alert('选择了图片');
+        fdata.append('token', AppConfig.token);
+        fdata.append('schoolcode', AppConfig.schoolCode);
+        $rootScope.loading = true;
+        return PublicService.imgUpload(fdata).success(function(data){
+            $rootScope.loading = false;
+            if(data.code == 0){
+                $scope.roomType.roomPic = data.data.serverPath;
+                $scope.roomType.fileid = data.data.fileId;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+        })
     }
     $scope.addSave = function(){
         RoomService.addType({
@@ -43,17 +65,22 @@ function($scope,AppConfig,$rootScope,RoomService) {
             memo:$scope.roomType.memo,
             bedStyle:$scope.roomType.bedStyle,
             area:$scope.roomType.area,
-            roomPic:$scope.roomType.roomPic,
+            fileid:$scope.roomType.fileid,
             purpose:$scope.roomType.purpose
-        }).success(function(){
-            swal("提示", "添加成功！", "success"); 
-            refresh();
+        }).success(function(data){
+            if(data.code == 0){
+                swal("提示", "添加成功！", "success"); 
+                refresh();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            
         });
     }
     $scope.editSave = function(){
         RoomService.editType({
             token:'',
-            typeId:AppConfig.schoolCode,
+            typeId:$scope.roomType.typeId,
             title:$scope.roomType.title,
             direction:$scope.roomType.direction,
             fee:$scope.roomType.fee,
@@ -61,33 +88,46 @@ function($scope,AppConfig,$rootScope,RoomService) {
             memo:$scope.roomType.memo,
             bedStyle:$scope.roomType.bedStyle,
             area:$scope.roomType.area,
-            roomPic:$scope.roomType.roomPic,
+            fileid:$scope.roomType.fileid,
             purpose:$scope.roomType.purpose
-        }).success(function(){
-            swal("提示", "修改成功！", "success"); 
-            refresh();
+        }).success(function(data){
+            if(data.code == 0){
+                swal("提示", "修改成功！", "success");
+                refresh();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         });
     }
     $scope.delete = function(){
         RoomService.delType({
             token:'',
-            schoolcode:$scope.roomType.typeId
-        }).success(function(){
-            swal("提示", "删除成功！", "success"); 
-            refresh();
+            typeid:$scope.roomType.typeId
+        }).success(function(data){
+            if(data.code == 0){
+                swal("提示", "删除成功！", "success");
+                refresh();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         });
     }
     $rootScope.loading = false;
     if(!$rootScope.treeType)
         refresh().then(function(){
             if($rootScope.treeType[0]) $scope.show($rootScope.treeType[0]);
+            else $scope.media.status = 1;
         });
     else
         if($rootScope.treeType[0]) $scope.show($rootScope.treeType[0]);
+        else $scope.media.status = 1;
     function refresh(){
         $rootScope.loading = true;
         return RoomService.getTypeList().success(function(data){
-            $rootScope.treeType = data.data;
+            if(data.code == 0)
+                $rootScope.treeType = data.data;
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             $rootScope.loading = false;
         });
     }

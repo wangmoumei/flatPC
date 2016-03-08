@@ -1,0 +1,174 @@
+<div class="history-container">
+    <a class="return-btn" href="javascript:history.go(-1)">
+        <i class="ALiconfont icon-sortleft"></i>
+        返回
+    </a>
+    <ul class="history-list">
+        <li><a href="#index" ng-click="routerInit('role')">权限</a></li>
+        <li><a href="#index">角色管理</a></li>
+        <li>角色管理</li>
+    </ul>
+</div>
+<div class="tool-bar">
+    <div class="bar-full">
+        <button class="btn btn-success" ng-click="showCard('#roleAdd')"><i class="glyphicon glyphicon-file"></i> 添加</button>
+    </div>
+</div>
+<div class="page-main">
+    <div class="table-container" style="bottom:54px;">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>角色</th>
+                    <th>描述</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="role in list || []">
+                    <td>{{role.title}}</td><td>{{role.remark}}</td><td>{{role.status?'已禁用':'使用中'}}</td>
+                    <td>
+                        <a class="btn btn-link btn-xs" ng-click="showCard('#menuSetting')">配置权限</a>
+                        <a class="btn btn-link btn-xs">编辑</a>
+                    </td>
+                </tr>
+                
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="10" ng-hide="media.recordCount" class="empty">没有检索到角色信息</td>
+                </tr>
+            </tfoot>
+        </table>
+        
+    </div>
+    <div class="page-controller">
+        <div class="page-number">
+            <ul class="pagination">
+                <li ng-class="{disabled:media.epage<2}">
+                    <a aria-label="Previous" ng-click="setPage(-1)">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li ng-show="media.epage-2>0"><a ng-click="setPage(-2)">{{media.epage-2}}</a></li>
+                <li ng-show="media.epage-1>0"><a ng-click="setPage(-1)">{{media.epage-1}}</a></li>
+                <li class="active"><a>{{media.epage}}</a></li>
+                <li ng-show="media.epage+1<=media.pageCount"><a ng-click="setPage(1)">{{media.epage+1}}</a></li>
+                <li ng-show="media.epage+2<=media.pageCount"><a ng-click="setPage(2)">{{media.epage+2}}</a></li>
+                <li ng-class="{disabled:media.epage>=media.pageCount}">
+                    <a aria-label="Next" ng-click="setPage(1)">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="page-size">
+            共 {{media.recordCount}} 条记录，每页显示
+            <div class="btn-group dropup">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{media.pagesize}} <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" style="min-width:54px">
+                    <li ng-click="setPageSize(10)"><a>10</a></li>
+                    <li ng-click="setPageSize(20)"><a>20</a></li>
+                    <li ng-click="setPageSize(30)"><a>30</a></li>
+                    <li ng-click="setPageSize(50)"><a>50</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="info-card fadeIn animated" id="roleAdd" info-card>
+    <div class="info-card-wrapper">
+        <div class="info-card-dialog">
+            <div class="info-card-content">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        {{media.status?'修改角色':'添加角色'}}
+                        <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table-form table-bordered bg-white">
+                            <tbody>
+                                <tr>
+                                    <td class="require">角色名称</td><td><input type="text" ng-model="role.title" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="require">角色描述</td><td><input type="text" ng-model="role.remark" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="require">状态</td><td><input bs-switch ng-model="role.status" type="checkbox" switch-size="mini" switch-on-text="开启" switch-off-text="关闭"></td>
+                                </tr>
+                                <tr>
+                                    <td class="require">模版</td><td><input type="text" ng-model="role.type" /></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td class="td-btn-box">
+                                        <a class="btn btn-success">提交</a>
+                                        <a class="btn btn-info">保存</a>
+                                        <a class="btn btn-danger">删除</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="info-card fadeIn animated" id="menuSetting" info-card>
+    <div class="info-card-wrapper">
+        <div class="info-card-dialog" style="width:800px;">
+            <div class="info-card-content">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        权限配置
+                        <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
+                    </div>
+                    <div class="panel-body menu-setting">
+                       <div class="page-tree" tree style="bottom:50px;">
+                            <ul>
+                                <li class="open">
+                                    <a class="branch">树枝</a>
+                                    <ul>
+                                        <li class="open">
+                                            <a class="branch">树枝</a>
+                                            <ul>
+                                                <li>
+                                                    <a class="leaf">叶子</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="branch">树枝</a>
+                                    <ul>
+                                        <li>
+                                            <a class="branch">树枝</a>
+                                            <ul>
+                                                <li>
+                                                    <a class="leaf">叶子</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="menu-setting-container">
+                            aaa
+                        </div>
+                        <div class="btn-tool">
+                            <a class="btn btn-info">保存</a>
+                            <a class="btn btn-default">重置</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

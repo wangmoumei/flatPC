@@ -80,6 +80,15 @@ angular.module('flatpcApp')
             case 'group':
                 return ['admin','admin','group'];
                 break;
+            case 'role':
+                return ['admin','role','role'];
+                break;
+            case 'template':
+                return ['admin','role','template'];
+                break;
+            case 'menu':
+                return ['admin','role','menu'];
+                break;
         }
     };
     var transform = function(){

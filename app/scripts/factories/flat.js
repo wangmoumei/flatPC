@@ -2,47 +2,133 @@ angular.module('flatpcApp')
 .factory('FlatService',['$http', 'AppConfig',function($http, AppConfig){
     var getList = function(schoolcode){
         var url = AppConfig.WEB_ROOT + 'flatdata/school/get_floor_list/?schoolcode='+AppConfig.schoolCode+'&token=123';
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     }
     var getFlat = function(flatid){
         var url = AppConfig.WEB_ROOT + 'apartment/floor/index/?flatid=' + flatid + '&token=123';
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     }
     var addCampus = function(param){
         var url = AppConfig.WEB_ROOT + 'flatdata/school/add_campus/';
-        return $http.get(url,param);
+        console.log(param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.post(url,param,{'Content-Type':'application/x-www-form-urlencoded'});
     }
     var editCampus = function(param){
         var url = AppConfig.WEB_ROOT + 'flatdata/school/edit_campus/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.post(url,param,{'Content-Type':'application/x-www-form-urlencoded'});
     }
     var delCampus = function(param){
         var url = AppConfig.WEB_ROOT + 'flatdata/school/del_campus/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.post(url,param,{'Content-Type':'application/x-www-form-urlencoded'});
     }
     var addArea = function(param){
         var url = AppConfig.WEB_ROOT + 'flatdata/school/add_livearea/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.post(url,param,{'Content-Type':'application/x-www-form-urlencoded'});
     }
     var editArea = function(param){
         var url = AppConfig.WEB_ROOT + 'flatdata/school/edit_livearea/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.post(url,param,{'Content-Type':'application/x-www-form-urlencoded'});
     }
     var delArea = function(param){
         var url = AppConfig.WEB_ROOT + 'flatdata/school/del_livearea/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.post(url,param,{'Content-Type':'application/x-www-form-urlencoded'});
     }
     var addFlat = function(param){
         var url = AppConfig.WEB_ROOT + 'flatdata/school/add_flat/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.post(url,param,{'Content-Type':'application/x-www-form-urlencoded'});
     }
     var editFlat = function(param){
         var url = AppConfig.WEB_ROOT + 'flatdata/school/edit_flat/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.post(url,param,{'Content-Type':'application/x-www-form-urlencoded'});
     }
     var delFlat = function(param){
         var url = AppConfig.WEB_ROOT + 'flatdata/school/del_flat/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.post(url,param,{'Content-Type':'application/x-www-form-urlencoded'});
     }
     var getImport = function(param){
         var url = AppConfig.WEB_ROOT + 'stmessage/roommessage/get_import_list/?'
@@ -55,15 +141,28 @@ angular.module('flatpcApp')
     var downloadImport = function(param){
         var url = AppConfig.WEB_ROOT + '/stmessage/roommessage/export_error/?importId = ' + param
         + "&token=123";
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     }
     var importFlat = function(param){
         var url = AppConfig.WEB_ROOT + 'stmessage/roommessage/import_data/';
-        return $http.post(url,param,{ headers: { 'Content-Type': undefined }});
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.post(url,param,{ headers: { 'Content-Type': undefined }});
     }
     var downloadExcel = function(){
         var url = AppConfig.WEB_ROOT + 'stmessage/roommessage/sample_table/?schoolcode='+AppConfig.schoolCode+'&token=123';
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     }
     return {
         getList:getList,

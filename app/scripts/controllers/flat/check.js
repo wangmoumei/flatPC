@@ -82,9 +82,14 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
     //初始化树+列表
     if(!$rootScope.treeFlat){
         FlatService.getList(AppConfig.schoolCode).success(function(data){
-            $rootScope.treeFlat = data.data;
+            if(data.code == 0){
+                $rootScope.treeFlat = data.data;
+                refresh();
+            }
+            else{
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            }
             $rootScope.loading = false;
-            refresh();
         });
     }
     else {
@@ -94,9 +99,15 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
     function refresh(){
         $rootScope.loading = true;
         DailyService.getCheckList($scope.media).success(function(data){
-            $scope.list = data.data.list;
-            $scope.media.recordCount = data.data.recordCount;
-            $scope.media.pageCount = data.data.pageCount;
+            if(data.code == 0){
+                $scope.list = data.data.list;
+                $scope.media.recordCount = data.data.recordCount;
+                $scope.media.pageCount = data.data.pageCount;
+            }
+            else{
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            }
+            
             //console.log(data.data);
             $rootScope.loading = false;
         })
@@ -122,9 +133,15 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
             occupancyid:$scope.work.occupancyId || '',
             adminid:''
         }).success(function(data){
-            swal("提示", "审批成功！", "success"); 
-            if(fun && typeof fun == 'function') fun();
-            refresh();
+            if(data.code == 0){
+                swal("提示", "审批成功！", "success"); 
+                if(fun && typeof fun == 'function') fun();
+                refresh();
+            }
+            else{
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            }
+            
             $rootScope.loading = false;
         });
     }
@@ -137,9 +154,15 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
             backmessage:$scope.work.returnMessage,
             adminid:''
         }).success(function(data){
-            swal("提示", "驳回成功！", "success");
-            if(fun && typeof fun == 'function') fun();
-            refresh();
+            if(data.code == 0){
+                swal("提示", "驳回成功！", "success");
+                if(fun && typeof fun == 'function') fun();
+                refresh();
+            }
+            else{
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            }
+            
             $rootScope.loading = false;
         });
     }
@@ -151,9 +174,14 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
             occupancyid:$scope.work.occupancyId || '',
             adminid:''
         }).success(function(data){
-            swal("提示", "已取消！", "success"); 
-            if(fun && typeof fun == 'function') fun();
-            refresh();
+            if(data.code == 0){
+                swal("提示", "已取消！", "success"); 
+                if(fun && typeof fun == 'function') fun();
+                refresh();
+            }
+            else{
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            }
             $rootScope.loading = false;
         });
     }

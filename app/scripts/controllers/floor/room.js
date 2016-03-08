@@ -37,8 +37,11 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
     if(!$rootScope.treeFlat){
         FlatService.getList(AppConfig.schoolCode).success(function(data){
             console.log(data.data);
-            $rootScope.treeFlat = data.data;
-            refresh();
+            if(data.code == 0){
+                $rootScope.treeFlat = data.data;
+                refresh();
+            }else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error");
         });
     }
     else {
@@ -82,13 +85,16 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     floorname:$scope.media.floor.floorname,
                     memo:$scope.media.floor.memo
                 }).success(function(data){
-                    console.log(data);
-                    swal("提示", "添加成功！", "success"); 
-                    refresh($scope.media.flatid);
+                    // console.log(data);
+                    if(data.code == 0 ){
+                        swal("提示", "添加成功！", "success"); 
+                        refresh($scope.media.flatid);
+                    }else{
+                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error");
+                        $rootScope.loading = false;
+                    }
                 });
             }else if($scope.media.floor.type == 2){
-                
-                
                 $rootScope.loading = true;
                 RoomService.multiAdd({
                     token:AppConfig.token,
@@ -100,8 +106,13 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     enumera:$scope.media.floor.enumera
                 }).success(function(data){
                     console.log(data);
-                    swal("提示", "添加成功！", "success"); 
-                    refresh($scope.media.flatid);
+                    if(data.code == 0){
+                        swal("提示", "添加成功！", "success");
+                        refresh($scope.media.flatid);
+                    }
+                    else{
+                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    }
                 });
             }
         },
@@ -118,8 +129,13 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                 memo:$scope.media.floor.memo
             }).success(function(data){
                 console.log(data);
-                swal("提示", "修改成功！", "success"); 
-                refresh($scope.media.flatid);
+                if(data.code == 0){
+                    swal("提示", "修改成功！", "success");
+                    refresh($scope.media.flatid);
+                }
+                else{
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                }
             });
         },
         delete:function () {
@@ -140,8 +156,13 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     floorid:$scope.media.floor.floorid
                 }).success(function(data){
                     console.log(data);
-                    swal("提示", "删除成功！", "success"); 
-                    refresh($scope.media.flatid);
+                    if(data.code == 0){
+                        swal("提示", "删除成功！", "success");
+                        refresh($scope.media.flatid);
+                    }
+                    else{
+                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    }
                 });
             });
         }
@@ -189,8 +210,13 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                 memo:$scope.media.room.memo
             }).success(function(data){
                 console.log(data);
-                swal("提示", "添加成功！", "success"); 
-                refresh($scope.media.flatid);
+                if(data.code == 0){
+                    swal("提示", "添加成功！", "success");
+                    refresh($scope.media.flatid);
+                }
+                else{
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                }
             });
             
         },
@@ -208,8 +234,13 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                 memo:$scope.media.room.memo
             }).success(function(data){
                 console.log(data);
-                swal("提示", "修改成功！", "success"); 
-                refresh($scope.media.flatid);
+                if(data.code == 0){
+                    swal("提示", "修改成功！", "success"); 
+                    refresh($scope.media.flatid);
+                }
+                else{
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                }
             });
         },
         delete:function () {
@@ -230,8 +261,14 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     roomid:$scope.media.room.roomid
                 }).success(function(data){
                     console.log(data);
-                    swal("提示", "删除成功！", "success"); 
-                    refresh($scope.media.flatid);
+                    if(data.code == 0){
+                        swal("提示", "删除成功！", "success");
+                        refresh($scope.media.flatid);
+                    }
+                    else{
+                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    }
+                    
                 });
             });
         }
@@ -241,7 +278,11 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
         if(!$rootScope.treeType){
             $rootScope.loading = true;
             RoomService.getTypeList().success(function(data){
-                $rootScope.treeType = data.data;
+                if(data.code == 0)
+                    $rootScope.treeType = data.data;
+                else{
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                }
                 $rootScope.loading = false;
             });
         }
@@ -249,34 +290,42 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
         
     function refresh(flatid){
         if(!flatid){
-            if($rootScope.treeFlat.cmpusList && $rootScope.treeFlat.cmpusList[0].liveAreaList && $rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList && $rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList[0].flatId)
+            if($rootScope.treeFlat.cmpusList.length>0 && $rootScope.treeFlat.cmpusList[0].liveAreaList.length>0 && $rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList.length>0 && $rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList[0].flatId)
             {
                 flatid = $rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList[0].flatId;
                 $scope.media.title = $rootScope.treeFlat.cmpusList[0].title + '-' + $rootScope.treeFlat.cmpusList[0].liveAreaList[0].title + '-' + $rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList[0].title;
             } 
-            else return;
+            else {
+                $rootScope.loading = false;
+                $scope.media.title = '请选择楼栋';
+                return;
+            }
         }
         $rootScope.loading = true;
         RoomService.getList(flatid).success(function(data){
-            data.data.floorList = data.data.floorList || [];
-            data.data.floorList.forEach(function(list){
-                list.roomList = list.roomList || [];
-                list.roomList =  $filter('sliceArray')(list.roomList);
-                var l = list.roomList.length;
-                if(list.roomList.length>0 && list.roomList[l-1].length<10){
-                    list.roomList[l-1].push({
-                        status:-1,
-                        roomName:'新增寝室'
-                    })
-                }else{
-                    list.roomList.push([{
-                        status:-1,
-                        roomName:'新增寝室'
-                    }])
-                }
-            });
-            $scope.flat = data.data;
-            console.log(data.data);
+            console.log(data);
+            if(data.code == 0 ){
+                data.data.floorList = data.data.floorList || [];
+                data.data.floorList.forEach(function(list){
+                    list.roomList = list.roomList || [];
+                    list.roomList =  $filter('sliceArray')(list.roomList);
+                    var l = list.roomList.length;
+                    if(list.roomList.length>0 && list.roomList[l-1].length<10){
+                        list.roomList[l-1].push({
+                            status:-1,
+                            roomName:'新增寝室'
+                        })
+                    }else{
+                        list.roomList.push([{
+                            status:-1,
+                            roomName:'新增寝室'
+                        }])
+                    }
+                });
+                $scope.flat = data.data;
+            }else{
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            }
             $rootScope.loading = false;
         })
     }

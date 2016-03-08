@@ -116,11 +116,15 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,StudentService,$
             return CheckInService.delKey({
                 token:AppConfig.token,
                 borrowkeyid:$scope.work.borrowkeyid
-            }).success(function(){
+            }).success(function(data){
                 $rootScope.loading = false;
-                swal("提示", "删除成功！", "success"); 
-                if(fun && typeof fun == 'function') fun();
-                refresh();
+                if(data.code == 0){
+                    swal("提示", "删除成功！", "success"); 
+                    if(fun && typeof fun == 'function') fun();
+                    refresh();
+                }
+                else
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             });
         });
     }
@@ -131,11 +135,16 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,StudentService,$
             borrowkeyid:$scope.work.borrowkeyid,
             endtime:time,
             adminid:''
-        }).success(function(){
+        }).success(function(data){
             $rootScope.loading = false;
-            swal("提示", "处理成功！", "success"); 
-            if(fun && typeof fun == 'function') fun();
-            refresh();
+            
+            if(data.code == 0){
+                swal("提示", "处理成功！", "success"); 
+                if(fun && typeof fun == 'function') fun();
+                refresh();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         });
     }
     //新增登记表单中的二级连选的select

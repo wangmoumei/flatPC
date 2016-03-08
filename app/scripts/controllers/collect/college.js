@@ -1,8 +1,8 @@
 angular.module('flatpcApp')
 .controller('SchoolCtrl', ['$scope','AppConfig','$rootScope','CollegeService',function($scope,AppConfig,$rootScope,CollegeService) {
     $scope.media = {
-        status:0,
-        type:0,
+        status:1,
+        type:1,
         name:'',
         collegeName:'',
         className:'',
@@ -23,7 +23,7 @@ angular.module('flatpcApp')
         $scope.media.className=item.className || '';
         $scope.media.classId=item.classId || '';
         $scope.media.grade=item.grade || '';
-        $scope.media.history = item.history || '';
+        $scope.media.history = item.history?true:false || false;
         
         $scope.media.listOrder=item.listOrder || 1;
     }
@@ -36,33 +36,38 @@ angular.module('flatpcApp')
         $scope.media.grade= '';
         $scope.media.listOrder= 1;
         $scope.media.collegeId = item.collegeId || '';
-        $scope.media.history = 0;
+        $scope.media.history = false;
     }
     $scope.addSave = function(){
         $rootScope.loading = true;
         (function(){
             if($scope.media.type == 1){
                 return CollegeService.addCollege({
-                    token:'',
+                    token:AppConfig.token,
                     schoolcode:AppConfig.schoolCode,
                     listorder:$scope.media.listOrder,
                     title:$scope.media.collegeName
                 })
             }else if($scope.media.type == 2){
                 return CollegeService.addClass({
-                    token:'',
+                    token:AppConfig.token,
                     schoolcode:AppConfig.schoolCode,
                     collegeid:$scope.media.collegeId,
                     listorder:$scope.media.listOrder,
-                    title:$scope.media.collegeName,
+                    title:$scope.media.className,
                     grade:$scope.media.grade,
-                    status:$scope.media.history
+                    status:$scope.media.history?1:0
                 })
             }
-        })().then(function(){
+        })().success(function(data){
             $rootScope.loading = false;
-            swal("提示", "添加成功！", "success"); 
-            refresh();
+            if(data.code == 0){
+                swal("提示", "添加成功！", "success"); 
+                refresh();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            
         })
     }
     $scope.editSave = function(){
@@ -70,7 +75,7 @@ angular.module('flatpcApp')
         (function(){
             if($scope.media.type == 1){
                 return CollegeService.editCollege({
-                    token:'',
+                    token:AppConfig.token,
                     collegeid:$scope.media.collegeId,
                     listorder:$scope.media.listOrder,
                     title:$scope.media.collegeName
@@ -79,20 +84,25 @@ angular.module('flatpcApp')
                 })
             }else if($scope.media.type == 2){
                 return CollegeService.editClass({
-                    token:'',
+                    token:AppConfig.token,
                     classid:$scope.media.classId,
                     listorder:$scope.media.listOrder,
-                    title:$scope.media.collegeName,
-                    status:$scope.media.history,
+                    title:$scope.media.className,
+                    status:$scope.media.history?1:0,
                     grade:$scope.media.grade
                 }).success(function(){
                     $rootScope.loading = false;
                 })
             }
-        })().then(function(){
+        })().success(function(data){
              $rootScope.loading = false;
-            swal("提示", "修改成功！", "success"); 
-            refresh();
+             if(data.code == 0){
+                swal("提示", "修改成功！", "success"); 
+                refresh();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            
         })
     }
     $scope.delete = function(){
@@ -111,20 +121,25 @@ angular.module('flatpcApp')
                 (function(){
                     if($scope.media.type == 1){
                         return CollegeService.delCollege({
-                            token:'',
+                            token:AppConfig.token,
                             collegeid:$scope.media.collegeId
                         })
                     }else if($scope.media.type == 2){
                         return CollegeService.delClass({
-                            token:'',
+                            token:AppConfig.token,
                             classid:$scope.media.classId
                         })
                     }
-                })().then(function(){
+                })().success(function(data){
                     $rootScope.loading = false;
-                    swal("提示", "删除成功！", "success"); 
-                    $scope.media.type=0;
-                    refresh();
+                    
+                    if(data.code == 0){
+                        swal("提示", "删除成功！", "success"); 
+                        $scope.media.type=0;
+                        refresh();
+                    }
+                    else
+                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                 })
                 
         });
@@ -133,9 +148,13 @@ angular.module('flatpcApp')
     
     
     if(!$rootScope.treeCollege)
-        refresh().then(function(){$scope.show(1,$rootScope.treeCollege[0].collegeList[0]);});
+        refresh().then(function(){
+            if($rootScope.treeCollege.length > 0 && $rootScope.treeCollege[0].collegeList.length > 0)
+            $scope.show(1,$rootScope.treeCollege[0].collegeList[0]);
+        });
     else{
-        $scope.show(1,$rootScope.treeCollege[0].collegeList[0]);
+        if($rootScope.treeCollege.length > 0 && $rootScope.treeCollege[0].collegeList.length > 0)
+            $scope.show(1,$rootScope.treeCollege[0].collegeList[0]);
         $rootScope.loading = false;
     }
         
@@ -143,7 +162,12 @@ angular.module('flatpcApp')
         $rootScope.loading = true;
         return CollegeService.getList(AppConfig.schoolCode).success(function(data){
             console.log(data);
-            $rootScope.treeCollege = data.data;
+            if(data.code == 0){
+                $rootScope.treeCollege = data.data;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            
             $rootScope.loading = false;
         });
     }

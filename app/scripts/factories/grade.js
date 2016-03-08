@@ -5,55 +5,108 @@ angular.module('flatpcApp')
         + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
         + '&flatid=' + (param.flatid || "") + '&semesterid=' + (param.semesterid || "")
         + '&currentweek=' + (param.currentweek || "");
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     };
     var setGrade = function (param) {
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolcode;
         param.adminid = param.adminid || AppConfig.adminid;
         var url = AppConfig.WEB_ROOT + 'evaluation/hygienegrade/add_room_score/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     };
     var editGrade = function (param) {
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolcode;
         param.adminid = param.adminid || AppConfig.adminid;
         var url = AppConfig.WEB_ROOT + 'evaluation/hygienegrade/edit_room_score/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     };
     var getGrade = function (param) {
         var url = AppConfig.WEB_ROOT + 'evaluation/hygienegrade/get_room_message/?token='+ AppConfig.token
         + '&roomscoreid=' + param.roomscoreid;
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     };
     var getGradeImgs = function (param) {
         var url = AppConfig.WEB_ROOT + 'evaluation/hygienegrade/get_pictures/?token='+ AppConfig.token
         + '&roomid=' + param.roomid + '&currentweek=' + param.currentweek + '&semesterid=' + param.semesterid;
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     };
     var uploadImg = function (param) {
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolcode;
         param.adminid = param.adminid || AppConfig.adminid;
         var url = AppConfig.WEB_ROOT + 'evaluation/hygienegrade/upload_picture/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     };
     var setBedGrade = function (param) {
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolcode;
         param.adminid = param.adminid || AppConfig.adminid;
         var url = AppConfig.WEB_ROOT + 'evaluation/hygienegrade/add_bed_score/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     };
     var editBedGrade = function (param) {
         param.token = param.token || AppConfig.token;
         var url = AppConfig.WEB_ROOT + 'evaluation/hygienegrade/edit_bed_score/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     };
     var getBedGrade = function (param) {
         var url = AppConfig.WEB_ROOT + 'evaluation/hygienegrade/get_bed_message/?token='+ AppConfig.token
         + '&roomscoreid=' + param.roomscoreid;
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     };
     var getList = function(param){
         var url = AppConfig.WEB_ROOT + 'evaluation/hygienegrade/score_search/?'
@@ -69,13 +122,17 @@ angular.module('flatpcApp')
         + (param.roomname?('&roomname='+param.roomname):'')
         + (param.orderfield?('&orderfield='+param.orderfield):'')
         + (param.ordertype?('&ordertype='+param.ordertype):'');
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     };
     var download = function (param) {
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolcode;
         var url = AppConfig.WEB_ROOT + 'evaluation/hygienegrade/score_search_export/';
-        return $http.get(url,param);
+        return $http.get(url,param).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     };
     var getTopList = function(param){
         var url = AppConfig.WEB_ROOT + 'evaluation/hygienegrade/ranking_list/?'
@@ -86,36 +143,69 @@ angular.module('flatpcApp')
         + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
         + (param.campusid?('&campusid='+param.campusid):'')
         + (param.tobed?('&tobed='+param.tobed):'');
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     };
     var downloadTopList = function (param) {
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolcode;
         var url = AppConfig.WEB_ROOT + 'evaluation/hygienegrade/score_search_export/';
-        return $http.get(url,param);
+        return $http.get(url,param).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     };
     var getSettingList = function(param){
         var url = AppConfig.WEB_ROOT + 'evaluation/setups/get_type_list/?'
         + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token;
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     };
     var addSetting = function (param) {
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolcode;
         var url = AppConfig.WEB_ROOT + 'evaluation/setups/add_type/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     };
     var editSetting = function (param) {
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolcode;
         var url = AppConfig.WEB_ROOT + 'evaluation/setups/edit_type/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     };
     var delSetting = function (param) {
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolcode;
         var url = AppConfig.WEB_ROOT + 'evaluation/setups/del_type/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     };
     var getStatistics = function(param){
         var url = AppConfig.WEB_ROOT + 'evaluation/scorecount/get_list/?'
@@ -126,7 +216,9 @@ angular.module('flatpcApp')
         + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
         + (param.campusid?('&campusid='+param.campusid):'');
         
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     };
     var downloadStatistics = function(param){
         var url = AppConfig.WEB_ROOT + 'evaluation/scorecount/get_list_export/?'
@@ -137,7 +229,9 @@ angular.module('flatpcApp')
         + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
         + (param.campusid?('&campusid='+param.campusid):'');
         
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     };
     return {
         getListByFlat:getListByFlat,

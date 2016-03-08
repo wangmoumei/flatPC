@@ -2,7 +2,9 @@ angular.module('flatpcApp')
 .factory('StudentService',['$http', 'AppConfig',function($http, AppConfig){
     var getStudent = function(studentid){
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/get_student_message/?student_key=' + studentid + '&token=123';
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     }
     var getList = function(param){
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/get_list/?'
@@ -14,23 +16,61 @@ angular.module('flatpcApp')
         + (param.classid?('&classid='+param.classid):'')
         + (param.orderfield?('&orderfield='+param.orderfield):'')
         + (param.ordertype?('&ordertype='+param.ordertype):'');
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     }
     var addStudent = function(param){
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/add_student/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     }
     var editStudent = function(param){
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/edit_student/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     }
     var delStudent = function(param){
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/del_student/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     }
     var importStudent = function(param){
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/import_student/';
-        return $http.post(url,param,{ headers: { 'Content-Type': undefined }});
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.post(url,param,{ headers: { 'Content-Type': undefined }});
     }
     var downloadStudent = function(param){
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/download_student_data/?'
@@ -40,7 +80,9 @@ angular.module('flatpcApp')
         + (param.studentnumber?('&studentnumber='+param.studentnumber):'')
         + (param.collegeid?('&collegeid='+param.collegeid):'')
         + (param.classid?('&classid='+param.classid):'');
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     }
     var getImport = function(param){
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/get_import_list/?'
@@ -53,30 +95,47 @@ angular.module('flatpcApp')
     var downloadImport = function(param){
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/export_error/?importId = ' + param
         + "&token=" + AppConfig.token;
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     }
     var uploadImg = function(param){
         var url = AppConfig.WEB_ROOT + '/stmessage/tmessage/upload_img/';
         param.token = param.token || '213';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     }
     var getListByName = function (param) {
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/search_list/?'
         + 'schoolcode='+ AppConfig.schoolCode + '&token=' + AppConfig.token
         + '&keyword=' + (param.keyword || "") + '&collegeid=' + (param.collegeid || "") + '&classid=' + (param.classid || "");
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     }
     var getListWithBed = function (param) {
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/search_bed_list/?'
         + 'schoolcode='+ AppConfig.schoolCode + '&token=' + AppConfig.token
         + '&keyword=' + (param.keyword || "") + '&collegeid=' + (param.collegeid || "") + '&classid=' + (param.classid || "");
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     }
     var getListWithBedByFlat = function (param) {
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/student_room_message/?'
         + 'schoolcode='+ AppConfig.schoolCode + '&token=' + AppConfig.token
         + '&keyword=' + (param.keyword || "") + '&flatid=' + (param.flatid || "");
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     }
     return {
         getStudent:getStudent,//获取学生详细信息

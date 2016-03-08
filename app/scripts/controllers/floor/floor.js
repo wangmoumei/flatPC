@@ -52,14 +52,14 @@ angular.module('flatpcApp')
         (function(){
             if($scope.media.type == 1){
                 return FlatService.addCampus({
-                    token:'',
+                    token:AppConfig.token,
                     schoolcode:AppConfig.schoolCode,
                     listorder:$scope.media.listOrder,
                     title:$scope.media.campusTitle
                 })
             }else if($scope.media.type == 2){
                 return FlatService.addArea({
-                    token:'',
+                    token:AppConfig.token,
                     schoolcode:AppConfig.schoolCode,
                     listorder:$scope.media.listOrder,
                     title:$scope.media.areaTitle,
@@ -67,18 +67,22 @@ angular.module('flatpcApp')
                 })
             }else if($scope.media.type == 3){
                 return FlatService.addFlat({
-                    token:'',
+                    token:AppConfig.token,
                     schoolcode:AppConfig.schoolCode,
                     campusid:$scope.media.campusId,
-                    areaid:$scope.media.areaId,
+                    areaid:$scope.media.liveAreaId,
                     listorder:$scope.media.listOrder,
                     title:$scope.media.flatTitle
                 })
             }
-        })().then(function(){
+        })().success(function(data){
             $rootScope.loading = false;
-            swal("提示", "添加成功！", "success"); 
-            refresh();
+            if(data.code == 0){
+                swal("提示", "添加成功！", "success"); 
+                refresh();
+            }else{
+                swal("提示", data.msg, "error"); 
+            }
         })
     }
     $scope.editSave = function(){
@@ -86,36 +90,34 @@ angular.module('flatpcApp')
         (function(){
             if($scope.media.type == 1){
                 return FlatService.editCampus({
-                    token:'',
+                    token:AppConfig.token,
                     campusid:$scope.media.campusId,
                     listorder:$scope.media.listOrder,
                     title:$scope.media.campusTitle
-                }).success(function(){
-                    $rootScope.loading = false;
                 })
             }else if($scope.media.type == 2){
                 return FlatService.editArea({
-                    token:'',
-                    areaid:$scope.media.areaId,
+                    token:AppConfig.token,
+                    areaid:$scope.media.liveAreaId,
                     listorder:$scope.media.listOrder,
                     title:$scope.media.areaTitle
-                }).success(function(){
-                    $rootScope.loading = false;
                 })
             }else if($scope.media.type == 3){
                 return FlatService.editFlat({
-                    token:'',
+                    token:AppConfig.token,
                     flatid:$scope.media.flatId,
                     listorder:$scope.media.listOrder,
                     title:$scope.media.flatTitle
-                }).success(function(){
-                    $rootScope.loading = false;
                 })
             }
-        })().then(function(){
-             $rootScope.loading = false;
-            swal("提示", "修改成功！", "success"); 
-            refresh();
+        })().success(function(data){
+            $rootScope.loading = false;
+            if(data.code == 0){
+                swal("提示", "修改成功！", "success"); 
+                refresh();
+            }else{
+                swal("提示", data.msg, "error"); 
+            }
         })
     }
     $scope.delete = function(){
@@ -134,25 +136,28 @@ angular.module('flatpcApp')
                 (function(){
                     if($scope.media.type == 1){
                         return FlatService.delCampus({
-                            token:'',
+                            token:AppConfig.token,
                             campusid:$scope.media.campusId
                         })
                     }else if($scope.media.type == 2){
                         return FlatService.delArea({
-                            token:'',
-                            areaid:$scope.media.areaId
+                            token:AppConfig.token,
+                            areaid:$scope.media.liveAreaId
                         })
                     }else if($scope.media.type == 3){
                         return FlatService.delFlat({
-                            token:'',
+                            token:AppConfig.token,
                             flatid:$scope.media.flatId
                         })
                     }
-                })().then(function(){
+                })().success(function(data){
                     $rootScope.loading = false;
-                    swal("提示", "删除成功！", "success"); 
-                    $scope.media.type=0;
-                    refresh();
+                    if(data.code == 0){
+                        swal("提示", "删除成功！", "success"); 
+                        refresh();
+                    }else{
+                        swal("提示", data.msg, "error"); 
+                    }
                 })
                 
         });
@@ -165,12 +170,16 @@ angular.module('flatpcApp')
     }
     else {
         $scope.show(1,$rootScope.treeFlat.cmpusList[0]);
-        $rootScope.loading = false;
+        
     }
     function refresh(){
         return FlatService.getList(AppConfig.schoolCode).success(function(data){
             //console.log(data);
-            $rootScope.treeFlat = data.data;
+            if(data.code == 0)
+                $rootScope.treeFlat = data.data;
+            else
+                swal("提示", data.msg, "error"); 
+            $rootScope.loading = false;
         });
     }
 }]);

@@ -23,10 +23,9 @@ angular
       //});
   })
   .constant('AppConfig',{
-      WEB_ROOT:'http://test.houqinbao.com/gyxt_api/',
+      WEB_ROOT:'http://120.55.84.193/Geese_Apartment/',//'http://test.houqinbao.com/gyxt_api/',
       schoolCode:10353,
-	  token:''
-      
+	  token:'213123'
   }).run(['$rootScope', '$location', 'AppConfig','authority',
 		function($rootScope, $location, AppConfig,authority) {
             $rootScope.sysMenu = ['flat','flat',''];
@@ -433,6 +432,57 @@ angular
             "": {
                 templateUrl: 'views/admin/group.html',
                 controller: 'GroupCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('role', {
+        url: "/role",
+        views: {
+            "": {
+                templateUrl: 'views/role/role.html',
+                controller: 'RoleCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('template', {
+        url: "/template",
+        views: {
+            "": {
+                templateUrl: 'views/role/template.html',
+                controller: 'RoleTemplateCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('menu', {
+        url: "/menu",
+        views: {
+            "": {
+                templateUrl: 'views/role/menu.html',
+                controller: 'MenuCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",

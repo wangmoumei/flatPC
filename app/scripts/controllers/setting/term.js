@@ -1,7 +1,7 @@
 angular.module('flatpcApp')
 .controller('TermCtrl', ['$scope','AppConfig','$rootScope', 'TermService',function($scope,AppConfig,$rootScope,TermService) {
     $scope.media = {
-        status:0,
+        status:1,
         type:0,
         schoolYearId:'',
         schoolYearName:'',
@@ -93,10 +93,14 @@ angular.module('flatpcApp')
                     endtime:$scope.media.endTime
                 })
             }
-        })().then(function(){
+        })().success(function(data){
             $rootScope.loading = false;
-            swal("提示", "添加成功！", "success"); 
-            refresh();
+            if(data.code == 0){
+                swal("提示", "添加成功！", "success"); 
+                refresh();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })
     }
     $scope.editSave = function(){
@@ -122,10 +126,15 @@ angular.module('flatpcApp')
                     endtime:$scope.media.endTime
                 })
             }
-        })().then(function(){
+        })().success(function(data){
             $rootScope.loading = false;
-            swal("提示", "修改成功！", "success"); 
-            refresh();
+            if(data.code == 0){
+                swal("提示", "修改成功！", "success"); 
+                refresh();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            
         })
     }
     $scope.delete = function(){
@@ -153,11 +162,16 @@ angular.module('flatpcApp')
                             semesterId:$scope.media.semesterId
                         })
                     }
-                })().then(function(){
+                })().success(function(data){
                     $rootScope.loading = false;
-                    swal("提示", "删除成功！", "success"); 
-                    $scope.media.type=0;
-                    refresh();
+                    if(data.code == 0){
+                        swal("提示", "删除成功！", "success"); 
+                        $scope.media.type=0;
+                        refresh();
+                    }
+                    else
+                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    
                 })
                 
         });
@@ -169,8 +183,13 @@ angular.module('flatpcApp')
         $rootScope.loading = true;
         return TermService.getList().success(function(data){
             console.log(data);
+            if(data.code == 0){
+                $rootScope.treeTerm = data.data;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             $rootScope.loading = false;
-            $rootScope.treeTerm = data.data;
+            
         });
     }
 }]);

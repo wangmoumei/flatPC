@@ -12,23 +12,61 @@ angular.module('flatpcApp')
         + (param.status>0?('&status='+param.status):'')
         + (param.orderfield?('&orderfield='+param.orderfield):'')
         + (param.ordertype?('&ordertype='+param.ordertype):'');
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     }
     var addLive = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/occupancy/add_occupancy/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     }
     var backLive = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/occupancy/back/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     }
     var passLive = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/occupancy/pass/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     }
     var cancelLive = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/occupancy/cancel/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     }
     var getChangeList = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/transfer/get_list/?'
@@ -42,23 +80,61 @@ angular.module('flatpcApp')
         + (param.status>0?('&status='+param.status):'')
         + (param.orderfield?('&orderfield='+param.orderfield):'')
         + (param.ordertype?('&ordertype='+param.ordertype):'');
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     }
     var addChange = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/transfer/add_transfer/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     }
     var backChange = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/transfer/back/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     }
     var passChange = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/transfer/pass/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     }
     var cancelChange = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/transfer/cancel/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     }
     var getQuitList = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/exitroom/get_list/?'
@@ -72,23 +148,61 @@ angular.module('flatpcApp')
         + (param.status>0?('&status='+param.status):'')
         + (param.orderfield?('&orderfield='+param.orderfield):'')
         + (param.ordertype?('&ordertype='+param.ordertype):'');
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     }
     var addQuit = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/exitroom/add_exitroom/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     }
     var backQuit = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/exitroom/back/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     }
     var passQuit = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/exitroom/pass/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     }
     var cancelQuit = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/exitroom/cancel/';
-        return $http.get(url,param);
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
     }
     var getCheckList = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/occupancy/get_list/?'
@@ -102,7 +216,9 @@ angular.module('flatpcApp')
         + (param.status>0?('&status='+param.status):'')
         + (param.orderfield?('&orderfield='+param.orderfield):'')
         + (param.ordertype?('&ordertype='+param.ordertype):'');
-        return $http.get(url);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
     }
     
     return {

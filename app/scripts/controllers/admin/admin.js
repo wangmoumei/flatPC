@@ -25,15 +25,24 @@ angular.module('flatpcApp')
     }
     
     AdminService.getDictionary().success(function (data) {
-        $scope.dic = data.list;
-        refresh();
+        
         console.log(data);
+        if(data.code == 0){
+                $scope.dic = data.list;
+                refresh();
+        }
+        else
+            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
     });
     function refresh(){
         $rootScope.loading = true;
         return AdminService.getList().success(function(data){
+            if(data.code == 0){
+                $scope.admins = data.list;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             
-            $scope.admins = data.list;
             $rootScope.loading = false;
         });
     }

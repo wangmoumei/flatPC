@@ -8,7 +8,7 @@
  * Controller of the flatpcApp
  */
 angular.module('flatpcApp')
-  .controller('GroupCtrl', ['$scope','$rootScope','UserService','$filter',function ($scope,$rootScope,UserService,$filter) {
+  .controller('RoleTemplateCtrl', ['$scope','$rootScope','UserService','$filter',function ($scope,$rootScope,UserService,$filter) {
     $scope.media = {
         type:1,
         status:0,
@@ -26,11 +26,7 @@ angular.module('flatpcApp')
     function refresh(){
         $rootScope.loading = true;
         return UserService.getGroupList().success(function(data){
-            if(data.code == 0){
-                $scope.groups = data.list;
-            }
-            else
-                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            $scope.groups = data.list;
             $rootScope.loading = false;
         });
     }
