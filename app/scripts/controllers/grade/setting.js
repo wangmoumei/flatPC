@@ -7,18 +7,18 @@ function($scope,AppConfig,$rootScope,GradeService) {
             this.tab = n;
             this.status = n?(this.typeId1?0:1):(this.typeId?0:1);
         },
-        status:0,
+        status:1,
         type:0,
         typeId:0,
         title:'',
         parentTitle:'',
-        fid:'',
+        fid:0,
         listOrder:1,
         value:0,
         typeId1:0,
         title1:'',
         parentTitle1:'',
-        fid1:'',
+        fid1:0,
         listOrder1:1,
         value1:0
     };
@@ -68,33 +68,38 @@ function($scope,AppConfig,$rootScope,GradeService) {
                 token:AppConfig.token,
                 fid:$scope.media.tab?$scope.media.fid1:$scope.media.fid,
                 value:$scope.media.tab?$scope.media.value1:$scope.media.value,
-                title:$scope.media.tab?$scope.media.title1:$scope.media.title,
+                title:$scope.media.tab?($scope.media.type>1?$scope.media.title1:$scope.media.parentTitle1):($scope.media.type>1?$scope.media.title:$scope.media.parentTitle),
                 listorder:$scope.media.tab?$scope.media.listOrder1:$scope.media.listOrder
             })
 
-        })().then(function(){
+        })().success(function(data){
             $rootScope.loading = false;
-            swal("提示", "添加成功！", "success"); 
-            refresh();
+            if(data.code == 0){
+                swal("提示", "添加成功！", "success"); 
+                refresh();
+            }else{
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            }
+            
         })
     }
     $scope.editSave = function(){
         $rootScope.loading = true;
-        (function(){
-            return GradeService.editSetting({
-                token:AppConfig.token,
-                typeid:$scope.media.tab?$scope.media.typeId1:$scope.media.typeId,
-                value:$scope.media.tab?$scope.media.value1:$scope.media.value,
-                title:$scope.media.tab?$scope.media.title1:$scope.media.title,
-                listorder:$scope.media.tab?$scope.media.listOrder1:$scope.media.listOrder
-            }).success(function(){
-                $rootScope.loading = false;
-            })
-
-        })().then(function(){
+        return GradeService.editSetting({
+            token:AppConfig.token,
+            typeid:$scope.media.tab?$scope.media.typeId1:$scope.media.typeId,
+            value:$scope.media.tab?$scope.media.value1:$scope.media.value,
+            title:$scope.media.tab?($scope.media.type>1?$scope.media.title1:$scope.media.parentTitle1):($scope.media.type>1?$scope.media.title:$scope.media.parentTitle),
+            listorder:$scope.media.tab?$scope.media.listOrder1:$scope.media.listOrder
+        }).success(function(data){
              $rootScope.loading = false;
-            swal("提示", "修改成功！", "success"); 
-            refresh();
+            
+            if(data.code == 0){
+                swal("提示", "修改成功！", "success"); 
+                refresh();
+            }else{
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            }
         })
     }
     $scope.delete = function(){
@@ -110,18 +115,19 @@ function($scope,AppConfig,$rootScope,GradeService) {
             }, 
             function(){   
                 $rootScope.loading = true;
-                (function(){
-                    
-                    return GradeService.delSetting({
-                        token:'',
-                        typeid:$scope.media.tab?$scope.media.typeId1:$scope.media.typeId
-                    })
-                    
-                })().then(function(){
+                return GradeService.delSetting({
+                    token:'',
+                    typeid:$scope.media.tab?$scope.media.typeId1:$scope.media.typeId
+                }).success(function(data){
                     $rootScope.loading = false;
-                    swal("提示", "删除成功！", "success"); 
-                    $scope.media.type=0;
-                    refresh();
+                    
+                    if(data.code == 0){
+                        swal("提示", "删除成功！", "success"); 
+                        $scope.media.type=0;
+                        refresh();
+                    }else{
+                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    }
                 })
                 
         });
@@ -157,9 +163,13 @@ function($scope,AppConfig,$rootScope,GradeService) {
     function refresh(){
         $rootScope.loading = true;
         return GradeService.getSettingList().success(function(data){
-            // console.log(data);
+            console.log(data);
             $rootScope.loading = false;
-            $rootScope.treeGrade = data.data;
+            
+            if(data.code == 0){
+                $rootScope.treeGrade = data.data;
+            }else{
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         });
     }
 }]);

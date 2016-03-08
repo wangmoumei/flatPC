@@ -28,8 +28,8 @@ angular.module('flatpcApp')
         
         console.log(data);
         if(data.code == 0){
-                $scope.dic = data.list;
-                refresh();
+            $scope.dic = data.list;
+            refresh();
         }
         else
             swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 

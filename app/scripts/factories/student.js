@@ -84,6 +84,13 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });
     }
+    var downloadOriginal = function(param){
+        var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/sample_table/?'
+        + 'schoolcode='+ AppConfig.schoolCode + '&token=' + AppConfig.token;
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
+    }
     var getImport = function(param){
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/get_import_list/?'
         + 'schoolcode='+ AppConfig.schoolCode + '&token=' + AppConfig.token
@@ -150,6 +157,7 @@ angular.module('flatpcApp')
         uploadImg:uploadImg,
         getListByName:getListByName,
         getListWithBed:getListWithBed,
-        getListWithBedByFlat:getListWithBedByFlat
+        getListWithBedByFlat:getListWithBedByFlat,
+        downloadOriginal:downloadOriginal
     }
 }]);

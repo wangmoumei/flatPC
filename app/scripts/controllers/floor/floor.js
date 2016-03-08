@@ -81,7 +81,7 @@ angular.module('flatpcApp')
                 swal("提示", "添加成功！", "success"); 
                 refresh();
             }else{
-                swal("提示", data.msg, "error"); 
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             }
         })
     }
@@ -116,7 +116,7 @@ angular.module('flatpcApp')
                 swal("提示", "修改成功！", "success"); 
                 refresh();
             }else{
-                swal("提示", data.msg, "error"); 
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             }
         })
     }
@@ -156,7 +156,7 @@ angular.module('flatpcApp')
                         swal("提示", "删除成功！", "success"); 
                         refresh();
                     }else{
-                        swal("提示", data.msg, "error"); 
+                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     }
                 })
                 
@@ -178,7 +178,7 @@ angular.module('flatpcApp')
             if(data.code == 0)
                 $rootScope.treeFlat = data.data;
             else
-                swal("提示", data.msg, "error"); 
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             $rootScope.loading = false;
         });
     }

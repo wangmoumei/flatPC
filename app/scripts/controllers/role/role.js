@@ -36,11 +36,16 @@ angular.module('flatpcApp')
         $rootScope.loading = true;
         return RoleService.getList($scope.media).success(function(data){
             console.log(data);
-            $scope.list = data.data?data.data.list:[] || [];
             
-            $scope.media.recordCount = data.data?data.data.recordCount:0;
-            $scope.media.pageCount = data.data?data.data.pageCount:0;
             $rootScope.loading = false;
+            if(data.code == 0){
+               $scope.list = data.data?data.data.list:[] || [];
+                
+                $scope.media.recordCount = data.data?data.data.recordCount:0;
+                $scope.media.pageCount = data.data?data.data.pageCount:0;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         });
     }
     

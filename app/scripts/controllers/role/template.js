@@ -26,8 +26,13 @@ angular.module('flatpcApp')
     function refresh(){
         $rootScope.loading = true;
         return UserService.getGroupList().success(function(data){
-            $scope.groups = data.list;
+            
             $rootScope.loading = false;
+            if(data.code == 0){
+                $scope.groups = data.list;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         });
     }
   }]);

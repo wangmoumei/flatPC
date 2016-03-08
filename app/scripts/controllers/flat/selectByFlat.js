@@ -16,22 +16,30 @@ function($scope,AppConfig,$rootScope,StudentService,FlatService,$filter) {
             return null;
         $rootScope.loading = true;
         return StudentService.getStudent('11481_201234005').success(function(data){
+            if(data.code == 0){
+                $scope.student = data.data;
+                $rootScope.loading = false;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             console.log(data);
-            $scope.student = data.data;
-            $rootScope.loading = false;
-        }).error(function(){
-            $rootScope.loading = false;
+            
         })
     }
     
     function refresh(flatid){
         FlatService.getFlat(flatid).success(function(data){
-            data.list.floorList = data.list.floorList || [];
-            data.list.floorList.forEach(function(list){
-                list.roomList = list.roomList || [];
-                list.roomList =  $filter('sliceArray')(list.roomList);
-            });
-            $scope.flat = data.list;
+            if(data.code == 0){
+                data.list.floorList = data.list.floorList || [];
+                data.list.floorList.forEach(function(list){
+                    list.roomList = list.roomList || [];
+                    list.roomList =  $filter('sliceArray')(list.roomList);
+                });
+                $scope.flat = data.list;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            
             console.log(data.list);
             $rootScope.loading = false;
         })

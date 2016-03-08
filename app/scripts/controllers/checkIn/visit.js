@@ -56,9 +56,14 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
     //初始化树+列表
     if(!$rootScope.treeFlat){
         FlatService.getList(AppConfig.schoolCode).success(function(data){
-            $rootScope.treeFlat = data.data;
+            
             $rootScope.loading = false;
-            refresh();
+            if(data.code == 0){
+                $rootScope.treeFlat = data.data;
+                refresh();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         });
     }
     else {
@@ -70,9 +75,14 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
         $rootScope.loading = true;
         console.log($scope.media);
         CheckInService.getVisitList($scope.media).success(function(data){
-            $scope.list = data.data.list;
-            $scope.media.recordCount = data.data.recordCount;
-            $scope.media.pageCount = data.data.pageCount;
+            if(data.code == 0){
+                $scope.list = data.data.list;
+                $scope.media.recordCount = data.data.recordCount;
+                $scope.media.pageCount = data.data.pageCount;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            
             console.log(data.data);
             $rootScope.loading = false;
         })
@@ -99,8 +109,13 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
         }).success(function (data) {
             $rootScope.loading = false;
             console.log(data);
-            swal("提示", "修改成功！", "success"); 
-            refresh();
+            
+            if(data.code == 0){
+                swal("提示", "修改成功！", "success"); 
+                refresh();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })
     }
     $scope.delete = function(fun){       
@@ -121,9 +136,14 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
                 visitid:$scope.work.visitid
             }).success(function(){
                 $rootScope.loading = false;
-                swal("提示", "删除成功！", "success"); 
-                if(fun && typeof fun == 'function') fun();
-                refresh();
+                
+                if(data.code == 0){
+                    swal("提示", "删除成功！", "success"); 
+                    if(fun && typeof fun == 'function') fun();
+                    refresh();
+                }
+                else
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             });
         });
     }
@@ -136,9 +156,14 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
             adminid:''
         }).success(function(){
             $rootScope.loading = false;
-            swal("提示", "处理成功！", "success"); 
-            if(fun && typeof fun == 'function') fun();
-            refresh();
+            
+            if(data.code == 0){
+                swal("提示", "处理成功！", "success"); 
+                if(fun && typeof fun == 'function') fun();
+                refresh();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         });
     }
     //新增登记表单中的二级连选的select
@@ -209,7 +234,12 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
             }).success(function (data) {
                 //console.log(data);
                 $rootScope.loading = false;
-                that.studentList = data.list;
+                
+                if(data.code == 0){
+                    that.studentList = data.list;
+                }
+                else
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             })
         },
         studentChoose:function (student) {
@@ -233,8 +263,13 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
             }).success(function (data) {
                 $rootScope.loading = false;
                 console.log(data);
-                swal("提示", "提交成功！", "success"); 
-                refresh();
+                
+                if(data.code == 0){
+                    swal("提示", "提交成功！", "success"); 
+                    refresh();
+                }
+                else
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             })
         }
     }

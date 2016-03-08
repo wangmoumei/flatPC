@@ -113,7 +113,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
         $scope.student.name = "";
         $scope.student.headImgurl = "";
         $scope.student.sex = "男";
-        $scope.student.birthDay = "";
+        $scope.student.birthDay = new Date().Format("yyyy-MM-dd");
         $scope.student.political = "";
         $scope.student.nation = "";
         $scope.student.origin = "";
@@ -165,7 +165,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
             name:$scope.student.name,
             fileid:$scope.student.fileid,
             sex:$scope.student.sex,
-            birthday:$scope.student.birthday,
+            birthday:$scope.student.birthDay,
             political:$scope.student.political,
             nation:$scope.student.nation,
             origin:$scope.student.origin,
@@ -199,7 +199,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
             name:$scope.student.name,
             fileid:$scope.student.fileid,
             sex:$scope.student.sex,
-            birthday:$scope.student.birthday,
+            birthday:$scope.student.birthDay,
             political:$scope.student.political,
             nation:$scope.student.nation,
             origin:$scope.student.origin,
@@ -343,6 +343,19 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
     $scope.download = function(id){
         $rootScope.loading = true;
         StudentService.downloadImport(id).success(function(data){
+            console.log(data.data.fileUrl);
+            if(data.code == 0){
+                location.href=data.data.fileUrl;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            $rootScope.loading = false;
+        })
+        
+    }
+    $scope.downloadOriginal = function(id){
+        $rootScope.loading = true;
+        StudentService.downloadOriginal().success(function(data){
             console.log(data.data.fileUrl);
             if(data.code == 0){
                 location.href=data.data.fileUrl;

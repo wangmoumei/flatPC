@@ -258,7 +258,12 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         roomscoreid:this.item.roomScoreId
                     }).success(function (data) {
                         $rootScope.loading = false;
-                        that.room = data.data;
+                        
+                        if(data.code == 0){
+                            that.room = data.data;
+                        }
+                        else
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                         //console.log(data);
                     });
                     break;
@@ -268,7 +273,12 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         bedscoreid:this.item.bedScoreId
                     }).success(function (data) {
                         $rootScope.loading = false;
-                        that.bed = data.data;
+                        
+                        if(data.code == 0){
+                            that.bed = data.data;
+                        }
+                        else
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                         //console.log(data);
                     });
                     break;
@@ -280,7 +290,12 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         currentweek:$scope.media.week
                     }).success(function (data) {
                         $rootScope.loading = false;
-                        that.img = data.data;
+                        
+                        if(data.code == 0){
+                            that.img = data.data;
+                        }
+                        else
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                         //console.log(data);
                     });
                     break;
@@ -317,8 +332,13 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
     if(!$rootScope.treeTerm)
         TermService.getList().success(function(data){
             //console.log(data);
-            $rootScope.treeTerm = data.data;
-            getFlat();
+            if(data.code == 0){
+                $rootScope.treeTerm = data.data;
+                getFlat();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            
         }); 
     else {
         getFlat();
@@ -328,8 +348,13 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
        if(!$rootScope.treeFlat){
             FlatService.getList(AppConfig.schoolCode).success(function(data){
                 //console.log(data);
-                $rootScope.treeFlat = data.data;
-                init();
+                if(data.code == 0){
+                    $rootScope.treeFlat = data.data;
+                    init();
+                }
+                else
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                
             });
         }
         else
@@ -366,13 +391,18 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                 currentweek:$scope.media.week
             }).success(function (data) {
                 $rootScope.loading = false;
-                data.list.floorList = data.list.floorList || [];
-                data.list.floorList.forEach(function(list,index){
-                    list.roomList = list.roomList || [];
-                    list.roomList =  $filter('sliceArray')(list.roomList,10,index);
-                    console.log(index);
-                });
-                $scope.flat = data.list;
+                if(data.code == 0){
+                    data.list.floorList = data.list.floorList || [];
+                    data.list.floorList.forEach(function(list,index){
+                        list.roomList = list.roomList || [];
+                        list.roomList =  $filter('sliceArray')(list.roomList,10,index);
+                        console.log(index);
+                    });
+                    $scope.flat = data.list;
+                }
+                else
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                
                 console.log(data);
             })
         }else if($scope.media.tab == 2){
@@ -391,9 +421,14 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                 currentweek:$scope.media.week
             }).success(function (data) {
                 $rootScope.loading = false;
-                $scope.rooms = data.list;
-                $scope.media.recordCount = data.list.recordCount;
-                $scope.media.pageCount = data.list.pageCount;
+                
+                if(data.code == 0){
+                    $scope.rooms = data.list;
+                    $scope.media.recordCount = data.list.recordCount;
+                    $scope.media.pageCount = data.list.pageCount;
+                }
+                else
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                 // console.log(data);
             })
         }else if($scope.media.tab == 3){
@@ -413,9 +448,14 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                 tobed:$scope.media.tobed
             }).success(function (data) {
                 $rootScope.loading = false;
-                $scope.topList = data.list;
-                $scope.media.recordCount = data.list.recordCount;
-                $scope.media.pageCount = data.list.pageCount;
+                if(data.code == 0){
+                    $scope.topList = data.list;
+                    $scope.media.recordCount = data.list.recordCount;
+                    $scope.media.pageCount = data.list.pageCount;
+                }
+                else
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                
                 // console.log(data);
             })
         }

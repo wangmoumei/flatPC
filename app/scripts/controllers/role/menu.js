@@ -77,6 +77,11 @@ angular.module('flatpcApp')
         }).success(function(data){
             console.log(data);
             $rootScope.loading = false;
+            if(data.code == 0){
+               console.log(data);
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         });
     }
     $scope.editSave = function () {
@@ -91,14 +96,24 @@ angular.module('flatpcApp')
         }).success(function(data){
             console.log(data);
             $rootScope.loading = false;
+            if(data.code == 0){
+               console.log(data);
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         });
     }
     $scope.delete = function () {
         return RoleService.delMenu({
             nodeid:$scope.media.nodeid
         }).success(function(data){
-            console.log(data);
+            
             $rootScope.loading = false;
+            if(data.code == 0){
+               console.log(data);
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         });
     }
     
@@ -110,9 +125,14 @@ angular.module('flatpcApp')
     function refresh(){
         $rootScope.loading = true;
         return RoleService.getMenuList($scope.media).success(function(data){
-            $scope.list = data.list;
+            
             console.log(data);
             $rootScope.loading = false;
+            if(data.code == 0){
+               $scope.list = data.list;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         });
     }
   }]);

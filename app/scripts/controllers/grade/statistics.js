@@ -63,9 +63,15 @@ angular.module('flatpcApp')
     function refresh() {
         $rootScope.loading = true;
         GradeService.getStatistics($scope.media).success(function (data) {
-            $scope.media.data = data.list;
+            
             console.log(data);            
-            chartInit();
+            
+            if(data.code == 0){
+                $scope.media.data = data.list;
+                chartInit();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })
     }
     function chartInit() {
@@ -128,8 +134,12 @@ angular.module('flatpcApp')
         FlatService.getList(AppConfig.schoolCode).success(function(data){
             // console.log(data);
             $rootScope.treeFlat = data.data;
-            getTerm();
             
+            if(data.code == 0){
+                getTerm();
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         });
     }else{
         getTerm();
@@ -137,9 +147,14 @@ angular.module('flatpcApp')
     function getTerm(){
         if(!$rootScope.treeTerm)
             TermService.getList().success(function(data){
-                $rootScope.treeTerm = data.data;
-                $scope.media.getYear(1);
-                $scope.show($rootScope.treeFlat || {});
+                
+                if(data.code == 0){
+                    $rootScope.treeTerm = data.data;
+                    $scope.media.getYear(1);
+                    $scope.show($rootScope.treeFlat || {});
+                }
+                else
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             });
         else{
             $scope.show($rootScope.treeFlat || {});
@@ -151,7 +166,11 @@ angular.module('flatpcApp')
         GradeService.downloadStatistics($scope.media).success(function (data) {
             console.log(data);            
             $rootScope.loading = false;
-            location.href = data.data.fileUrl;
+            if(data.code == 0){
+                location.href = data.data.fileUrl;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })
     }
   }]);

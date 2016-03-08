@@ -20,7 +20,7 @@
             <li class="fadeIn animated active">
                 <div class="page-tree" tree>
                     <ul>
-                        <li class="open">
+                        <li class="open" ng-show="treeGrade[0]">
                             <a class="branch">{{treeGrade[0].title}}</a>
                             <ul ng-show="treeGrade[0].subNodes">
                                 <li ng-repeat="category in treeGrade[0].subNodes||[]">
@@ -35,6 +35,7 @@
                                 <li><a class="add" ng-click="add(1,treeGrade[0])"><i class="ALiconfont icon-plus1"></i> 添加分类</a></li>
                             </ul>
                         </li>
+                        <li ng-hide="treeGrade[0]"><a class="add" ng-click="add(0,{})"><i class="ALiconfont icon-plus1"></i> 添加分类</a></li>
                     </ul>
                 </div>
                 <div class="from-container" style="left:225px;">
@@ -68,7 +69,7 @@
             <li class="fadeIn animated">
                 <div class="page-tree" tree>
                     <ul>
-                        <li class="open">
+                        <li class="open" ng-show="treeGrade[1]">
                             <a class="branch">{{treeGrade[1].title}}</a>
                             <ul ng-show="treeGrade[1].subNodes">
                                 <li ng-repeat="category in treeGrade[1].subNodes||[]">
@@ -83,6 +84,7 @@
                                 <li><a class="add" ng-click="add(1,treeGrade[1])"><i class="ALiconfont icon-plus1"></i> 添加分类</a></li>
                             </ul>
                         </li>
+                        <li ng-hide="treeGrade[1]"><a class="add" ng-click="add(0,{})"><i class="ALiconfont icon-plus1"></i> 添加分类</a></li>
                     </ul>
                 </div>
                 <div class="from-container" style="left:225px;">
