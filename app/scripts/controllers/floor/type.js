@@ -55,6 +55,7 @@ function($scope,AppConfig,$rootScope,RoomService,PublicService) {
         })
     }
     $scope.addSave = function(){
+        $rootScope.loading = true;
         RoomService.addType({
             token:'',
             schoolcode:AppConfig.schoolCode,
@@ -68,6 +69,7 @@ function($scope,AppConfig,$rootScope,RoomService,PublicService) {
             fileid:$scope.roomType.fileid,
             purpose:$scope.roomType.purpose
         }).success(function(data){
+            $rootScope.loading = false;
             if(data.code == 0){
                 swal("提示", "添加成功！", "success"); 
                 refresh();
@@ -78,6 +80,7 @@ function($scope,AppConfig,$rootScope,RoomService,PublicService) {
         });
     }
     $scope.editSave = function(){
+        $rootScope.loading = true;
         RoomService.editType({
             token:'',
             typeId:$scope.roomType.typeId,
@@ -91,6 +94,7 @@ function($scope,AppConfig,$rootScope,RoomService,PublicService) {
             fileid:$scope.roomType.fileid,
             purpose:$scope.roomType.purpose
         }).success(function(data){
+            $rootScope.loading = false;
             if(data.code == 0){
                 swal("提示", "修改成功！", "success");
                 refresh();
@@ -100,17 +104,32 @@ function($scope,AppConfig,$rootScope,RoomService,PublicService) {
         });
     }
     $scope.delete = function(){
-        RoomService.delType({
-            token:'',
-            typeid:$scope.roomType.typeId
-        }).success(function(data){
-            if(data.code == 0){
-                swal("提示", "删除成功！", "success");
-                refresh();
-            }
-            else
-                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+        swal({   
+            title: "确认删除",   
+            text: "真的要删除吗？",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "删除",   
+            cancelButtonText: "取消",   
+            closeOnConfirm: false 
+        }, 
+        function(){   
+            $rootScope.loading = true;
+            RoomService.delType({
+                token:'',
+                typeid:$scope.roomType.typeId
+            }).success(function(data){
+                $rootScope.loading = false;
+                if(data.code == 0){
+                    swal("提示", "删除成功！", "success");
+                    refresh();
+                }
+                else
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            });
         });
+        
     }
     $rootScope.loading = false;
     if(!$rootScope.treeType)

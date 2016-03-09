@@ -70,7 +70,7 @@
             }
         }
     }
-    li.open>a::before{
+    li.open>a.branch::before{
         content: "\e652 ";
     }
     li.open>ul{

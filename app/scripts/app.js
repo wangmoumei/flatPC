@@ -23,7 +23,8 @@ angular
       //});
   })
   .constant('AppConfig',{
-      WEB_ROOT:'http://120.55.84.193/Geese_Apartment/',//'http://test.houqinbao.com/gyxt_api/',
+      WEB_ROOT:'http://120.55.84.193/Geese_Apartment/',
+    //   WEB_ROOT:'http://test.houqinbao.com/gyxt_api/',
       schoolCode:10353,
 	  token:'213123'
   }).run(['$rootScope', '$location', 'AppConfig','authority',

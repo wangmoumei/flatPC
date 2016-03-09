@@ -50,8 +50,8 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
     };
     //检索功能
     $scope.search = function(search){
-        $scope.media.name = $scope.media.search?'':search;
-        $scope.media.studentnumber = $scope.media.search?search:'';
+        $scope.media.studentnumber = $scope.media.search?'':search;
+        $scope.media.name = $scope.media.search?search:'';
         refresh();
     };
     
@@ -65,7 +65,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
             this.classId = '';
             var college = this.collegeId?$filter('filter')($rootScope.treeCollege[0].collegeList,{collegeId:this.collegeId}):[];
             this.classList = (college.length>0 && college[0].classList)?college[0].classList : [];
-            console.log(this.classList);
+            //console.log(this.classList);
         },
         classSelecter : function(){
             //用classId反向获取collegeId和classList
@@ -140,15 +140,15 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
         if(studentid.length<1) 
             return null;
         $rootScope.loading = true;
-        return StudentService.getStudent('11481_201234005').success(function(data){
-            console.log(data);
+        return StudentService.getStudent(studentid).success(function(data){
             if(data.code == 0){
                 $scope.student = data.data;
+                $scope.student.studentKey = studentid;
                 $scope.student.fileid = data.data.fileId;
                 $scope.student.type = 1;
                 $scope.selecter.collegeId = data.data.collegeId;
                 $scope.selecter.collegeSelecter();
-                $scope.selecter.classId =  data.data.classId;
+                $scope.selecter.classId = '' + data.data.classId;
             }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
@@ -281,7 +281,6 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
     $scope.downloadStudent = function(){
         $rootScope.loading = true;
         StudentService.downloadStudent($scope.media).success(function(data){
-            console.log(data.data.fileUrl);
             
             $rootScope.loading = false;
             if(data.code == 0){
@@ -305,7 +304,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             
-            console.log(data.data);
+            //console.log(data.data);
             $rootScope.loading = false;
         })
     }
@@ -343,7 +342,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
     $scope.download = function(id){
         $rootScope.loading = true;
         StudentService.downloadImport(id).success(function(data){
-            console.log(data.data.fileUrl);
+            //console.log(data.data.fileUrl);
             if(data.code == 0){
                 location.href=data.data.fileUrl;
             }
@@ -356,7 +355,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
     $scope.downloadOriginal = function(id){
         $rootScope.loading = true;
         StudentService.downloadOriginal().success(function(data){
-            console.log(data.data.fileUrl);
+            //console.log(data.data.fileUrl);
             if(data.code == 0){
                 location.href=data.data.fileUrl;
             }
@@ -368,11 +367,11 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
     }
     $scope.uploadFile = function(){
         var files = event.target.files;
-        //console.log(files);
+        ////console.log(files);
         if(files[0].name.split(".").pop() != "xls" && files[0].name.split(".").pop() != "xlsx"){
             swal('提示', '文件格式不正确！请上传*.xls或*.xlsx文件', 'error'); 
             return false;
-        }console.log(files[0].name);
+        }//console.log(files[0].name);
         $scope.importFileName = files[0].name;
         $scope.$digest();
         var data = new FormData();
@@ -384,10 +383,10 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
         $scope.uploadExcel.append('title',$scope.importName);
         $scope.uploadExcel.append('token',AppConfig.token);
         $scope.uploadExcel.append('importtype','学生信息');
-        console.log($scope.uploadExcel);
+        //console.log($scope.uploadExcel);
         $rootScope.loading = true;
         return StudentService.importStudent($scope.uploadExcel).success(function(data){
-            console.log(data);
+            //console.log(data);
             $rootScope.loading = false;
         })
     }
@@ -402,7 +401,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             
-            console.log(data.data);
+            //console.log(data.data);
             $rootScope.loading = false;
         })
     }

@@ -163,7 +163,7 @@ angular.module('flatpcApp')
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });
-    }
+    };
     return {
         getList:getList,
         getFlat:getFlat,

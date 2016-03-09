@@ -15,7 +15,7 @@
             <li class="open">
                 <a class='branch'>所有</a>
                 <ul>
-                    <li ng-repeat="year in treeTerm||[]">
+                    <li class="open" ng-repeat="year in treeTerm||[]">
                         <a class="branch" ng-click="show(0,year)">{{year.schoolYearName }}</a>
                         <ul ng-show="year.semesterList">
                             <li ng-repeat="term in year.semesterList||[]">

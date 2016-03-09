@@ -52,7 +52,7 @@
             <tr>
                 <td width="200">朝向</td><td><input type="text" ng-model="roomType.direction" /></td>
             </tr>
-            <tr>
+            <tr ng-hide="roomType.bedNum == 0">
                 <td width="200">收费标准</td><td><input type="text" ng-model="roomType.fee" /></td>
             </tr>
             <tr ng-show="roomType.bedNum > 0">

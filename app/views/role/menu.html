@@ -15,16 +15,16 @@
             <li class="open" ng-repeat="item in list">
                 <a ng-click="show(0,item,0)" class="branch">{{item.remark}}</a>
                 <ul>
-                    <li ng-repeat="item1 in item.subNodes || []" >
+                    <li class="open" ng-repeat="item1 in item.subNodes || []" >
                         <a class="branch" ng-click="show(1,item1,item.nodeId,item.remark)">{{item1.remark}}</a>
                         <ul>
-                            <li ng-repeat="item2 in item1.subNodes||[]" >
+                            <li class="open" ng-repeat="item2 in item1.subNodes||[]" >
                                 <a class="branch" ng-click="show(2,item2,item1.nodeId,item.remark,item1.remark)">{{item2.remark}}</a>
                                 <ul>
-                                    <li ng-repeat="item3 in item2.subNodes||[]" >
+                                    <li class="open" ng-repeat="item3 in item2.subNodes||[]" >
                                         <a class="branch" ng-click="show(3,item3,item2.nodeId,item.remark,item1.remark,item2.remark)">{{item3.remark}}</a>
                                         <ul>
-                                            <li ng-repeat="item4 in item3.subNodes||[]" >
+                                            <li class="open" ng-repeat="item4 in item3.subNodes||[]" >
                                                 <a class="branch" ng-click="show(4,item4,item3.nodeId,item.remark,item1.remark,item2.remark,item3.remark)">{{item4.remark}}</a>
                                                 <ul>
                                                     <li ng-repeat="item5 in item4.subNodes||[]" >

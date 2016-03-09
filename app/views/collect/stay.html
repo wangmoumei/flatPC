@@ -34,10 +34,10 @@
             <li class="open">
                 <a ng-class="{'branch':treeFlat.cmpusList,'leaf':!treeFlat.cmpusList}">{{treeFlat.title}}</a>
                 <ul ng-show="treeFlat.cmpusList">
-                    <li ng-repeat="campus in treeFlat.cmpusList||[]">
+                    <li class="open" ng-repeat="campus in treeFlat.cmpusList||[]">
                         <a ng-class="{'branch':campus.liveAreaList,'leaf':!campus.liveAreaList}">{{campus.title}}</a>
                         <ul ng-show="campus.liveAreaList">
-                            <li ng-repeat="liveArea in campus.liveAreaList||[]">
+                            <li class="open" ng-repeat="liveArea in campus.liveAreaList||[]">
                                 <a ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}">{{liveArea.title}}</a>
                                 <ul ng-show="liveArea.flatList">
                                     <li ng-repeat="flat in liveArea.flatList||[]">
@@ -92,6 +92,9 @@
                 <div class="tool-bar">
                     <div>
                         <a class="btn btn-success" ng-click="showCard('#multiAdd')">数据导入</a>
+                    </div>
+                    <div>
+                        <a class="btn btn-default" ng-click="downloadOriginal()">下载样表</a>
                     </div>
                 </div>
                 <div class="table-container" style="top:50px;">

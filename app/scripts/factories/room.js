@@ -144,7 +144,7 @@ angular.module('flatpcApp')
     }
     var getListByName = function(param){
         var url = AppConfig.WEB_ROOT + 'flatdata/rooms/get_empty_beds/?flatid=' + (param.flatid || "") 
-        + '&token=' + (param.token || AppConfig.token) + '&roomname=' + (param.flatid || "");
+        + '&token=' + (param.token || AppConfig.token) + '&roomname=' + (param.roomname || "");
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });

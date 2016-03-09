@@ -29,10 +29,10 @@
             <li class="open">
                 <a ng-class="{'branch':treeFlat.cmpusList,'leaf':!treeFlat.cmpusList}">{{treeFlat.title}}</a>
                 <ul ng-show="treeFlat.cmpusList">
-                    <li ng-repeat="campus in treeFlat.cmpusList||[]">
+                    <li class="open" ng-repeat="campus in treeFlat.cmpusList||[]">
                         <a ng-class="{'branch':campus.liveAreaList,'leaf':!campus.liveAreaList}">{{campus.title}}</a>
                         <ul ng-show="campus.liveAreaList">
-                            <li ng-repeat="liveArea in campus.liveAreaList||[]">
+                            <li class="open" ng-repeat="liveArea in campus.liveAreaList||[]">
                                 <a ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}">{{liveArea.title}}</a>
                                 <ul ng-show="liveArea.flatList">
                                     <li ng-repeat="flat in liveArea.flatList||[]">
@@ -59,7 +59,7 @@
                 </div>
                 <ul class="room-list room-list-row" ng-repeat="rooms in floor.roomList">
                     <li class="room-item" ng-repeat="room in rooms">
-                        <div ng-click="showCard('#roomEdit',roomInit(room,floor))" ng-class="{'room-add':room.status<0}">{{room.roomName}}</div>
+                        <div ng-click="showCard('#roomEdit',roomInit(room,floor))" ng-class="{'room-add':room.status<0,'other':room.purpose}">{{room.purpose?room.purpose:room.roomName}}</div>
                     </li>
                 </ul>
             </li>
@@ -172,7 +172,7 @@
                                     <td>
                                         <select ng-model="media.room.typeid">
                                             <option value="">户型</option>
-                                            <option ng-repeat="type in treeType" ng-selected="media.room.roomtype == type.typeId" value="{{type.typeId}}">{{type.title}}</option>
+                                            <option ng-repeat="type in treeType" ng-selected="media.room.typeid == type.typeId" value="{{type.typeId}}">{{type.title}}</option>
                                         </select>
                                     </td>
                                 </tr>

@@ -284,6 +284,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         bedList:null,
         bedName:'',
         bedSearch:function () {
+            if($scope.selecter.flatId.length < 0 || this.bedName.length < 0)return;
             var that = this;
             $rootScope.loading = true;
             RoomService.getListByName({
@@ -308,6 +309,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         studentName:'',
         studentList:null,
         studentSearch:function () {
+            if($scope.selecter.classId.length < 0 ||$scope.selecter.collegeId.length < 0 || this.studentName.length < 0)return;
             var that = this;
             $rootScope.loading = true;
             StudentService.getListByName({

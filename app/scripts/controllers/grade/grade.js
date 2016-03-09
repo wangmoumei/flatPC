@@ -98,10 +98,16 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     }
                 }else{
                     if(this.yearIndex < $rootScope.treeTerm.length - 1){
-                        return {
-                            year:$rootScope.treeTerm[this.yearIndex+1].year,
-                            term:$rootScope.treeTerm[this.yearIndex+1].semesterList[$rootScope.treeTerm[this.yearIndex+1].semesterList.length-1].semesterName
-                        }
+                        if($rootScope.treeTerm[this.yearIndex+1].semesterList.length>0)
+                            return {
+                                year:$rootScope.treeTerm[this.yearIndex+1].year,
+                                term:$rootScope.treeTerm[this.yearIndex+1].semesterList[$rootScope.treeTerm[this.yearIndex+1].semesterList.length-1].semesterName
+                            };
+                        else
+                            return {
+                                year:null,
+                                term:null
+                            };
                     }else{
                         return {
                             year:null,
@@ -331,7 +337,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
     //界面初始化相关
     if(!$rootScope.treeTerm)
         TermService.getList().success(function(data){
-            //console.log(data);
+            console.log(data);
             if(data.code == 0){
                 $rootScope.treeTerm = data.data;
                 getFlat();
@@ -375,7 +381,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                 }
             }
         }
-        if($rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList[0].flatId){
+        if($rootScope.treeFlat.cmpusList[0]&&$rootScope.treeFlat.cmpusList[0].liveAreaList[0]&&$rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList[0]&&$rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList[0].flatId){
             $scope.media.title = $rootScope.treeFlat.cmpusList[0].title + ' - ' +  $rootScope.treeFlat.cmpusList[0].liveAreaList[0].title + ' - ' +  $rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList[0].title;
             $scope.media.flatid = $rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList[0].flatId;
             refresh();
@@ -383,6 +389,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             $rootScope.loading = false;
     };
     function refresh() {
+        if($scope.media.flatid.length<1)return;
         $rootScope.loading = true;
         if($scope.media.tab == 1){
             GradeService.getListByFlat({

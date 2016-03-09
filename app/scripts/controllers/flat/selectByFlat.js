@@ -1,21 +1,24 @@
 angular.module('flatpcApp')
 .controller('FlatCtrl', ['$scope', 'AppConfig','$rootScope','StudentService','FlatService','$filter',
 function($scope,AppConfig,$rootScope,StudentService,FlatService,$filter) {
+    $scope.media = {
+        title:''
+    }
     if(!$rootScope.treeFlat){
         FlatService.getList(AppConfig.schoolCode).success(function(data){
             //console.log(data);
             $rootScope.treeFlat = data.data;
-            refresh('11481_1_1_1_1_1');
+            refresh();
         });
     }
     else {
-        refresh('11481_1_1_1_1_1');
+        refresh();
     }
     $scope.loadInfo = function(studentid){
-        if(studentid.length<1) 
+        if(!studentid || studentid.length<1) 
             return null;
         $rootScope.loading = true;
-        return StudentService.getStudent('11481_201234005').success(function(data){
+        return StudentService.getStudent(studentid).success(function(data){
             if(data.code == 0){
                 $scope.student = data.data;
                 $rootScope.loading = false;
@@ -26,8 +29,25 @@ function($scope,AppConfig,$rootScope,StudentService,FlatService,$filter) {
             
         })
     }
-    
+    $scope.show = function (item) {
+        if(item && item.flatId){
+            refresh(item.flatId)
+        }
+    }
     function refresh(flatid){
+        flatid = flatid || false;
+        if(!flatid){
+            if($rootScope.treeFlat.cmpusList.length>0 && $rootScope.treeFlat.cmpusList[0].liveAreaList.length>0 && $rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList.length>0 && $rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList[0].flatId)
+            {
+                flatid = $rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList[0].flatId;
+                $scope.media.title = $rootScope.treeFlat.cmpusList[0].title + '-' + $rootScope.treeFlat.cmpusList[0].liveAreaList[0].title + '-' + $rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList[0].title;
+            } 
+            else {
+                $rootScope.loading = false;
+                $scope.media.title = '请选择楼栋';
+                return;
+            }
+        }
         FlatService.getFlat(flatid).success(function(data){
             if(data.code == 0){
                 data.list.floorList = data.list.floorList || [];

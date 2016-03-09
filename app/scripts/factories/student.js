@@ -34,6 +34,7 @@ angular.module('flatpcApp')
         });//.get(url,param);
     }
     var editStudent = function(param){
+        console.log(param);
         var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/edit_student/';
         return $http({
             url:url,
@@ -144,6 +145,18 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });
     }
+    var getListWithBedByClass = function (param) {
+        var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/distribution/?'
+        + 'schoolcode='+ AppConfig.schoolCode + '&token=' + AppConfig.token
+        + '&epage=' + (param.epage || 1) + '&pagesize=' + (param.pagesize || 10)
+        + (param.orderfield?('&orderfield='+param.orderfield):'')
+        + (param.ordertype?('&orderfield='+param.ordertype):'')
+        + (param.name?('&name='+param.name):'')+ (param.studentnumber?('&studentnumber='+param.studentnumber):'')
+        + (param.collegeid?('&collegeid='+param.collegeid):'')+ (param.classid?('&classid='+param.classid):'');
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
+    }
     return {
         getStudent:getStudent,//获取学生详细信息
         getList:getList,//获取学生列表
@@ -158,6 +171,7 @@ angular.module('flatpcApp')
         getListByName:getListByName,
         getListWithBed:getListWithBed,
         getListWithBedByFlat:getListWithBedByFlat,
-        downloadOriginal:downloadOriginal
+        downloadOriginal:downloadOriginal,
+        getListWithBedByClass:getListWithBedByClass
     }
 }]);

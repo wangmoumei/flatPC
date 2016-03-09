@@ -6,7 +6,7 @@ angular.module('flatpcApp')
             url:url,
             method:"POST",
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'multipart/form-data'
             },
             data:param
         }).error(function (error) {

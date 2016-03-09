@@ -15,11 +15,11 @@
             <li ng-repeat="item1 in tree">
                 <a ng-class="{'branch':item1.list,'leaf':!item1.list}">{{item1.name}}</a>
                 <ul ng-show="item1.list">
-                    <li ng-repeat="item2 in item1.list||[]">
+                    <li class="open" ng-repeat="item2 in item1.list||[]">
                         <a ng-class="{'branch':item2.list,'leaf':!item2.list}">{{item2.name}}</a>
                         <ul ng-show="item2.list">
                             <li ng-repeat="item3 in item2.list||[]">
-                                <a ng-class="{'branch':item3.list,'leaf':!item3.list}">{{item3.name}}</a>
+                                <a class="leaf">{{item3.name}}</a>
                             </li>
                             <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加学期</a></li>
                         </ul>

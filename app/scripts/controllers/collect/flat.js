@@ -43,7 +43,19 @@ function($scope,$rootScope,FlatService,AppConfig) {
         })
         
     }
-    
+    $scope.downloadOriginal = function () {
+        $rootScope.loading = true;
+        FlatService.downloadExcel().success(function(data){
+            console.log(data.data.fileUrl);
+            if(data.code == 0){
+                location.href=data.data.fileUrl;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            
+            $rootScope.loading = false;
+        })
+    }
     $scope.uploadFile = function(){
         var files = event.target.files;
         //console.log(files);

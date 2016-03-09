@@ -23,10 +23,10 @@
                         <li class="open" ng-show="treeGrade[0]">
                             <a class="branch">{{treeGrade[0].title}}</a>
                             <ul ng-show="treeGrade[0].subNodes">
-                                <li ng-repeat="category in treeGrade[0].subNodes||[]">
+                                <li class="open" ng-repeat="category in treeGrade[0].subNodes||[]">
                                     <a ng-click="show(1,category)" ng-class="{'branch':category.subNodes,'leaf':!category.subNodes}">{{category.title}}</a>
                                     <ul ng-show="category.subNodes">
-                                        <li ng-repeat="option in category.subNodes||[]">
+                                        <li class="open" ng-repeat="option in category.subNodes||[]">
                                             <a ng-click="show(2,option,category.title)" ng-class="{'branch':option.subNodes,'leaf':!option.subNodes}">{{option.title}}</a>
                                         </li>
                                         <li><a class="add" ng-click="add(2,category,category.title)"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
@@ -72,7 +72,7 @@
                         <li class="open" ng-show="treeGrade[1]">
                             <a class="branch">{{treeGrade[1].title}}</a>
                             <ul ng-show="treeGrade[1].subNodes">
-                                <li ng-repeat="category in treeGrade[1].subNodes||[]">
+                                <li class="open" ng-repeat="category in treeGrade[1].subNodes||[]">
                                     <a ng-click="show(1,category)" ng-class="{'branch':category.subNodes,'leaf':!category.subNodes}">{{category.title}}</a>
                                     <ul ng-show="category.subNodes">
                                         <li ng-repeat="option in category.subNodes||[]">

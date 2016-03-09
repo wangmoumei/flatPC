@@ -170,6 +170,7 @@ function($scope,AppConfig,$rootScope,GradeService) {
                 $rootScope.treeGrade = data.data;
             }else{
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            }
         });
     }
 }]);

@@ -15,7 +15,7 @@
             <li class="open">
                 <a class="branch">所有</a>
                 <ul>
-                    <li ng-repeat="admin in admins||[]" >
+                    <li class="open" ng-repeat="admin in admins||[]" >
                         <a ng-class="{'branch':admin.adminList,'leaf':!admin.adminList}" ng-click="show(1,admin)">{{admin.adminTypeName}}</a>
                         <ul ng-show="admin.adminList">
                             <li ng-repeat="item in admin.adminList||[]" >

@@ -11,7 +11,7 @@
 </div>
 <div class="tool-bar" style="margin-left:225px;">
     <div class="bar-full" style="min-width:160px">
-        {{flat.flatName}}
+        {{flat.flatName || media.title}}
     </div>
     <div>
         楼层：{{flat.floorNum}}
@@ -33,14 +33,14 @@
             <li class="open">
                 <a ng-class="{'branch':treeFlat.cmpusList,'leaf':!treeFlat.cmpusList}">{{treeFlat.title}}</a>
                 <ul ng-show="treeFlat.cmpusList">
-                    <li ng-repeat="campus in treeFlat.cmpusList||[]">
+                    <li class="open" ng-repeat="campus in treeFlat.cmpusList||[]">
                         <a ng-class="{'branch':campus.liveAreaList,'leaf':!campus.liveAreaList}">{{campus.title}}</a>
                         <ul ng-show="campus.liveAreaList">
-                            <li ng-repeat="liveArea in campus.liveAreaList||[]">
+                            <li class="open" ng-repeat="liveArea in campus.liveAreaList||[]">
                                 <a ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}">{{liveArea.title}}</a>
                                 <ul ng-show="liveArea.flatList">
                                     <li ng-repeat="flat in liveArea.flatList||[]">
-                                        <a class="leaf">{{flat.title}}</a>
+                                        <a class="leaf" ng-click="show(flat)">{{flat.title}}</a>
                                     </li>
                                 </ul>
                             </li>

@@ -169,6 +169,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
     }
     
     $scope.roomInit = function (room,floor) {
+        console.log(room.listOrder)
         typeInit();
         $scope.media.floor.floorid = floor.floorId || "";
         $scope.media.floor.floorname = floor.floorName || "";
@@ -177,27 +178,25 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
             $scope.media.room.roomid = '';
             $scope.media.room.roomname = '';
             $scope.media.room.floornum = 0;
-            $scope.media.room.roomnum = 0;
+            $scope.media.room.listorder = 0;
             $scope.media.room.status = 0;
             $scope.media.room.roomstyle = '';
-            $scope.media.room.roomtype = '';
+            $scope.media.room.typeid = '';
             $scope.media.room.memo = '';
         }else{
             $scope.media.room.type = 1;
             $scope.media.room.roomid = room.roomId;
             $scope.media.room.roomname = room.roomName;
             $scope.media.room.floornum = room.listOrder;
-            $scope.media.room.roomnum = room.listOrder;
+            $scope.media.room.listorder = room.listOrder;
             $scope.media.room.status = room.status;
             $scope.media.room.roomstyle = room.roomStyle;
-            $scope.media.room.roomtype = room.typeId;
+            $scope.media.room.typeid = room.typeId;
             $scope.media.room.memo = room.memo;
         }
     }
     $scope.room = {
         addSave:function () {
-            
-            
             $rootScope.loading = true;
             RoomService.addRoom({
                 token:AppConfig.token,
@@ -221,12 +220,11 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
             
         },
         editSave:function () {
-            
             $rootScope.loading = true;
             RoomService.editRoom({
                 token:AppConfig.token,
-                roomid:$scope.media.roomid,
-                roomnum:$scope.media.room.roomnum,
+                roomid:$scope.media.room.roomid,
+                listorder:$scope.media.room.listorder,
                 status:$scope.media.room.status,
                 roomstyle:$scope.media.room.roomstyle,
                 typeid:$scope.media.room.typeid,

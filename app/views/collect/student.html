@@ -20,7 +20,7 @@
             <li class="open">
                 <a ng-class="{'branch':treeCollege[0].collegeList,'leaf':!treeCollege[0].collegeList}" ng-click="show(0,treeCollege[0])">{{treeCollege[0].name}}</a>
                 <ul ng-show="treeCollege[0].collegeList">
-                    <li ng-repeat="college in treeCollege[0].collegeList||[]">
+                    <li class="open" ng-repeat="college in treeCollege[0].collegeList||[]">
                         <a ng-click="show(1,college,treeCollege[0].name)" ng-class="{'branch':college.classList,'leaf':!college.classList}">{{college.collegeName}}</a>
                         <ul ng-show="college.classList">
                             <li ng-repeat="cla in college.classList||[]">
@@ -86,7 +86,7 @@
                                 <td>{{student.collegeName}}</td>
                                 <td>{{student.className}}</td>
                                 <td>
-                                    <a ng-click="showCard({selecter:'#studentForm',before:loadInfo('123123')})" class="btn btn-link btn-xs">编辑</a>
+                                    <a ng-click="showCard({selecter:'#studentForm',before:loadInfo(student.studentKey)})" class="btn btn-link btn-xs">编辑</a>
                                 </td>
                             </tr>
                         </tbody>

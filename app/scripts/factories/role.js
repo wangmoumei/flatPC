@@ -1,9 +1,9 @@
 angular.module('flatpcApp')
 .factory('RoleService',['$http', 'AppConfig',function($http, AppConfig){
     var getList = function(param){
-        var url = AppConfig.WEB_ROOT + 'rolemanage/roles/get_list/?schoolcode='+AppConfig.schoolCode
-        +'&token='+AppConfig.token
-        +('&type=' + param.type || 1)
+        var url = AppConfig.WEB_ROOT + 'rolemanage/roles/get_list/?'
+        +'token='+AppConfig.token
+        +('&type=' + param.type)+(param.type?('&schoolcode='+AppConfig.schoolCode):'')
         +(param.epage?'&epage='+param.epage:'')
         +(param.pagesize?'&pagesize='+param.pagesize:'');
         return $http.get(url).error(function (error) {
