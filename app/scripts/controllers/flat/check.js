@@ -46,31 +46,11 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         $scope.media.liveareaid = item.liveAreaId || "";
         $scope.media.flatid = item.flatId || "";
         
-        switch(type){
-            case 0:
-                $scope.selecter.campusId = "";
-                $scope.selecter.liveAreaId = "";
-                $scope.selecter.flatId = "";
-                break;
-            case 1:
-                $scope.selecter.campusId = item.campusId;
-                $scope.selecter.liveAreaId = "";
-                $scope.selecter.flatId = "";
-                break;
-            case 2:
-                $scope.selecter.liveAreaId = item.liveAreaId;
-                $scope.selecter.flatId = "";
-                break;
-            case 3:
-                $scope.selecter.flatId = item.flatId;
-                break;
-        }
-        
         refresh();
     };
     //调整查询规则，计划中、已审批、已取消、已驳回
     $scope.setStatus = function(status){
-        $scope.media.status = status || -1;
+        $scope.media.status = status;
         refresh();
     }
     //检索功能
@@ -118,6 +98,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
     $scope.detail = function(work){
         $scope.work = work;
         $scope.work.returnMessage  = "";
+        $scope.returnSwitch = false;
         return null;
     }
     //驳回理由 Dom操控
@@ -129,9 +110,9 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
     $scope.passWork = function(fun){
         $rootScope.loading = true;
         DailyService.passChange({
-            token:'',
+            token:AppConfig.token,
             occupancyid:$scope.work.occupancyId || '',
-            adminid:''
+            adminid:AppConfig.adminId
         }).success(function(data){
             if(data.code == 0){
                 swal("提示", "审批成功！", "success"); 
@@ -149,10 +130,10 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
     $scope.returnWork = function(fun){
         $rootScope.loading = true;
         DailyService.backChange({
-            token:'',
+            token:AppConfig.token,
             occupancyid:$scope.work.occupancyId || '',
             backmessage:$scope.work.returnMessage,
-            adminid:''
+            adminid:AppConfig.adminId
         }).success(function(data){
             if(data.code == 0){
                 swal("提示", "驳回成功！", "success");
@@ -172,7 +153,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         DailyService.cancelChange({
             token:'',
             occupancyid:$scope.work.occupancyId || '',
-            adminid:''
+            adminid:AppConfig.adminId
         }).success(function(data){
             if(data.code == 0){
                 swal("提示", "已取消！", "success"); 

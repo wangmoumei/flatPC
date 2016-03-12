@@ -7,6 +7,7 @@ angular.module('flatpcApp')
         });
     }
     var addAdmin = function(param){
+        param.token = param.token || AppConfig.token;
         var url = AppConfig.WEB_ROOT + 'accountmanage/Admins/add/';
         return $http({
             url:url,
@@ -20,6 +21,7 @@ angular.module('flatpcApp')
         });//.get(url,param);
     }
     var editAdmin = function(param){
+        param.token = param.token || AppConfig.token;
         var url = AppConfig.WEB_ROOT + 'accountmanage/Admins/edit/';
         return $http({
             url:url,
@@ -33,6 +35,7 @@ angular.module('flatpcApp')
         });//.get(url,param);
     }
     var delAdmin = function(param){
+        param.token = param.token || AppConfig.token;
         var url = AppConfig.WEB_ROOT + 'accountmanage/Admins/del/';
         return $http({
             url:url,

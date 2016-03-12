@@ -56,10 +56,10 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,StudentService,$
     //初始化树+列表
     if(!$rootScope.treeFlat){
         FlatService.getList(AppConfig.schoolCode).success(function(data){
-            
             $rootScope.loading = false;
             if(data.code == 0){
                 $rootScope.treeFlat = data.data;
+                refresh();
             }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
@@ -98,10 +98,12 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,StudentService,$
         $rootScope.loading = true;
         CheckInService.editKey({
             token:AppConfig.token,
-            borrowkeyid:$scope.work.borrowkeyid,
-            starttime:$scope.work.starttime,
+            borrowkeyid:$scope.work.borrowkeyId,
+            starttime:$scope.work.startTime,
             phone:$scope.work.phone,
-            memo:$scope.work.memo
+            memo:$scope.work.memo,
+            adminid:AppConfig.adminId,
+            endtime:$scope.work.endTime
         }).success(function (data) {
             $rootScope.loading = false;
             console.log(data);
@@ -129,7 +131,7 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,StudentService,$
             $rootScope.loading = true;
             return CheckInService.delKey({
                 token:AppConfig.token,
-                borrowkeyid:$scope.work.borrowkeyid
+                borrowkeyid:$scope.work.borrowkeyId
             }).success(function(data){
                 $rootScope.loading = false;
                 if(data.code == 0){
@@ -146,9 +148,9 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,StudentService,$
         $rootScope.loading = true;
         return CheckInService.dealKey({
             token:AppConfig.token,
-            borrowkeyid:$scope.work.borrowkeyid,
+            borrowkeyid:$scope.work.borrowkeyId,
             endtime:time,
-            adminid:''
+            adminid:AppConfig.adminId
         }).success(function(data){
             $rootScope.loading = false;
             
@@ -239,7 +241,7 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,StudentService,$
                 name:this.student.name,
                 starttime:this.starttime,
                 phone:this.phone,
-                adminid:'',
+                adminid:AppConfig.adminId,
                 memo:this.memo
             }).success(function (data) {
                 $rootScope.loading = false;

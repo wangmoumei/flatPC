@@ -1,13 +1,13 @@
 angular.module('flatpcApp')
 .factory('FlatService',['$http', 'AppConfig',function($http, AppConfig){
     var getList = function(schoolcode){
-        var url = AppConfig.WEB_ROOT + 'flatdata/school/get_floor_list/?schoolcode='+AppConfig.schoolCode+'&token=123';
+        var url = AppConfig.WEB_ROOT + 'flatdata/school/get_floor_list/?schoolcode='+AppConfig.schoolCode+'&token=' + AppConfig.token;
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });
     }
     var getFlat = function(flatid){
-        var url = AppConfig.WEB_ROOT + 'apartment/floor/index/?flatid=' + flatid + '&token=123';
+        var url = AppConfig.WEB_ROOT + 'apartment/floor/index/?flatid=' + flatid + '&token=' + AppConfig.token;
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });
@@ -132,15 +132,15 @@ angular.module('flatpcApp')
     }
     var getImport = function(param){
         var url = AppConfig.WEB_ROOT + 'stmessage/roommessage/get_import_list/?'
-        + 'schoolcode='+ AppConfig.schoolCode + '&token=123'
+        + 'schoolcode='+ AppConfig.schoolCode + '&token=' + AppConfig.token
         + '&epage=' + (param.epage || 1) + '&pagesize=' + (param.pagesize || 10)
         + (param.orderfield?('&orderfield='+param.orderfield):'')
         + (param.ordertype?('&ordertype='+param.ordertype):'');
         return $http.get(url,param);
     }
     var downloadImport = function(param){
-        var url = AppConfig.WEB_ROOT + '/stmessage/roommessage/export_error/?importId = ' + param
-        + "&token=123";
+        var url = AppConfig.WEB_ROOT + '/stmessage/roommessage/export_error/?importid=' + param
+        + "&token=" + AppConfig.token;
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });
@@ -151,15 +151,15 @@ angular.module('flatpcApp')
             url:url,
             method:"POST",
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': undefined
             },
-            params:param
+            data:param
         }).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });//.post(url,param,{ headers: { 'Content-Type': undefined }});
     }
     var downloadExcel = function(){
-        var url = AppConfig.WEB_ROOT + 'stmessage/roommessage/sample_table/?schoolcode='+AppConfig.schoolCode+'&token=123';
+        var url = AppConfig.WEB_ROOT + 'stmessage/roommessage/sample_table/?schoolcode='+AppConfig.schoolCode+'&token=' + AppConfig.token;
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });

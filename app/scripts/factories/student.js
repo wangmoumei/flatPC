@@ -1,7 +1,7 @@
 angular.module('flatpcApp')
 .factory('StudentService',['$http', 'AppConfig',function($http, AppConfig){
     var getStudent = function(studentid){
-        var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/get_student_message/?student_key=' + studentid + '&token=123';
+        var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/get_student_message/?student_key=' + studentid + '&token=' + AppConfig.token;
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });
@@ -66,9 +66,9 @@ angular.module('flatpcApp')
             url:url,
             method:"POST",
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': undefined
             },
-            params:param
+            data:param
         }).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });//.post(url,param,{ headers: { 'Content-Type': undefined }});
@@ -101,7 +101,7 @@ angular.module('flatpcApp')
         return $http.get(url,param);
     }
     var downloadImport = function(param){
-        var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/export_error/?importId = ' + param
+        var url = AppConfig.WEB_ROOT + 'stmessage/tmessage/export_error/?importid=' + param
         + "&token=" + AppConfig.token;
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 

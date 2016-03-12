@@ -100,12 +100,14 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
         CheckInService.editVisit({
             token:AppConfig.token,
             visitid:$scope.work.visitid,
-            starttime:$scope.work.starttime,
+            starttime:$scope.work.startTime,
             name:$scope.work.name,
-            credentialtype:$scope.work.credentialtype,
+            credentialtype:$scope.work.credentialType,
             credential:$scope.work.credential,
             phone:$scope.work.phone,
-            memo:$scope.work.memo
+            memo:$scope.work.memo,
+            endtime:$scope.work.endTime,
+            adminid:AppConfig.adminId
         }).success(function (data) {
             $rootScope.loading = false;
             console.log(data);
@@ -153,7 +155,7 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
             token:AppConfig.token,
             visitid:$scope.work.visitid,
             endtime:time,
-            adminid:''
+            adminid:AppConfig.adminId
         }).success(function(){
             $rootScope.loading = false;
             
@@ -258,7 +260,7 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
                 credentialtype:this.credentialtype,
                 credential:this.credential,
                 phone:this.phone,
-                adminid:'',
+                adminid:AppConfig.adminId,
                 memo:this.memo
             }).success(function (data) {
                 $rootScope.loading = false;

@@ -12,7 +12,7 @@ angular.module('flatpcApp')
     }
     var addRole = function(param){
         param.token = param.token || AppConfig.token;
-        var url = AppConfig.WEB_ROOT + 'accountmanage/Roles/add/';
+        var url = AppConfig.WEB_ROOT + 'rolemanage/roles/add/';
         return $http({
             url:url,
             method:"POST",
@@ -26,7 +26,7 @@ angular.module('flatpcApp')
     }
     var editRole = function(param){
         param.token = param.token || AppConfig.token;
-        var url = AppConfig.WEB_ROOT + 'accountmanage/Roles/edit/';
+        var url = AppConfig.WEB_ROOT + 'rolemanage/roles/edit/';
         return $http({
             url:url,
             method:"POST",
@@ -40,7 +40,7 @@ angular.module('flatpcApp')
     }
     var delRole = function(param){
         param.token = param.token || AppConfig.token;
-        var url = AppConfig.WEB_ROOT + 'accountmanage/Roles/del/';
+        var url = AppConfig.WEB_ROOT + 'rolemanage/roles/del/';
         return $http({
             url:url,
             method:"POST",
@@ -54,7 +54,7 @@ angular.module('flatpcApp')
     }
     var changeRole = function(param){
         param.token = param.token || AppConfig.token;
-        var url = AppConfig.WEB_ROOT + 'accountmanage/Roles/edit_status/';
+        var url = AppConfig.WEB_ROOT + 'rolemanage/roles/edit_status/';
         return $http({
             url:url,
             method:"POST",
@@ -68,7 +68,7 @@ angular.module('flatpcApp')
     }
     var setRole = function(param){
         param.token = param.token || AppConfig.token;
-        var url = AppConfig.WEB_ROOT + 'accountmanage/Roles/edit_nodes/';
+        var url = AppConfig.WEB_ROOT + 'rolemanage/roles/edit_nodes/';
         return $http({
             url:url,
             method:"POST",
@@ -81,9 +81,10 @@ angular.module('flatpcApp')
         });//.get(url,param);
     }
     var getMenuList = function(param){
+        var isschool = param?(param.isschool || 1):1;
         var url = AppConfig.WEB_ROOT + 'rolemanage/setups/get_list/?'
         +'token='+AppConfig.token
-        +(param.isschool?'&isschool='+param.isschool:'');
+        +('&isschool='+isschool);
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });

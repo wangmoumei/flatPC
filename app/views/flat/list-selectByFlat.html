@@ -4,9 +4,9 @@
         返回
     </a>
     <ul class="history-list">
-        <li><a>公寓管理</a></li>
-        <li><a>宿舍管理</a></li>
-        <li>公寓宿舍查询</li>
+        <li><a href="#index" ng-click="routerInit('flat')">公寓管理</a></li>
+        <li><a href="#index">公寓管理</a></li>
+        <li>按楼查看</li>
     </ul>
 </div>
 <div class="tool-bar" style="margin-left:225px;">
@@ -79,7 +79,7 @@
                             <li class="room-item" ng-repeat="room in rooms">
                                 <div>{{room.number}}</div>
                                 <ul ng-show="room.bedNum">
-                                    <li ng-repeat="bed in room.bedList || []"><a ng-click="showCard({before:loadInfo(bed.bedStatus?bed.studentKey:'')})"> {{bed.bedNum + ' ' + (bed.bedStatus?bed.studentName:'空闲')}}</a></li>
+                                    <li ng-repeat="bed in room.bedList || []"><a ng-click="showCard({before:loadInfo(bed.bedStatus?bed.studentKey:'')})"> {{bed.bedNum}}  <span ng-class="{'bed-empty':!bed.bedStatus}">{{bed.bedStatus?bed.studentName:'空闲'}}</span></a></li>
                                 </ul>
                                 <div ng-hide="room.bedNum">
                                     <a>{{room.purpose}}</a>
@@ -120,24 +120,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="table-container" style="top:50px;">
-                    <table class="table table-bordered table-hover">
+                <div class="table-container" style="top:50px;background-color:#fff;">
+                    <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th class="sort">学号</th>
                                 <th class="sort">姓名</th>
-                                <th class="sort-up">班级</th>
+                                <th class="sort">班级</th>
                                 <th>性别</th>
                                 <th class="sort">宿舍号</th>
-                                <th class="sort-down">床号</th>
+                                <th class="sort">床号</th>
                                 <th>查看</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white">
-                            <tr>
+                            <tr ng-repeat="student in studentList || []">
                                 <td>1</td><td>aaa</td><td>bbb</td><td>ccc</td><td>ddd</td><td>eee</td><td><a class="btn btn-link btn-xs" ng-click="showCard({before:loadInfo('11481_201234005')})">详情</a></td>
                             </tr>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="10" ng-hide="media.recordCount" class="empty">没有检索到学生信息</td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
                 <div class="page-controller">
@@ -199,7 +204,7 @@
                             <ul class="page-tabs-container">
                                 <li class="fadeIn animated active">
                                     <table class="table table-bordered bg-white">
-                                        <tr><td>学号</td><td>{{student.studentNumber}}</td><td>姓名</td><td>{{student.name}}</td><td rowspan="7"><img width="100" src="{{student.headImgurl}}"/></td></tr>
+                                        <tr><td>学号</td><td>{{student.studentNumber}}</td><td>姓名</td><td>{{student.name}}</td><td rowspan="7"><img width="100" src="{{student.headImgurl || 'http://7xp0c4.com2.z0.glb.qiniucdn.com/default.png'}}"/></td></tr>
                                         <tr><td>性别</td><td>{{student.sex}}</td><td>出生日期</td><td>{{student.birthDay}}</td></tr>
                                         <tr><td>政治面貌</td><td>{{student.political}}</td><td>民族</td><td>{{student.nation}}</td></tr>
                                         <tr><td>籍贯</td><td>{{student.origin}}</td><td>婚姻状况</td><td>{{student.marital}}</td></tr>

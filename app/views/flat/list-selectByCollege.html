@@ -4,9 +4,9 @@
         返回
     </a>
     <ul class="history-list">
-        <li><a>公寓管理</a></li>
-        <li><a>宿舍管理</a></li>
-        <li>公寓宿舍查询</li>
+        <li><a href="#index" ng-click="routerInit('flat')">公寓管理</a></li>
+        <li><a href="#index">公寓管理</a></li>
+        <li>按学院查看</li>
     </ul>
 </div>
 <div class="tool-bar" style="margin-left:225px;">
@@ -28,10 +28,10 @@
                 <a ng-click="show(0,treeCollege[0])" ng-class="{'branch':treeCollege[0].collegeList,'leaf':!treeCollege[0].collegeList}">{{treeCollege[0].name}}</a>
                 <ul ng-show="treeCollege[0].collegeList">
                     <li class="open" ng-repeat="college in treeCollege[0].collegeList||[]">
-                        <a ng-click="show(1,college,list)" ng-class="{'branch':college.classList,'leaf':!college.classList}">{{college.collegeName}}</a>
+                        <a ng-click="show(1,college)" ng-class="{'branch':college.classList,'leaf':!college.classList}">{{college.collegeName}}</a>
                         <ul ng-show="college.classList">
                             <li ng-repeat="cla in college.classList||[]">
-                                <a ng-click="show(2,cla,list,college)" class="leaf">{{cla.className}}</a>
+                                <a ng-click="show(2,cla,college.collegeName)" class="leaf">{{cla.className}}</a>
                             </li>
                         </ul>
                     </li>
@@ -46,7 +46,10 @@
         </ul>
         <ul class="page-tabs-container">
             <li class="fadeIn animated active">
-                饼图
+                <div id="mychart" pie></div>
+                <div class="chart-missing" ng-hide="media.recordCount">
+                    暂无数据
+                </div>
             </li>
             <li class="fadeIn animated">
                 <div class="search-bar">
@@ -62,22 +65,22 @@
                         </div>
                     </div>
                     <div class="search-bool">
-                        <div class="input-group">
+                        <form ng-submit="search(searchText)" class="input-group">
                             <input type="text" class="form-control" ng-model="searchText" placeholder="检索">
                             <span class="input-group-btn">
-                                <button ng-click="search(searchText)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                <button type="submit" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                             </span>
-                        </div>
+                        </form>
                     </div>
                 </div>
-                <div class="table-container" style="top:50px;">
-                    <table class="table table-bordered table-hover">
+                <div class="table-container" style="top:50px;background-color:#fff;">
+                    <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th class="sort">学号</th>
-                                <th class="sort">姓名</th>
-                                <th class="sort">班级</th>
-                                <th class="sort">宿舍号</th>
+                                <th class="sort" ng-class="{'sort-up':media.orderfield=='studentNumber' && media.ordertype=='asc','sort-down':media.orderfield=='studentNumber' && media.ordertype=='desc'}" ng-click="setOrder('studentNumber')">学号</th>
+                                <th class="sort" ng-class="{'sort-up':media.orderfield=='name' && media.ordertype=='asc','sort-down':media.orderfield=='name' && media.ordertype=='desc'}" ng-click="setOrder('name')">姓名</th>
+                                <th class="sort" ng-class="{'sort-up':media.orderfield=='className' && media.ordertype=='asc','sort-down':media.orderfield=='className' && media.ordertype=='desc'}" ng-click="setOrder('className')">班级</th>
+                                <th class="sort" ng-class="{'sort-up':media.orderfield=='roomName' && media.ordertype=='asc','sort-down':media.orderfield=='roomName' && media.ordertype=='desc'}" ng-click="setOrder('roomName')">宿舍号</th>
                                 <th class="sort">床号</th>
                                 <th>查看</th>
                             </tr>
@@ -88,6 +91,11 @@
                                 <td><a class="btn btn-link btn-xs" ng-click="showCard({before:loadInfo(student.studentKey)})">详情</a></td>
                             </tr>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="10" ng-hide="media.recordCount" class="empty">没有检索到学生信息</td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
                 <div class="page-controller">
@@ -149,7 +157,7 @@
                             <ul class="page-tabs-container">
                                 <li class="fadeIn animated active">
                                     <table class="table table-bordered bg-white">
-                                        <tr><td>学号</td><td>{{student.studentNumber}}</td><td>姓名</td><td>{{student.name}}</td><td rowspan="7"><img width="100" src="{{student.headImgurl}}"/></td></tr>
+                                        <tr><td>学号</td><td>{{student.studentNumber}}</td><td>姓名</td><td>{{student.name}}</td><td rowspan="7" style="vertical-align:middle"><img width="100" ng-src="{{student.headImgurl || 'http://7xp0c4.com2.z0.glb.qiniucdn.com/default.png'}}"/></td></tr>
                                         <tr><td>性别</td><td>{{student.sex}}</td><td>出生日期</td><td>{{student.birthDay}}</td></tr>
                                         <tr><td>政治面貌</td><td>{{student.political}}</td><td>民族</td><td>{{student.nation}}</td></tr>
                                         <tr><td>籍贯</td><td>{{student.origin}}</td><td>婚姻状况</td><td>{{student.marital}}</td></tr>

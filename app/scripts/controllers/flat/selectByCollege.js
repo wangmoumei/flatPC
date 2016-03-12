@@ -1,6 +1,6 @@
 angular.module('flatpcApp')
-.controller('CollegeCtrl', ['$scope','AppConfig','$rootScope','CollegeService','StudentService'
-,function($scope,AppConfig,$rootScope,CollegeService,StudentService) {
+.controller('CollegeCtrl', ['$scope','AppConfig','$rootScope','CollegeService','StudentService','$filter'
+,function($scope,AppConfig,$rootScope,CollegeService,StudentService,$filter) {
      //基础的页码、排序等等选项
     $scope.media = {
         epage:1,
@@ -40,10 +40,8 @@ angular.module('flatpcApp')
         refresh();
     }
     //调整查询规则，按学院或者班级查询
-    $scope.show = function(type,item,school,college){
-        $scope.media.title = (school || item.name) 
-        + (type > 0?'-':'') + (college || item.collegeName ||'') 
-        + (type > 1?'-':'') + (item.className || '');
+    $scope.show = function(type,item,college){
+        $scope.media.title = (item.name || '') + (college || item.collegeName ||'') + (type > 1?'-':'') + (item.className || '');
         $scope.media.collegeid = item.collegeId || "";
         $scope.media.classid = item.classId || "";
         refresh();
@@ -58,6 +56,7 @@ angular.module('flatpcApp')
         CollegeService.getList(AppConfig.schoolCode).success(function(data){
             if(data.code == 0){
                 $rootScope.treeCollege = data.data;
+                $scope.show(0,$rootScope.treeCollege[0]);
             }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
@@ -66,6 +65,7 @@ angular.module('flatpcApp')
         });
     }
     else {
+        $scope.show(0,$rootScope.treeCollege[0]);
         $rootScope.loading = false;
     }
     $scope.student = {};
@@ -91,6 +91,15 @@ angular.module('flatpcApp')
                 $scope.studentList = data.data.list;
                 $scope.media.recordCount = data.data.recordCount;
                 $scope.media.pageCount = data.data.pageCount;
+                $scope.option.legend.data = $filter('ObjToArray')(data.data.distribution,'flatName') || [];
+                $scope.option.series[0].data = [];
+                data.data.distribution.forEach(function (item) {
+                    $scope.option.series[0].data.push({
+                        value:item.number,
+                        name:item.flatName
+                    })
+                })
+                $scope.myChart.setOption($scope.option); 
             }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 

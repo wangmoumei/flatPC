@@ -99,9 +99,10 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,StudentService,$
         $rootScope.loading = true;
         CheckInService.editLate({
             token:AppConfig.token,
-            backlateid:$scope.work.backlateid,
-            backlatetime:$scope.work.backlatetime,
+            backlateid:$scope.work.backLateId,
+            backlatetime:$scope.work.backLateTime,
             phone:$scope.work.phone,
+            adminid:AppConfig.adminId,
             memo:$scope.work.memo
         }).success(function (data) {
             $rootScope.loading = false;
@@ -226,7 +227,7 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,StudentService,$
                 name:this.student.name,
                 backlatetime:this.backlatetime,
                 phone:this.phone,
-                adminid:'',
+                adminid:AppConfig.adminId,
                 memo:this.memo
             }).success(function (data) {
                 $rootScope.loading = false;

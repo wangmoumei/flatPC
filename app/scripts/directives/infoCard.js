@@ -15,6 +15,8 @@ angular.module('flatpcApp')
                             str.before.then(function(){
                                 show();
                             })
+                        }else{
+                            str.before(show);
                         }
                     }
                 }else{

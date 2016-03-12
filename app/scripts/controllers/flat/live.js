@@ -41,7 +41,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         refresh();
     }
     //调整查询规则，按学区、生活区或者楼栋查询
-    $scope.show = function(type,item){
+    $scope.show = function(type,item,campusId,liveAreaId){
         $scope.media.campusid = item.campusId || "";
         $scope.media.liveareaid = item.liveAreaId || "";
         $scope.media.flatid = item.flatId || "";
@@ -58,10 +58,13 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
                 $scope.selecter.flatId = "";
                 break;
             case 2:
+                $scope.selecter.campusId = campusId;
                 $scope.selecter.liveAreaId = item.liveAreaId;
                 $scope.selecter.flatId = "";
                 break;
             case 3:
+                $scope.selecter.campusId = campusId;
+                $scope.selecter.liveAreaId = liveAreaId;
                 $scope.selecter.flatId = item.flatId;
                 break;
         }
@@ -70,7 +73,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
     };
     //调整查询规则，计划中、已审批、已取消、已驳回
     $scope.setStatus = function(status){
-        $scope.media.status = status || -1;
+        $scope.media.status = status;
         refresh();
     }
     //检索功能
@@ -119,6 +122,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
     $scope.detail = function(work){
         $scope.work = work;
         $scope.work.returnMessage  = "";
+        $scope.returnSwitch = false;
         return null;
     }
     //驳回理由 Dom操控
@@ -127,35 +131,50 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         $scope.returnSwitch = !$scope.returnSwitch;
     }
     //审批
-    $scope.passWork = function(){
-        $rootScope.loading = true;
-        DailyService.passLive({
-            token:AppConfig.token,
-            occupancyid:$scope.work.occupancyId || '',
-            adminid:''
-        }).success(function(data){
-            if(data.code == 0){
-                swal("提示", "审批成功！", "success"); 
-                refresh();
-            }
-            else
-                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-            
-            $rootScope.loading = false;
+    $scope.passWork = function(fun){
+        swal({   
+            title: "确认",   
+            text: "确定要通过这条申请吗？",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#2772ee",   
+            confirmButtonText: "确定",   
+            cancelButtonText: "取消",   
+            closeOnConfirm: false 
+        }, 
+        function(){   
+            $rootScope.loading = true;
+            DailyService.passLive({
+                token:AppConfig.token,
+                occupancyid:$scope.work.occupancyId || '',
+                adminid:AppConfig.adminId
+            }).success(function(data){
+                if(data.code == 0){
+                    swal("提示", "审批成功！", "success"); 
+                    refresh();
+                    if(fun && typeof fun == 'function')fun();
+                }
+                else
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                
+                $rootScope.loading = false;
+            });
         });
+        
     }
     //驳回
-    $scope.returnWork = function(){
+    $scope.returnWork = function(fun){
         $rootScope.loading = true;
         DailyService.backLive({
             token:AppConfig.token,
             occupancyid:$scope.work.occupancyId || '',
             backmessage:$scope.work.returnMessage,
-            adminid:''
+            adminid:AppConfig.adminId
         }).success(function(data){
             if(data.code == 0){
                 swal("提示", "驳回成功！", "success"); 
                 refresh();
+                if(fun && typeof fun == 'function')fun();
             }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
@@ -164,7 +183,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         });
     }
     //取消
-    $scope.cancelWork = function(){
+    $scope.cancelWork = function(fun){
         swal({   
             title: "确认关闭",   
             text: "确定要取消掉这条申请吗？",   
@@ -180,11 +199,12 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
             return DailyService.cancelLive({
                 token:AppConfig.token,
                 occupancyid:$scope.work.occupancyId || '',
-                adminid:''
+                adminid:AppConfig.adminId
             }).success(function(data){
                 if(data.code == 0){
                     swal("提示", "已取消！", "success"); 
                     refresh();
+                    if(fun && typeof fun == 'function')fun();
                 }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
@@ -330,20 +350,21 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         studentChoose:function (student) {
             this.student = student;
         },
-        sub:function () {
+        sub:function (fun) {
             $rootScope.loading = true;
             DailyService.addLive({
                 token:AppConfig.token,
                 schoolcode:AppConfig.schoolCode,
                 bedid:this.bed.bedId,
                 studentkey:this.student.studentKey,
-                adminid:'',
+                adminid:AppConfig.adminId,
                 memo:this.memo
             }).success(function (data) {
                 $rootScope.loading = false;
                 if(data.code == 0){
                     swal("提示", "提交成功！", "success"); 
                     refresh();
+                    if(fun && typeof fun == 'function')fun();
                 }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 

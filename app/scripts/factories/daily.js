@@ -9,7 +9,7 @@ angular.module('flatpcApp')
         + (param.campusid?('&campusid='+param.campusid):'')
         + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
         + (param.flatid?('&flatid='+param.flatid):'')
-        + (param.status>0?('&status='+param.status):'')
+        + (param.status>-1?('&status='+param.status):'')
         + (param.orderfield?('&orderfield='+param.orderfield):'')
         + (param.ordertype?('&ordertype='+param.ordertype):'');
         return $http.get(url).error(function (error) {
@@ -77,7 +77,7 @@ angular.module('flatpcApp')
         + (param.campusid?('&campusid='+param.campusid):'')
         + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
         + (param.flatid?('&flatid='+param.flatid):'')
-        + (param.status>0?('&status='+param.status):'')
+        + (param.status>-1?('&status='+param.status):'')
         + (param.orderfield?('&orderfield='+param.orderfield):'')
         + (param.ordertype?('&ordertype='+param.ordertype):'');
         return $http.get(url).error(function (error) {
@@ -145,7 +145,7 @@ angular.module('flatpcApp')
         + (param.campusid?('&campusid='+param.campusid):'')
         + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
         + (param.flatid?('&flatid='+param.flatid):'')
-        + (param.status>0?('&status='+param.status):'')
+        + (param.status>-1?('&status='+param.status):'')
         + (param.orderfield?('&orderfield='+param.orderfield):'')
         + (param.ordertype?('&ordertype='+param.ordertype):'');
         return $http.get(url).error(function (error) {
@@ -213,7 +213,7 @@ angular.module('flatpcApp')
         + (param.campusid?('&campusid='+param.campusid):'')
         + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
         + (param.flatid?('&flatid='+param.flatid):'')
-        + (param.status>0?('&status='+param.status):'')
+        + (param.status>-1?('&status='+param.status):'')
         + (param.orderfield?('&orderfield='+param.orderfield):'')
         + (param.ordertype?('&ordertype='+param.ordertype):'');
         return $http.get(url).error(function (error) {

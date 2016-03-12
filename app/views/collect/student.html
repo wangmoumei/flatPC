@@ -66,8 +66,8 @@
                         <a class="btn btn-default" ng-click="downloadStudent()">数据导出</a>
                     </div>
                 </div>
-                <div class="table-container" style="top:50px;">
-                    <table class="table table-bordered table-hover">
+                <div class="table-container" style="top:50px;background-color:#fff;">
+                    <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th class="sort" ng-class="{'sort-up':media.orderfield=='studentNumber' && media.ordertype=='asc','sort-down':media.orderfield=='studentNumber' && media.ordertype=='desc'}" ng-click="setOrder('studentNumber')">学号</th>
@@ -90,6 +90,11 @@
                                 </td>
                             </tr>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="10" ng-hide="media.recordCount" class="empty">没有检索到学生信息</td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
                 <div class="page-controller">
@@ -131,14 +136,14 @@
             <li class="fadeIn animated" ng-controller="StudentImportCtrl">
                 <div class="tool-bar">
                     <div>
-                        <a class="btn btn-success" ng-click="showCard('#multiAdd')">数据导入</a>
+                        <a class="btn btn-success" ng-click="showCard('#multiAdd',importInit)">数据导入</a>
                     </div>
                     <div>
                         <a class="btn btn-default" ng-click="downloadOriginal()">下载样表</a>
                     </div>
                 </div>
-                <div class="table-container" style="top:50px;">
-                    <table class="table table-bordered table-hover">
+                <div class="table-container" style="top:50px;background-color:#fff;">
+                    <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th class="sort"  ng-class="{'sort-up':media.orderfield=='title' && media.ordertype=='asc','sort-down':media.orderfield=='title' && media.ordertype=='desc'}" ng-click="setOrder('title')">导入名称</th>
@@ -156,6 +161,11 @@
                                 <td>{{import.errorNumber}}个错误信息</td><td><a class="btn btn-link btn-xs" ng-click="download(import.importId)">导出错误数据</a></td>
                             </tr>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="10" ng-hide="media.recordCount" class="empty">没有检索到导入历史纪录</td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
                 <div class="page-controller">

@@ -1,7 +1,7 @@
 angular.module('flatpcApp')
 .factory('RoomService',['$http', 'AppConfig',function($http, AppConfig){
     var getList = function(flatid){
-        var url = AppConfig.WEB_ROOT + 'flatdata/rooms/get_rooms_list/?flatid=' + flatid + '&token=123';
+        var url = AppConfig.WEB_ROOT + 'flatdata/rooms/get_rooms_list/?flatid=' + flatid + '&token=' + AppConfig.token;
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });
@@ -98,7 +98,7 @@ angular.module('flatpcApp')
         });//.get(url,param);
     }
     var getTypeList = function(){
-        var url = AppConfig.WEB_ROOT + '/flatdata/types/get_type_list/?schoolcode=' + AppConfig.schoolCode + '&token=123';
+        var url = AppConfig.WEB_ROOT + '/flatdata/types/get_type_list/?schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token;
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });

@@ -1,7 +1,7 @@
 angular.module('flatpcApp')
 .factory('TermService',['$http', 'AppConfig',function($http, AppConfig){
     var getList = function(){
-        var url = AppConfig.WEB_ROOT + 'basesetup/timesetup/get_list/?schoolcode='+AppConfig.schoolCode+'&token=123';
+        var url = AppConfig.WEB_ROOT + 'basesetup/timesetup/get_list/?schoolcode='+AppConfig.schoolCode+'&token=' + AppConfig.token;
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });

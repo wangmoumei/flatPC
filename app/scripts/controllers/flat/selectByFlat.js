@@ -48,6 +48,7 @@ function($scope,AppConfig,$rootScope,StudentService,FlatService,$filter) {
                 return;
             }
         }
+        $rootScope.loading = true;
         FlatService.getFlat(flatid).success(function(data){
             if(data.code == 0){
                 data.list.floorList = data.list.floorList || [];

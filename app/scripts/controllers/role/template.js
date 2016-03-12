@@ -8,7 +8,8 @@
  * Controller of the flatpcApp
  */
 angular.module('flatpcApp')
-  .controller('RoleTemplateCtrl', ['$scope','$rootScope','RoleService','AppConfig',function ($scope,$rootScope,RoleService,AppConfig) {
+  .controller('RoleTemplateCtrl', ['$scope','$rootScope','RoleService','AppConfig','$location','$anchorScroll',
+  function ($scope,$rootScope,RoleService,AppConfig,$location,$anchorScroll) {
     $scope.media = {
         type:0,
         status:0,
@@ -111,31 +112,130 @@ angular.module('flatpcApp')
     }
     $scope.delete = function () {
         swal({   
-                title: "确认删除",   
-                text: "真的要删除吗？",   
-                type: "warning",   
-                showCancelButton: true,   
-                confirmButtonColor: "#DD6B55",   
-                confirmButtonText: "删除",   
-                cancelButtonText: "取消",   
-                closeOnConfirm: false 
-            }, 
-            function(){   
-                $rootScope.loading = true;
-                RoleService.delRole({
-                    token:AppConfig.token,
-                    roleid:$scope.role.roleid
-                }).success(function (data) {
-                    $rootScope.loading = false;
-                    if(data.code == 0){
-                        swal("提示", "删除成功！", "success"); 
-                        refresh();
-                    }else{
-                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-                    }
-                })
+            title: "确认删除",   
+            text: "真的要删除吗？",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "删除",   
+            cancelButtonText: "取消",   
+            closeOnConfirm: false 
+        }, 
+        function(){   
+            $rootScope.loading = true;
+            RoleService.delRole({
+                token:AppConfig.token,
+                roleid:$scope.role.roleid
+            }).success(function (data) {
+                $rootScope.loading = false;
+                if(data.code == 0){
+                    swal("提示", "删除成功！", "success"); 
+                    refresh();
+                }else{
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                }
+            })
                 
         });
         
+    }
+    $scope.menuInit = function (item) {
+        if(!$rootScope.treeMenu){
+            $rootScope.loading = true;
+            return RoleService.getMenuList().success(function(data){
+                $rootScope.loading = false;
+                if(data.code == 0){
+                    $rootScope.treeMenu = data.list;
+                    $scope.menuInit(item);
+                }
+                else
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            });
+        }else{
+            $scope.role.roleid = item.roleId;
+            $scope.role.nodeids = item.nodeIds;
+            var ids = ',' + item.nodeIds + ',';
+            compute($rootScope.treeMenu,function (menu) {
+                menu.open = new RegExp(',' + menu.nodeId +',').test(ids);
+            });
+            //console.log($rootScope.treeMenu);
+            return function (show) {
+                show();
+            }
+        }
+    }
+    $scope.menuChange = function (item) {
+        // alert(arguments.length)
+        if(item.subNodes)
+            compute(item.subNodes,function (menu) {
+                menu.open = item.open;
+            });
+        if(arguments.length > 1){
+            if(item.open){
+                for(var i= 1;i<arguments.length; i++){
+                    arguments[i].open = true;
+                }
+            }else{
+                for(var i = 1; i<arguments.length; i++){
+                    for(var j = 1; j<arguments[i].subNodes.length; j++){
+                        if(arguments[i].subNodes[j].open) {
+                            return;
+                        }
+                    }
+                    arguments[i].open = false;
+                }
+            }
+        }
+    }
+    $scope.menuReset = function () {
+        var ids = ',' + $scope.role.nodeids + ',';
+        compute($rootScope.treeMenu,function (menu) {
+            menu.open = new RegExp(',' + menu.nodeId +',').test(ids);
+        });
+    }
+    $scope.menuSave = function () {
+        var nodeids = "";
+        compute($rootScope.treeMenu,function (menu) {
+            if(menu.open)
+                nodeids += menu.nodeId + ","
+        });
+        if(nodeids.length>0){
+            nodeids = nodeids.substring(0,nodeids.length-1);
+        }
+        $rootScope.loading = true;
+        return RoleService.setRole({
+            token:AppConfig.token,
+            roleid:$scope.role.roleid,
+            nodeids:nodeids
+        }).success(function(data){
+            $rootScope.loading = false;
+            if(data.code == 0){
+                 swal("提示","保存成功！", "success"); 
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+        });
+    }
+    function compute(list,fun) {
+        if(list)
+            list.forEach(function (menu) {
+                if(fun && typeof fun == 'function')
+                    fun(menu);
+                if(menu.subNodes){
+                    compute(menu.subNodes,fun);
+                }
+            })
+    }
+    $scope.goHash = function (x) {
+        var newHash = 'menu' + x;
+        if ($location.hash() !== newHash) {
+            // set the $location.hash to `newHash` and
+            // $anchorScroll will automatically scroll to it
+            $location.hash('menu' + x);
+        } else {
+            // call $anchorScroll() explicitly,
+            // since $location.hash hasn't changed
+            $anchorScroll();
+        }
     }
   }]);

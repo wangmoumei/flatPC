@@ -26,19 +26,29 @@ angular
       WEB_ROOT:'http://120.55.84.193/Geese_Apartment/',
     //   WEB_ROOT:'http://test.houqinbao.com/gyxt_api/',
       schoolCode:10353,
-	  token:'213123'
+	  token:'213123',
+      adminId:1,
+      nodeIds:''
   }).run(['$rootScope', '$location', 'AppConfig','authority',
 		function($rootScope, $location, AppConfig,authority) {
             $rootScope.sysMenu = ['flat','flat',''];
-            //console.log($rootScope.sysMenu);
             $rootScope.routerInit = function(menu){
                 $rootScope.sysMenu = [menu,menu,""];
+            }
+            $rootScope.menuCheck = function(menu){
+                if(AppConfig.nodeIds.length < 2) $location.path('/login');
+                return new RegExp(',' + menu + ',' ).test(AppConfig.nodeIds);
             }
             $rootScope.authority = '';
 			$rootScope.$on('$stateChangeStart',
 				function(event, toState, toParams, fromState, fromParams) {
-                    // alert(toState.name);
-                    $rootScope.sysMenu = authority.check(toState.name);
+                    $rootScope.sysMenu = authority.transform(toState.name);
+                    if(authority.check()){
+                        $rootScope.loginSwitch = true;
+                    }else{
+                        $location.path('/login');
+                    }
+                    
                     $rootScope.loading = true;
             });
             $rootScope.$on('$stateChangeError', 
@@ -50,6 +60,15 @@ angular
 	])
   .config(function ($stateProvider,$urlRouterProvider) {
     $stateProvider
+    .state('login', {
+        url: "/login",
+        views: {
+            "login": {
+                templateUrl: 'views/login.html',
+                controller: 'LoginCtrl'
+            }
+        }
+    })
     .state('index', {
         url: "/index",
         views: {
@@ -483,7 +502,7 @@ angular
         views: {
             "": {
                 templateUrl: 'views/role/menu.html',
-                controller: 'MenuCtrl'
+                controller: 'MenuSettingCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",
@@ -538,7 +557,7 @@ angular
             }
         }
     });
-    $urlRouterProvider.otherwise('/index');
+    $urlRouterProvider.otherwise('/login');
   });
   
 Date.prototype.Format = function (format) {

@@ -16,10 +16,10 @@
                 <a class="branch">所有</a>
                 <ul>
                     <li class="open" ng-repeat="admin in admins||[]" >
-                        <a ng-class="{'branch':admin.adminList,'leaf':!admin.adminList}" ng-click="show(1,admin)">{{admin.adminTypeName}}</a>
+                        <a ng-class="{'branch':admin.adminList,'leaf':!admin.adminList}">{{admin.adminTypeName}}</a>
                         <ul ng-show="admin.adminList">
                             <li ng-repeat="item in admin.adminList||[]" >
-                                <a class="leaf" ng-click="show(2,item)">{{item.userName}}</a>
+                                <a class="leaf" ng-click="show(2,item,admin)">{{item.userName}}</a>
                             </li>
                             <li><a class="add" ng-click="add(2,admin)"><i class="ALiconfont icon-plus1"></i> 添加帐号</a></li>
                         </ul>
@@ -31,41 +31,55 @@
     <div class="from-container" style="left:225px;">
         <table class="table-form table-bordered bg-white">
             <tr>
-                <td class="require" width="200">分类</td><td><input type="text" ng-model="media.collegeName" /></td>
+                <td class="require" width="200">分类</td><td><input disabled type="text" placeholder="请选择" ng-model="media.admintypename" /></td>
+            </tr>
+            <tr>
+                <td class="require" width="200">学校</td><td><input type="text" ng-model="media.username" /></td>
+            </tr>
+            <tr>
+                <td class="require" width="200">学校编码</td><td><input type="text" ng-model="media.universityid" /></td>
+            </tr>
+            <tr>
+                <td width="200">学校人数</td>
+                <td>
+                    <select ng-model="media.schoolnumber">
+                        <option value="">请选择</option>
+                        <option value="1万以下">1万以下</option>
+                        <option value="1-2万">1-2万</option>
+                        <option value="2-3万">2-3万</option>
+                        <option value="3-5万">3-5万</option>
+                        <option value="5万及以上">5万及以上</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td width="200">学校类型</td>
                 <td>
                     <select ng-model="media.schooltype">
                         <option value="">请选择</option>
-                        <option ng-repeat="item in dic[1].values" value="{{item.title}}">{{item.title}}</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="require" width="200">学校</td><td><input type="text" ng-model="media.username" /></td>
-            </tr>
-            <tr>
-                <td width="200">学校人数</td>
-                <td>
-                    <select ng-model="media.schooltype">
-                        <option value="">请选择</option>
-                        <option ng-repeat="item in dic[0].values" value="{{item.title}}">{{item.title}}</option>
+                        <option value="985、211">985、211</option>
+                        <option value="普通本科">普通本科</option>
+                        <option value="专科">专科</option>
+                        <option value="其他">其他</option>
                     </select>
                 </td>
             </tr>
             <tr>
                 <td class="require" width="200">帐号</td><td><input type="text" ng-model="media.useraccount" /></td>
             </tr>
-            <tr>
-                <td class="require" width="200">密码</td><td><input type="text" ng-model="media.password" /></td>
+            <tr ng-show="media.status">
+                <td class="require" width="200">密码</td><td><input type="password" ng-model="media.password" /></td>
+            </tr>
+            <tr ng-show="media.status">
+                <td class="require" width="200">确认密码</td><td><input type="password" ng-model="media.password1" /></td>
             </tr>
             <tr>
                 <td></td><td>
                     <div class="btn-box">
-                        <button ng-show="media.status == 1" ng-click="addSave()" class="btn btn-success">提交</button>
-                        <button ng-show="media.status == 0" ng-click="editSave()" class="btn btn-info">保存</button>
-                        <button ng-show="media.status == 0" ng-click="delete()" class="btn btn-danger">删除</button>
+                        <button ng-show="media.status" ng-click="addSave()" class="btn btn-success">提交</button>
+                        <button ng-hide="media.status" ng-click="editSave()" class="btn btn-info">保存</button>
+                        <button ng-hide="media.status" ng-click="delete()" class="btn btn-danger">删除</button>
                     </div>
                 </td>
             </tr>

@@ -18,11 +18,11 @@
     </div>
     <div class="group-tool">
         <div class="btn-group">
-            <button type="button" class="btn btn-info" ng-click="setStatus(0)" ng-class="{'btn-stroke':media.status>0}">全部</button>
-            <button type="button" class="btn btn-info" ng-click="setStatus(1)" ng-class="{'btn-stroke':media.status!=1}">计划中</button>
-            <button type="button" class="btn btn-info" ng-click="setStatus(2)" ng-class="{'btn-stroke':media.status!=2}">已审批</button>
-            <button type="button" class="btn btn-info" ng-click="setStatus(3)" ng-class="{'btn-stroke':media.status!=3}">已取消</button>
-            <button type="button" class="btn btn-info" ng-click="setStatus(4)" ng-class="{'btn-stroke':media.status!=4}">已驳回</button>
+            <button type="button" class="btn btn-info" ng-click="setStatus(-1)" ng-class="{'btn-stroke':media.status>=0}">全部</button>
+            <button type="button" class="btn btn-info" ng-click="setStatus(0)" ng-class="{'btn-stroke':media.status!=0}">计划中</button>
+            <button type="button" class="btn btn-info" ng-click="setStatus(1)" ng-class="{'btn-stroke':media.status!=1}">已审批</button>
+            <button type="button" class="btn btn-info" ng-click="setStatus(2)" ng-class="{'btn-stroke':media.status!=2}">已取消</button>
+            <button type="button" class="btn btn-info" ng-click="setStatus(3)" ng-class="{'btn-stroke':media.status!=3}">已驳回</button>
         </div>
     </div>
     <div class="search-option">
@@ -37,12 +37,12 @@
         </div>
     </div>
     <div>
-        <div class="input-group search-bool">
+        <form ng-submit="search(searchText)" class="input-group search-bool">
             <input type="text" class="form-control" ng-model="searchText" placeholder="检索">
             <span class="input-group-btn">
-                <button ng-click="search(searchText)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                <button type="submit" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
             </span>
-        </div>
+        </form>
     </div>
 </div>
 <div class="page-main">
@@ -55,10 +55,10 @@
                         <a ng-class="{'branch':campus.liveAreaList,'leaf':!campus.liveAreaList}" ng-click="show(1,campus)">{{campus.title}}</a>
                         <ul ng-show="campus.liveAreaList">
                             <li class="open" ng-repeat="liveArea in campus.liveAreaList||[]">
-                                <a ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}" ng-click="show(2,liveArea)">{{liveArea.title}}</a>
+                                <a ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}" ng-click="show(2,liveArea,campus.campusId)">{{liveArea.title}}</a>
                                 <ul ng-show="liveArea.flatList">
                                     <li ng-repeat="flat in liveArea.flatList||[]">
-                                        <a class="leaf" ng-click="show(3,flat)">{{flat.title}}</a>
+                                        <a class="leaf" ng-click="show(3,flat,campus.campusId,liveArea.liveAreaId)">{{flat.title}}</a>
                                     </li>
                                 </ul>
                             </li>
@@ -92,6 +92,11 @@
                     <td><button type="button" class="btn btn-link btn-xs" ng-click="showCard('#setCheck',detail(live))">查看详情</button></td>
                 </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="10" ng-hide="media.recordCount" class="empty">没有检索到相关登记纪录</td>
+                </tr>
+            </tfoot>
         </table>
         
     </div>
@@ -175,13 +180,13 @@
                                 <div ng-if="work.status == 0">
                                     <div class="check-btn-box" ng-hide="returnSwitch">
                                         <div>
-                                            <a class="btn btn-addon btn-success" ng-click="passWork()"><i class="glyphicon glyphicon-ok"></i>审批</a>
+                                            <a class="btn btn-addon btn-success" ng-click="passWork(closeCard('#setCheck'))"><i class="glyphicon glyphicon-ok"></i>审批</a>
                                         </div>
                                         <div>
                                             <a class="btn btn-addon btn-warning" ng-click="returnSwitchChange()"><i class="glyphicon glyphicon-remove"></i>驳回</a>
                                         </div>
                                         <div>
-                                            <a class="btn btn-addon btn-default" ng-click="cancelWork()"><i class="glyphicon glyphicon-off"></i>取消</a>
+                                            <a class="btn btn-addon btn-default" ng-click="cancelWork(closeCard('#setCheck'))"><i class="glyphicon glyphicon-off"></i>取消</a>
                                         </div>
                                     </div>
                                     <div class="check-input-box" ng-show="returnSwitch">
@@ -192,7 +197,7 @@
                                             <input type="text" class="form-control" ng-model="work.returnMessage"/>
                                         </div>
                                         <div>
-                                            <a class="btn btn-warning" ng-click="returnWork()">驳回</a>
+                                            <a class="btn btn-warning" ng-click="returnWork(closeCard('#setCheck'))">驳回</a>
                                         </div>
                                         <div>
                                             <a class="btn btn-default" ng-click="returnSwitchChange()">取消</a>
@@ -207,7 +212,7 @@
         </div>
     </div>
 </div>
-<div class="info-card fadeIn animated" info-card>
+<div class="info-card fadeIn animated" info-card id="addChange">
     <div class="info-card-wrapper">
         <div class="info-card-dialog">
             <div class="info-card-content">
@@ -240,7 +245,7 @@
                             </ul>
                             <ul class="form-tabs-container">
                                 <li class="fadeIn animated active">
-                                    <div class="form-tabs-tool-bar">
+                                    <form class="form-tabs-tool-bar" ng-submit="form.studentSearch()">
                                         <div>
                                             <select class="form-control" ng-change="selecter.collegeSelecter()" ng-model="selecter.collegeId">
                                                 <option value="">请选择学院</option>
@@ -257,9 +262,9 @@
                                             <input class="form-control" type="text" placeholder="学号或姓名" ng-model="form.studentName" />
                                         </div>
                                         <div>
-                                            <a class="btn btn-stroke btn-info" ng-click="form.studentSearch()">搜索</a>
+                                            <button type="submit" class="btn btn-stroke btn-info">搜索</button>
                                         </div>
-                                    </div>
+                                    </form>
                                     <table class="table table-bordered bg-white">
                                         <thead>
                                             <tr>
@@ -283,8 +288,8 @@
                                     </table>
                                 </li>
                                 <li class="fadeIn animated ">
-                                    <div class="form-tabs-info"><span>已选学生：</span>{{form.student.campusName + " - " + form.student.liveAreaName + " - " +form.student.flatName + " - " +form.student.roomName + " - " + (form.student.bedName || form.student.bedNum)}}</div>
-                                    <div class="form-tabs-tool-bar">
+                                    <div class="form-tabs-info"><span>已选学生：</span>{{form.student.name + "（" + form.student.studentNumber + "）" + form.student.campusName + " - " + form.student.liveAreaName + " - " +form.student.flatName + " - " +form.student.roomName + " - " + (form.student.bedName || form.student.bedNum)}}</div>
+                                    <form class="form-tabs-tool-bar" ng-submit="form.bedSearch()">
                                         <div>
                                             <select class="form-control" ng-change="selecter.campusSelecter()" ng-model="selecter.campusId">
                                                 <option value="">选择校区</option>
@@ -307,9 +312,9 @@
                                             <input class="form-control" type="text" placeholder="房间号" ng-model="form.bedName" />
                                         </div>
                                         <div>
-                                            <a class="btn btn-stroke btn-info" ng-click="form.bedSearch()">搜索</a>
+                                            <button type="submit" class="btn btn-stroke btn-info">搜索</button>
                                         </div>
-                                    </div>
+                                    </form>
                                     <table class="table table-bordered bg-white">
                                         <thead>
                                             <tr>
@@ -334,9 +339,10 @@
                                 </li>
                                 
                                 <li class="fadeIn animated">
+                                    <form ng-submit="form.sub(closeCard('#addChange'))">
                                     <div class="form-tabs-tool-bar">
                                         <div class="form-tabs-full"><span>计划确认</span></div>
-                                        <div><a class="btn btn-addon btn-success" ng-click="form.sub()"><i class="glyphicon glyphicon-plus"></i>提交</a></div>
+                                        <div><button type="submit" class="btn btn-addon btn-success"><i class="glyphicon glyphicon-plus"></i>提交</button></div>
                                     </div>
                                     <table class="table table-bordered bg-white">
                                         <tbody>
@@ -350,6 +356,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
+                                    </form>
                                 </li>
                             </ul>
                         </div>

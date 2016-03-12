@@ -109,31 +109,35 @@
                                 <tr>
                                     <td class="require">角色</td>
                                     <td>
-                                        <select ng-model="form.groupid">
+                                        <select ng-model="form.roleid">
                                             <option value="">请选择角色</option>
-                                            <option ng-repeat="role in form.roleList || []" value="{{role.roleId}}" ng-selected="form.roleid == role.roleId">{{role.title}}</option>
+                                            <option ng-repeat="role in form.roleList || []" value="{{role.roleId}}" ng-selected="form.roleid == role.roleId">{{role.remark}}</option>
                                         </select>
                                     </td>
                                 </tr>
-                                 <tr>
-                                    <td class="require">用户名</td>
-                                    <td><input type="text" ng-model="form.username" /></td>
-                                </tr>
-                                 <tr>
-                                    <td>工号</td>
-                                    <td><input type="text" ng-model="form.jobnumber" /></td>
-                                </tr>
-                                 <tr>
-                                    <td>联系方式</td>
-                                    <td><input type="text" ng-model="form.phone" /></td>
-                                </tr>
-                                 <tr>
+                                <tr>
                                     <td class="require">帐号</td>
                                     <td><input type="text" ng-model="form.useraccount" /></td>
                                 </tr>
-                                 <tr ng-hide="form.status">
+                                <tr ng-hide="form.status">
                                     <td class="require">密码</td>
-                                    <td><input type="text" ng-model="form.password" /></td>
+                                    <td><input type="password" ng-model="form.password" /></td>
+                                </tr>
+                                <tr ng-hide="form.status">
+                                    <td class="require">确认密码</td>
+                                    <td><input type="password" ng-model="form.password1" /></td>
+                                </tr>
+                                 <tr>
+                                    <td class="require">姓名</td>
+                                    <td><input type="text" ng-model="form.username" /></td>
+                                </tr>
+                                <tr>
+                                    <td>工号</td>
+                                    <td><input type="text" ng-model="form.jobnumber" /></td>
+                                </tr>
+                                <tr>
+                                    <td>联系方式</td>
+                                    <td><input type="text" ng-model="form.phone" /></td>
                                 </tr>
                                 <tr>
                                     <td></td>

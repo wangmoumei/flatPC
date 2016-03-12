@@ -11,7 +11,7 @@
 </div>
 <div class="tool-bar">
     <div class="bar-full">
-        <button class="btn btn-info" ng-click="showCard('#roleAdd',roleInit())"><i class="glyphicon glyphicon-file"></i> 添加</button>
+        <button class="btn btn-success" ng-click="showCard('#roleAdd',roleInit())"><i class="glyphicon glyphicon-file"></i> 添加</button>
     </div>
 </div>
 <div class="page-main">
@@ -29,7 +29,7 @@
                 <tr ng-repeat="role in list || []">
                     <td>{{role.title}}</td><td>{{role.remark}}</td><td>{{role.status?'已禁用':'使用中'}}</td>
                     <td>
-                        <a class="btn btn-link btn-xs" ng-click="showCard('#menuSetting')">配置权限</a>
+                        <a class="btn btn-link btn-xs" ng-click="showCard({selecter:'#menuSetting',before:menuInit(role)})">配置权限</a>
                         <a class="btn btn-link btn-xs" ng-click="showCard('#roleAdd',roleInit(role))">编辑</a>
                     </td>
                 </tr>
@@ -126,29 +126,31 @@
                         <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
                     </div>
                     <div class="panel-body menu-setting">
-                       <div class="page-tree" tree style="bottom:50px;">
+                       <div class="page-tree"  style="bottom:50px;">
                             <ul>
-                                <li class="open">
-                                    <a class="branch">树枝</a>
+                                <li class="open" ng-repeat="item in treeMenu || []">
+                                    <a class="branch" ng-click="goHash(item.nodeId)">{{item.remark}}</a>
                                     <ul>
-                                        <li class="open">
-                                            <a class="branch">树枝</a>
+                                        <li class="open" ng-repeat="item1 in item.subNodes || []" >
+                                            <a class="branch" ng-click="goHash(item1.nodeId)">{{item1.remark}}</a>
                                             <ul>
-                                                <li>
-                                                    <a class="leaf">叶子</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a class="branch">树枝</a>
-                                    <ul>
-                                        <li>
-                                            <a class="branch">树枝</a>
-                                            <ul>
-                                                <li>
-                                                    <a class="leaf">叶子</a>
+                                                <li class="open" ng-repeat="item2 in item1.subNodes || []">
+                                                    <a class="branch" ng-click="goHash(item2.nodeId)">{{item2.remark}}</a>
+                                                    <ul>
+                                                        <li class="open" ng-repeat="item3 in item2.subNodes||[]" >
+                                                            <a class="branch" ng-click="goHash(item3.nodeId)">{{item3.remark}}</a>
+                                                            <ul>
+                                                                <li class="open" ng-repeat="item4 in item3.subNodes||[]" >
+                                                                    <a class="branch" ng-click="goHash(item4.nodeId)">{{item4.remark}}</a>
+                                                                    <ul>
+                                                                        <li ng-repeat="item5 in item4.subNodes||[]" >
+                                                                            <a class="leaf" ng-click="goHash(item5.nodeId)">{{item5.remark}}</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
                                                 </li>
                                             </ul>
                                         </li>
@@ -156,12 +158,71 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="menu-setting-container">
-                            aaa
+                        <div class="menu-setting-container" style="background-color:#f6f7f8">
+                            <ul class="list-group" style="margin:20px;">
+                                <li ng-repeat="item in treeMenu || []">
+                                    <a class="list-group-item b-l-primary" id="{{'menu' + item.nodeId}}">
+                                        {{item.remark}}
+                                        <div style="float:right">
+                                            <input ng-change="menuChange(item)" bs-switch ng-model="item.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                        </div>
+                                    </a>
+                                    <ul class="list-group" style="margin-left:10px;">
+                                        <li ng-repeat="item1 in item.subNodes || []">
+                                            <a class="list-group-item b-l-warning" id="{{'menu' + item1.nodeId}}">
+                                                {{item1.remark}}
+                                                <div style="float:right">
+                                                    <input ng-change="menuChange(item1,item)" bs-switch ng-model="item1.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                                </div>
+                                            </a>
+                                            <ul class="list-group" style="margin:0 0 15px 10px;">
+                                                <li ng-repeat="item2 in item1.subNodes || []">
+                                                    <a class="list-group-item b-l-success" id="{{'menu' + item2.nodeId}}">
+                                                        {{item2.remark}}
+                                                        <div style="float:right">
+                                                            <input ng-change="menuChange(item2,item1,item)" bs-switch ng-model="item2.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                                        </div>
+                                                    </a>
+                                                    <ul class="list-group" style="margin:0 0 10px 10px;">
+                                                        <li ng-repeat="item3 in item2.subNodes || []">
+                                                            <a class="list-group-item b-l-danger" id="{{'menu' + item3.nodeId}}">
+                                                                {{item3.remark}}
+                                                                <div style="float:right">
+                                                                    <input ng-change="menuChange(item3,item2,item1,item)" bs-switch ng-model="item3.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                                                </div>
+                                                            </a>
+                                                            <ul class="list-group" style="margin:0 0 5px 10px;">
+                                                                <li ng-repeat="item4 in item3.subNodes || []">
+                                                                    <a class="list-group-item b-l-info" id="{{'menu' + item4.nodeId}}">
+                                                                        {{item4.remark}}
+                                                                        <div style="float:right">
+                                                                            <input ng-change="menuChange(item4,item3,item2,item1,item)" bs-switch ng-model="item4.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                                                        </div>
+                                                                    </a>
+                                                                    <ul class="list-group" style="margin:0 0 0 10px;">
+                                                                        <li ng-repeat="item5 in item4.subNodes || []">
+                                                                            <a class="list-group-item" id="{{'menu' + item5.nodeId}}">
+                                                                                {{item5.remark}} 
+                                                                                <div style="float:right">
+                                                                                    <input ng-change="menuChange(item5,item4,item3,item2,item1,item)" bs-switch ng-model="item5.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                                                                </div>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </div>
                         <div class="btn-tool">
-                            <a class="btn btn-info">保存</a>
-                            <a class="btn btn-default">重置</a>
+                            <a class="btn btn-info" ng-click="menuSave()">保存</a>
+                            <a class="btn btn-default" ng-click="menuReset()">重置</a>
                         </div>
                     </div>
                 </div>

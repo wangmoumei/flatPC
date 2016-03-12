@@ -25,12 +25,12 @@
         </div>
     </div>
     <div class="search-bool">
-        <div class="input-group">
+        <form ng-submit="search(searchText)" class="input-group">
             <input type="text" class="form-control" ng-model="searchText" placeholder="检索">
             <span class="input-group-btn">
-                <button ng-click="search(searchText)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                <button type="submit" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
             </span>
-        </div>
+        </form>
     </div>
 </div>
 <div class="page-main">
@@ -76,6 +76,11 @@
                     </td>
                 </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="10" ng-hide="media.recordCount" class="empty">没有检索到相关登记纪录</td>
+                </tr>
+            </tfoot>
         </table>
         
     </div>
@@ -142,7 +147,7 @@
                             </ul>
                             <ul class="form-tabs-container">
                                 <li class="fadeIn animated active">
-                                    <div class="form-tabs-tool-bar">
+                                    <form class="form-tabs-tool-bar" ng-submit="form.studentSearch()">
                                         <div>
                                             <select class="form-control" ng-change="selecter.campusSelecter()" ng-model="selecter.campusId">
                                                 <option value="">选择校区</option>
@@ -162,12 +167,12 @@
                                             </select>
                                         </div>
                                         <div class="form-tabs-full">
-                                            <input class="form-control" type="text" placeholder="姓名或学号" ng-model="form.bedName" />
+                                            <input class="form-control" type="text" placeholder="姓名或学号" ng-model="form.studentName" />
                                         </div>
                                         <div>
-                                            <a class="btn btn-stroke btn-info" ng-click="form.studentSearch()">搜索</a>
+                                            <button type="submit" class="btn btn-stroke btn-info">搜索</button>
                                         </div>
-                                    </div>
+                                    </form>
                                     <table class="table table-bordered bg-white">
                                         <thead>
                                             <tr>
@@ -243,7 +248,7 @@
                                     <div class="check-info-title">
                                         <div class="check-info-tip">借出</div> 
                                         <div>{{work.rpersonnelName}}</div>
-                                        <div><span>提交人：</span>{{work.rpersonnelName}}</div>
+                                        <div><span>提交人：</span>{{work.bpersonnelName}}</div>
                                     </div>
                                     <table class="table table-bordered bg-white">
                                         <tr><td>学生</td><td>{{work.name + '（' + work.studentNumber + '）'}}</td></tr>
@@ -327,7 +332,10 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td></td><td class="td-btn-box"><a class="btn btn-info">确认修改</a></td>
+                                    <td></td><td class="td-btn-box">
+                                        <a class="btn btn-info" ng-click="editSave(closeCard('#keyEdit'))">确认修改</a>
+                                        <a class="btn btn-danger" ng-click="delete(closeCard('#keyEdit'))">删除</a>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

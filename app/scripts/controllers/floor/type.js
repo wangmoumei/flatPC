@@ -31,13 +31,17 @@ function($scope,AppConfig,$rootScope,RoomService,PublicService) {
         $scope.roomType.fileid = 0;
     }
     $scope.uploadImg = function(){
+        
+        
         var files = event.target.files;
         var s = files[0].name.split(".").pop();
         if(s != "jpg" && s != "png" && s != "jpeg"){
             swal('提示', '文件格式不正确！请上传*.jpg或*.png文件', 'error'); 
             return false;
         }
-        var fdata = new FormData();
+        var form = document.createElement('form');
+        form.enctype = 'multipart/form-data';
+        var fdata = new FormData(form);
         if (!fdata) { swal('提示', '你的浏览器不支持文件上传！', 'error'); return false; };
         fdata.append('img', files[0]);
         

@@ -8,11 +8,13 @@
  * Controller of the flatpcApp
  */
 angular.module('flatpcApp')
-  .controller('UserCtrl', ['$scope','$rootScope','UserService','$filter',function ($scope,$rootScope,UserService,$filter) {
+  .controller('UserCtrl', ['$scope','$rootScope','UserService','$filter',
+  function ($scope,$rootScope,UserService,$filter) {
     $scope.form = {
         status:0,
         username:'',
         password:'',
+        password1:'',
         useraccount:'',
         phone:'',
         jobnumber:'',
@@ -40,8 +42,17 @@ angular.module('flatpcApp')
         }
     }
     $scope.addSave = function () {
+        if($scope.form.password != $scope.form.password1)return;
         $rootScope.loading = true;
-        UserService.addUser($scope.form).success(function (data) {
+        UserService.addUser({
+            groupid:$scope.form.groupid,
+            username:$scope.form.username,
+            password:$scope.form.password,
+            useraccount:$scope.form.useraccount,
+            phone:$scope.form.phone,
+            jobnumber:$scope.form.jobnumber,
+            roleid:$scope.form.roleid
+        }).success(function (data) {
             
             if(data.code == 0){
                 swal("提示", "添加成功！", "success"); 
@@ -53,7 +64,16 @@ angular.module('flatpcApp')
     }
     $scope.editSave = function () {
         $rootScope.loading = true;
-        UserService.editUser($scope.form).success(function (data) {
+        UserService.editUser({
+            adminid:$scope.form.adminid,
+            groupid:$scope.form.groupid,
+            username:$scope.form.username,
+            // password:$scope.form.password,
+            useraccount:$scope.form.useraccount,
+            phone:$scope.form.phone,
+            jobnumber:$scope.form.jobnumber,
+            roleid:$scope.form.roleid
+        }).success(function (data) {
             if(data.code == 0){
                 swal("提示", "保存成功！", "success"); 
                 refresh();
@@ -64,27 +84,27 @@ angular.module('flatpcApp')
     }
     $scope.delete = function () {
         swal({   
-                title: "确认删除",   
-                text: "真的要删除吗？",   
-                type: "warning",   
-                showCancelButton: true,   
-                confirmButtonColor: "#DD6B55",   
-                confirmButtonText: "删除",   
-                cancelButtonText: "取消",   
-                closeOnConfirm: false 
-            }, 
-            function(){   
-                $rootScope.loading = true;
-                return UserService.delUser({
-                    adminid:$scope.media.adminid
-                }).success(function (data) {
-                    if(data.code == 0){
-                        swal("提示", "删除成功！", "success"); 
-                        refresh();
-                    }
-                    else
-                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-                })
+            title: "确认删除",   
+            text: "真的要删除吗？",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "删除",   
+            cancelButtonText: "取消",   
+            closeOnConfirm: false 
+        }, 
+        function(){   
+            $rootScope.loading = true;
+            return UserService.delUser({
+                adminid:$scope.form.adminid
+            }).success(function (data) {
+                if(data.code == 0){
+                    swal("提示", "删除成功！", "success"); 
+                    refresh();
+                }
+                else
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            })
         });
         
     }

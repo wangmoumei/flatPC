@@ -9,6 +9,8 @@ angular.module('flatpcApp')
         });
     }
     var addUser = function(param){
+        param.token = param.token || AppConfig.token;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
         var url = AppConfig.WEB_ROOT + 'accountmanage/users/add/';
         return $http({
             url:url,
@@ -22,6 +24,7 @@ angular.module('flatpcApp')
         });//.get(url,param);
     }
     var editUser = function(param){
+        param.token = param.token || AppConfig.token;
         var url = AppConfig.WEB_ROOT + 'accountmanage/users/edit/';
         return $http({
             url:url,
@@ -35,6 +38,7 @@ angular.module('flatpcApp')
         });//.get(url,param);
     }
     var delUser = function(param){
+        param.token = param.token || AppConfig.token;
         var url = AppConfig.WEB_ROOT + 'accountmanage/users/del/';
         return $http({
             url:url,

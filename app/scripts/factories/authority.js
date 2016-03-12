@@ -1,9 +1,22 @@
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name flatpcApp.controller:AboutCtrl
+ * @description
+ * # AboutCtrl
+ * Controller of the flatpcApp
+ */
 angular.module('flatpcApp')
-.factory('authority', ['$rootScope',function ($rootScope) {
-    //console.log('authority');
-    var check = function(name){
+.factory('authority', ['$rootScope','AppConfig',function ($rootScope,AppConfig) {
+    
+    var transform = function(name){
+        
         name = name || "";
-        switch(name){
+        switch (name){
+            case "login":
+                return $rootScope.sysMenu;
+                break;
             case "index":
                 return $rootScope.sysMenu;
                 break;
@@ -91,9 +104,21 @@ angular.module('flatpcApp')
                 break;
         }
     };
-    var transform = function(){
-        //console.log('transform');
-    };
+    var check = function () {
+        AppConfig.adminId = localStorage.adminId;
+        AppConfig.token = localStorage.token;
+        AppConfig.nodeIds = ',' + localStorage.nodeIds + ',';
+        AppConfig.schoolCode = localStorage.schoolCode;
+        AppConfig.userName = localStorage.userName;
+        AppConfig.roleName = localStorage.roleName;
+        AppConfig.roleId = localStorage.roleId;
+        AppConfig.userAccount = localStorage.userAccount;
+        AppConfig.isOpenBed = localStorage.isOpenBed;
+        if(AppConfig.adminId && AppConfig.token && AppConfig.nodeIds && AppConfig.schoolCode && AppConfig.userName && AppConfig.roleName && AppConfig.roleId && AppConfig.userAccount){
+            return true;
+        }
+        else return false;
+    }
     return {
         check:check,
         transform:transform

@@ -6,7 +6,7 @@
     <ul class="history-list">
         <li><a href="#index" ng-click="routerInit('admin')">权限</a></li>
         <li><a href="#index">帐号管理</a></li>
-        <li>超级管理员</li>
+        <li>帐号组</li>
     </ul>
 </div>
 <div class="page-main" style="top:49px;">
@@ -15,9 +15,10 @@
             <li class="open">
                 <a class="branch">所有</a>
                 <ul>
-                    <li ng-repeat="group in groups||[]" >
+                    <li ng-repeat="group in treeGroup||[]" >
                         <a class="leaf" ng-click="show(1,group)">{{group.title}}</a>
                     </li>
+                    <li><a class="add" ng-click="add()"><i class="ALiconfont icon-plus1"></i> 添加</a></li>
                 </ul>
             </li>
         </ul>
@@ -36,8 +37,15 @@
             <tr>
                 <td class="require" width="200">可分配角色</td>
                 <td>
-                    
+                    <ul style="width:160px;max-height:200px;overflow-y:auto;">
+                        <li ng-repeat="role in roles">
+                            <label><input bs-switch ng-model="role.checked" type="checkbox" switch-size="mini" switch-on-text="on" switch-off-text="off"> {{role.remark}}</label>
+                        </li>
+                    </ul>
                 </td>
+            </tr>
+            <tr>
+                <td width="200">帐号组管理员</td><td><input type="text" ng-model="media.useraccount" /></td>
             </tr>
             <tr>
                 <td></td><td>

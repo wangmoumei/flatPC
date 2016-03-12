@@ -1,7 +1,7 @@
 angular.module('flatpcApp')
 .factory('CollegeService',['$http', 'AppConfig',function($http, AppConfig){
     var getList = function(schoolcode){
-        var url = AppConfig.WEB_ROOT + 'stmessage/collegeclass/get_list/?schoolcode='+schoolcode+'&token=123';
+        var url = AppConfig.WEB_ROOT + 'stmessage/collegeclass/get_list/?schoolcode='+schoolcode+'&token=' + AppConfig.token;
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });
