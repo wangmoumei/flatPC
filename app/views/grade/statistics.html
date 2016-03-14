@@ -24,10 +24,10 @@
                         <a ng-click="show(campus)" ng-class="{'branch':campus.liveAreaList,'leaf':!campus.liveAreaList}">{{campus.title}}</a>
                         <ul ng-show="campus.liveAreaList">
                             <li class="open" ng-repeat="liveArea in campus.liveAreaList||[]">
-                                <a ng-click="show(liveArea)" ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}">{{liveArea.title}}</a>
+                                <a ng-click="show(liveArea,campus.title)" ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}">{{liveArea.title}}</a>
                                 <ul ng-show="liveArea.flatList">
                                     <li ng-repeat="flat in liveArea.flatList||[]">
-                                        <a class="leaf" ng-click="show(flat)">{{flat.title}}</a>
+                                        <a class="leaf" ng-click="show(flat,campus.title,liveArea.title)">{{flat.title}}</a>
                                     </li>
                                 </ul>
                             </li>

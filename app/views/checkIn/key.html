@@ -218,7 +218,7 @@
                                                 <td><textarea class="form-control" rows="3" ng-model="form.memo"></textarea></td>
                                             </tr>
                                             <tr>
-                                                <td></td><td class="td-btn-box"><a class="btn btn-success" ng-click="form.sub()">完成登记</a></td>
+                                                <td></td><td class="td-btn-box"><a class="btn btn-success" ng-click="form.sub(closeCard('#keyAdd'))">完成登记</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -307,7 +307,7 @@
                         <table class="table-form table-bordered bg-white">
                             <tbody>
                                 <tr>
-                                    <td>学生</td><td>{{work.peopleName + '（'+work.studentNumber+'）'}}</td>
+                                    <td>学生</td><td>{{work.name + '（'+work.studentNumber+'）'}}</td>
                                 </tr>
                                 <tr>
                                     <td>宿舍</td><td>{{work.roomPath}}</td>

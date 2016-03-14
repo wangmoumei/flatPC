@@ -37,6 +37,7 @@ angular.module('flatpcApp')
     //         swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
     // });
     $scope.show = function (type,item,admin) {
+        if(!item.adminId)return;
         $scope.media.status = 0;
         $scope.media.adminid = item.adminId;
         $scope.media.admintypename = admin.adminTypeName;
@@ -63,10 +64,10 @@ angular.module('flatpcApp')
         $scope.media.universityid = "";
     }
     $scope.addSave = function () {
-        $rootScope.loading = true;
         if(!$scope.media.admintypeid){
             return;
         }
+        $rootScope.loading = true;
         if($scope.media.password!=$scope.media.password1){
             swal("提示","两次密码不一致！", "error"); 
             return;
@@ -83,6 +84,8 @@ angular.module('flatpcApp')
         }).success(function(data){
             if(data.code == 0){
                 swal("提示","添加成功！", "success"); 
+                $scope.media.status = 0;
+                $scope.media.adminid = data.adminId;
                 refresh();
             }
             else
@@ -99,7 +102,7 @@ angular.module('flatpcApp')
         return AdminService.editAdmin({
             adminid : $scope.media.adminid,
             username : $scope.media.username,
-            useraccount : $scope.media.useraccount,
+            //useraccount : $scope.media.useraccount,
             roleid : 2,
             schooltype : $scope.media.schooltype,
             schoolnumber : $scope.media.schoolnumber,
@@ -129,8 +132,7 @@ angular.module('flatpcApp')
         function(){   
             $rootScope.loading = true;
             return AdminService.delAdmin({
-                token:AppConfig.token,
-                adminid : $scope.media.adminid,
+                adminid : $scope.media.adminid
             }).success(function(data){
                 if(data.code == 0){
                     swal("提示"," 删除成功！", "success"); 
@@ -145,7 +147,11 @@ angular.module('flatpcApp')
         
     }
     
-    refresh();
+    refresh().then(function () {
+        if($scope.admins[0]){
+            $scope.add(2,$scope.admins[0]);
+        }
+    });
     function refresh(){
         $rootScope.loading = true;
         return AdminService.getList().success(function(data){
@@ -154,7 +160,6 @@ angular.module('flatpcApp')
             }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-            
             $rootScope.loading = false;
         });
     }

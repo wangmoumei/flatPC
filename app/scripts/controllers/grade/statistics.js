@@ -22,8 +22,8 @@ angular.module('flatpcApp')
         getYear:function(n) {
             var that = this;
             this.semesterid = '';
-            $rootScope.treeTerm.forEach(function (year) {
-                year.semesterList.forEach(function (term) {
+            $rootScope.treeTerm.forEach(function (year,i) {
+                year.semesterList.forEach(function (term,j) {
                     if(term.isCurrent){
                         that.schoolyearid = year.schoolYearId;
                         if(n)
@@ -31,14 +31,20 @@ angular.module('flatpcApp')
                         else refresh();
                         return;
                     }
-                        
+                    if(i == $rootScope.treeTerm.length - 1 && j == year.semesterList.length - 1){
+                        that.schoolyearid = $rootScope.treeTerm[0].schoolYearId;
+                        if(n)
+                            return;
+                        else refresh();
+                        return;
+                    }
                 })
             })
         },
         getTerm:function(n) {
             var that = this;
-            $rootScope.treeTerm.forEach(function (year) {
-                year.semesterList.forEach(function (term) {
+            $rootScope.treeTerm.forEach(function (year,i) {
+                year.semesterList.forEach(function (term,j) {
                     if(term.isCurrent){
                         that.schoolyearid = year.schoolYearId;
                         that.semesterid = term.semesterId;
@@ -47,32 +53,40 @@ angular.module('flatpcApp')
                         else refresh();
                         return;
                     }
-                        
+                    if(i == $rootScope.treeTerm.length - 1 && j == year.semesterList.length - 1){
+                        that.schoolyearid = $rootScope.treeTerm[0].schoolYearId;
+                        that.semesterid = $rootScope.treeTerm[0].semesterList[0].semesterId;
+                        if(n)
+                            return;
+                        else refresh();
+                        return;
+                    }   
                 })
             })
         }
     }
-    $scope.show = function (item) {
+    $scope.show = function (item,campus,liveArea) {
         $scope.media.flatid = item.flatId || '';
         $scope.media.liveareaid = item.liveAreaId || '';
         $scope.media.campusid = item.campusId || '';
-        $scope.media.title = item.title || '';
+        $scope.media.title = (item.title + (campus?('-' + campus):'') + (liveArea?('-' + liveArea):'')) || '';
         // console.log($scope.media);
         refresh();
     }
     function refresh() {
-        $rootScope.loading = true;
-        GradeService.getStatistics($scope.media).success(function (data) {
-            
-            console.log(data);            
-            
-            if(data.code == 0){
-                $scope.media.data = data.list;
-                chartInit();
-            }
-            else
-                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-        })
+        if($scope.media.semesterid || $scope.media.schoolyearid){
+            $rootScope.loading = true;
+            GradeService.getStatistics($scope.media).success(function (data) {
+                if(data.code == 0){
+                    $scope.media.data = data.list;
+                    chartInit();
+                }
+                else
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            })
+        }
+        else
+            $rootScope.loading = false;
     }
     function chartInit() {
         if($scope.media.flatid){
@@ -157,8 +171,8 @@ angular.module('flatpcApp')
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             });
         else{
-            $scope.show($rootScope.treeFlat || {});
             $scope.media.getYear(1);
+            $scope.show($rootScope.treeFlat || {});
         }
     } 
     $scope.download = function () {

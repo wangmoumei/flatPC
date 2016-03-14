@@ -43,6 +43,14 @@ angular.module('flatpcApp')
                         if(authority.check()){
                             
                         }
+                        $rootScope.treeFlat = null;
+                        $rootScope.treeCollege = null;
+                        $rootScope.treeTerm = null;
+                        $rootScope.treeGrade = null;
+                        $rootScope.treeType = null;
+                        $rootScope.treeGroup = null;
+                        $rootScope.treeMenu = null;
+                        
                         $location.path('/index');
                         $rootScope.loginSwitch = true;
                     }

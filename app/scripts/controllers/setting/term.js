@@ -56,6 +56,8 @@ angular.module('flatpcApp')
     $scope.add = function(type,item){
         $scope.media.status = 1;
         $scope.media.type = type;
+        if(type) $scope.media._semesterName = true;
+        else $scope.media._schoolYearName = true;
         $scope.media.schoolYearName = item.schoolYearName || '';
         $scope.media.schoolYearId = item.schoolYearId || '';
         $scope.media.year = new Date().getFullYear();
@@ -74,14 +76,14 @@ angular.module('flatpcApp')
         (function(){
             if($scope.media.type == 0){
                 return TermService.addYear({
-                    token:'',
+                    token:AppConfig.token,
                     schoolcode:AppConfig.schoolCode,
                     title:$scope.media.schoolYearName,
                     year:$scope.media.year
                 })
             }else if($scope.media.type == 1){
                 return TermService.addTerm({
-                    token:'',
+                    token:AppConfig.token,
                     schoolcode:AppConfig.schoolCode,
                     schoolyearid:$scope.media.schoolYearId,
                     title:$scope.media.semesterName,
@@ -98,6 +100,7 @@ angular.module('flatpcApp')
             if(data.code == 0){
                 swal("提示", "添加成功！", "success"); 
                 refresh();
+                $scope.media.status = 0;
             }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
@@ -108,14 +111,14 @@ angular.module('flatpcApp')
         (function(){
             if($scope.media.type == 0){
                 return TermService.editYear({
-                    token:'',
+                    token:AppConfig.token,
                     schoolyearid:$scope.media.schoolYearId,
                     title:$scope.media.schoolYearName,
                     year:$scope.media.year
                 })
             }else if($scope.media.type == 1){
                 return TermService.editTerm({
-                    token:'',
+                    token:AppConfig.token,
                     semesterid:$scope.media.semesterId,
                     title:$scope.media.semesterName,
                     iscurrent:$scope.media.isCurrent,
@@ -153,12 +156,12 @@ angular.module('flatpcApp')
                 (function(){
                     if($scope.media.type == 0){
                         return TermService.delYear({
-                            token:'',
+                            token:AppConfig.token,
                             schoolyearid:$scope.media.schoolYearId
                         })
                     }else if($scope.media.type == 1){
                         return TermService.delTerm({
-                            token:'',
+                            token:AppConfig.token,
                             semesterId:$scope.media.semesterId
                         })
                     }

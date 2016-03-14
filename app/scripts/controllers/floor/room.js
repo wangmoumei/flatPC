@@ -14,7 +14,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
             memo:'',
             floornumber:0,
             roomnumber:0,
-            enumera:''
+            startfloor:1
         },
         room:{
             type:0,
@@ -66,7 +66,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
             $scope.media.floor.memo = "";
             $scope.media.floor.floornumber=1;
             $scope.media.floor.roomnumber=1;
-            $scope.media.floor.enumera='';
+            $scope.media.floor.startfloor=1;
         }
         typeInit();
     }
@@ -103,7 +103,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     roomnumber:$scope.media.floor.roomnumber,
                     typeid:$scope.media.floor.typeid,
                     roomstyle:$scope.media.floor.floortype,
-                    enumera:$scope.media.floor.enumera
+                    startfloor:$scope.media.floor.startfloor
                 }).success(function(data){
                     console.log(data);
                     if(data.code == 0){

@@ -11,6 +11,8 @@
         font-size: 13px;
         i{
             font-size: 18px;
+            position: relative;
+            top:2px;
         }
     }
     ul.history-list{
@@ -275,6 +277,10 @@ table{
     }
     td.td-btn-box{
         padding:10px 4px;
+    }
+    td.td-img-box{
+        vertical-align:middle !important;
+        text-align:center !important;
     }
 }
 

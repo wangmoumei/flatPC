@@ -298,13 +298,14 @@
     </div>
     
 </div>
-<div class="info-card fadeIn animated grade-simple" id="gradeCard" info-card>
+<!-- grade-simple -->
+<div class="info-card fadeIn animated" id="gradeCard" info-card>
     <div class="info-card-wrapper">
         <div class="info-card-dialog">
             <div class="info-card-content">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        打分页 {{cardMedia.item.roomNum}}
+                        {{cardMedia.item.roomNum}}寝室打分页 
                         <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
                     </div>
                     <div class="panel-body grade-panel">
@@ -314,22 +315,22 @@
                                 <li ng-click="cardMedia.setTab(2)" ng-class="{'active':cardMedia.tab ==2}">床位分</li>
                                 <li ng-click="cardMedia.setTab(3)" ng-class="{'active':cardMedia.tab ==3}">照片</li>
                             </ul>
-                            <ul class="page-tabs-container grade-container" ng-class="{'grade-tool-on':media.tab==1}">
+                            <ul class="page-tabs-container grade-container" ng-class="{'grade-tool-on':media.tab==1 && cardMedia.tab < 3}">
                                 <li class="fadeIn animated" ng-class="{'active':cardMedia.tab ==1}">
                                     <table class="table table-bordered bg-white">
                                         <thead>
                                             <tr><th>序号</th><th>打分项目</th><th>打分</th></tr>
                                         </thead>
                                         <tbody ng-repeat="category in cardMedia.room || []">
-                                            <tr><th>{{category.typeName}}</th><th></th><th></th></tr>
-                                            <tr ng-repeat="item in category.itemList">
+                                            <tr><th>{{category.typeName || category.title}}</th><th></th><th></th></tr>
+                                            <tr ng-repeat="item in category.itemList || category.subNodes">
                                                 <td>{{$index + 1}}</td>
-                                                <td>{{item.title + '（' +  item.maxScore + '）'}}</td>
+                                                <td>{{item.title + '（' +  (item.maxScore||item.value) + '）'}}</td>
                                                 <td class="grade-handle">
                                                     <div>
-                                                        <div>-</div>
-                                                        <div ng-class="{'minuses':item.score<item.maxScore}">{{item.score}}</div>
-                                                        <div>+</div>
+                                                        <div ng-click="cardMedia.grade(-1,item)"><i class="ALiconfont icon-minus3"></i></div>
+                                                        <div ng-class="{'minuses':item.score<(item.maxScore||item.value)}">{{item.score}}</div>
+                                                        <div ng-click="cardMedia.grade(1,item)"><i class="ALiconfont icon-plus3"></i></div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -393,12 +394,12 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="grade-tool-bar" ng-if="media.tab==1">
+                        <div class="grade-tool-bar" ng-if="media.tab==1" ng-show="cardMedia.tab < 3">
                             <div>
                                 <a class="btn" ng-click="cardMedia.setData(0)" ng-class="{'btn-default disabled':!cardMedia.getPrev(),'btn-stroke btn-info':cardMedia.getPrev()}"><i class="ALiconfont icon-sortleft"></i></a>
                             </div>
                             <div>
-                                <a class="btn btn-info" onclick="javascript:$(this).closest('.info-card').removeClass('grade-simple');">保存并关闭</a>
+                                <a class="btn btn-info" ng-click="cardMedia.gradeSave()">保存并关闭</a>
                             </div>
                             <div>
                                 <a class="btn" ng-click="cardMedia.setData(1)" ng-class="{'disabled btn-default':!cardMedia.getNext(),'btn-stroke btn-info':cardMedia.getNext()}"><i class="ALiconfont icon-sortright"></i></a>

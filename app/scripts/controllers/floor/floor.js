@@ -1,7 +1,7 @@
 angular.module('flatpcApp')
 .controller('FloorCtrl', ['$scope','AppConfig','$rootScope','FlatService',function($scope,AppConfig,$rootScope,FlatService) {
     $scope.media = {
-        status:0,
+        status:1,
         type:0,
         title:'',
         campusTitle:'',
@@ -166,10 +166,10 @@ angular.module('flatpcApp')
     
     
     if(!$rootScope.treeFlat){
-        refresh().then(function(){$scope.show(1,$rootScope.treeFlat.cmpusList[0])});
+        refresh().then(function(){$scope.show(1,$rootScope.treeFlat.cmpusList[0] || {})});
     }
     else {
-        $scope.show(1,$rootScope.treeFlat.cmpusList[0]);
+        $scope.show(1,$rootScope.treeFlat.cmpusList[0] || {});
         $rootScope.loading = false;
     }
     function refresh(){

@@ -28,7 +28,7 @@ angular.module('flatpcApp')
         });
     }
     var logout = function(param){
-        var url = AppConfig.WEB_ROOT + 'public/login/login_out/?adminId=' + param.adminid || '';
+        var url = AppConfig.WEB_ROOT + 'public/login/login_out/?adminid=' + AppConfig.adminId || '';
         
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 

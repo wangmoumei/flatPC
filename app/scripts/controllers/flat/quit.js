@@ -136,7 +136,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
             closeOnConfirm: false 
         }, 
         function(){   
-            rootScope.loading = true;
+            $rootScope.loading = true;
             DailyService.passQuit({
                 token:AppConfig.token,
                 exitroomid:$scope.work.exitRoomId || '',

@@ -29,15 +29,13 @@ angular.module('flatpcApp')
         $scope.media.listorder = item.listOrder;
         $scope.media.title = item.title;
         $scope.media.useraccount = item.userAccount;
-        $scope.media.roleList = (function () {
-            var ids = ',';
-            if(typeof item.roleList == 'array')
-            item.roleList.forEach(function (role) {
-                ids += role.roleId + ',';
-            })
-            else ids = ',' + item.roleList + ',';
-            return ids;
-        })() 
+        $scope.media.roleList = ',';
+        item.roleList.forEach(function (role) {
+            console.log(role.roleId);
+            $scope.media.roleList += role.roleId + ',';
+        })
+            
+       
         setRole();
     }
     $scope.add = function () {
@@ -51,6 +49,7 @@ angular.module('flatpcApp')
         setRole();
     }
     function setRole() {
+        console.log($scope.media.roleList)
         $scope.roles.forEach(function (role) {
             role.checked = new RegExp(',' + role.roleId + ',').test($scope.media.roleList);
         })

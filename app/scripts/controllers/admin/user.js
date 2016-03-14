@@ -27,11 +27,12 @@ angular.module('flatpcApp')
         $scope.form.status= user.adminId ? 1 : 0;
         $scope.form.username= user.userName || '';
         $scope.form.password= '';
+        $scope.form.password1= '';
         $scope.form.useraccount=user.userAccount || '';
         $scope.form.phone=user.phone || '';
         $scope.form.jobnumber=user.jobNumber || '';
-        $scope.form.roleid=user.roleId || '';
-        $scope.form.groupid=user.groupId || '';
+        $scope.form.roleid= '' + user.roleId || '';
+        $scope.form.groupid=user.groupId || $scope.media.groupid || '';
         $scope.groupSelect();
         $scope.form.adminid=user.adminId || '';
     }
@@ -41,7 +42,7 @@ angular.module('flatpcApp')
             $scope.form.roleList = list[0].roleList || [];
         }
     }
-    $scope.addSave = function () {
+    $scope.addSave = function (fun) {
         if($scope.form.password != $scope.form.password1)return;
         $rootScope.loading = true;
         UserService.addUser({
@@ -53,36 +54,39 @@ angular.module('flatpcApp')
             jobnumber:$scope.form.jobnumber,
             roleid:$scope.form.roleid
         }).success(function (data) {
-            
+            $rootScope.loading = false;
             if(data.code == 0){
                 swal("提示", "添加成功！", "success"); 
                 refresh();
+                if(fun && typeof fun == 'function') fun();
             }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })
     }
-    $scope.editSave = function () {
+    $scope.editSave = function (fun) {
         $rootScope.loading = true;
         UserService.editUser({
             adminid:$scope.form.adminid,
             groupid:$scope.form.groupid,
             username:$scope.form.username,
             // password:$scope.form.password,
-            useraccount:$scope.form.useraccount,
+            //useraccount:$scope.form.useraccount,
             phone:$scope.form.phone,
             jobnumber:$scope.form.jobnumber,
             roleid:$scope.form.roleid
         }).success(function (data) {
+            $rootScope.loading = false;
             if(data.code == 0){
                 swal("提示", "保存成功！", "success"); 
                 refresh();
+                if(fun && typeof fun == 'function') fun();
             }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })
     }
-    $scope.delete = function () {
+    $scope.delete = function (fun) {
         swal({   
             title: "确认删除",   
             text: "真的要删除吗？",   
@@ -98,9 +102,11 @@ angular.module('flatpcApp')
             return UserService.delUser({
                 adminid:$scope.form.adminid
             }).success(function (data) {
+                $rootScope.loading = false;
                 if(data.code == 0){
                     swal("提示", "删除成功！", "success"); 
                     refresh();
+                    if(fun && typeof fun == 'function') fun();
                 }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 

@@ -155,6 +155,8 @@ angular.module('flatpcApp')
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             });
         }else{
+            console.log(item.type);
+            $scope.role.type = item.type?true:false;
             $scope.role.roleid = item.roleId;
             $scope.role.nodeids = item.nodeIds;
             var ids = ',' + (typeof item.nodeIds == 'string'?item.nodeIds:item.nodeIds.toString()) + ',';

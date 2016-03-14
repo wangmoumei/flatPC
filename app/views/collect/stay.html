@@ -180,7 +180,7 @@
                             <ul class="page-tabs-container">
                                 <li class="fadeIn animated active">
                                     <table class="table table-bordered bg-white">
-                                        <tr><td>学号</td><td>{{student.studentNumber}}</td><td>姓名</td><td>{{student.name}}</td><td rowspan="7"><img width="100" src="{{student.headImgurl}}"/></td></tr>
+                                        <tr><td>学号</td><td>{{student.studentNumber}}</td><td>姓名</td><td>{{student.name}}</td><td rowspan="7" class="td-img-box"><img width="100" ng-src="{{student.headImgurl || 'http://7xp0c4.com2.z0.glb.qiniucdn.com/default.png'}}"/></td></tr>
                                         <tr><td>性别</td><td>{{student.sex}}</td><td>出生日期</td><td>{{student.birthDay}}</td></tr>
                                         <tr><td>政治面貌</td><td>{{student.political}}</td><td>民族</td><td>{{student.nation}}</td></tr>
                                         <tr><td>籍贯</td><td>{{student.origin}}</td><td>婚姻状况</td><td>{{student.marital}}</td></tr>

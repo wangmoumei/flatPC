@@ -59,7 +59,9 @@
                 </div>
                 <ul class="room-list room-list-row" ng-repeat="rooms in floor.roomList">
                     <li class="room-item" ng-repeat="room in rooms">
-                        <div ng-click="showCard('#roomEdit',roomInit(room,floor))" ng-class="{'room-add':room.status<0,'other':room.purpose}">{{room.purpose?room.purpose:room.roomName}}</div>
+                        <div ng-click="showCard('#roomEdit',roomInit(room,floor))" ng-class="{'room-add':room.status<0,'other':room.purpose}">
+                            {{room.purpose?room.purpose:room.roomName}}
+                        </div>
                     </li>
                 </ul>
             </li>
@@ -86,6 +88,14 @@
                                 </tr>
                                 <tr ng-show="media.floor.type == 2">
                                     <td class="require">层数</td><td><input type="text" ng-model="media.floor.floornumber" /></td>
+                                </tr>
+                                <tr ng-show="media.floor.type == 2">
+                                    <td class="require">开始层数</td>
+                                    <td>
+                                        <div>
+                                            <input type="text" ng-model="media.floor.startfloor" />
+                                        <div>
+                                    </td>
                                 </tr>
                                 <tr ng-show="media.floor.type == 2">
                                     <td class="require">每层房间数</td><td><input type="text" ng-model="media.floor.roomnumber" /></td>
@@ -116,14 +126,7 @@
                                         </select>
                                     </td>
                                 </tr>
-                                <tr ng-show="media.floor.type == 2">
-                                    <td class="require">房间号枚举</td>
-                                    <td>
-                                        <div>
-                                            <input type="text" ng-model="media.floor.enumera" />
-                                        <div>
-                                    </td>
-                                </tr>
+                                
                                 <tr ng-hide="media.floor.type == 2">
                                     <td>备注</td>
                                     <td><textarea class="form-control" rows="3" ng-model="media.floor.memo"></textarea></td>

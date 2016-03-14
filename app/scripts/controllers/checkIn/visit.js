@@ -136,7 +136,7 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
             return CheckInService.delVisit({
                 token:AppConfig.token,
                 visitid:$scope.work.visitid
-            }).success(function(){
+            }).success(function(data){
                 $rootScope.loading = false;
                 
                 if(data.code == 0){
@@ -156,7 +156,7 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
             visitid:$scope.work.visitid,
             endtime:time,
             adminid:AppConfig.adminId
-        }).success(function(){
+        }).success(function(data){
             $rootScope.loading = false;
             
             if(data.code == 0){
@@ -247,7 +247,7 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
         studentChoose:function (student) {
             this.student = student;
         },
-        sub:function () {
+        sub:function (fun) {
             $rootScope.loading = true;
             CheckInService.addVisit({
                 token:AppConfig.token,
@@ -269,6 +269,7 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
                 if(data.code == 0){
                     swal("提示", "提交成功！", "success"); 
                     refresh();
+                    if(fun && typeof fun == 'function') fun();
                 }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 

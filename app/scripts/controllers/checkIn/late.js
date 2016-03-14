@@ -73,10 +73,7 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,StudentService,$
     //渲染list
     function refresh(){
         $rootScope.loading = true;
-        console.log($scope.media);
         CheckInService.getLateList($scope.media).success(function(data){
-            
-            console.log(data.data);
             if(data.code == 0){
                 $scope.list = data.data.list;
                 $scope.media.recordCount = data.data.recordCount;
@@ -106,7 +103,6 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,StudentService,$
             memo:$scope.work.memo
         }).success(function (data) {
             $rootScope.loading = false;
-            console.log(data);
             
             if(data.code == 0){
                 swal("提示", "修改成功！", "success"); 
@@ -131,14 +127,14 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,StudentService,$
             $rootScope.loading = true;
             return CheckInService.delLate({
                 token:AppConfig.token,
-                backlateid:$scope.work.backlateid
-            }).success(function(){
+                backlateid:$scope.work.backLateId
+            }).success(function(data){
                 $rootScope.loading = false;
                 
                 if(data.code == 0){
                     swal("提示", "删除成功！", "success"); 
-                    if(fun && typeof fun == 'function') fun();
                     refresh();
+                    if(fun && typeof fun == 'function') fun();
                 }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
@@ -204,7 +200,6 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,StudentService,$
                 keyword:this.studentName,
                 flatid:$scope.selecter.flatId
             }).success(function (data) {
-                //console.log(data);
                 if(data.code == 0){
                     $rootScope.loading = false;
                     that.studentList = data.list;
@@ -217,7 +212,7 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,StudentService,$
         studentChoose:function (student) {
             this.student = student;
         },
-        sub:function () {
+        sub:function (fun) {
             $rootScope.loading = true;
             CheckInService.addLate({
                 token:AppConfig.token,
@@ -231,12 +226,10 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,StudentService,$
                 memo:this.memo
             }).success(function (data) {
                 $rootScope.loading = false;
-                console.log(data);
-                
                 if(data.code == 0){
-                    
                     swal("提示", "提交成功！", "success"); 
                     refresh();
+                    if(fun && typeof fun == 'function') fun();
                 }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 

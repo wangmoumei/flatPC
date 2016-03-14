@@ -8,7 +8,7 @@ angular.module('flatpcApp')
     }
     var addAdmin = function(param){
         param.token = param.token || AppConfig.token;
-        var url = AppConfig.WEB_ROOT + 'accountmanage/Admins/add/';
+        var url = AppConfig.WEB_ROOT + 'accountmanage/admins/add/';
         return $http({
             url:url,
             method:"POST",
@@ -22,7 +22,7 @@ angular.module('flatpcApp')
     }
     var editAdmin = function(param){
         param.token = param.token || AppConfig.token;
-        var url = AppConfig.WEB_ROOT + 'accountmanage/Admins/edit/';
+        var url = AppConfig.WEB_ROOT + 'accountmanage/admins/edit/';
         return $http({
             url:url,
             method:"POST",
@@ -36,7 +36,7 @@ angular.module('flatpcApp')
     }
     var delAdmin = function(param){
         param.token = param.token || AppConfig.token;
-        var url = AppConfig.WEB_ROOT + 'accountmanage/Admins/del/';
+        var url = AppConfig.WEB_ROOT + 'accountmanage/admins/del/';
         return $http({
             url:url,
             method:"POST",

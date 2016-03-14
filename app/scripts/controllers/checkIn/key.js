@@ -231,7 +231,7 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,StudentService,$
         studentChoose:function (student) {
             this.student = student;
         },
-        sub:function () {
+        sub:function (fun) {
             $rootScope.loading = true;
             CheckInService.addKey({
                 token:AppConfig.token,
@@ -245,10 +245,11 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,StudentService,$
                 memo:this.memo
             }).success(function (data) {
                 $rootScope.loading = false;
-                console.log(data);
+                // console.log(data);
                 if(data.code == 0){
                     swal("提示", "提交成功！", "success"); 
                     refresh();
+                    if(fun && typeof fun == 'function') fun();
                 }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 

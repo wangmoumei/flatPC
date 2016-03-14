@@ -46,6 +46,11 @@
                     </td>
                 </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="10" ng-hide="media.recordCount" class="empty">没有检索帐号信息</td>
+                </tr>
+            </tfoot>
         </table>
         
     </div>
@@ -117,7 +122,7 @@
                                 </tr>
                                 <tr>
                                     <td class="require">帐号</td>
-                                    <td><input type="text" ng-model="form.useraccount" /></td>
+                                    <td><input type="text" ng-disabled="form.status" ng-model="form.useraccount" /></td>
                                 </tr>
                                 <tr ng-hide="form.status">
                                     <td class="require">密码</td>
@@ -142,9 +147,9 @@
                                 <tr>
                                     <td></td>
                                     <td class="td-btn-box">
-                                        <a ng-hide="form.status" class="btn btn-success" ng-click="addSave()">提交</a>
-                                        <a ng-show="form.status" class="btn btn-primary" ng-click="editSave()">保存</a>
-                                        <a ng-show="form.status" class="btn btn-danger" ng-click="delete()">删除</a>
+                                        <a ng-hide="form.status" class="btn btn-success" ng-click="addSave(closeCard())">提交</a>
+                                        <a ng-show="form.status" class="btn btn-primary" ng-click="editSave(closeCard())">保存</a>
+                                        <a ng-show="form.status" class="btn btn-danger" ng-click="delete(closeCard())">删除</a>
                                     </td>
                                 </tr>
                             </tbody>

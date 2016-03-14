@@ -235,8 +235,8 @@
                                 <tr>
                                     <td class="require">学号</td><td><input type="text" ng-model="student.studentNumber" /></td>
                                     <td rowspan="5" colspan="2">
-                                        <div ng-class="{imgError:!student.headImgurl}"><img src="{{student.headImgurl}}" /></div>
-                                        <div class="btn btn-primary btn-sm" input-file change="uploadImg()">点击上传照片</div>
+                                        <div><img style="max-width:{{student.headImgurl?200:100}}px;" src="{{student.headImgurl || 'http://7xp0c4.com2.z0.glb.qiniucdn.com/default.png'}}" /></div>
+                                        <div class="btn btn-primary btn-sm" style="margin-top:10px;" input-file change="uploadImg()">点击上传照片</div>
                                     </td>
                                 </tr>
                                 <tr>
