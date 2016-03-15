@@ -11,7 +11,7 @@
 </div>
 <div class="tool-bar">
     <div class="bar-full">
-        <button class="btn btn-addon btn-success"  ng-click="resetForm(dataInit)"><i class="glyphicon glyphicon-plus"></i>新增登记</button>
+        <button ng-if="menuCheck(76)" class="btn btn-addon btn-success"  ng-click="resetForm(dataInit)"><i class="glyphicon glyphicon-plus"></i>新增登记</button>
     </div>
     <div class="group-tool">
         <div class="btn-group">
@@ -71,7 +71,7 @@
                 <tr ng-repeat="item in list">
                     <td>{{item.startTime}}</td><td>{{item.peopleName}}</td><td>{{item.name + '（'+ item.studentNumber +'）'}}</td><td>{{item.roomPath}}</td>
                     <td>
-                        <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#visitEdit',detail(item))">编辑</button>
+                        <button ng-if="menuCheck(98)" type="button" class="btn btn-link btn-xs" ng-click="showCard('#visitEdit',detail(item))">编辑</button>
                         <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#visitDetail',detail(item))">查看</button>
                     </td>
                 </tr>
@@ -290,16 +290,16 @@
                                 <div class="check-point"></div>
                                 <div>
                                     <div class="check-btn-box" ng-hide="returnSwitch">
-                                        <div>
+                                        <div ng-if="menuCheck(164)">
                                             <input type="text" datetimepicker class="form-control" ng-model="endTime" />
                                         </div>
-                                        <div>
+                                        <div ng-if="menuCheck(164)">
                                             <a class="btn btn-addon btn-success" ng-click="deal(endTime,closeCard('#visitDetail'))"><i class="glyphicon glyphicon-ok"></i>出楼</a>
                                         </div>
-                                        <div>
+                                        <div ng-if="menuCheck(201)">
                                             <a class="btn btn-stroke btn-danger" ng-click="delete(closeCard('#visitDetail'))">删除</a>
                                         </div>
-                                        <div>
+                                        <div ng-if="menuCheck(98)">
                                             <a class="btn btn-stroke btn-info" ng-click="closeCard('#visitDetail')();showCard('#visitEdit')">编辑</a>
                                         </div>
                                     </div>
@@ -364,8 +364,8 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td></td><td class="td-btn-box"><a class="btn btn-info" ng-click="editSave(closeCard('#visitEdit'))">确认修改</a>
-                                    <a class="btn btn-danger" ng-click="delete(closeCard('#visitEdit'))">删除</a></td>
+                                    <td></td><td class="td-btn-box"><a ng-if="menuCheck(98)" class="btn btn-info" ng-click="editSave(closeCard('#visitEdit'))">确认修改</a>
+                                    <a ng-if="menuCheck(201)" class="btn btn-danger" ng-click="delete(closeCard('#visitEdit'))">删除</a></td>
                                 </tr>
                             </tbody>
                         </table>

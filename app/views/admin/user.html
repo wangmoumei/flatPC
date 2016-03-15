@@ -11,7 +11,7 @@
 </div>
 <div class="tool-bar" style="margin-left:225px">
     <div>
-        <button class="btn btn-success" ng-click="showCard(dataInit)">新建帐号</button>
+        <button class="btn btn-success" ng-click="showCard('#userForm',dataInit)">新建帐号</button>
     </div>
 
 </div>
@@ -42,7 +42,7 @@
                 <tr ng-repeat="user in list">
                     <td>{{user.userAccount}}</td><td>{{user.userName}}</td><td>{{user.roleName}}</td>
                     <td>
-                        <button type="button" class="btn btn-link btn-xs" ng-click="showCard(dataInit(user))">编辑</button>
+                        <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#userForm',dataInit(user))">编辑</button>
                     </td>
                 </tr>
             </tbody>
@@ -90,7 +90,7 @@
         </div>
     </div>
 </div>
-<div class="info-card fadeIn animated" info-card data-userid = "form.status">
+<div class="info-card fadeIn animated" id="userForm" info-card data-userid = "form.status">
     <div class="info-card-wrapper">
         <div class="info-card-dialog">
             <div class="info-card-content">

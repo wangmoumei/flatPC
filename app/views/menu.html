@@ -1,14 +1,14 @@
 <ul class="menu-container">
-    <li ng-show="sysMenu[1]=='flat'">
+    <li ng-if="menuCheck(14)" ng-show="sysMenu[1]=='flat'">
         <div class="menu-title">综合查询</div>
         <ul class="menu-list">
-            <li >
+            <li ng-if="menuCheck(18)">
                 <a href="#flat">
                     <i class="ALiconfont icon-loudong" style="background-color:#38adff;font-size:32px"></i>
                     按楼查看
                 </a>
             </li>
-            <li >
+            <li ng-if="menuCheck(19)">
                 <a href="#college">
                     <i class="ALiconfont icon-xuexiao" style="line-height: 45px;background-color:#02cf97;font-size:32px"></i>
                     按学院查看
@@ -16,28 +16,28 @@
             </li>
         </ul>
     </li>
-    <li ng-show="sysMenu[1]=='flat'">
+    <li ng-if="menuCheck(15)" ng-show="sysMenu[1]=='flat'">
         <div class="menu-title">日常调换宿</div>
         <ul class="menu-list">
-            <li >
+            <li ng-if="menuCheck(27)">
                 <a href="#live">
                     <i class="ALiconfont icon-ruzhu" style="line-height: 45px;background-color:#ff9c00;font-size:32px"></i>
                     入住
                 </a>
             </li>
-            <li >
+            <li ng-if="menuCheck(28)">
                 <a href="#change">
                     <i class="ALiconfont icon-tiaosu" style="line-height: 45px;background-color:#fc7257;font-size:32px"></i>
                     调宿
                 </a>
             </li>
-            <li >
+            <li ng-if="menuCheck(29)">
                 <a href="#quit">
                     <i class="ALiconfont icon-tuisu" style="line-height: 45px;background-color:#02cf97;font-size:32px"></i>
                     退宿
                 </a>
             </li>
-            <li >
+            <li ng-if="menuCheck(30)">
                 <a href="#check">
                     <i class="ALiconfont icon-susheshenpi" style="line-height: 45px;background-color:#38adff;font-size:32px"></i>
                     审批
@@ -45,7 +45,7 @@
             </li>
         </ul>
     </li>
-    <li ng-show="sysMenu[1]=='flat'">
+    <li ng-if="menuCheck(16)" ng-show="sysMenu[1]=='flat'">
         <div class="menu-title">新生入学管理</div>
         <ul class="menu-list">
             <li >
@@ -56,7 +56,7 @@
             </li>
         </ul>
     </li>
-    <li ng-show="sysMenu[1]=='flat'">
+    <li ng-if="menuCheck(17)" ng-show="sysMenu[1]=='flat'">
         <div class="menu-title">毕业退宿管理</div>
         <ul class="menu-list">
             <li >
@@ -67,16 +67,16 @@
             </li>
         </ul>
     </li>
-    <li ng-show="sysMenu[1]=='grade'">
+    <li ng-if="menuCheck(58)" ng-show="sysMenu[1]=='grade'">
         <div class="menu-title">查宿舍</div>
         <ul class="menu-list">
-            <li >
+            <li ng-if="menuCheck(60)">
                 <a href="#grade">
                     <i class="ALiconfont icon-yixiangdengji" style="background-color:#ff9c00;font-size:26px"></i>
                     卫生打分
                 </a>
             </li>
-            <li >
+            <li ng-if="menuCheck(61)">
                 <a href="#scoreStatistics">
                     <i class="ALiconfont icon-chart" style="background-color:#fc7257;font-size:26px"></i>
                     打分统计
@@ -84,10 +84,10 @@
             </li>
         </ul>
     </li>
-    <li ng-show="sysMenu[1]=='grade'">
+    <li ng-if="menuCheck(59)" ng-show="sysMenu[1]=='grade'">
         <div class="menu-title">设置</div>
         <ul class="menu-list">
-            <li >
+            <li ng-if="menuCheck(62)">
                 <a href="#gradeSetting">
                     <i class="ALiconfont icon-week1" style="background-color:#ff9c00;font-size:24px"></i>
                     打分设置
@@ -95,22 +95,22 @@
             </li>
         </ul>
     </li>
-    <li ng-show="sysMenu[1]=='check'">
+    <li ng-if="menuCheck(72)" ng-show="sysMenu[1]=='check'">
         <div class="menu-title">日常登记</div>
         <ul class="menu-list">
-            <li >
+            <li ng-if="menuCheck(73)">
                 <a href="#visit">
                     <i class="ALiconfont icon-crmtubiao67" style="background-color:#ff9c00;font-size:28px;line-height:44px;"></i>
                     访客登记
                 </a>
             </li>
-            <li >
+            <li ng-if="menuCheck(74)">
                 <a href="#key">
                     <i class="ALiconfont icon-iconfontkey" style="background-color:#fc7257;font-size:25px"></i>
                     借钥匙
                 </a>
             </li>
-            <li >
+            <li ng-if="menuCheck(75)">
                 <a href="#late">
                     <i class="ALiconfont icon-iconfontkey1" style="background-color:#02cf97;font-size:25px"></i>
                     晚归
@@ -120,22 +120,22 @@
     </li>
     
     
-    <li ng-show="sysMenu[1]=='admin'">
+    <li ng-if="menuCheck(106)" ng-show="sysMenu[1]=='admin'">
         <div class="menu-title">帐号管理</div>
         <ul class="menu-list">
-            <li >
+            <li ng-if="menuCheck(111)">
                 <a href="#admin">
                     <i class="ALiconfont icon-jiaoseguanli" style="background-color:#fc7257;font-size:23px"></i>
                     超级管理员
                 </a>
             </li>
-            <li >
+            <li ng-if="menuCheck(114)">
                 <a href="#user">
                     <i class="ALiconfont icon-iconfonticonfontzhiweiguanli" style="background-color:#02cf97;font-size:30px;"></i>
                     帐号管理
                 </a>
             </li>
-            <li >
+            <li ng-if="menuCheck(117)">
                 <a href="#group">
                     <i class="ALiconfont icon-xiaji" style="background-color:#38adff;font-size:24px"></i>
                     帐号组
@@ -143,22 +143,22 @@
             </li>
         </ul>
     </li>
-    <li ng-show="sysMenu[1]=='role'">
+    <li ng-if="menuCheck(121)" ng-show="sysMenu[1]=='role'">
         <div class="menu-title">角色管理</div>
         <ul class="menu-list">
-            <li >
+            <li ng-if="menuCheck(123)">
                 <a href="#role">
                     <i class="ALiconfont icon-managerole" style="background-color:#02cf97;font-size:24px"></i>
                     角色管理
                 </a>
             </li>
-            <li >
+            <li ng-if="menuCheck(124)">
                 <a href="#template">
                     <i class="ALiconfont icon-jiaose" style="background-color:#38adff;font-size:24px;line-height:38px;"></i>
                     角色模版
                 </a>
             </li>
-            <li >
+            <li ng-if="menuCheck(127)">
                 <a href="#menu">
                     <i class="ALiconfont icon-yingyongchengxu" style="background-color:#ff9c00;font-size:24px"></i>
                     功能设置
@@ -166,10 +166,10 @@
             </li>
         </ul>
     </li>
-    <li ng-show="sysMenu[1]=='data'">
+    <li ng-if="menuCheck(103)" ng-show="sysMenu[1]=='data'">
         <div class="menu-title">基础设置</div>
         <ul class="menu-list">
-            <li >
+            <li ng-if="menuCheck(104)">
                 <a href="#term">
                     <i class="ALiconfont icon-week" style="background-color:#02cf97;font-size:25px"></i>
                     学期周数设置
@@ -177,22 +177,22 @@
             </li>
         </ul>
     </li>
-    <li ng-show="sysMenu[1]=='floor'">
+    <li ng-if="menuCheck(109)" ng-show="sysMenu[1]=='floor'">
         <div class="menu-title">楼栋信息</div>
         <ul class="menu-list">
-            <li >
+            <li ng-if="menuCheck(125)">
                 <a href="#floor">
                     <i class="ALiconfont icon-xiezilou" style="background-color:#ff9c00;font-size:32px"></i>
                     校区生活区
                 </a>
             </li>
-            <li >
+            <li ng-if="menuCheck(128)">
                 <a href="#room">
                     <i class="ALiconfont icon-key" style="background-color:#02cf97;font-size:25px"></i>
                     宿舍信息
                 </a>
             </li>
-            <li >
+            <li ng-if="menuCheck(130)">
                 <a href="#type">
                     <i class="ALiconfont icon-housetype" style="background-color:#38adff;font-size:30px"></i>
                     户型管理
@@ -200,22 +200,22 @@
             </li>
         </ul>
     </li>
-    <li ng-show="sysMenu[1]=='collect'">
+    <li ng-if="menuCheck(105)" ng-show="sysMenu[1]=='collect'">
         <div class="menu-title">师生信息</div>
         <ul class="menu-list">
-            <li >
+            <li ng-if="menuCheck(107)">
                 <a href="#class">
                     <i class="ALiconfont icon-temple" style="background-color:#ff9c00;font-size:28px;line-height:36px"></i>
                     学院班级信息
                 </a>
             </li>
-            <li >
+            <li ng-if="menuCheck(108)">
                 <a href="#student">
                     <i class="ALiconfont icon-Contact" style="background-color:#38adff;font-size:28px;line-height:44px"></i>
                     学生信息
                 </a>
             </li>
-            <li >
+            <li ng-if="menuCheck(129)">
                 <a href="#stay">
                     <i class="ALiconfont icon-home1" style="background-color:#fc7257;font-size:26px"></i>
                     住宿信息

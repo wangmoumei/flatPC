@@ -41,17 +41,17 @@
     </div>
     <div class="page-tabs" tabs style="left:225px">
         <ul class="page-tabs-nav">
-            <li class="active">人员分布</li>
-            <li>人员查询</li>
+            <li ng-if="menuCheck(25)" class="active">人员分布</li>
+            <li ng-if="menuCheck(26)">人员查询</li>
         </ul>
         <ul class="page-tabs-container">
-            <li class="fadeIn animated active">
+            <li ng-if="menuCheck(25)" class="fadeIn animated active">
                 <div id="mychart" pie></div>
                 <div class="chart-missing" ng-hide="media.recordCount">
                     暂无数据
                 </div>
             </li>
-            <li class="fadeIn animated">
+            <li ng-if="menuCheck(26)" class="fadeIn animated">
                 <div class="search-bar">
                     <div>
                         <div class="btn-group">

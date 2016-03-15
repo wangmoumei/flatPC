@@ -7,24 +7,60 @@
     </div>
     <div class="top-navigation" top-nav>
         <ul>
-            <li ng-class="{'active':sysMenu[0]=='flat'}" ng-click="switch(0,'flat')"><a href="#index">公寓管理</a></li>
-            <li ng-class="{'active':sysMenu[0]=='data'}"  ng-click="switch(0,'data')"><a href="#index">数据中心</a></li>
-            <li ng-class="{'active':sysMenu[0]=='admin'}"  ng-click="switch(0,'admin')"><a href="#index">权限</a></li>
-            <li ng-class="{'active':sysMenu[0]=='repair'}"  ng-click="switch(1,'repair')"><a href="http://baidu.com" target="page-tab">智能报修</a></li>
-            <li ng-class="{'active':sysMenu[0]=='pay'}"  ng-click="switch(1,'pay')"><a href="http://baidu.com" target="page-tab">缴费中心</a></li>
+            <li ng-if="menuCheck(1)" ng-class="{'active':sysMenu[0]=='flat'}" ng-click="switch(0,'flat')"><a href="#index">公寓管理</a></li>
+            <li ng-if="menuCheck(2)" ng-class="{'active':sysMenu[0]=='data'}"  ng-click="switch(0,'data')"><a href="#index">数据中心</a></li>
+            <li ng-if="menuCheck(3)" ng-class="{'active':sysMenu[0]=='admin'}"  ng-click="switch(0,'admin')"><a href="#index">权限</a></li>
+            <li ng-if="menuCheck(4)" ng-class="{'active':sysMenu[0]=='repair'}"  ng-click="switch(1,'repair')"><a href="http://baidu.com" target="page-tab">智能报修</a></li>
+            <li ng-if="menuCheck(5)" ng-class="{'active':sysMenu[0]=='pay'}"  ng-click="switch(1,'pay')"><a href="http://baidu.com" target="page-tab">缴费中心</a></li>
             
         </ul>
     </div>
     <div class="user-nav">
-        <a>用户</a>
+        <a>{{media.name}}</a>
         <ul>
-            <li>修改密码</li>
+            <li ng-click="showCard('#newPassword')">修改密码</li>
             <li ng-click="logout()">退出登陆</li>
         </ul>
     </div>
     <!--<div class="menu-nav">
         <a>test2</a>
     </div>-->
+</div>
+<div class="info-card fadeIn animated" id="newPassword" info-card>
+    <div class="info-card-wrapper">
+        <div class="info-card-dialog">
+            <div class="info-card-content">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        修改密码
+                        <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
+                    </div>
+                    <div class="panel-body">
+                        <form ng-submit="editSave(closeCard('#newPassword'))">
+                        <table class="table-form table-bordered bg-white">
+                            <tbody>
+                                <tr>
+                                    <td class="require">原密码</td><td><input type="password" ng-model="media.old" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="require">新密码</td><td><input type="password" ng-model="media.newPassword" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="require">确认密码</td><td><input type="password" ng-model="media.confirm" /></td>
+                                </tr>
+                                <tr>
+                                    <td></td><td class="td-btn-box">
+                                        <button type="submit" class="btn btn-info">确认修改</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     //菜单点击事件

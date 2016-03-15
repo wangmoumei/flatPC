@@ -34,7 +34,7 @@ angular.module('flatpcApp')
                         {
                             name : '打分',
                             type : 'value',
-                            max : 100
+                            //max : 100
                         }
                     ],
                     series : []

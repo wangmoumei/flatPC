@@ -52,14 +52,14 @@
     </div>
     <div class="page-tabs" tabs style="left:225px">
         <ul class="page-tabs-nav">
-            <li class="active">总览信息</li>
-            <li>床位统计</li>
-            <li>房间统计</li>
-            <li>入住人员统计</li>
-            <li>入住人员查询</li>
+            <li ng-if="menuCheck(20)" class="active">总览信息</li>
+            <li ng-if="menuCheck(21)">床位统计</li>
+            <li ng-if="menuCheck(22)">房间统计</li>
+            <li ng-if="menuCheck(23)">入住人员统计</li>
+            <li ng-if="menuCheck(24)">入住人员查询</li>
         </ul>
         <ul class="page-tabs-container">
-            <li class="fadeIn animated active">
+            <li ng-if="menuCheck(20)" class="fadeIn animated active">
                 <ul class="floor-list">
                     <li ng-repeat="floor in flat.floorList">
                         <div class="floor-title">
@@ -89,16 +89,16 @@
                     </li>
                 </ul>
             </li>
-            <li class="fadeIn animated">
+            <li ng-if="menuCheck(21)" class="fadeIn animated">
                 床位统计
             </li>
-            <li class="fadeIn animated">
+            <li ng-if="menuCheck(22)" class="fadeIn animated">
                 房间统计
             </li>
-            <li class="fadeIn animated">
+            <li ng-if="menuCheck(23)" class="fadeIn animated">
                 入住人员统计
             </li>
-            <li class="fadeIn animated">
+            <li ng-if="menuCheck(24)" class="fadeIn animated">
                 <div class="search-bar">
                     <div>
                         <div class="btn-group">

@@ -169,7 +169,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
     }
     
     $scope.roomInit = function (room,floor) {
-        console.log(room.listOrder)
+        console.log(floor)
         typeInit();
         $scope.media.floor.floorid = floor.floorId || "";
         $scope.media.floor.floorname = floor.floorName || "";
@@ -180,8 +180,8 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
             $scope.media.room.floornum = 0;
             $scope.media.room.listorder = 0;
             $scope.media.room.status = 0;
-            $scope.media.room.roomstyle = '';
-            $scope.media.room.typeid = '';
+            $scope.media.room.roomstyle = floor.floorType;
+            $scope.media.room.typeid = floor.typeId;
             $scope.media.room.memo = '';
         }else{
             $scope.media.room.type = 1;
@@ -201,7 +201,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
             RoomService.addRoom({
                 token:AppConfig.token,
                 floorid:$scope.media.floor.floorid,
-                listorder:$scope.media.room.listorder,
+                listtype:2,
                 status:$scope.media.room.status,
                 roomstyle:$scope.media.room.roomstyle,
                 typeid:$scope.media.room.typeid,
@@ -290,8 +290,8 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
         if(!flatid){
             if($rootScope.treeFlat.cmpusList.length>0 && $rootScope.treeFlat.cmpusList[0].liveAreaList.length>0 && $rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList.length>0 && $rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList[0].flatId)
             {
-                flatid = $rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList[0].flatId;
-                $scope.media.title = $rootScope.treeFlat.cmpusList[0].title + '-' + $rootScope.treeFlat.cmpusList[0].liveAreaList[0].title + '-' + $rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList[0].title;
+                $scope.show($rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList[0],$rootScope.treeFlat.cmpusList[0],$rootScope.treeFlat.cmpusList[0].liveAreaList[0])
+                return;
             } 
             else {
                 $rootScope.loading = false;

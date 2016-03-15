@@ -32,7 +32,7 @@
 </div>
 <div class="tool-bar" style="margin-left:225px;">
     <div class="bar-full" style="min-width:160px">
-        {{ media.tab == 1 ? (flat.flatName||'请选择楼栋') : media.title }}
+        {{ media.tab == 1 ? (flat.flatName||'请选择楼栋') : (media.campus?media.campus+'-' : '') + (media.liveArea?media.liveArea+'-' : '') +  media.title }}
     </div>
     <div class="progress-box" ng-hide="media.tab == 3">
         <div class="progress progress-xs">
@@ -71,12 +71,12 @@
     </div>
     <div class="page-tabs" tabs style="left:225px">
         <ul class="page-tabs-nav">
-            <li class="active" ng-click="media.setTab(1)">打分信息</li>
-            <li ng-click="media.setTab(2)">打分查询</li>
-            <li ng-click="media.setTab(3)">排行榜</li>
+            <li ng-if="menuCheck(63)" ng-class="{'active':media.tab == 1}" class="" ng-click="media.setTab(1)">打分信息</li>
+            <li ng-if="menuCheck(64)" ng-class="{'active':media.tab == 2}" ng-click="media.setTab(2)">打分查询</li>
+            <li ng-if="menuCheck(65)" ng-class="{'active':media.tab == 3}" ng-click="media.setTab(3)">排行榜</li>
         </ul>
         <ul class="page-tabs-container">
-            <li class="fadeIn animated active">
+            <li ng-if="menuCheck(63)" class="fadeIn animated active" ng-class="{'active':media.tab == 1}">
                 <ul class="floor-list">
                     <li ng-repeat="floor in flat.floorList">
                         <div class="floor-title">
@@ -109,7 +109,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="fadeIn animated">
+            <li ng-if="menuCheck(64)" class="fadeIn animated" ng-class="{'active':media.tab == 2}">
                 <div class="search-bar">
                     <!--div>
                         <select class="form-control">
@@ -223,7 +223,7 @@
                     </div>
                 </div>
             </li>
-            <li class="fadeIn animated">
+            <li ng-if="menuCheck(65)" class="fadeIn animated" ng-class="{'active':media.tab == 3}">
                 <div class="search-bar">
                     <div class="bar-full">
                         <div class="btn-group" role="group" ng-show="media.flatid1">
@@ -298,8 +298,8 @@
     </div>
     
 </div>
-<!-- grade-simple -->
-<div class="info-card fadeIn animated" id="gradeCard" info-card>
+<!--  -->
+<div class="info-card fadeIn animated" id="gradeCard" ng-class="{'grade-simple':media.tab>1 || !menuCheck(191)}" info-card>
     <div class="info-card-wrapper">
         <div class="info-card-dialog">
             <div class="info-card-content">
@@ -311,12 +311,12 @@
                     <div class="panel-body grade-panel">
                         <div class="page-tabs" tabs>
                             <ul class="page-tabs-nav">
-                                <li ng-click="cardMedia.setTab(1)" ng-class="{'active':cardMedia.tab ==1}">寝室分</li>
-                                <li ng-click="cardMedia.setTab(2)" ng-class="{'active':cardMedia.tab ==2}">床位分</li>
-                                <li ng-click="cardMedia.setTab(3)" ng-class="{'active':cardMedia.tab ==3}">照片</li>
+                                <li ng-if="menuCheck(188)" ng-click="cardMedia.setTab(1)" ng-class="{'active':cardMedia.tab ==1}">寝室分</li>
+                                <li ng-if="menuCheck(189)" ng-click="cardMedia.setTab(2)" ng-class="{'active':cardMedia.tab ==2}">床位分</li>
+                                <li ng-if="menuCheck(190)" ng-click="cardMedia.setTab(3)" ng-class="{'active':cardMedia.tab ==3}">照片</li>
                             </ul>
-                            <ul class="page-tabs-container grade-container" ng-class="{'grade-tool-on':media.tab==1 && cardMedia.tab < 3}">
-                                <li class="fadeIn animated" ng-class="{'active':cardMedia.tab ==1}">
+                            <ul class="page-tabs-container grade-container" ng-class="{'grade-tool-on':media.tab==1 && menuCheck(191)}">
+                                <li ng-if="menuCheck(188)" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==1}">
                                     <table class="table table-bordered bg-white">
                                         <thead>
                                             <tr><th>序号</th><th>打分项目</th><th>打分</th></tr>
@@ -351,21 +351,25 @@
                                         </tfoot>
                                     </table>
                                 </li>
-                                <li class="fadeIn animated" ng-class="{'active':cardMedia.tab ==2}">
+                                <li ng-if="menuCheck(189)" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==2}">
                                     <table class="table table-bordered bg-white">
                                         <thead>
                                             <tr><th>序号</th><th>打分项目</th><th>打分</th></tr>
                                         </thead>
                                         <tbody ng-repeat="bed in cardMedia.bed">
-                                            <tr><th>{{bed.bedName}}</th><th>{{bed.sutdentName + '（' + bed.sutdentName + '）'}}</th><th class="grade-number">{{bed.totalScore}}</th></tr>
+                                            <tr><th>{{bed.bedName || bed.bedNum}}</th><th> -{{bed.studentName + '（' + bed.studentNumber + '）'}}</th><th class="grade-number">{{bed.totalScore}}</th></tr>
                                             <tr ng-repeat="item in bed.itemList">
                                                 <td>{{$index + 1}}</td><td>{{item.title + '（' + item.maxScore + '）'}}</td>
                                                 <td class="grade-handle">
-                                                    <div><div>-</div><div ng-class="{'minuses':item.score<item.maxScore}">{{item.score}}</div><div>+</div></div>
+                                                    <div>
+                                                        <div ng-click="cardMedia.grade(-1,item)"><i class="ALiconfont icon-minus3"></i></div>
+                                                        <div ng-class="{'minuses':item.score<item.maxScore}">{{item.score}}</div>
+                                                        <div ng-click="cardMedia.grade(1,item)"><i class="ALiconfont icon-plus3"></i></div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td colspan="10" ng-show="bed.itemList.length < 1" class="empty">没有打分记录</td>
+                                                <td colspan="10" ng-show="bed.itemList.length < 1" class="empty">{{media.item.bedScoreId?'没有打分记录':'没有设置床位打分项'}}</td>
                                             </tr>
                                         </tbody>
                                         <tbody>
@@ -378,11 +382,11 @@
                                         </tbody>
                                     </table>
                                 </li>
-                                <li class="fadeIn animated" ng-class="{'active':cardMedia.tab ==3}">
+                                <li ng-if="menuCheck(190)" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==3}">
                                     <div class="album" album>
                                         <ul>
-                                            <li ng-repeat="img in cardMedia.img"><img ng-src="img.picUrl" /></li>
-                                            <li class="album-plus"><span class="ALiconfont icon-plus3"></span><input type="file" style="display:none" /></li> 
+                                            <li ng-repeat="img in cardMedia.img"><img src="{{img.picUrl}}" /></li>
+                                            <li class="album-plus" input-file change="uploadImg()"><span class="ALiconfont icon-plus3"></span></li> 
                                         </ul>
                                         <div class="album-frame" style="bottom:50px;top:40px;">
                                             <div>
@@ -394,12 +398,12 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="grade-tool-bar" ng-if="media.tab==1" ng-show="cardMedia.tab < 3">
+                        <div class="grade-tool-bar" ng-if="media.tab==1 && menuCheck(191)">
                             <div>
                                 <a class="btn" ng-click="cardMedia.setData(0)" ng-class="{'btn-default disabled':!cardMedia.getPrev(),'btn-stroke btn-info':cardMedia.getPrev()}"><i class="ALiconfont icon-sortleft"></i></a>
                             </div>
                             <div>
-                                <a class="btn btn-info" ng-click="cardMedia.gradeSave()">保存并关闭</a>
+                                <a class="btn btn-info" ng-click="cardMedia.gradeSave(closeCard('#gradeCard'))">保存并关闭</a>
                             </div>
                             <div>
                                 <a class="btn" ng-click="cardMedia.setData(1)" ng-class="{'disabled btn-default':!cardMedia.getNext(),'btn-stroke btn-info':cardMedia.getNext()}"><i class="ALiconfont icon-sortright"></i></a>

@@ -372,6 +372,7 @@ table{
                     background-color: #f6f7f8;
                     border-right:1px solid #dedfdf;
                     color: #333;
+                    position: relative;
                     &.graded{
                         color: #4bb622;
                         &::before{
@@ -382,10 +383,32 @@ table{
                     &.room-add{
                         color: #4bb622;
                         &::before{
-                            content: "+";
-                            font-size: 16px;
-                            font-weight: 700;
+                            content: "\e671";
+                            font-family: "ALiconfont" !important;
+                            font-style: normal;
+                            -webkit-font-smoothing: antialiased;
+                            -webkit-text-stroke-width: 0.2px;
+                            -moz-osx-font-smoothing: grayscale;
+                            font-size: 14px;
                         }
+                    }
+                    .add-after,.add-before{
+                        position: absolute;
+                        top:0;
+                        height: 30px;
+                        width: 30%;
+                        i{
+                            position: absolute;
+                            top:0;
+                            height: 30px;
+                            line-height: 30px;
+                            width: 20px;
+                            background-color: #4bb622;
+                            color: #fff;
+                        }
+                    }
+                    .add-after{
+                        right: 0;
                     }
                 }
                 

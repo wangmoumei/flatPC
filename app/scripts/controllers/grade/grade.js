@@ -1,6 +1,6 @@
 angular.module('flatpcApp')
-.controller('GradeCtrl', ['$scope','AppConfig','$rootScope', 'FlatService','TermService','$filter','GradeService','RoomService',
-function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeService,RoomService) {
+.controller('GradeCtrl', ['$scope','AppConfig','$rootScope', 'FlatService','TermService','$filter','GradeService','RoomService','PublicService',
+function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeService,RoomService,PublicService) {
     
     $scope.media = {
         tab:1,
@@ -174,6 +174,23 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
     $scope.cardMedia = {
         tab:1,
         setTab:function (n) {
+            this.tab = n;
+            switch(n){
+                case 1:
+                    if(this.room){
+                        return;
+                    }
+                case 2:
+                    if(this.bed){
+                        return;
+                    }
+                    break;
+                case 3:
+                    if(this.img){
+                        return;
+                    }
+                    break;
+            }
             this.getData(n)
         },
         item:null,
@@ -261,7 +278,10 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             //打分初始化相关
             this.item = item;
             this.tab = 1;
-            console.log(item);
+            // console.log(item);
+            this.img = null;
+            this.bed = null;
+            this.room = null;
             return this.getData();
         },
         getData:function (n) {
@@ -320,15 +340,28 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                                     bed.itemList = [];
                                     bed.totalScore = 0;
                                     $rootScope.treeGrade[1].subNodes.forEach(function (item) {
-                                        bed.itemList.push({
-                                            typeId:item.typeId,
-                                            title:item.title,
-                                            maxScore:item.value,
-                                            score:item.value,
-                                        })
-                                        bed.totalScore += item.value;
+                                        if(item.subNodes){
+                                            item.subNodes.forEach(function (item1) {
+                                                bed.itemList.push({
+                                                    typeId:item1.typeId,
+                                                    title:item1.title,
+                                                    maxScore:item1.value,
+                                                    score:item1.value,
+                                                })
+                                                bed.totalScore += item1.value;
+                                            })
+                                        }else{
+                                            bed.itemList.push({
+                                                typeId:item.typeId,
+                                                title:item.title,
+                                                maxScore:item.value,
+                                                score:item.value,
+                                            })
+                                            bed.totalScore += item.value;
+                                        }
                                     })
                                 })
+                                // console.log($rootScope.treeGrade[1]);
                             }
                             else
                                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
@@ -390,68 +423,213 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             }
         },
         gradeSave:function (fun) {
-            switch (this.tab) {
-                case 1:
-                    var grades = "[",that = this;
-                    // console.log(this.room);
-                    this.room.forEach(function (item,i) {
-                        var list = item.itemList || item.subNodes;
-                        console.log(list);
-                        for(var j = 0;j < list.length; j++){
-                            grades += '{"typeid":' + (list[j].typeId || list[j].typeid) + ',"score":' + list[j].score +'},';
+            if(this.room)
+                this.roomGrade(fun);
+            else if(this.bed) this.roomGrade(fun);
+            else if(this.img)this.roomGrade(fun);
+        },
+        roomGrade:function(fun){
+            var grades = "[",that = this;
+            // console.log(this.room);
+            this.room.forEach(function (item,i) {
+                var list = item.itemList || item.subNodes;
+                console.log(list);
+                for(var j = 0;j < list.length; j++){
+                    grades += '{"typeid":' + (list[j].typeId || list[j].typeid) + ',"score":' + list[j].score +'},';
+                }
+            })
+            if(grades.length > 2)
+                grades = grades.substring(0,grades.length-1) + ']';
+            else return;
+            // console.log(grades); 
+            if(grades.length > 0){
+                $rootScope.loading = true;
+                if(this.item.roomScoreId){
+                    GradeService.editGrade({
+                        token:AppConfig.token,
+                        roomscoreid:this.item.roomScoreId,
+                        scoreitem:grades
+                    }).success(function(data){
+                        $rootScope.loading = false;
+                        if(data.code == 0){
+                            if(that.bed){
+                                that.bedGrade(fun);
+                            }else if(that.img){
+                                that.gradeImg(fun);
+                            }
+                            else{
+                                if(fun && typeof fun == 'function') fun();
+                                swal("提示","保存成功！", "success"); 
+                                refresh();
+                            }
+                            that.room = null;
+                        }else{
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                         }
-                    })
-                    grades = grades.substring(0,grades.length-1) + ']';
-                    console.log(grades);
-                    if(grades.length > 0){
-                        $rootScope.loading = true;
-                        if(this.item.roomScoreId){
-                            GradeService.editGrade({
-                                token:AppConfig.token,
-                                roomscoreid:this.item.roomScoreId,
-                                scoreitem:grades
-                            }).success(function(data){
-                                $rootScope.loading = true;
-                                if(data.code == 0){
-                                    swal("提示","保存成功！", "success"); 
-                                    refresh();
-                                    if(fun && typeof fun == 'function') fun();
-                                }else{
-                                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-                                }
-                            });
+                    });
+                }
+                else{
+                    GradeService.setGrade({
+                        token:AppConfig.token,
+                        schoolcode:AppConfig.schoolCode,
+                        roomid:this.item.roomId,
+                        semesterid:$rootScope.treeTerm[$scope.media.yearIndex].semesterList[$scope.media.termIndex].semesterId,
+                        currentweek:$scope.media.week,
+                        adminid:AppConfig.adminId,
+                        scoreitem:grades
+                    }).success(function(data){
+                        $rootScope.loading = false;
+                        if(data.code == 0){
+                            if(that.bed){
+                                that.bedGrade(fun);
+                            }else if(that.img){
+                                that.gradeImg(fun);
+                            }
+                            else{
+                                swal("提示","打分成功！", "success"); 
+                                refresh();
+                                if(fun && typeof fun == 'function') fun();
+                            }
+                            that.room = null;
+                        }else{
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                         }
-                        else
-                            GradeService.setGrade({
-                                token:AppConfig.token,
-                                schoolcode:AppConfig.schoolCode,
-                                roomid:this.item.roomId,
-                                semesterid:$rootScope.treeTerm[$scope.media.yearIndex].semesterList[$scope.media.termIndex].semesterId,
-                                currentweek:$scope.media.week,
-                                adminid:AppConfig.adminId,
-                                scoreitem:grades
-                            }).success(function(data){
-                                $rootScope.loading = true;
-                                if(data.code == 0){
-                                    swal("提示","打分成功！", "success"); 
-                                    refresh();
-                                    if(fun && typeof fun == 'function') fun();
-                                }else{
-                                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-                                }
-                            });
-                    }
-                    break;
-                case 2:
-                
-                    break;
-                case 3:
-                
-                    break;
+                    });
+                }
             }
+        },
+        bedGrade:function(fun){
+            var grades = "[",that = this;
+            // console.log(this.room);
+            this.bed.forEach(function (item,i) {
+                var list = item.itemList;
+                console.log(list);
+                for(var j = 0;j < list.length; j++){
+                    grades += '{"typeid":' + (list[j].typeId || list[j].typeid) + ',"studentkey":"' + item.studentKey +  '","bedid":"' + item.bedId + '","score":' + list[j].score +'},';
+                }
+            })
+            if(grades.length > 2)
+                grades = grades.substring(0,grades.length-1) + ']';
+            else return;
+            console.log(grades);
+            if(grades.length > 0){
+                $rootScope.loading = true;
+                if(this.item.bedScoreId){
+                    GradeService.editBedGrade({
+                        token:AppConfig.token,
+                        bedscoreid:this.item.bedScoreId,
+                        scoreitem:grades
+                    }).success(function(data){
+                        $rootScope.loading = false;
+                        if(data.code == 0){
+                            if(that.img){
+                                that.gradeImg(fun);
+                            }
+                            else{
+                                refresh();
+                                swal("提示","保存成功！", "success");
+                                if(fun && typeof fun == 'function') fun();
+                            }
+                            that.bed = null;
+                        }else{
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                        }
+                    });
+                }
+                else{
+                    GradeService.setBedGrade({
+                        token:AppConfig.token,
+                        schoolcode:AppConfig.schoolCode,
+                        roomid:this.item.roomId,
+                        semesterid:$rootScope.treeTerm[$scope.media.yearIndex].semesterList[$scope.media.termIndex].semesterId,
+                        currentweek:$scope.media.week,
+                        adminid:AppConfig.adminId,
+                        scoreitem:grades
+                    }).success(function(data){
+                        $rootScope.loading = false;
+                        if(data.code == 0){
+                            if(that.img){
+                                that.gradeImg(fun);
+                            }
+                            else{
+                                swal("提示","打分成功！", "success"); 
+                                refresh();
+                                if(fun && typeof fun == 'function') fun();
+                            }
+                            that.bed = null;
+                        }else{
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                        }
+                    });
+                }
+            }
+        },
+        gradeImg:function(fun){
+            var imgs = "",that = this;
+            // console.log(this.room);
+            this.img.forEach(function (item,i) {
+                imgs += (item.fileId || item.fileid) + ',';
+                
+            })
+            if(imgs.length > 0)
+                imgs = imgs.substring(0,imgs.length-1);
+            else return;
+            console.log(imgs);
+            $rootScope.loading = true;
+            GradeService.uploadImg({
+                token:AppConfig.token,
+                schoolcode:AppConfig.schoolCode,
+                roomid:this.item.roomId,
+                semesterid:$rootScope.treeTerm[$scope.media.yearIndex].semesterList[$scope.media.termIndex].semesterId,
+                currentweek:$scope.media.week,
+                adminid:AppConfig.adminId,
+                fileids:imgs
+            }).success(function(data){
+                $rootScope.loading = false;
+                if(data.code == 0){
+                    swal("提示","打分成功！", "success"); 
+                    refresh();
+                    if(fun && typeof fun == 'function') fun();
+                    that.img = null;
+                }else{
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                }
+            });
         }
     }
-    
+    //上传打分图片，并将返回的img url显示
+    $scope.uploadImg = function(){
+        var files = event.target.files;
+        var s = files[0].name.split(".").pop();
+        if(s != "jpg" && s != "png" && s != "jpeg"){
+            swal('提示', '文件格式不正确！请上传*.jpg或*.png文件', 'error'); 
+            return false;
+        }
+        var form = document.createElement('form');
+        form.enctype = 'multipart/form-data';
+        var fdata = new FormData(form);
+        if (!fdata) { swal('提示', '你的浏览器不支持文件上传！', 'error'); return false; };
+        fdata.append('img', files[0]);
+        
+        fdata.append('token', AppConfig.token);
+        fdata.append('schoolcode', AppConfig.schoolCode);
+        console.log(fdata);
+        $rootScope.loading = true;
+        return PublicService.imgUpload(fdata).success(function(data){
+            $rootScope.loading = false;
+            if(data.code == 0){
+                $scope.cardMedia.img = $scope.cardMedia.img || [];
+                $scope.cardMedia.img.push({
+                    picUrl:data.data.serverPath,
+                    fileId:data.data.fileId
+                });
+                console.log($scope.cardMedia.img);
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+        })
+        
+    }
     
     
     

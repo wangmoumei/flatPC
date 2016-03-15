@@ -29,7 +29,7 @@ angular.module('flatpcApp')
                     if(data.code == 0){
                         localStorage.adminId = data.data.adminId;
                         localStorage.token = data.data.token;
-                        localStorage.nodeIds = ',' + data.data.nodeIds + ',';
+                        localStorage.nodeIds = data.data.nodeIds;
                         localStorage.schoolCode = data.data.schoolCode;
                         localStorage.userName = data.data.userName;
                         localStorage.roleName = data.data.roleName;
@@ -41,18 +41,19 @@ angular.module('flatpcApp')
                         //     $rootScope.loginSwitch = true;
                         // }
                         if(authority.check()){
+                            $rootScope.treeFlat = null;
+                            $rootScope.treeCollege = null;
+                            $rootScope.treeTerm = null;
+                            $rootScope.treeGrade = null;
+                            $rootScope.treeType = null;
+                            $rootScope.treeGroup = null;
+                            $rootScope.treeMenu = null;
                             
+                            
+                            location.href = '#index';
+                            $rootScope.loginSwitch = true;
                         }
-                        $rootScope.treeFlat = null;
-                        $rootScope.treeCollege = null;
-                        $rootScope.treeTerm = null;
-                        $rootScope.treeGrade = null;
-                        $rootScope.treeType = null;
-                        $rootScope.treeGroup = null;
-                        $rootScope.treeMenu = null;
                         
-                        $location.path('/index');
-                        $rootScope.loginSwitch = true;
                     }
                     else
                         swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 

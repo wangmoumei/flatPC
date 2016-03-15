@@ -11,7 +11,7 @@
 </div>
 <div class="tool-bar">
     <div class="bar-full">
-        <button class="btn btn-addon btn-success" ng-click="resetForm(dataInit)"><i class="glyphicon glyphicon-plus"></i>新增登记</button>
+        <button ng-if="menuCheck(78)" class="btn btn-addon btn-success" ng-click="resetForm(dataInit)"><i class="glyphicon glyphicon-plus"></i>新增登记</button>
     </div>
     <div class="group-tool">
         <div class="btn-group">
@@ -71,7 +71,8 @@
                 <tr ng-repeat="item in list">
                     <td>{{item.backLateTime}}</td><td>{{item.name + '（' + item.studentNumber + '）'}}</td><td>{{item.roomPath}}</td><td>{{item.phone}}</td>
                     <td>
-                        <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#lateEdit',detail(item))">编辑</button>
+                        <button type="button" class="btn btn-link btn-xs" ng-if="menuCheck(206)" ng-click="showCard('#lateEdit',detail(item))">编辑</button>
+                        <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#lateDetail',detail(item))">查看</button>
                     </td>
                 </tr>
             </tbody>
@@ -264,12 +265,45 @@
                                 <tr>
                                     <td></td>
                                     <td class="td-btn-box">
-                                        <a class="btn btn-info" ng-click="editSave()">确认修改</a>
-                                        <a class="btn btn-danger" ng-click="delete(closeCard('#lateEdit'))">删除</a>
+                                        <a ng-if="menuCheck(206)" class="btn btn-info" ng-click="editSave()">确认修改</a>
+                                        <a ng-if="menuCheck(207)" class="btn btn-danger" ng-click="delete(closeCard('#lateEdit'))">删除</a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="info-card fadeIn animated" info-card id="lateDetail">
+    <div class="info-card-wrapper">
+        <div class="info-card-dialog">
+            <div class="info-card-content">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        晚归登记
+                        <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="check-list">
+                            <li class="checked submited">
+                                <div class="check-point "></div>
+                                <div class="check-info">
+                                    <div class="check-info-title">
+                                        <div class="check-info-tip">晚归</div> 
+                                        <div>{{work.backLateTime}}</div>
+                                        <div><span>提交人：</span>{{work.adminName}}</div>
+                                    </div>
+                                    <table class="table table-bordered bg-white">
+                                        <tr><td>学生</td><td>{{work.name + '（' + work.studentNumber + '）'}}</td></tr>
+                                        <tr><td>宿舍</td><td> {{work.roomPath}}</td></tr>
+                                        <tr><td>备注</td><td>{{work.memo}}</td></tr>
+                                    </table>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

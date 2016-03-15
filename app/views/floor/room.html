@@ -13,8 +13,8 @@
     <div style="min-width:160px">
         {{media.title}}
     </div>
-    <div><a class="btn btn-success" ng-click="showCard('#floorAdd',floorInit(0))">新增楼层</a></div>
-    <div class="bar-full"><a class="btn btn-info" ng-click="showCard('#floorAdd',floorInit(2))">批量添加</a></div>
+    <div ng-if="menuCheck(145)"><a class="btn btn-success" ng-click="showCard('#floorAdd',floorInit(0))">新增楼层</a></div>
+    <div ng-if="menuCheck(152)" class="bar-full"><a class="btn btn-info" ng-click="showCard('#floorAdd',floorInit(2))">批量添加</a></div>
     <div>
         楼层：{{flat.floorNum}}
 
@@ -58,9 +58,11 @@
                     </div>
                 </div>
                 <ul class="room-list room-list-row" ng-repeat="rooms in floor.roomList">
-                    <li class="room-item" ng-repeat="room in rooms">
+                    <li class="room-item" ng-repeat="room in rooms" ng-if="room.status>=0 || (room.status<0 && menuCheck(148))">
                         <div ng-click="showCard('#roomEdit',roomInit(room,floor))" ng-class="{'room-add':room.status<0,'other':room.purpose}">
+                            <div ng-if="room.status>=0" class="add-before"><i class="ALiconfont icon-plus3"></i></div>
                             {{room.purpose?room.purpose:room.roomName}}
+                            <div ng-if="room.status>=0" class="add-after"><i class="ALiconfont icon-plus3"></i></div>
                         </div>
                     </li>
                 </ul>
@@ -133,9 +135,9 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <a ng-hide="media.floor.type == 1" ng-click="floor.addSave()" class="btn btn-success">确认添加</a>
-                                        <a ng-show="media.floor.type == 1" ng-click="floor.editSave()" class="btn btn-info">确认修改</a>
-                                        <a ng-show="media.floor.type == 1" ng-click="floor.delete()" class="btn btn-danger">删除</a>
+                                        <a ng-if="menuCheck(145)||menuCheck(152)" ng-hide="media.floor.type == 1" ng-click="floor.addSave()" class="btn btn-success">确认添加</a>
+                                        <a ng-if="menuCheck(146)" ng-show="media.floor.type == 1" ng-click="floor.editSave()" class="btn btn-info">确认修改</a>
+                                        <a ng-if="menuCheck(147)" ng-show="media.floor.type == 1" ng-click="floor.delete()" class="btn btn-danger">删除</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -164,7 +166,7 @@
                                 <tr>
                                     <td class="require">寝室号</td><td><input type="text" ng-model="media.room.roomname" /></td>
                                 </tr>
-                                <tr>
+                                <tr style="display:none">
                                     <td class="require">排序</td>
                                     <td>
                                         <input type="text" ng-model="media.room.listorder" />
@@ -205,9 +207,9 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <a ng-hide="media.room.type == 1" ng-click="room.addSave()" class="btn btn-success">确认添加</a>
-                                        <a ng-show="media.room.type == 1" ng-click="room.editSave()" class="btn btn-info">确认修改</a>
-                                        <a ng-show="media.room.type == 1" ng-click="room.delete()" class="btn btn-danger">删除</a>
+                                        <a ng-if="menuCheck(148)" ng-hide="media.room.type == 1" ng-click="room.addSave()" class="btn btn-success">确认添加</a>
+                                        <a ng-if="menuCheck(149)" ng-show="media.room.type == 1" ng-click="room.editSave()" class="btn btn-info">确认修改</a>
+                                        <a ng-if="menuCheck(150)" ng-show="media.room.type == 1" ng-click="room.delete()" class="btn btn-danger">删除</a>
                                     </td>
                                 </tr>
                             </tbody>

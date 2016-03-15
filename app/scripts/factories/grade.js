@@ -103,7 +103,7 @@ angular.module('flatpcApp')
     };
     var getBedGrade = function (param) {
         var url = AppConfig.WEB_ROOT + 'evaluation/hygienegrade/get_bed_message/?token='+ AppConfig.token
-        + '&roomscoreid=' + param.roomscoreid;
+        + '&bedscoreid=' + param.bedscoreid;
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });

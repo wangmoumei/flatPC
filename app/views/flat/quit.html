@@ -11,7 +11,7 @@
 </div>
 <div class="tool-bar">
     <div class="bar-full">
-        <button class="btn btn-addon btn-info" ng-click="resetForm(dataInit)">
+        <button ng-if="menuCheck(48)" class="btn btn-addon btn-info" ng-click="resetForm(dataInit)">
             <i class="glyphicon glyphicon-plus"></i>
             新增退宿
         </button>
@@ -176,19 +176,19 @@
                                         <tr><td width="100">驳回理由</td><td>{{work.backMessage}}</td></tr>
                                     </table>
                                 </div>
-                                <div ng-if="work.status == 0">
+                                <div ng-if="work.status == 0 && (menuCheck(50) || menuCheck(51) || menuCheck(52))">
                                     <div class="check-btn-box" ng-hide="returnSwitch">
-                                        <div>
+                                        <div ng-if="menuCheck(50)">
                                             <a class="btn btn-addon btn-success" ng-click="passWork(closeCard('#setCheck'))"><i class="glyphicon glyphicon-ok"></i>审批</a>
                                         </div>
-                                        <div>
+                                        <div ng-if="menuCheck(51)">
                                             <a class="btn btn-addon btn-warning" ng-click="returnSwitchChange()"><i class="glyphicon glyphicon-remove"></i>驳回</a>
                                         </div>
-                                        <div>
+                                        <div ng-if="menuCheck(52)">
                                             <a class="btn btn-addon btn-default" ng-click="cancelWork(closeCard('#setCheck'))"><i class="glyphicon glyphicon-off"></i>取消</a>
                                         </div>
                                     </div>
-                                    <div class="check-input-box" ng-show="returnSwitch">
+                                    <div ng-if="menuCheck(51)" class="check-input-box" ng-show="returnSwitch">
                                         <div>
                                             驳回理由：
                                         </div>

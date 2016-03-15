@@ -31,24 +31,20 @@ angular
       nodeIds:''
   }).run(['$rootScope', '$location', 'AppConfig','authority',
 		function($rootScope, $location, AppConfig,authority) {
-            $rootScope.sysMenu = ['flat','flat',''];
+            //$rootScope.sysMenu = ['flat','flat',''];
             $rootScope.routerInit = function(menu){
                 $rootScope.sysMenu = [menu,menu,""];
             }
-            $rootScope.menuCheck = function(menu){
-                if(AppConfig.nodeIds.length < 2) $location.path('/login');
-                return new RegExp(',' + menu + ',' ).test(AppConfig.nodeIds);
-            }
+            $rootScope.menuCheck = authority.menuCheck;
             $rootScope.authority = '';
 			$rootScope.$on('$stateChangeStart',
 				function(event, toState, toParams, fromState, fromParams) {
-                    $rootScope.sysMenu = authority.transform(toState.name);
                     if(authority.check()){
                         $rootScope.loginSwitch = true;
                     }else{
                         $location.path('/login');
                     }
-                    
+                    $rootScope.sysMenu = authority.transform(toState.name);
                     $rootScope.loading = true;
             });
             $rootScope.$on('$stateChangeError', 
