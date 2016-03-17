@@ -11,7 +11,7 @@
             <div id="spanPassword"></div>
         </div>
         <div>
-            <input type="text" id="code" ng-model="media.code" placeholder="验证码"> <img class="code" src="http://120.55.84.193/Geese_Apartment/public/login/get_code/" />
+            <input type="text" id="code" ng-model="media.code" placeholder="验证码"> <img ng-if="media.sessionid" class="code" ng-src="{{media.sessionid?'http://120.55.84.193/Geese_Apartment/public/login/get_code/?sessionid='+media.sessionid:''}}" />
             <div id="spanPassword"></div>
         </div>
         <div class="remember">

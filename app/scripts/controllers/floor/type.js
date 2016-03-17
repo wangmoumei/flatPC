@@ -61,7 +61,7 @@ function($scope,AppConfig,$rootScope,RoomService,PublicService) {
     $scope.addSave = function(){
         $rootScope.loading = true;
         RoomService.addType({
-            token:'',
+            token:AppConfig.token,
             schoolcode:AppConfig.schoolCode,
             title:$scope.roomType.title,
             direction:$scope.roomType.direction,
@@ -86,7 +86,7 @@ function($scope,AppConfig,$rootScope,RoomService,PublicService) {
     $scope.editSave = function(){
         $rootScope.loading = true;
         RoomService.editType({
-            token:'',
+            token:AppConfig.token,
             typeId:$scope.roomType.typeId,
             title:$scope.roomType.title,
             direction:$scope.roomType.direction,
@@ -121,7 +121,7 @@ function($scope,AppConfig,$rootScope,RoomService,PublicService) {
         function(){   
             $rootScope.loading = true;
             RoomService.delType({
-                token:'',
+                token:AppConfig.token,
                 typeid:$scope.roomType.typeId
             }).success(function(data){
                 $rootScope.loading = false;

@@ -55,14 +55,14 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
             $scope.media.floor.floorname = floor.floorName || "";
             $scope.media.floor.listorder = floor.listOrder || "";
             $scope.media.floor.typeid = floor.typeId || "";
-            $scope.media.floor.floortype = floor.floorType || "";
+            $scope.media.floor.floortype = floor.floorType || '男';
             $scope.media.floor.memo = floor.memo || "";
         }else{
             $scope.media.floor.floorid = "";
             $scope.media.floor.floorname = "";
             $scope.media.floor.listorder = "";
             $scope.media.floor.typeid = "";
-            $scope.media.floor.floortype = "";
+            $scope.media.floor.floortype = '男';
             $scope.media.floor.memo = "";
             $scope.media.floor.floornumber=1;
             $scope.media.floor.roomnumber=1;
@@ -105,7 +105,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     roomstyle:$scope.media.floor.floortype,
                     startfloor:$scope.media.floor.startfloor
                 }).success(function(data){
-                    console.log(data);
+                    $rootScope.loading = false;
                     if(data.code == 0){
                         swal("提示", "添加成功！", "success");
                         refresh($scope.media.flatid);
@@ -128,7 +128,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                 floorname:$scope.media.floor.floorname,
                 memo:$scope.media.floor.memo
             }).success(function(data){
-                console.log(data);
+                $rootScope.loading = false;
                 if(data.code == 0){
                     swal("提示", "修改成功！", "success");
                     refresh($scope.media.flatid);
@@ -155,7 +155,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     token:AppConfig.token,
                     floorid:$scope.media.floor.floorid
                 }).success(function(data){
-                    console.log(data);
+                    $rootScope.loading = false;
                     if(data.code == 0){
                         swal("提示", "删除成功！", "success");
                         refresh($scope.media.flatid);
@@ -180,9 +180,11 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
             $scope.media.room.floornum = 0;
             $scope.media.room.listorder = 0;
             $scope.media.room.status = 0;
-            $scope.media.room.roomstyle = floor.floorType;
+            $scope.media.room.roomstyle = floor.floorType || '男';
             $scope.media.room.typeid = floor.typeId;
             $scope.media.room.memo = '';
+            $scope.media.room.listtype  = "" + 2;
+            $scope.media.room.listroom  = '';
         }else{
             $scope.media.room.type = 1;
             $scope.media.room.roomid = room.roomId;
@@ -190,25 +192,33 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
             $scope.media.room.floornum = room.listOrder;
             $scope.media.room.listorder = room.listOrder;
             $scope.media.room.status = room.status;
-            $scope.media.room.roomstyle = room.roomStyle;
+            $scope.media.room.roomstyle = room.roomStyle || '男';
             $scope.media.room.typeid = room.typeId;
             $scope.media.room.memo = room.memo;
+            $scope.media.room.listtype  = "" + 2;
+            $scope.media.room.listroom  = '';
         }
     }
     $scope.room = {
         addSave:function () {
-            $rootScope.loading = true;
-            RoomService.addRoom({
+            var param = {
                 token:AppConfig.token,
                 floorid:$scope.media.floor.floorid,
-                listtype:2,
+                listtype:$scope.media.room.listtype,
                 status:$scope.media.room.status,
                 roomstyle:$scope.media.room.roomstyle,
                 typeid:$scope.media.room.typeid,
                 roomname:$scope.media.room.roomname,
                 memo:$scope.media.room.memo
-            }).success(function(data){
-                console.log(data);
+            };
+            if($scope.media.room.listtype < 2){
+                if($scope.media.room.listroom.length > 0)
+                    param.listroom = $scope.media.room.listroom;
+                else return;
+            }
+            $rootScope.loading = true;
+            RoomService.addRoom(param).success(function(data){
+                $rootScope.loading = false;
                 if(data.code == 0){
                     swal("提示", "添加成功！", "success");
                     refresh($scope.media.flatid);
@@ -220,18 +230,24 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
             
         },
         editSave:function () {
-            $rootScope.loading = true;
-            RoomService.editRoom({
+            var param = {
                 token:AppConfig.token,
                 roomid:$scope.media.room.roomid,
-                listorder:$scope.media.room.listorder,
                 status:$scope.media.room.status,
+                listtype:$scope.media.room.listtype,
                 roomstyle:$scope.media.room.roomstyle,
                 typeid:$scope.media.room.typeid,
                 roomname:$scope.media.room.roomname,
                 memo:$scope.media.room.memo
-            }).success(function(data){
-                console.log(data);
+            };
+            if($scope.media.room.listtype < 2){
+                if($scope.media.room.listroom.length > 0)
+                    param.listroom = $scope.media.room.listroom;
+                else return;
+            }
+            $rootScope.loading = true;
+            RoomService.editRoom(param).success(function(data){
+                $rootScope.loading = false;
                 if(data.code == 0){
                     swal("提示", "修改成功！", "success"); 
                     refresh($scope.media.flatid);
@@ -258,7 +274,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     token:AppConfig.token,
                     roomid:$scope.media.room.roomid
                 }).success(function(data){
-                    console.log(data);
+                    $rootScope.loading = false;
                     if(data.code == 0){
                         swal("提示", "删除成功！", "success");
                         refresh($scope.media.flatid);

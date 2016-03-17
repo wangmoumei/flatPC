@@ -16,9 +16,7 @@ angular.module('flatpcApp')
             $rootScope.sysMenu[1] = name;
         }
         $scope.logout = function () {
-            PublicService.logout({
-                adminId:AppConfig.adminId || 1
-            }).success(function (data) {
+            PublicService.logout().success(function (data) {
                 $rootScope.loading = false;
                     if(data.code == 0){
                         localStorage.adminId = "";
@@ -54,6 +52,7 @@ angular.module('flatpcApp')
                 }else{
                     $rootScope.loading = true;
                     PublicService.password({
+                        token:AppConfig.token,
                         adminid:AppConfig.adminId,
                         password:$scope.media.old,
                         newpassword:$scope.media.newPassword,

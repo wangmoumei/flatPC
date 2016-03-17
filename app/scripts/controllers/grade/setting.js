@@ -2,10 +2,20 @@ angular.module('flatpcApp')
 .controller('GradeSettingCtrl', ['$scope','AppConfig','$rootScope', 'GradeService',
 function($scope,AppConfig,$rootScope,GradeService) {
     $scope.media = {
-        tab:0,
+        tab:1,
         setTab:function (n) {
             this.tab = n;
-            this.status = n?(this.typeId1?0:1):(this.typeId?0:1);
+            switch (n){
+                case 1:
+                    this.status = (this.typeId?0:1);
+                    break;
+                case 2:
+                    this.status = (this.typeId1?0:1);
+                    break;
+                case 3:
+                
+                    break;
+            }
         },
         status:1,
         type:0,
@@ -25,13 +35,13 @@ function($scope,AppConfig,$rootScope,GradeService) {
     $scope.show = function(type,item,category){
         $scope.media.status = 0;
         $scope.media.type = type;
-        if($scope.media.tab){
+        if($scope.media.tab == 2){
             $scope.media.title1 = item.title || '';
             $scope.media.parentTitle1 = category || item.title || '';
             $scope.media.typeId1 = item.typeId || 0;
             $scope.media.value1 = item.value || 0;
             $scope.media.listOrder1 =item.listOrder || 1;
-        }else{
+        }else if($scope.media.tab == 1){
             $scope.media.title = item.title || '';
             $scope.media.parentTitle = category || item.title || '';
             $scope.media.typeId = item.typeId || 0;
@@ -43,14 +53,14 @@ function($scope,AppConfig,$rootScope,GradeService) {
     $scope.add = function(type,item,category){
         $scope.media.status = 1;
         $scope.media.type = type;
-        if($scope.media.tab){
+        if($scope.media.tab == 2){
             $scope.media.title1 = '';
             $scope.media.parentTitle1 = category  || '';
             $scope.media.typeId1 = 0;
             $scope.media.fid1 = item.typeId;
             $scope.media.value1 = 0;
             $scope.media.listOrder1 = 1;
-        }else{
+        }else if($scope.media.tab == 1){
             $scope.media.title = '';
             $scope.media.parentTitle = category  || '';
             $scope.media.typeId = 0;
@@ -66,10 +76,10 @@ function($scope,AppConfig,$rootScope,GradeService) {
             return GradeService.addSetting({
                 schoolcode:AppConfig.schoolCode,
                 token:AppConfig.token,
-                fid:$scope.media.tab?$scope.media.fid1:$scope.media.fid,
-                value:$scope.media.tab?$scope.media.value1:$scope.media.value,
-                title:$scope.media.tab?($scope.media.type>1?$scope.media.title1:$scope.media.parentTitle1):($scope.media.type>1?$scope.media.title:$scope.media.parentTitle),
-                listorder:$scope.media.tab?$scope.media.listOrder1:$scope.media.listOrder
+                fid:$scope.media.tab == 2?$scope.media.fid1:$scope.media.fid,
+                value:$scope.media.tab == 2?$scope.media.value1:$scope.media.value,
+                title:$scope.media.tab == 2?($scope.media.type>1?$scope.media.title1:$scope.media.parentTitle1):($scope.media.type>1?$scope.media.title:$scope.media.parentTitle),
+                listorder:$scope.media.tab == 2?$scope.media.listOrder1:$scope.media.listOrder
             })
 
         })().success(function(data){
@@ -87,10 +97,10 @@ function($scope,AppConfig,$rootScope,GradeService) {
         $rootScope.loading = true;
         return GradeService.editSetting({
             token:AppConfig.token,
-            typeid:$scope.media.tab?$scope.media.typeId1:$scope.media.typeId,
-            value:$scope.media.tab?$scope.media.value1:$scope.media.value,
-            title:$scope.media.tab?($scope.media.type>1?$scope.media.title1:$scope.media.parentTitle1):($scope.media.type>1?$scope.media.title:$scope.media.parentTitle),
-            listorder:$scope.media.tab?$scope.media.listOrder1:$scope.media.listOrder
+            typeid:$scope.media.tab == 2?$scope.media.typeId1:$scope.media.typeId,
+            value:$scope.media.tab == 2?$scope.media.value1:$scope.media.value,
+            title:$scope.media.tab == 2?($scope.media.type>1?$scope.media.title1:$scope.media.parentTitle1):($scope.media.type>1?$scope.media.title:$scope.media.parentTitle),
+            listorder:$scope.media.tab == 2?$scope.media.listOrder1:$scope.media.listOrder
         }).success(function(data){
              $rootScope.loading = false;
             
@@ -117,7 +127,7 @@ function($scope,AppConfig,$rootScope,GradeService) {
                 $rootScope.loading = true;
                 return GradeService.delSetting({
                     token:'',
-                    typeid:$scope.media.tab?$scope.media.typeId1:$scope.media.typeId
+                    typeid:$scope.media.tab == 2?$scope.media.typeId1:$scope.media.typeId
                 }).success(function(data){
                     $rootScope.loading = false;
                     
@@ -145,14 +155,14 @@ function($scope,AppConfig,$rootScope,GradeService) {
     }
     
     function init() {
-        $scope.media.tab=1;
+        $scope.media.tab=2;
         if($rootScope.treeGrade[1])
             if($rootScope.treeGrade[1].subNodes[0])
                 $scope.show(1,$rootScope.treeGrade[1].subNodes[0]);
             else
                 $scope.add(1,$rootScope.treeGrade[1]);
             
-        $scope.media.tab=0;
+        $scope.media.tab=1;
         if($rootScope.treeGrade[0])
             if($rootScope.treeGrade[0].subNodes[0])
                 $scope.show(1,$rootScope.treeGrade[0].subNodes[0]);

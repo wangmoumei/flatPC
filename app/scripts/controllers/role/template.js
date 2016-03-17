@@ -211,6 +211,7 @@ angular.module('flatpcApp')
             $rootScope.loading = false;
             if(data.code == 0){
                  swal("提示","保存成功！", "success"); 
+                 refresh();
             }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 

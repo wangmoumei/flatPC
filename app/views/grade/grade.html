@@ -98,10 +98,10 @@
                         <ul class="room-list" ng-repeat="rooms in floor.roomList">
                             <li class="room-item" ng-repeat="room in rooms">
                                 <div ng-class="{'graded':room.roomScoreId}">{{room.roomNum}}</div>
-                                <ul ng-if="!room.isLive">
-                                    <li><a ng-click="showCard('#gradeCard',cardMedia.dataInit(room))">{{room.roomScoreId?room.score:'尚未打分'}}</a></li>
+                                <ul>
+                                    <li ng-if="!room.purpose"><a ng-click="showCard('#gradeCard',cardMedia.dataInit(room))">{{room.roomScoreId?room.score:'尚未打分'}}</a></li>
                                 </ul>
-                                <div>
+                                <div ng-if="room.purpose" style="min-height:30px">
                                     <a>{{room.purpose}}</a>
                                 </div>
                             </li>

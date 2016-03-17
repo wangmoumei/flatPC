@@ -5,7 +5,7 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,StudentService,$
     $scope.media = {
         epage:1,
         pageCount:1,
-        recordCount:1,
+        recordCount:0,
         pagesize:10,
         name:'',
         studentnumber:'',

@@ -76,7 +76,7 @@
                             <li class="room-item" ng-repeat="room in rooms">
                                 <div>{{room.number}}</div>
                                 <ul ng-show="room.bedNum">
-                                    <li ng-repeat="bed in room.bedList || []"><a ng-click="showCard({before:loadInfo(bed.bedStatus?bed.studentKey:'')})"> {{bed.bedNum}}  <span ng-class="{'bed-empty':!bed.bedStatus}">{{bed.bedStatus?bed.studentName:'空闲'}}</span></a></li>
+                                    <li ng-repeat="bed in room.bedList || []"><a ng-click="showCard({selecter:'#studentDetail',before:loadInfo(bed.bedStatus?bed.studentKey:'')})"> {{bed.bedNum}}  <span ng-class="{'bed-empty':!bed.bedStatus}">{{bed.bedStatus?bed.studentName:'空闲'}}</span></a></li>
                                 </ul>
                                 <div ng-hide="room.bedNum">
                                     <a>{{room.purpose}}</a>
@@ -89,10 +89,10 @@
             <li class="fadeIn animated" ng-controller="FlatImportCtrl">
                 <div class="tool-bar">
                     <div>
-                        <a class="btn btn-success" ng-click="showCard('#multiAdd',importInit)">数据导入</a>
+                        <a ng-if="menuCheck(253)" class="btn btn-success" ng-click="showCard('#multiAdd',importInit)">数据导入</a>
                     </div>
                     <div>
-                        <a class="btn btn-default" ng-click="downloadOriginal()">下载样表</a>
+                        <a ng-if="menuCheck(254)" class="btn btn-default" ng-click="downloadOriginal()">下载样表</a>
                     </div>
                 </div>
                 <div class="table-container" style="top:50px;background-color:#fff;">
@@ -111,7 +111,7 @@
                                 <td>{{import.title}}</td>
                                 <td>{{import.importType}}</td>
                                 <td>{{import.addTime}}</td>
-                                <td>{{import.errorNumber}}个错误信息</td><td><a class="btn btn-link btn-xs" ng-click="download(import.importId)">导出错误数据</a></td>
+                                <td>{{import.errorNumber}}个错误信息</td><td><a ng-if="menuCheck(255)" class="btn btn-link btn-xs" ng-click="download(import.importId)">导出错误数据</a></td>
                             </tr>
                         </tbody>
                         <tfoot>
@@ -161,7 +161,7 @@
     </div>
     
 </div>
-<div class="info-card fadeIn animated" info-card>
+<div class="info-card fadeIn animated" info-card id="studentDetail">
     <div class="info-card-wrapper">
         <div class="info-card-dialog">
             <div class="info-card-content">

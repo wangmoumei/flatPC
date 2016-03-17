@@ -35,12 +35,12 @@
     <div class="page-tabs" tabs style="left:225px">
         <ul class="page-tabs-nav">
             <li class="active">学生信息</li>
-            <li>数据导入</li>
+            <li ng-if="menuCheck(217)">数据导入</li>
         </ul>
         <ul class="page-tabs-container">
             <li class="fadeIn animated active">
                 <div class="tool-bar">
-                    <div>
+                    <div ng-if="menuCheck(214)">
                         <a ng-click="showCard('#studentForm',studentInit)" class="btn btn-addon btn-success"><i class="glyphicon glyphicon-plus"></i>添加学生</a>
                     </div>
                     <div>
@@ -86,7 +86,7 @@
                                 <td>{{student.collegeName}}</td>
                                 <td>{{student.className}}</td>
                                 <td>
-                                    <a ng-click="showCard({selecter:'#studentForm',before:loadInfo(student.studentKey)})" class="btn btn-link btn-xs">编辑</a>
+                                    <a ng-click="showCard({selecter:'#studentForm',before:loadInfo(student.studentKey)})" class="btn btn-link btn-xs">{{menuCheck(216)?'编辑':'查看'}}</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -135,10 +135,10 @@
             </li>
             <li class="fadeIn animated" ng-controller="StudentImportCtrl">
                 <div class="tool-bar">
-                    <div>
+                    <div ng-if="menuCheck(218)">
                         <a class="btn btn-success" ng-click="showCard('#multiAdd',importInit)">数据导入</a>
                     </div>
-                    <div>
+                    <div ng-if="menuCheck(219)">
                         <a class="btn btn-default" ng-click="downloadOriginal()">下载样表</a>
                     </div>
                 </div>
@@ -158,7 +158,7 @@
                                 <td>{{import.title}}</td>
                                 <td>{{import.importType}}</td>
                                 <td>{{import.addTime}}</td>
-                                <td>{{import.errorNumber}}个错误信息</td><td><a class="btn btn-link btn-xs" ng-click="download(import.importId)">导出错误数据</a></td>
+                                <td>{{import.errorNumber}}个错误信息</td><td><a ng-if="menuCheck(220)" class="btn btn-link btn-xs" ng-click="download(import.importId)">导出错误数据</a></td>
                             </tr>
                         </tbody>
                         <tfoot>
@@ -222,59 +222,92 @@
                                 <tr>
                                     <td class="require" width="100">班级</td>
                                     <td colspan="3">
-                                         <select ng-change="selecter.collegeSelecter()" ng-model="selecter.collegeId">
+                                         <select ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-change="selecter.collegeSelecter()" ng-model="selecter.collegeId">
                                              <option value="">请选择学院</option>
                                              <option ng-repeat="college in treeCollege[0].collegeList || []" value="{{college.collegeId}}" ng-selected="selecter.collegeId == college.collegeId">{{college.collegeName}}</option>
                                          </select>
-                                         <select ng-model="selecter.classId">
+                                         <select ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="selecter.classId">
                                              <option value="">请选择班级</option>
                                              <option ng-repeat="cla in selecter.classList || []" value="{{cla.classId}}" ng-selected="selecter.classId == cla.classId">{{cla.className}}</option>
                                          </select>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="require">学号</td><td><input type="text" ng-model="student.studentNumber" /></td>
+                                    <td class="require">学号</td><td><input type="text" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.studentNumber" /></td>
                                     <td rowspan="5" colspan="2">
                                         <div><img style="max-width:{{student.headImgurl?200:100}}px;" src="{{student.headImgurl || 'http://7xp0c4.com2.z0.glb.qiniucdn.com/default.png'}}" /></div>
-                                        <div class="btn btn-primary btn-sm" style="margin-top:10px;" input-file change="uploadImg()">点击上传照片</div>
+                                        <div class="btn btn-primary btn-sm" ng-hide="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" style="margin-top:10px;" input-file change="uploadImg()">点击上传照片</div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="require">姓名</td><td><input type="text" ng-model="student.name"/></td>
+                                    <td class="require">姓名</td><td><input type="text" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.name"/></td>
                                 </tr>
                                 <tr>
                                     <td class="require">性别</td>
                                     <td>
-                                        <label><input type="radio" name="sex" value="男" checked="checked"/> 男</label>
-                                        <label><input type="radio" name="sex" value="女" /> 女</label>
+                                        <label><input type="radio" name="sex" value="男" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" checked="checked"/> 男</label>
+                                        <label><input type="radio" name="sex" value="女" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" /> 女</label>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>联系电话</td><td><input type="text" ng-model="student.phone"/></td>
+                                    <td>联系电话</td>
+                                    <td>
+                                        <input type="text" ng-model="student.phone" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))"/>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>出生日期</td><td><input type="text" datepicker ng-model="student.birthDay"/></td>
+                                    <td>出生日期</td>
+                                    <td>
+                                        <input type="text" datepicker ng-model="student.birthDay" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))"/>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>政治面貌</td><td><input type="text"  ng-model="student.political"/></td><td>民族</td><td><input type="text"  ng-model="student.nation"/></td>
+                                    <td>政治面貌</td>
+                                    <td>
+                                        <input type="text"  ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.political"/>
+                                    </td>
+                                    <td>民族</td>
+                                    <td>
+                                        <input type="text"  ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.nation"/>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>类型</td><td><input type="text"  ng-model="student.studentType"/></td><td>婚姻状况</td><td><input type="text"  ng-model="student.marital"/></td>
+                                    <td>类型</td>
+                                    <td>
+                                        <input type="text"  ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.studentType"/>
+                                    </td>
+                                    <td>婚姻状况</td>
+                                    <td>
+                                        <input type="text"  ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.marital"/>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>身份证号</td><td><input type="text"  ng-model="student.identityCard"/></td><td>籍贯</td><td><input type="text"  ng-model="student.origin"/></td>
+                                    <td>身份证号</td>
+                                    <td>
+                                        <input type="text"  ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.identityCard"/>
+                                    </td>
+                                    <td>籍贯</td>
+                                    <td>
+                                        <input type="text"  ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.origin"/>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>家庭住址</td><td colspan="3"><textarea class="form-control" ng-model="student.homeAddress">{{student.homeAddress}}</textarea></td>
+                                    <td>家庭住址</td>
+                                    <td colspan="3">
+                                        <textarea class="form-control" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.homeAddress">{{student.homeAddress}}</textarea>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>备注</td><td colspan="3"><textarea class="form-control" ng-model="student.memo">{{student.memo}}</textarea></td>
+                                    <td>备注</td>
+                                    <td colspan="3">
+                                        <textarea class="form-control" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.memo">{{student.memo}}</textarea>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td colspan="4">
-                                        <a class="btn btn-success" ng-show="!student.type" ng-click="studentAdd()">提交</a>
-                                        <a class="btn btn-info" ng-show="student.type" ng-click="studentEdit()">保存修改</a>
-                                        <a class="btn btn-danger" ng-show="student.type" ng-click="studentDel()">删除</a>
+                                        <a ng-if="menuCheck(214)" class="btn btn-success" ng-show="!student.type" ng-click="studentAdd()">提交</a>
+                                        <a ng-if="menuCheck(216)" class="btn btn-info" ng-show="student.type" ng-click="studentEdit()">保存修改</a>
+                                        <a ng-if="menuCheck(215)" class="btn btn-danger" ng-show="student.type" ng-click="studentDel()">删除</a>
                                     </td>
                                 </tr>
                             </tbody>

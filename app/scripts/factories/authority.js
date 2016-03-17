@@ -8,17 +8,16 @@
  * Controller of the flatpcApp
  */
 angular.module('flatpcApp')
-.factory('authority', ['$rootScope','AppConfig','$location',function ($rootScope,AppConfig,$location) {
+.factory('authority', ['$rootScope','AppConfig','$state',function ($rootScope,AppConfig,$state) {
     
     var transform = function(name){
         
         name = name || "";
         switch (name){
             case "login":
-                return null;
-                break;
+                return ['login'];
             case "index":
-                if($rootScope.sysMenu){
+                if($rootScope.sysMenu && $rootScope.sysMenu[0]!='login'){
                     return $rootScope.sysMenu;
                 }else{
                     var menus = [];
@@ -51,171 +50,144 @@ angular.module('flatpcApp')
                     menus.push(' ')
                     return menus;
                 }
-                break;
             case 'flat':
                 if(menuCheck(18))
                     return ['flat','flat','flat'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'college':
                 if(menuCheck(19))
                     return ['flat','flat','college'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'live':
                 if(menuCheck(27))
                     return ['flat','flat','live'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'change':
                 if(menuCheck(28))
                     return ['flat','flat','change'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'quit':
                 if(menuCheck(29))
                     return ['flat','flat','quit'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'check':
                 if(menuCheck(30))
                     return ['flat','flat','check'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'grade':
                 if(menuCheck(60))
                     return ['flat','grade','grade'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'visit':
                 if(menuCheck(73))
                     return ['flat','check','visit'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'key':
                 if(menuCheck(74))
                     return ['flat','check','key'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'late':
                 if(menuCheck(75))
                     return ['flat','check','late'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'scoreStatistics':
                 if(menuCheck(61))
                     return ['flat','grade','scoreStatistics'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'gradeSetting':
                 if(menuCheck(62))
                     return ['flat','grade','gradeSetting'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'floor':
                 if(menuCheck(125))
                     return ['data','floor','floor'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'room':
                 if(menuCheck(128))
                     return ['data','floor','room'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'type':
                 if(menuCheck(130))
                     return ['data','floor','type'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'student':
                 if(menuCheck(108))
                     return ['data','collect','student'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'stay':
                 if(menuCheck(129))
                     return ['data','collect','stay'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'class':
                 if(menuCheck(107))
                     return ['data','collect','class'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'term':
                 if(menuCheck(104))
                     return ['data','data','term'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'user':
                 if(menuCheck(114))
                     return ['admin','admin','user'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'admin':
                 if(menuCheck(111))
                     return ['admin','admin','admin'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'group':
                 if(menuCheck(117))
                     return ['admin','admin','group'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'role':
                 if(menuCheck(123))
                     return ['admin','role','role'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'template':
                 if(menuCheck(124))
                     return ['admin','role','template'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
             case 'menu':
                 if(menuCheck(127))
                     return ['admin','role','menu'];
                 else
-                    $location.path('/index');
-                break;
+                    return null;
         }
-        if(AppConfig.nodeIds.length < 2) $location.path('/login');
         return null;
     };
     var check = function () {
-        AppConfig.adminId = localStorage.adminId;
-        AppConfig.token = localStorage.token;
-        AppConfig.nodeIds = ',' + localStorage.nodeIds + ',';
-        AppConfig.schoolCode = localStorage.schoolCode;
-        AppConfig.userName = localStorage.userName;
-        AppConfig.roleName = localStorage.roleName;
-        AppConfig.roleId = localStorage.roleId;
-        AppConfig.userAccount = localStorage.userAccount;
-        AppConfig.isOpenBed = localStorage.isOpenBed;
+        AppConfig.adminId = sessionStorage.adminId;
+        AppConfig.token = sessionStorage.token;
+        AppConfig.nodeIds = ',' + sessionStorage.nodeIds + ',';
+        AppConfig.schoolCode = sessionStorage.schoolCode;
+        AppConfig.userName = sessionStorage.userName;
+        AppConfig.roleName = sessionStorage.roleName;
+        AppConfig.roleId = sessionStorage.roleId;
+        AppConfig.userAccount = sessionStorage.userAccount;
+        AppConfig.isOpenBed = sessionStorage.isOpenBed;
         if(AppConfig.adminId && AppConfig.token && AppConfig.nodeIds && AppConfig.schoolCode && AppConfig.userName && AppConfig.roleName && AppConfig.roleId && AppConfig.userAccount){
             return true;
         }

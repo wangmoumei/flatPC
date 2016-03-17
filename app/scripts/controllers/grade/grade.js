@@ -425,7 +425,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
         gradeSave:function (fun) {
             if(this.room)
                 this.roomGrade(fun);
-            else if(this.bed) this.roomGrade(fun);
+            else if(this.bed && this.bed.length>0) this.roomGrade(fun);
             else if(this.img)this.roomGrade(fun);
         },
         roomGrade:function(fun){
@@ -452,7 +452,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     }).success(function(data){
                         $rootScope.loading = false;
                         if(data.code == 0){
-                            if(that.bed){
+                            if(that.bed && that.bed.length>0){
                                 that.bedGrade(fun);
                             }else if(that.img){
                                 that.gradeImg(fun);
@@ -480,7 +480,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     }).success(function(data){
                         $rootScope.loading = false;
                         if(data.code == 0){
-                            if(that.bed){
+                            if(that.bed&& that.bed.length>0){
                                 that.bedGrade(fun);
                             }else if(that.img){
                                 that.gradeImg(fun);
@@ -500,6 +500,11 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
         },
         bedGrade:function(fun){
             var grades = "[",that = this;
+            if(that.bed&& that.bed.length>0){
+                that.bedGrade(fun);
+            }else if(that.img){
+                that.gradeImg(fun);
+            }
             // console.log(this.room);
             this.bed.forEach(function (item,i) {
                 var list = item.itemList;

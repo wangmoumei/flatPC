@@ -88,7 +88,7 @@
                         <tbody class="bg-white">
                             <tr ng-repeat="student in studentList || []">
                                 <td>{{student.studentNumber}}</td><td>{{student.name}}</td><td>{{student.collegeName + student.className + student.grade}}</td><td>{{student.campusName + student.liveAreaName + student.flatName + student.roomName}}</td><td>{{student.bedNum || student.bedName}}</td>
-                                <td><a class="btn btn-link btn-xs" ng-click="showCard({before:loadInfo(student.studentKey)})">详情</a></td>
+                                <td><a class="btn btn-link btn-xs" ng-click="showCard({selecter:'#studentDetail',before:loadInfo(student.studentKey)})">详情</a></td>
                             </tr>
                         </tbody>
                         <tfoot>
@@ -138,7 +138,7 @@
     </div>
     
 </div>
-<div class="info-card fadeIn animated" info-card>
+<div class="info-card fadeIn animated" info-card id="studentDetail">
     <div class="info-card-wrapper">
         <div class="info-card-dialog">
             <div class="info-card-content">

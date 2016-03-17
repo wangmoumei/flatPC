@@ -46,6 +46,13 @@ angular
                     }
                     $rootScope.sysMenu = authority.transform(toState.name);
                     $rootScope.loading = true;
+                    console.log(AppConfig.nodeIds)
+            });
+            $rootScope.$on('$stateChangeSuccess',
+				function(event, toState, toParams, fromState, fromParams) {
+                    
+                    if(!$rootScope.sysMenu)$location.path('/index');
+
             });
             $rootScope.$on('$stateChangeError', 
                 function(event, toState, toParams, fromState, fromParams, error){ 

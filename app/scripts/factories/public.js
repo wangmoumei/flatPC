@@ -28,7 +28,7 @@ angular.module('flatpcApp')
         });
     }
     var logout = function(param){
-        var url = AppConfig.WEB_ROOT + 'public/login/login_out/?adminid=' + AppConfig.adminId || '';
+        var url = AppConfig.WEB_ROOT + 'public/login/login_out/?token=' + AppConfig.token || '';
         
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
@@ -48,10 +48,18 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });
     }
+    var session = function(param){
+        var url = AppConfig.WEB_ROOT + 'public/login/get_sessionid/';
+        
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
+    }
     return {
         imgUpload:imgUpload,
         login:login,
         logout:logout,
-        password:password
+        password:password,
+        session:session
     }
 }]);

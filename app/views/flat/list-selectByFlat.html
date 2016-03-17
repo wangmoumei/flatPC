@@ -79,7 +79,7 @@
                             <li class="room-item" ng-repeat="room in rooms">
                                 <div>{{room.number}}</div>
                                 <ul ng-show="room.bedNum">
-                                    <li ng-repeat="bed in room.bedList || []"><a ng-click="showCard({before:loadInfo(bed.bedStatus?bed.studentKey:'')})"> {{bed.bedNum}}  <span ng-class="{'bed-empty':!bed.bedStatus}">{{bed.bedStatus?bed.studentName:'空闲'}}</span></a></li>
+                                    <li ng-repeat="bed in room.bedList || []"><a ng-click="showCard({selecter:'#studentDetail',before:loadInfo(bed.bedStatus?bed.studentKey:'')})"> {{bed.bedNum}}  <span ng-class="{'bed-empty':!bed.bedStatus}">{{bed.bedStatus?bed.studentName:'空闲'}}</span></a></li>
                                 </ul>
                                 <div ng-hide="room.bedNum">
                                     <a>{{room.purpose}}</a>
@@ -185,7 +185,7 @@
     </div>
     
 </div>
-<div class="info-card fadeIn animated" info-card>
+<div class="info-card fadeIn animated" info-card id="studentDetail">
     <div class="info-card-wrapper">
         <div class="info-card-dialog">
             <div class="info-card-content">

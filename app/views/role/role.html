@@ -10,7 +10,7 @@
     </ul>
 </div>
 <div class="tool-bar">
-    <div class="bar-full">
+    <div ng-if="menuCheck(136)" class="bar-full">
         <button class="btn btn-success" ng-click="showCard('#roleAdd',roleInit())"><i class="glyphicon glyphicon-file"></i> 添加</button>
     </div>
 </div>
@@ -29,8 +29,8 @@
                 <tr ng-repeat="role in list || []">
                     <td>{{role.title}}</td><td>{{role.remark}}</td><td>{{role.status?'已禁用':'使用中'}}</td>
                     <td>
-                        <a class="btn btn-link btn-xs" ng-click="showCard({selecter:'#menuSetting',before:menuInit(role)})">{{role.type?'配置权限':'查看权限'}}</a>
-                        <a ng-if="role.type" class="btn btn-link btn-xs" ng-click="showCard('#roleAdd',roleInit(role))">编辑</a>
+                        <a class="btn btn-link btn-xs" ng-click="showCard({selecter:'#menuSetting',before:menuInit(role)})">{{role.type&&menuCheck(179)?'配置权限':'查看权限'}}</a>
+                        <a ng-if="role.type && menuCheck(178)" class="btn btn-link btn-xs" ng-click="showCard('#roleAdd',roleInit(role))">编辑</a>
                     </td>
                 </tr>
                 
@@ -158,13 +158,13 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="menu-setting-container" style="background-color:#f6f7f8;bottom:{{role.type?50:0}}px">
+                        <div class="menu-setting-container" style="background-color:#f6f7f8;bottom:{{role.type&&menuCheck(179)?50:0}}px">
                             <ul class="list-group" style="margin:20px;">
                                 <li ng-repeat="item in treeMenu || []">
                                     <a class="list-group-item b-l-primary" id="{{'menu' + item.nodeId}}">
                                         {{item.remark}}
                                         <div style="float:right">
-                                            <input switch-active="{{role.type}}" ng-change="menuChange(item)" bs-switch ng-model="item.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                            <input switch-active="{{role.type&&menuCheck(179)}}" ng-change="menuChange(item)" bs-switch ng-model="item.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
                                         </div>
                                     </a>
                                     <ul class="list-group" style="margin-left:10px;">
@@ -172,7 +172,7 @@
                                             <a class="list-group-item b-l-warning" id="{{'menu' + item1.nodeId}}">
                                                 {{item1.remark}}
                                                 <div style="float:right">
-                                                    <input switch-active="{{role.type}}" ng-change="menuChange(item1,item)" bs-switch ng-model="item1.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                                    <input switch-active="{{role.type&&menuCheck(179)}}" ng-change="menuChange(item1,item)" bs-switch ng-model="item1.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
                                                 </div>
                                             </a>
                                             <ul class="list-group" style="margin:0 0 15px 10px;">
@@ -180,7 +180,7 @@
                                                     <a class="list-group-item b-l-success" id="{{'menu' + item2.nodeId}}">
                                                         {{item2.remark}}
                                                         <div style="float:right">
-                                                            <input switch-active="{{role.type}}" ng-change="menuChange(item2,item1,item)" bs-switch ng-model="item2.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                                            <input switch-active="{{role.type&&menuCheck(179)}}" ng-change="menuChange(item2,item1,item)" bs-switch ng-model="item2.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
                                                         </div>
                                                     </a>
                                                     <ul class="list-group" style="margin:0 0 10px 10px;">
@@ -188,7 +188,7 @@
                                                             <a class="list-group-item b-l-danger" id="{{'menu' + item3.nodeId}}">
                                                                 {{item3.remark}}
                                                                 <div style="float:right">
-                                                                    <input switch-active="{{role.type}}" ng-change="menuChange(item3,item2,item1,item)" bs-switch ng-model="item3.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                                                    <input switch-active="{{role.type&&menuCheck(179)}}" ng-change="menuChange(item3,item2,item1,item)" bs-switch ng-model="item3.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
                                                                 </div>
                                                             </a>
                                                             <ul class="list-group" style="margin:0 0 5px 10px;">
@@ -196,7 +196,7 @@
                                                                     <a class="list-group-item b-l-info" id="{{'menu' + item4.nodeId}}">
                                                                         {{item4.remark}}
                                                                         <div style="float:right">
-                                                                            <input switch-active="{{role.type}}" ng-change="menuChange(item4,item3,item2,item1,item)" bs-switch ng-model="item4.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                                                            <input switch-active="{{role.type&&menuCheck(179)}}" ng-change="menuChange(item4,item3,item2,item1,item)" bs-switch ng-model="item4.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
                                                                         </div>
                                                                     </a>
                                                                     <ul class="list-group" style="margin:0 0 0 10px;">
@@ -204,7 +204,7 @@
                                                                             <a class="list-group-item" id="{{'menu' + item5.nodeId}}">
                                                                                 {{item5.remark}} 
                                                                                 <div style="float:right">
-                                                                                    <input switch-active="{{role.type}}" ng-change="menuChange(item5,item4,item3,item2,item1,item)" bs-switch ng-model="item5.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                                                                    <input switch-active="{{role.type&&menuCheck(179)}}" ng-change="menuChange(item5,item4,item3,item2,item1,item)" bs-switch ng-model="item5.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
                                                                                 </div>
                                                                             </a>
                                                                         </li>
@@ -220,7 +220,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="btn-tool" ng-if="role.type">
+                        <div class="btn-tool" ng-if="role.type&&menuCheck(179)">
                             <a class="btn btn-info" ng-click="menuSave()">保存</a>
                             <a class="btn btn-default" ng-click="menuReset()">重置</a>
                         </div>

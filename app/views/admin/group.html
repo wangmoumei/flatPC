@@ -18,7 +18,7 @@
                     <li ng-repeat="group in treeGroup||[]" >
                         <a class="leaf" ng-click="show(1,group)">{{group.title}}</a>
                     </li>
-                    <li><a class="add" ng-click="add()"><i class="ALiconfont icon-plus1"></i> 添加</a></li>
+                    <li ng-if="menuCheck(236)"><a class="add" ng-click="add()"><i class="ALiconfont icon-plus1"></i> 添加</a></li>
                 </ul>
             </li>
         </ul>
@@ -26,33 +26,33 @@
     <div class="from-container" style="left:225px;">
         <table class="table-form table-bordered bg-white">
             <tr>
-                <td class="require" width="200">账号组名称</td><td><input type="text" ng-model="media.title" /></td>
+                <td class="require" width="200">账号组名称</td><td><input ng-disabled="(media.status&&!menuCheck(236)) || (!media.status&&!menuCheck(237))" type="text" ng-model="media.title" /></td>
             </tr>
             <tr>
-                <td class="require" width="200">排序</td><td><input type="text" ng-model="media.listorder" /></td>
+                <td class="require" width="200">排序</td><td><input type="text" ng-model="media.listorder" ng-disabled="(media.status&&!menuCheck(236)) || (!media.status&&!menuCheck(237))" /></td>
             </tr>
             <tr>
-                <td width="200">可创建账号数</td><td><input type="text" ng-model="media.maxaccount" /></td>
+                <td width="200">可创建账号数</td><td><input type="text" ng-model="media.maxaccount" ng-disabled="(media.status&&!menuCheck(236)) || (!media.status&&!menuCheck(237))" /></td>
             </tr>
             <tr>
                 <td class="require" width="200">可分配角色</td>
                 <td>
                     <ul style="width:160px;max-height:200px;overflow-y:auto;">
                         <li ng-repeat="role in roles">
-                            <label><input bs-switch ng-model="role.checked" type="checkbox" switch-size="mini" switch-on-text="on" switch-off-text="off"> {{role.remark}}</label>
+                            <label><input bs-switch switch-active="{{(media.status&&menuCheck(236)) || (!media.status&&menuCheck(237))}}" ng-model="role.checked" type="checkbox" switch-size="mini" switch-on-text="on" switch-off-text="off"> {{role.remark}}</label>
                         </li>
                     </ul>
                 </td>
             </tr>
             <tr>
-                <td width="200">帐号组管理员</td><td><input type="text" ng-model="media.useraccount" /></td>
+                <td width="200">帐号组管理员</td><td><input ng-disabled="{{(media.status&&!menuCheck(236)) || (!media.status&&!menuCheck(237))}}" type="text" ng-model="media.useraccount" /></td>
             </tr>
             <tr>
                 <td></td><td>
                     <div class="btn-box">
-                        <button ng-show="media.status == 1" ng-click="addSave()" class="btn btn-success">提交</button>
-                        <button ng-show="media.status == 0" ng-click="editSave()" class="btn btn-info">保存</button>
-                        <button ng-show="media.status == 0" ng-click="delete()" class="btn btn-danger">删除</button>
+                        <button ng-if="menuCheck(236)" ng-show="media.status == 1" ng-click="addSave()" class="btn btn-success">提交</button>
+                        <button ng-if="menuCheck(237)" ng-show="media.status == 0" ng-click="editSave()" class="btn btn-info">保存</button>
+                        <button ng-if="menuCheck(238)" ng-show="media.status == 0" ng-click="delete()" class="btn btn-danger">删除</button>
                     </div>
                 </td>
             </tr>

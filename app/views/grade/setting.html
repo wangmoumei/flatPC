@@ -12,16 +12,15 @@
 <div class="page-main" style="top:49px;">
     <div class="page-tabs" tabs>
         <ul class="page-tabs-nav">
-            <li class="active" ng-click="media.setTab(0)">寝室分</li>
-            <li ng-click="media.setTab(1)">床位分</li>
-            <li>打分周期</li>
+            <li ng-if="menuCheck(69)" ng-class="{'active':media.tab == 1}" ng-click="media.setTab(1)">寝室分</li>
+            <li ng-if="menuCheck(70)" ng-class="{'active':media.tab == 2}" ng-click="media.setTab(2)">床位分</li>
+            <li ng-if="menuCheck(71)" ng-class="{'active':media.tab == 3}" ng-click="media.setTab(3)">打分周期</li>
         </ul>
         <ul class="page-tabs-container">
-            <li class="fadeIn animated active">
+            <li ng-if="menuCheck(69)" ng-class="{'active':media.tab == 1}" class="fadeIn animated active">
                 <div class="page-tree" tree>
                     <ul>
                         <li class="open" ng-show="treeGrade[0]">
-                            <a class="branch">{{treeGrade[0].title}}</a>
                             <ul ng-show="treeGrade[0].subNodes">
                                 <li class="open" ng-repeat="category in treeGrade[0].subNodes||[]">
                                     <a ng-click="show(1,category)" ng-class="{'branch':category.subNodes,'leaf':!category.subNodes}">{{category.title}}</a>
@@ -56,9 +55,9 @@
                             <td></td>
                             <td>
                                 <div class="btn-box">
-                                    <button ng-show="media.status" ng-click="addSave()" class="btn btn-success">提交</button>
-                                    <button ng-hide="media.status" ng-click="editSave()" class="btn btn-info">保存</button>
-                                    <button ng-hide="media.status" ng-click="delete()" class="btn btn-danger">删除</button>
+                                    <button ng-if="menuCheck(194)" ng-show="media.status" ng-click="addSave()" class="btn btn-success">提交</button>
+                                    <button ng-if="menuCheck(195)" ng-hide="media.status" ng-click="editSave()" class="btn btn-info">保存</button>
+                                    <button ng-if="menuCheck(196)" ng-hide="media.status" ng-click="delete()" class="btn btn-danger">删除</button>
                                 </div>
                             </td>
                         </tr>
@@ -66,11 +65,10 @@
                     </table>
                 </div>
             </li>
-            <li class="fadeIn animated">
+            <li ng-if="menuCheck(70)" ng-class="{'active':media.tab == 2}" class="fadeIn animated">
                 <div class="page-tree" tree>
                     <ul>
                         <li class="open" ng-show="treeGrade[1]">
-                            <a class="branch">{{treeGrade[1].title}}</a>
                             <ul ng-show="treeGrade[1].subNodes">
                                 <li class="open" ng-repeat="category in treeGrade[1].subNodes||[]">
                                     <a ng-click="show(1,category)" ng-class="{'branch':category.subNodes,'leaf':!category.subNodes}">{{category.title}}</a>
@@ -105,16 +103,16 @@
                             <td></td>
                             <td>
                                 <div class="btn-box">
-                                    <button ng-show="media.status" ng-click="addSave()" class="btn btn-success">提交</button>
-                                    <button ng-hide="media.status" ng-click="editSave()" class="btn btn-info">保存</button>
-                                    <button ng-hide="media.status" ng-click="delete()" class="btn btn-danger">删除</button>
+                                    <button ng-if="menuCheck(197)"  ng-show="media.status" ng-click="addSave()" class="btn btn-success">提交</button>
+                                    <button ng-if="menuCheck(198)"  ng-hide="media.status" ng-click="editSave()" class="btn btn-info">保存</button>
+                                    <button ng-if="menuCheck(199)"  ng-hide="media.status" ng-click="delete()" class="btn btn-danger">删除</button>
                                 </div>
                             </td>
                         </tr>
                     </table>
                 </div>
             </li>
-            <li class="fadeIn animated">
+            <li ng-if="menuCheck(71)" ng-class="{'active':media.tab == 3}" class="fadeIn animated">
                 <div class="from-container">
                     <table class="table-form table-bordered bg-white">
                         <tr>

@@ -10,7 +10,7 @@
     </ul>
 </div>
 <div class="tool-bar" style="margin-left:225px">
-    <div>
+    <div ng-if="menuCheck(233)">
         <button class="btn btn-success" ng-click="showCard('#userForm',dataInit)">新建帐号</button>
     </div>
 
@@ -35,13 +35,13 @@
                     <th class="sort" ng-class="{'sort-up':media.orderfield=='userAccount' && media.ordertype=='asc','sort-down':media.orderfield=='userAccount' && media.ordertype=='desc'}" ng-click="setOrder('userAccount')">帐号</th>
                     <th class="sort" ng-class="{'sort-up':media.orderfield=='userName' && media.ordertype=='asc','sort-down':media.orderfield=='userName' && media.ordertype=='desc'}" ng-click="setOrder('userName')">用户名</th>
                     <th class="sort" ng-class="{'sort-up':media.orderfield=='roleName' && media.ordertype=='asc','sort-down':media.orderfield=='roleName' && media.ordertype=='desc'}" ng-click="setOrder('roleName')">角色</th>
-                    <th>操作</th>
+                    <th ng-if="menuCheck(234)">操作</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="user in list">
                     <td>{{user.userAccount}}</td><td>{{user.userName}}</td><td>{{user.roleName}}</td>
-                    <td>
+                    <td ng-if="menuCheck(234)">
                         <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#userForm',dataInit(user))">编辑</button>
                     </td>
                 </tr>
@@ -147,9 +147,9 @@
                                 <tr>
                                     <td></td>
                                     <td class="td-btn-box">
-                                        <a ng-hide="form.status" class="btn btn-success" ng-click="addSave(closeCard())">提交</a>
-                                        <a ng-show="form.status" class="btn btn-primary" ng-click="editSave(closeCard())">保存</a>
-                                        <a ng-show="form.status" class="btn btn-danger" ng-click="delete(closeCard())">删除</a>
+                                        <a ng-if="menuCheck(233)" ng-hide="form.status" class="btn btn-success" ng-click="addSave(closeCard())">提交</a>
+                                        <a ng-if="menuCheck(234)" ng-show="form.status" class="btn btn-primary" ng-click="editSave(closeCard())">保存</a>
+                                        <a ng-if="menuCheck(235)" ng-show="form.status" class="btn btn-danger" ng-click="delete(closeCard())">删除</a>
                                     </td>
                                 </tr>
                             </tbody>

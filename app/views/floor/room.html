@@ -13,7 +13,7 @@
     <div style="min-width:160px">
         {{media.title}}
     </div>
-    <div ng-if="menuCheck(145)"><a class="btn btn-success" ng-click="showCard('#floorAdd',floorInit(0))">新增楼层</a></div>
+    <!--div ng-if="menuCheck(145)"><a class="btn btn-success" ng-click="showCard('#floorAdd',floorInit(0))">新增楼层</a></div-->
     <div ng-if="menuCheck(152)" class="bar-full"><a class="btn btn-info" ng-click="showCard('#floorAdd',floorInit(2))">批量添加</a></div>
     <div>
         楼层：{{flat.floorNum}}
@@ -51,18 +51,16 @@
             <li ng-repeat="floor in flat.floorList">
                 <div class="floor-title">
                     <div>{{floor.floorName}}</div>
-                    <div class="title-full"><a class="btn btn-default btn-xs" ng-click="showCard('#floorAdd',floorInit(1,floor))">编辑</a></div>
+                    <div class="title-full"><a class="btn btn-default btn-xs" ng-click="showCard('#floorAdd',floorInit(1,floor))">{{menuCheck(146)?'编辑':'查看'}}</a></div>
                     <div>
                         房间总数：{{floor.roomNum}} 
                         床位总数：{{floor.bedNum}}
                     </div>
                 </div>
                 <ul class="room-list room-list-row" ng-repeat="rooms in floor.roomList">
-                    <li class="room-item" ng-repeat="room in rooms" ng-if="room.status>=0 || (room.status<0 && menuCheck(148))">
+                    <li class="room-item" ng-repeat="room in rooms" ng-if="room.status>=0 || (room.status<0 && menuCheck(148))" >
                         <div ng-click="showCard('#roomEdit',roomInit(room,floor))" ng-class="{'room-add':room.status<0,'other':room.purpose}">
-                            <div ng-if="room.status>=0" class="add-before"><i class="ALiconfont icon-plus3"></i></div>
                             {{room.purpose?room.purpose:room.roomName}}
-                            <div ng-if="room.status>=0" class="add-after"><i class="ALiconfont icon-plus3"></i></div>
                         </div>
                     </li>
                 </ul>
@@ -86,32 +84,32 @@
                                     <td width="150">楼栋</td><td>{{media.title}}</td>
                                 </tr>
                                 <tr ng-hide="media.floor.type == 2">
-                                    <td class="require">楼层号</td><td><input type="text" ng-model="media.floor.floorname" /></td>
+                                    <td class="require">楼层号</td><td><input type="text" ng-disabled="(media.floor.type==0&&!menuCheck(145)) || (media.floor.type==1&&!menuCheck(146))" ng-model="media.floor.floorname" /></td>
                                 </tr>
                                 <tr ng-show="media.floor.type == 2">
-                                    <td class="require">层数</td><td><input type="text" ng-model="media.floor.floornumber" /></td>
+                                    <td class="require">层数</td><td><input type="text" ng-model="media.floor.floornumber" ng-disabled="(media.floor.type==2&&!menuCheck(152))" /></td>
                                 </tr>
                                 <tr ng-show="media.floor.type == 2">
                                     <td class="require">开始层数</td>
                                     <td>
                                         <div>
-                                            <input type="text" ng-model="media.floor.startfloor" />
+                                            <input type="text" ng-model="media.floor.startfloor" ng-disabled="(media.floor.type==2&&!menuCheck(152))" />
                                         <div>
                                     </td>
                                 </tr>
                                 <tr ng-show="media.floor.type == 2">
-                                    <td class="require">每层房间数</td><td><input type="text" ng-model="media.floor.roomnumber" /></td>
+                                    <td class="require">每层房间数</td><td><input type="text" ng-model="media.floor.roomnumber" ng-disabled="(media.floor.type==2&&!menuCheck(152))" /></td>
                                 </tr>
                                 <tr ng-hide="media.floor.type == 2">
                                     <td class="require">排序</td>
                                     <td>
-                                        <input type="text" ng-model="media.floor.listorder" />
+                                        <input type="text" ng-disabled="(media.floor.type==0&&!menuCheck(145)) || (media.floor.type==1&&!menuCheck(146))" ng-model="media.floor.listorder" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="require">户型</td>
                                     <td>
-                                        <select ng-model="media.floor.typeid">
+                                        <select ng-model="media.floor.typeid" ng-disabled="(media.floor.type==0&&!menuCheck(145)) || (media.floor.type==1&&!menuCheck(146))||(media.floor.type==2&&!menuCheck(152))">
                                             <option value="">户型</option>
                                             <option ng-repeat="type in treeType" ng-selected="media.floor.roomstyle == type.typeId" value="{{type.typeId}}">{{type.title}}</option>
                                         </select>
@@ -120,7 +118,7 @@
                                 <tr>
                                     <td>类别</td>
                                     <td>
-                                        <select ng-model="media.floor.floortype">
+                                        <select ng-model="media.floor.floortype" ng-disabled="(media.floor.type==0&&!menuCheck(145)) || (media.floor.type==1&&!menuCheck(146))||(media.floor.type==2&&!menuCheck(152))" >
                                             <option value="">请选择类别</option>
                                             <option value="男">男</option>
                                             <option value="女">女</option>
@@ -131,7 +129,7 @@
                                 
                                 <tr ng-hide="media.floor.type == 2">
                                     <td>备注</td>
-                                    <td><textarea class="form-control" rows="3" ng-model="media.floor.memo"></textarea></td>
+                                    <td><textarea class="form-control" rows="3" ng-disabled="(media.floor.type==0&&!menuCheck(145)) || (media.floor.type==1&&!menuCheck(146))" ng-model="media.floor.memo"></textarea></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
@@ -154,7 +152,7 @@
             <div class="info-card-content">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        {{media.room.type?"宿舍编辑":"添加宿舍"}}
+                        {{media.room.type?(menuCheck(149)?"宿舍编辑":'查看宿舍'):"添加宿舍"}}
                         <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
                     </div>
                     <div class="panel-body">
@@ -164,27 +162,33 @@
                                     <td width="150">楼栋</td><td>{{media.title + '-' + media.floor.floorname}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="require">寝室号</td><td><input type="text" ng-model="media.room.roomname" /></td>
+                                    <td class="require">寝室号</td><td><input type="text" ng-disabled="(media.room.type&&!menuCheck(149)) || (media.room.type==0&&!menuCheck(148))" ng-model="media.room.roomname" /></td>
                                 </tr>
-                                <tr style="display:none">
-                                    <td class="require">排序</td>
+                                <tr ng-hide="(media.room.type&&!menuCheck(149)) || (media.room.type==0&&!menuCheck(148))">
+                                    <td class="require">位置</td>
                                     <td>
-                                        <input type="text" ng-model="media.room.listorder" />
+                                        <input type="text" ng-show="media.room.listtype<2" ng-model="media.room.listroom" style="width:90px" placeholder="输入寝室号" />
+                                        <select ng-model="media.room.listtype">
+                                            <option value="2">{{media.room.type?"不修改":"新增"}}</option>
+                                            <option value="0">之前</option>
+                                            <option value="1">之后</option>
+                                        </select>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="require">户型</td>
                                     <td>
-                                        <select ng-model="media.room.typeid">
+                                        <select ng-model="media.room.typeid" ng-disabled="(media.room.type&&!menuCheck(149)) || (media.room.type==0&&!menuCheck(148))">
                                             <option value="">户型</option>
                                             <option ng-repeat="type in treeType" ng-selected="media.room.typeid == type.typeId" value="{{type.typeId}}">{{type.title}}</option>
                                         </select>
                                     </td>
                                 </tr>
+                                
                                 <tr>
                                     <td class="require">类别</td>
                                     <td>
-                                        <select ng-model="media.room.roomstyle">
+                                        <select ng-model="media.room.roomstyle" ng-disabled="(media.room.type&&!menuCheck(149)) || (media.room.type==0&&!menuCheck(148))">
                                             <option value="">请选择类别</option>
                                             <option value="男">男</option>
                                             <option value="女">女</option>
@@ -195,7 +199,7 @@
                                 <tr>
                                     <td class="require">状态</td>
                                     <td>
-                                        <select ng-model="media.room.status">
+                                        <select ng-model="media.room.status" ng-disabled="(media.room.type&&!menuCheck(149)) || (media.room.type==0&&!menuCheck(148))">
                                             <option value="0" ng-selected="media.room.status==0">开启</option>
                                             <option value="1" ng-selected="media.room.status==1">关闭</option>
                                         </select>
@@ -203,7 +207,7 @@
                                 </tr>
                                 <tr>
                                     <td>备注</td>
-                                    <td><textarea class="form-control" rows="3" ng-model="media.room.memo"></textarea></td>
+                                    <td><textarea class="form-control" rows="3" ng-disabled="(media.room.type&&!menuCheck(149)) || (media.room.type==0&&!menuCheck(148))" ng-model="media.room.memo"></textarea></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">

@@ -9,7 +9,25 @@ angular.module('flatpcApp')
         listOrder:1,
         grade:'',
         classId:'',
-        history:0
+        history:0,
+        menuCheck : function () {
+            switch (this.type){
+                case 0:
+                    //return this.status?$rootScope.menuCheck():$rootScope.menuCheck();
+                    break;
+                case 1:
+                    
+                    return this.status?$rootScope.menuCheck(167):$rootScope.menuCheck(170);
+                    break;
+                case 2:
+                    return this.status?$rootScope.menuCheck(168):$rootScope.menuCheck(170);
+                    break;
+                case 3:
+                    //return this.status?$rootScope.menuCheck(227):$rootScope.menuCheck(228);
+                    break;
+            }
+            return false;
+        }
     };
     $scope.grades = CollegeService.getGrade();
     $scope.show = function(type,item){

@@ -10,7 +10,25 @@ angular.module('flatpcApp')
         liveAreaId:'',
         flatTitle:'',
         flatId:'',
-        listOrder:1
+        listOrder:1,
+        menuCheck : function () {
+            switch (this.type){
+                case 0:
+                    //return this.status?$rootScope.menuCheck():$rootScope.menuCheck();
+                    break;
+                case 1:
+                    
+                    return this.status?$rootScope.menuCheck(137):$rootScope.menuCheck(138);
+                    break;
+                case 2:
+                    return this.status?$rootScope.menuCheck(224):$rootScope.menuCheck(225);
+                    break;
+                case 3:
+                    return this.status?$rootScope.menuCheck(227):$rootScope.menuCheck(228);
+                    break;
+            }
+            return false;
+        }
     };
     $scope.show = function(type,item,college,campus,liveArea){
         $scope.media.status = 0;
