@@ -40,15 +40,16 @@
     <div class="from-container" style="left:225px">
         <div class="tool-bar" style="border-bottom:1px solid #dfe0e0">
             <div>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{media.semesterid?'最近一学期':'最近一学年'}} <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a ng-click="media.getTerm()">最近一学期</a></li>
-                        <li><a ng-click="media.getYear()">最近一学年</a></li>
-                    </ul>
-                </div>
+                <select ng-model="media.schoolyearid" ng-change="media.yearSelect()">
+                    <option value="">请选择学年</option>
+                    <option ng-repeat="year in treeTerm" value="{{year.schoolYearId}}">{{year.schoolYearName}}</option>
+                </select>
+            </div>
+            <div>
+                <select ng-model="media.semesterid" ng-change="media.termSelect()">
+                    <option value="">全部</option>
+                    <option ng-repeat="term in media.termList || []" value="{{term.semesterId}}">{{term.semesterName}}</option>
+                </select>
             </div>
         </div>
         <div id="mychart" chart style="height:300px;border-bottom:1px solid #dfe0e0"></div>

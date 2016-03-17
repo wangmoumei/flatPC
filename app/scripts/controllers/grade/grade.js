@@ -167,6 +167,54 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             else{
                 refresh();
             }
+        },
+        downloadGrade:function(){
+            if(this.tab == 2){
+                GradeService.download({
+                    epage:this.epage,
+                    pagesize:this.pagesize,
+                    liveareaid:this.liveareaid,
+                    campusid:this.campusid,
+                    studentnumber:this.studentnumber,
+                    name:this.name,
+                    roomname:this.roomname,
+                    orderfield:this.orderfield,
+                    ordertype:this.ordertype,
+                    flatid:this.flatid1,
+                    semesterid:$rootScope.treeTerm[this.yearIndex].semesterList[this.termIndex].semesterId,
+                    currentweek:this.week
+                }).success(function (data) {
+                    $rootScope.loading = false;
+                    if(data.code == 0){
+                        location.href = data.data.fileUrl;
+                    }
+                    else
+                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    //console.log(data);
+                });
+            }else if(this.tab == 3){
+                GradeService.downloadTopList({
+                    epage:this.epage,
+                    pagesize:this.pagesize,
+                    liveareaid:this.liveareaid,
+                    campusid:this.campusid,
+                    studentnumber:this.studentnumber,
+                    orderfield:this.orderfield,
+                    ordertype:this.ordertype,
+                    flatid:this.flatid1,
+                    semesterid:$rootScope.treeTerm[this.yearIndex].semesterList[this.termIndex].semesterId,
+                    currentweek:this.week,
+                    tobed:this.tobed
+                }).success(function (data) {
+                    $rootScope.loading = false;
+                    if(data.code == 0){
+                        location.href = data.data.fileUrl;
+                    }
+                    else
+                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    //console.log(data);
+                });
+            }
         }
     }
     
@@ -500,8 +548,8 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
         },
         bedGrade:function(fun){
             var grades = "[",that = this;
-            if(that.bed&& that.bed.length>0){
-                that.bedGrade(fun);
+            if(!(that.bed && that.bed.length>0)){
+                return;
             }else if(that.img){
                 that.gradeImg(fun);
             }
@@ -516,7 +564,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             if(grades.length > 2)
                 grades = grades.substring(0,grades.length-1) + ']';
             else return;
-            console.log(grades);
+            // console.log(grades);
             if(grades.length > 0){
                 $rootScope.loading = true;
                 if(this.item.bedScoreId){

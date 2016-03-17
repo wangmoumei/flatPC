@@ -26,6 +26,7 @@ angular.module('flatpcApp')
                 year.semesterList.forEach(function (term,j) {
                     if(term.isCurrent){
                         that.schoolyearid = year.schoolYearId;
+                        that.yearSelect();
                         if(n)
                             return;
                         else refresh();
@@ -33,6 +34,7 @@ angular.module('flatpcApp')
                     }
                     if(i == $rootScope.treeTerm.length - 1 && j == year.semesterList.length - 1){
                         that.schoolyearid = $rootScope.treeTerm[0].schoolYearId;
+                        that.yearSelect();
                         if(n)
                             return;
                         else refresh();
@@ -63,6 +65,19 @@ angular.module('flatpcApp')
                     }   
                 })
             })
+        },
+        termList:null,
+        yearSelect : function(){
+            this.termList = null;
+            this.semesterid = "";
+            if(this.schoolyearid){
+                refresh();
+                var list = $filter('filter')($rootScope.treeTerm,{ schoolYearId:this.schoolyearid });
+                this.termList = list[0]?list[0].semesterList:[];
+            }
+        },
+        termSelect: function () {
+            refresh();
         }
     }
     $scope.show = function (item,campus,liveArea) {

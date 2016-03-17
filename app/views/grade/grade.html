@@ -145,7 +145,7 @@
                         </form>
                     </div>
                     <div>
-                        <a class="btn btn-default">数据导出</a>
+                        <a ng-click="media.downloadGrade()" class="btn btn-default">数据导出</a>
                     </div>
                 </div>
                 <div class="table-container" style="top:50px;bottom:50px;background-color:#fff;">
@@ -232,7 +232,7 @@
                         </div>
                     </div>
                     <div>
-                        <a class="btn btn-default">数据导出</a>
+                        <a ng-click="media.downloadGrade()" class="btn btn-default">数据导出</a>
                     </div>
                 </div>
                 <div class="table-container" style="top:50px;background-color:#fff;">
@@ -386,7 +386,7 @@
                                     <div class="album" album>
                                         <ul>
                                             <li ng-repeat="img in cardMedia.img"><img src="{{img.picUrl}}" /></li>
-                                            <li class="album-plus" input-file change="uploadImg()"><span class="ALiconfont icon-plus3"></span></li> 
+                                            <li class="album-plus" input-file change="uploadImg()" ng-hide="media.tab>1 || !menuCheck(191)"><span class="ALiconfont icon-plus3"></span></li> 
                                         </ul>
                                         <div class="album-frame" style="bottom:50px;top:40px;">
                                             <div>
