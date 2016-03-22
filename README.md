@@ -5,7 +5,7 @@ version 0.14.0.
 
 ## Install
 
-环境搭建 for Max OS X     
+环境搭建 for Mac OS X     
 先在app store安装xcode    
 接着百度搜索nodejs官网，下载并安装    
 打开命令行，安装grunt    
