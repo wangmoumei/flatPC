@@ -11,10 +11,10 @@ angular.module('flatpcApp')
   .controller('LoginCtrl',['$scope', 'PublicService','$rootScope','AppConfig','$location','authority',function($scope, PublicService,$rootScope,AppConfig,$location,authority) {
         $rootScope.loginSwitch = false;
         $scope.media = {
-            user:'',
+            user:localStorage.username || "",
             pass:'',
             code:'',
-            rem:false,
+            rem:localStorage.remember?true:false,
             sessionid:''
         }
         PublicService.session({
@@ -48,6 +48,15 @@ angular.module('flatpcApp')
                         sessionStorage.roleId = data.data.roleId;
                         sessionStorage.userAccount = data.data.userAccount;
                         sessionStorage.isOpenBed = data.data.isOpenBed;
+                        if($scope.media.rem){
+                            localStorage.username = $scope.media.user;
+                            localStorage.remember = 1;
+                        }
+                        else {
+                            ocalStorage.username = "";
+                            localStorage.remember = 0;
+                        }
+                        
                         // if(AppConfig.adminId && AppConfig.token && AppConfig.nodeIds && AppConfig.schoolCode && AppConfig.userName && AppConfig.roleName && AppConfig.roleId && AppConfig.userAccount){
                         //     $location.path('/index');
                         //     $rootScope.loginSwitch = true;

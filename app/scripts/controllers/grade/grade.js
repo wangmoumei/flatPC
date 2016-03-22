@@ -222,7 +222,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
     $scope.cardMedia = {
         tab:1,
         setTab:function (n) {
-            if(n < 1 || n > 3) return;
+            if(n < 1 || n > 4) return;
             this.tab = n;
             switch(n){
                 case 1:

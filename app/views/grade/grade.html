@@ -314,6 +314,7 @@
                                 <li ng-if="menuCheck(188)" ng-click="cardMedia.setTab(1)" ng-class="{'active':cardMedia.tab ==1}">寝室分</li>
                                 <li ng-if="menuCheck(189)" ng-click="cardMedia.setTab(2)" ng-class="{'active':cardMedia.tab ==2}">床位分</li>
                                 <li ng-if="menuCheck(190)" ng-click="cardMedia.setTab(3)" ng-class="{'active':cardMedia.tab ==3}">照片</li>
+                                <li ng-if="menuCheck(265)" ng-click="cardMedia.setTab(4)" ng-class="{'active':cardMedia.tab ==4}">寝室违章</li>
                             </ul>
                             <ul class="page-tabs-container grade-container grade-tool-on" >
                                 <li ng-if="menuCheck(188)" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==1}">
@@ -396,6 +397,9 @@
                                         <div class="album-frame-off" style="top:50px;"><i class="ALiconfont icon-close"></i></div>
                                         <div class="album-empty" ng-show="(media.tab>1 || !menuCheck(191)) && cardMedia.img.length < 1">没有照片上传记录</div>
                                     </div>
+                                </li>
+                                <li ng-if="menuCheck(265)" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==4}">
+                                    aaa
                                 </li>
                             </ul>
                         </div>

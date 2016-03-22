@@ -550,15 +550,6 @@ angular
                 controller: 'HeaderCtrl'
             }
         }
-    })
-    .state('404', {
-        url: "/missing",
-        views: {
-            "otherwise": {
-                templateUrl: '404.html',
-                controller: 'MissingCtrl'
-            }
-        }
     });
     $urlRouterProvider.otherwise('/login');
   });
