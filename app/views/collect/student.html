@@ -305,9 +305,9 @@
                                 </tr>
                                 <tr>
                                     <td colspan="4">
-                                        <a ng-if="menuCheck(214)" class="btn btn-success" ng-show="!student.type" ng-click="studentAdd()">提交</a>
+                                        <a ng-if="menuCheck(214)" class="btn btn-success" ng-show="!student.type" ng-click="studentAdd(closeCard('#studentForm'))">提交</a>
                                         <a ng-if="menuCheck(216)" class="btn btn-info" ng-show="student.type" ng-click="studentEdit()">保存修改</a>
-                                        <a ng-if="menuCheck(215)" class="btn btn-danger" ng-show="student.type" ng-click="studentDel()">删除</a>
+                                        <a ng-if="menuCheck(215)" class="btn btn-danger" ng-show="student.type" ng-click="studentDel(closeCard('#studentForm'))">删除</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -339,7 +339,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <a class="btn btn-success" ng-click="subImport()">确认导入</a>
+                                        <a class="btn btn-success" ng-click="subImport(closeCard('#multiAdd'))">确认导入</a>
                                     </td>
                                 </tr>
                             </tbody>

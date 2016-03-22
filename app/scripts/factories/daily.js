@@ -220,7 +220,13 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });
     }
-    
+    var getCheckTree = function(param){
+        var url = AppConfig.WEB_ROOT + 'apartment/approval/get_list/?'
+        + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token;
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
+    }
     return {
         getLiveList:getLiveList,
         addLive:addLive,
@@ -237,6 +243,7 @@ angular.module('flatpcApp')
         backQuit:backQuit,
         passQuit:passQuit,
         cancelQuit:cancelQuit,
-        getCheckList:getCheckList
+        getCheckList:getCheckList,
+        getCheckTree:getCheckTree
     }
 }]);

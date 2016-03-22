@@ -73,4 +73,19 @@
             font-size: 12px;
         }
     }
+    .album-empty{
+        position: absolute;
+        top:150px;bottom: 0;left: 0;right: 0;
+        text-align: center;
+        &::before{
+            font-family: "ALiconfont" !important;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -webkit-text-stroke-width: 0.2px;
+            -moz-osx-font-smoothing: grayscale;
+            content: "\e66f";
+            font-size: 30px;
+            display: block;
+        }
+    }
 }

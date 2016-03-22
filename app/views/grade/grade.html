@@ -315,7 +315,7 @@
                                 <li ng-if="menuCheck(189)" ng-click="cardMedia.setTab(2)" ng-class="{'active':cardMedia.tab ==2}">床位分</li>
                                 <li ng-if="menuCheck(190)" ng-click="cardMedia.setTab(3)" ng-class="{'active':cardMedia.tab ==3}">照片</li>
                             </ul>
-                            <ul class="page-tabs-container grade-container" ng-class="{'grade-tool-on':media.tab==1 && menuCheck(191)}">
+                            <ul class="page-tabs-container grade-container grade-tool-on" >
                                 <li ng-if="menuCheck(188)" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==1}">
                                     <table class="table table-bordered bg-white">
                                         <thead>
@@ -338,14 +338,14 @@
                                                 <td colspan="10" ng-show="category.itemList.length < 1" class="empty">没有打分记录</td>
                                             </tr>
                                         </tbody>
-                                        <tbody>
+                                        <tfoot>
                                             <tr>
                                                 <td colspan="10" ng-hide="cardMedia.room" class="start" style="height:300px">加载中..</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="10" ng-show="cardMedia.room && cardMedia.room.length < 1" class="empty">没有记录</td>
+                                                <td colspan="10" ng-show="cardMedia.room && cardMedia.room.length < 1" style="height:300px" class="empty">没有记录</td>
                                             </tr>
-                                        </tbody>
+                                        </tfoot>
                                         <tfoot ng-show="cardMedia.room">
                                             <tr><td></td><td>总计</td><td class="grade-number">{{cardMedia.getSum()}}</td></tr>
                                         </tfoot>
@@ -372,14 +372,14 @@
                                                 <td colspan="10" ng-show="bed.itemList.length < 1" class="empty">{{media.item.bedScoreId?'没有打分记录':'没有设置床位打分项'}}</td>
                                             </tr>
                                         </tbody>
-                                        <tbody>
+                                        <tfoot>
                                             <tr>
                                                 <td colspan="10" ng-hide="cardMedia.bed" class="start" style="height:300px">加载中..</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="10" ng-show="cardMedia.bed && cardMedia.bed.length < 1" class="empty">没有记录</td>
+                                                <td colspan="10" ng-show="cardMedia.bed && cardMedia.bed.length < 1" style="height:300px" class="empty">没有记录</td>
                                             </tr>
-                                        </tbody>
+                                        </tfoot>
                                     </table>
                                 </li>
                                 <li ng-if="menuCheck(190)" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==3}">
@@ -394,19 +394,20 @@
                                             </div>
                                         </div>
                                         <div class="album-frame-off" style="top:50px;"><i class="ALiconfont icon-close"></i></div>
+                                        <div class="album-empty" ng-show="(media.tab>1 || !menuCheck(191)) && cardMedia.img.length < 1">没有照片上传记录</div>
                                     </div>
                                 </li>
                             </ul>
                         </div>
-                        <div class="grade-tool-bar" ng-if="media.tab==1 && menuCheck(191)">
+                        <div class="grade-tool-bar">
                             <div>
-                                <a class="btn" ng-click="cardMedia.setData(0)" ng-class="{'btn-default disabled':!cardMedia.getPrev(),'btn-stroke btn-info':cardMedia.getPrev()}"><i class="ALiconfont icon-sortleft"></i></a>
+                                <a class="btn" ng-click="cardMedia.setTab(cardMedia.tab-1)" ng-class="{'btn-default disabled':cardMedia.tab-1<1,'btn-stroke btn-info':cardMedia.tab-1>0}"><i class="ALiconfont icon-sortleft"></i></a>
                             </div>
                             <div>
-                                <a class="btn btn-info" ng-click="cardMedia.gradeSave(closeCard('#gradeCard'))">保存并关闭</a>
+                                <a ng-if="media.tab==1 && menuCheck(191)" class="btn btn-info" ng-click="cardMedia.gradeSave(closeCard('#gradeCard'))">保存并关闭</a>
                             </div>
                             <div>
-                                <a class="btn" ng-click="cardMedia.setData(1)" ng-class="{'disabled btn-default':!cardMedia.getNext(),'btn-stroke btn-info':cardMedia.getNext()}"><i class="ALiconfont icon-sortright"></i></a>
+                                <a class="btn" ng-click="cardMedia.setTab(cardMedia.tab+1)" ng-class="{'disabled btn-default':cardMedia.tab+1>3,'btn-stroke btn-info':cardMedia.tab+1<4}"><i class="ALiconfont icon-sortright"></i></a>
                             </div>
                         </div>
                     </div>

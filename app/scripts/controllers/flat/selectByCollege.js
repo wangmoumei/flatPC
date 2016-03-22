@@ -91,6 +91,8 @@ angular.module('flatpcApp')
                 $scope.studentList = data.data.list;
                 $scope.media.recordCount = data.data.recordCount;
                 $scope.media.pageCount = data.data.pageCount;
+                $scope.media.inRoomNum = data.data.inRoomNum;
+                $scope.media.notRoomNum = data.data.notRoomNum;
                 $scope.option.legend.data = $filter('ObjToArray')(data.data.distribution,'flatName') || [];
                 $scope.option.series[0].data = [];
                 data.data.distribution.forEach(function (item) {
@@ -99,6 +101,7 @@ angular.module('flatpcApp')
                         name:item.flatName
                     })
                 })
+                console.log($scope.option);
                 $scope.myChart.setOption($scope.option); 
             }
             else

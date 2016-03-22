@@ -50,8 +50,8 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             refresh();
         },
         setSearch : function(search){
-            this.name = this.search?'':search;
-            this.studentnumber = this.search == 1?search:'';
+            this.studentnumber = this.search?'':search;
+            this.name = this.search == 1?search:'';
             this.roomname = this.search == 2?search:'';
             // console.log(this);
             refresh();
@@ -222,6 +222,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
     $scope.cardMedia = {
         tab:1,
         setTab:function (n) {
+            if(n < 1 || n > 3) return;
             this.tab = n;
             switch(n){
                 case 1:
@@ -379,6 +380,10 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     }
                         
                     else{
+                        if($scope.media.tab > 1){
+                            that.bed = [];
+                            return;
+                        }
                         $rootScope.loading = true;
                         RoomService.getStudentByRoomId({roomid:this.item.roomId}).success(function (data) {
                             $rootScope.loading = false;
@@ -517,6 +522,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     });
                 }
                 else{
+                    
                     GradeService.setGrade({
                         token:AppConfig.token,
                         schoolcode:AppConfig.schoolCode,
@@ -648,6 +654,11 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                 }
             });
+        },
+        menuCheck:function(){
+            
+            
+            return false;
         }
     }
     //上传打分图片，并将返回的img url显示

@@ -282,6 +282,12 @@ table{
         vertical-align:middle !important;
         text-align:center !important;
     }
+    td.multi-deal-box{
+        .btn{
+            float: right;
+            margin-left: 20px;
+        }
+    }
 }
 
 .floor-list{
@@ -350,7 +356,6 @@ table{
                 color: #4bb622;
             }
             .room-item{
-                min-width: 100px;
                 position: relative;
                 overflow: hidden;
                 text-align: center;
@@ -371,7 +376,7 @@ table{
                     line-height: 30px;
                 }
                 &>div:first-of-type{
-                    width: 100px;
+                    min-width: 100px;
                     background-color: #f6f7f8;
                     border-right:1px solid #dedfdf;
                     color: #333;

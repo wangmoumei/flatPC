@@ -7,15 +7,15 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         pageCount:1,
         recordCount:0,
         pagesize:10,
+        type:'occupancy',
+        title:'日常调换宿 - 入住',
         name:'',
         studentnumber:'',
-        campusid:'',
-        liveareaid:'',
-        flatid:'',
         search:0,
         orderfield:'',
         ordertype:'',
-        status:-1
+        status:-1,
+        multi:false
     }
     //换页
     $scope.setPage = function(n){
@@ -41,11 +41,9 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         refresh();
     }
     //调整查询规则，按学区、生活区或者楼栋查询
-    $scope.show = function(type,item){
-        $scope.media.campusid = item.campusId || "";
-        $scope.media.liveareaid = item.liveAreaId || "";
-        $scope.media.flatid = item.flatId || "";
-        
+    $scope.show = function(type,item,title){
+        $scope.media.type = item.controller || "";
+        $scope.media.title = title + ' - ' + item.title;
         refresh();
     };
     //调整查询规则，计划中、已审批、已取消、已驳回
@@ -59,30 +57,66 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         $scope.media.studentnumber = $scope.media.search?search:'';
         refresh();
     };
-    //初始化树+列表
-    if(!$rootScope.treeFlat){
-        FlatService.getList(AppConfig.schoolCode).success(function(data){
-            if(data.code == 0){
-                $rootScope.treeFlat = data.data;
-                refresh();
-            }
-            else{
-                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-            }
-            $rootScope.loading = false;
-        });
-    }
-    else {
-        refresh();
-    }
+    
     //渲染list
     function refresh(){
         $rootScope.loading = true;
-        DailyService.getCheckList($scope.media).success(function(data){
+        switch( $scope.media.type ){
+            case 'occupancy':
+                DailyService.getLiveList($scope.media).success(function(data){
+                    if(data.code == 0){
+                        $scope.list = data.data.list;
+                        $scope.media.recordCount = data.data.recordCount;
+                        $scope.media.pageCount = data.data.pageCount;
+                    }
+                    else{
+                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    }
+                    
+                    //console.log(data.data);
+                    $rootScope.loading = false;
+                })
+                break;
+            case 'transfer':
+                DailyService.getChangeList($scope.media).success(function(data){
+                    if(data.code == 0){
+                        $scope.list = data.data.list;
+                        $scope.media.recordCount = data.data.recordCount;
+                        $scope.media.pageCount = data.data.pageCount;
+                    }
+                    else{
+                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    }
+                    
+                    //console.log(data.data);
+                    $rootScope.loading = false;
+                })
+                break;
+            case 'exitroom':
+                DailyService.getQuitList($scope.media).success(function(data){
+                    if(data.code == 0){
+                        $scope.list = data.data.list;
+                        $scope.media.recordCount = data.data.recordCount;
+                        $scope.media.pageCount = data.data.pageCount;
+                    }
+                    else{
+                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    }
+                    
+                    //console.log(data.data);
+                    $rootScope.loading = false;
+                })
+                break;
+        }
+        
+    }
+    pageFresh();
+    function pageFresh() {
+        $rootScope.loading = true;
+        DailyService.getCheckTree().success(function(data){
             if(data.code == 0){
-                $scope.list = data.data.list;
-                $scope.media.recordCount = data.data.recordCount;
-                $scope.media.pageCount = data.data.pageCount;
+                $scope.treeCheck = data.list;
+                refresh();
             }
             else{
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
@@ -92,7 +126,6 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
             $rootScope.loading = false;
         })
     }
-    
     //查看详情
     $scope.work = {};
     $scope.detail = function(work){
@@ -108,63 +141,368 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
     }
     //审批
     $scope.passWork = function(fun){
-        $rootScope.loading = true;
-        DailyService.passChange({
-            token:AppConfig.token,
-            occupancyid:$scope.work.occupancyId || '',
-            adminid:AppConfig.adminId
-        }).success(function(data){
-            if(data.code == 0){
-                swal("提示", "审批成功！", "success"); 
-                if(fun && typeof fun == 'function') fun();
-                refresh();
+        swal({   
+            title: "确认",   
+            text: "确定要通过这条申请吗？",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#2772ee",   
+            confirmButtonText: "确定",   
+            cancelButtonText: "取消",   
+            closeOnConfirm: false 
+        }, 
+        function(){   
+            $rootScope.loading = true;
+            switch( $scope.media.type ){
+                case 'occupancy':
+                    DailyService.passLive({
+                        token:AppConfig.token,
+                        occupancyid:$scope.work.occupancyId || '',
+                        adminid:AppConfig.adminId
+                    }).success(function(data){
+                        if(data.code == 0){
+                            swal("提示", "审批成功！", "success"); 
+                            pageFresh();
+                            if(fun && typeof fun == 'function')fun();
+                        }
+                        else
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                        
+                        $rootScope.loading = false;
+                    });
+                    break;
+                case 'transfer':
+                    DailyService.passChange({
+                        token:AppConfig.token,
+                        transferid:$scope.work.transferId || '',
+                        adminid:AppConfig.adminId
+                    }).success(function(data){
+                        if(data.code == 0){
+                            swal("提示", "审批成功！", "success"); 
+                            pageFresh();
+                            if(fun && typeof fun == 'function')fun();
+                        }else{
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                        }
+                        
+                        $rootScope.loading = false;
+                    });
+                    break;
+                case 'exitroom':
+                    DailyService.passQuit({
+                        token:AppConfig.token,
+                        exitroomid:$scope.work.exitRoomId || '',
+                        adminid:AppConfig.adminId
+                    }).success(function(data){
+                        if(data.code == 0){
+                            swal("提示", "审批成功！", "success"); 
+                            pageFresh();
+                            if(fun && typeof fun == 'function')fun();
+                        }
+                        else
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error");
+                        
+                        $rootScope.loading = false;
+                    });
+                    break;
             }
-            else{
-                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-            }
-            
-            $rootScope.loading = false;
         });
+        
+        
     }
     //驳回
     $scope.returnWork = function(fun){
         $rootScope.loading = true;
-        DailyService.backChange({
-            token:AppConfig.token,
-            occupancyid:$scope.work.occupancyId || '',
-            backmessage:$scope.work.returnMessage,
-            adminid:AppConfig.adminId
-        }).success(function(data){
-            if(data.code == 0){
-                swal("提示", "驳回成功！", "success");
-                if(fun && typeof fun == 'function') fun();
-                refresh();
-            }
-            else{
-                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-            }
-            
-            $rootScope.loading = false;
-        });
+        switch( $scope.media.type ){
+            case 'occupancy':
+                DailyService.backLive({
+                    token:AppConfig.token,
+                    occupancyid:$scope.work.occupancyId || '',
+                    backmessage:$scope.work.returnMessage,
+                    adminid:AppConfig.adminId
+                }).success(function(data){
+                    if(data.code == 0){
+                        swal("提示", "驳回成功！", "success"); 
+                        pageFresh();
+                        if(fun && typeof fun == 'function')fun();
+                    }
+                    else
+                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    
+                    $rootScope.loading = false;
+                });
+                break;
+            case 'transfer':
+                DailyService.backChange({
+                    token:AppConfig.token,
+                    transferid:$scope.work.transferId || '',
+                    backmessage:$scope.work.returnMessage,
+                    adminid:AppConfig.adminId
+                }).success(function(data){
+                    if(data.code == 0){
+                        swal("提示", "驳回成功！", "success"); 
+                        pageFresh();
+                        if(fun && typeof fun == 'function')fun();
+                    }else{
+                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    }
+                    $rootScope.loading = false;
+                });
+                break;
+            case 'exitroom':
+                DailyService.backQuit({
+                    token:AppConfig.token,
+                    exitroomid:$scope.work.exitRoomId || '',
+                    backmessage:$scope.work.returnMessage,
+                    adminid:AppConfig.adminId
+                }).success(function(data){
+                    if(data.code == 0){
+                        swal("提示", "驳回成功！", "success"); 
+                        pageFresh();
+                        if(fun && typeof fun == 'function')fun();
+                    }
+                    else
+                        swal("提示","错误代码："+ data.code + '，' + data.msg, "error");
+                    
+                    $rootScope.loading = false;
+                });
+                break;
+        }
     }
     //取消
     $scope.cancelWork = function(fun){
-        $rootScope.loading = true;
-        DailyService.cancelChange({
-            token:'',
-            occupancyid:$scope.work.occupancyId || '',
-            adminid:AppConfig.adminId
-        }).success(function(data){
-            if(data.code == 0){
-                swal("提示", "已取消！", "success"); 
-                if(fun && typeof fun == 'function') fun();
-                refresh();
+        swal({   
+            title: "确认关闭",   
+            text: "确定要取消掉这条申请吗？",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "确定",   
+            cancelButtonText: "取消",   
+            closeOnConfirm: false 
+        }, 
+        function(){   
+            $rootScope.loading = true;
+            switch( $scope.media.type ){
+                case 'occupancy':
+                    return DailyService.cancelLive({
+                        token:AppConfig.token,
+                        occupancyid:$scope.work.occupancyId || '',
+                        adminid:AppConfig.adminId
+                    }).success(function(data){
+                        if(data.code == 0){
+                            swal("提示", "已取消！", "success"); 
+                            pageFresh();
+                            if(fun && typeof fun == 'function')fun();
+                        }
+                        else
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                        
+                        $rootScope.loading = false;
+                    });
+                    // break;
+                case 'transfer':
+                    DailyService.cancelChange({
+                        token:AppConfig.token,
+                        transferid:$scope.work.transferId || '',
+                        adminid:AppConfig.adminId
+                    }).success(function(data){
+                        if(data.code == 0){
+                            swal("提示", "已取消！", "success"); 
+                            pageFresh();
+                            if(fun && typeof fun == 'function')fun();
+                        }else{
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                        }
+                        $rootScope.loading = false;
+                    });
+                    break;
+                case 'exitroom':
+                    DailyService.cancelQuit({
+                        token:AppConfig.token,
+                        exitroomid:$scope.work.exitRoomId || '',
+                        adminid:AppConfig.adminId
+                    }).success(function(data){
+                        if(data.code == 0){
+                            swal("提示", "已取消！", "success"); 
+                            pageFresh();
+                            if(fun && typeof fun == 'function')fun();
+                        }
+                        else
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error");
+                        
+                        $rootScope.loading = false;
+                    });
+                    break;
             }
-            else{
-                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+        });
+        
+    }
+    $scope.multiCheck = function () {
+        $scope.list.forEach(function (item) {
+            if(!item.status)
+                item.checked = $scope.media.multi;
+        })
+    }
+    $scope.multiChecked = function (status) {
+        $scope.list.forEach(function (item) {
+            if(!item.status && item.checked != status)
+                return;
+        })
+        $scope.media.multi = status;
+    }
+    $scope.multiBack = function () {
+        var ids = "",n = 0;
+        $scope.list.forEach(function (item) {
+            if(!item.status && item.checked){
+                ids+= (item.occupancyId||item.transferId||item.exitRoomId) +","; 
+                n++;
             }
-            $rootScope.loading = false;
+        });
+        if(n>0){
+            ids = ids.substring(0,ids.length - 1);
+        }else
+            return;
+        swal({   
+            title: "确认",   
+            text: "确定要驳回这" + n + "条申请吗？",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "确定",   
+            cancelButtonText: "取消",   
+            closeOnConfirm: false 
+        }, 
+        function(){   
+            $rootScope.loading = true;
+            switch( $scope.media.type ){
+                case 'occupancy':
+                    DailyService.backLive({
+                        token:AppConfig.token,
+                        occupancyid:ids,
+                        backmessage:$scope.work.returnMessage,
+                        adminid:AppConfig.adminId
+                    }).success(function(data){
+                        if(data.code == 0){
+                            swal("提示", "驳回成功！", "success"); 
+                            pageFresh();
+                        }
+                        else
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                        
+                        $rootScope.loading = false;
+                    });
+                    break;
+                case 'transfer':
+                    DailyService.backChange({
+                        token:AppConfig.token,
+                        transferid:ids,
+                        backmessage:$scope.work.returnMessage,
+                        adminid:AppConfig.adminId
+                    }).success(function(data){
+                        if(data.code == 0){
+                            swal("提示", "驳回成功！", "success"); 
+                            pageFresh();
+                        }else{
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                        }
+                        $rootScope.loading = false;
+                    });
+                    break;
+                case 'exitroom':
+                    DailyService.backQuit({
+                        token:AppConfig.token,
+                        exitroomid:ids,
+                        backmessage:$scope.work.returnMessage,
+                        adminid:AppConfig.adminId
+                    }).success(function(data){
+                        if(data.code == 0){
+                            swal("提示", "驳回成功！", "success"); 
+                            pageFresh();
+                        }
+                        else
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error");
+                        
+                        $rootScope.loading = false;
+                    });
+                    break;
+            }
         });
     }
-    
+    $scope.multiPass = function () {
+        var ids = "",n = 0;
+        $scope.list.forEach(function (item) {
+            if(!item.status && item.checked){
+                ids+= (item.occupancyId||item.transferId||item.exitRoomId) +","; 
+                n++;
+            }
+        });
+        if(n>0){
+            ids = ids.substring(0,ids.length - 1);
+        }else
+            return;
+        swal({   
+            title: "确认",   
+            text: "确定要通过这" + n + "条申请吗？",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#2772ee",   
+            confirmButtonText: "确定",   
+            cancelButtonText: "取消",   
+            closeOnConfirm: false 
+        }, 
+        function(){   
+            $rootScope.loading = true;
+            switch( $scope.media.type ){
+                case 'occupancy':
+                    DailyService.passLive({
+                        token:AppConfig.token,
+                        occupancyid:ids,
+                        adminid:AppConfig.adminId
+                    }).success(function(data){
+                        if(data.code == 0){
+                            swal("提示", "审批成功！", "success"); 
+                            pageFresh();
+                        }
+                        else
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                        
+                        $rootScope.loading = false;
+                    });
+                    break;
+                case 'transfer':
+                    DailyService.passChange({
+                        token:AppConfig.token,
+                        transferid:ids,
+                        adminid:AppConfig.adminId
+                    }).success(function(data){
+                        if(data.code == 0){
+                            swal("提示", "审批成功！", "success"); 
+                            pageFresh();
+                        }else{
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                        }
+                        
+                        $rootScope.loading = false;
+                    });
+                    break;
+                case 'exitroom':
+                    DailyService.passQuit({
+                        token:AppConfig.token,
+                        exitroomid:ids,
+                        adminid:AppConfig.adminId
+                    }).success(function(data){
+                        if(data.code == 0){
+                            swal("提示", "审批成功！", "success"); 
+                            pageFresh();
+                        }
+                        else
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error");
+                        
+                        $rootScope.loading = false;
+                    });
+                    break;
+            }
+        });
+    }
 }]);

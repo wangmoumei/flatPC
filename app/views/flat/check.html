@@ -11,7 +11,7 @@
 </div>
 <div class="tool-bar" style="margin-left:225px;">
     <div class="bar-full">
-        日常审批
+        {{media.title}}
     </div>
     <div class="group-tool">
         <div class="btn-group">
@@ -46,18 +46,13 @@
     <div class="page-tree" tree style="top:-50px;">
         <ul>
             <li class="open">
-                <a ng-class="{'branch':treeFlat.cmpusList,'leaf':!treeFlat.cmpusList}" ng-click="show(0,treeFlat)">{{treeFlat.title}}</a>
-                <ul ng-show="treeFlat.cmpusList">
-                    <li class="open" ng-repeat="campus in treeFlat.cmpusList||[]">
-                        <a ng-class="{'branch':campus.liveAreaList,'leaf':!campus.liveAreaList}" ng-click="show(1,campus)">{{campus.title}}</a>
-                        <ul ng-show="campus.liveAreaList">
-                            <li class="open" ng-repeat="liveArea in campus.liveAreaList||[]">
-                                <a ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}" ng-click="show(2,liveArea)">{{liveArea.title}}</a>
-                                <ul ng-show="liveArea.flatList">
-                                    <li ng-repeat="flat in liveArea.flatList||[]">
-                                        <a class="leaf" ng-click="show(3,flat)">{{flat.title}}</a>
-                                    </li>
-                                </ul>
+                <a class="branch">所有</a>
+                <ul ng-show="treeCheck">
+                    <li class="open" ng-repeat="item in treeCheck||[]">
+                        <a ng-class="{'branch':item.subNodes && item.subNodes.length>0,'leaf':!item.subNodes}">{{item.title}}</a>
+                        <ul ng-show="item.subNodes">
+                            <li ng-repeat="item1 in item.subNodes||[]">
+                                <a ng-class="leaf" ng-click="show(2,item1,item.title)">{{item1.title + "（" + item1.number + "）"}}</a>
                             </li>
                         </ul>
                     </li>
@@ -66,7 +61,7 @@
         </ul>
     </div>
     <div class="table-container" style="left:225px;bottom:54px;">
-        <table class="table table-bordered table-hover bg-white" style="margin:-1px 0 0 -1px">
+        <table class="table  table-hover bg-white" style="margin:-1px 0 0 -1px">
             <thead>
                 <tr>
                     <th>状态</th>
@@ -76,6 +71,7 @@
                     <th>入住床位</th>
                     <th>备注</th>
                     <th>操作</th>
+                    <th><input ng-model="media.multi" type="checkbox" ng-change="multiCheck()"  /></th>
                 </tr>
             </thead>
             <tbody>
@@ -86,12 +82,19 @@
                         </div>
                     </td>
                     <td>{{live.addTime}}</td><td>{{live.name}}</td><td>{{live.studentNumber}}</td><td>{{live.roomPath}}</td><td>{{live.memo}}</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="showCard('#setCheck',detail(live))">查看详情</button></td>
+                    <td><button type="button" class="btn btn-link btn-xs" ng-click="showCard('#setCheck',detail(live))">{{live.status==0?'审批':'查看'}}</button></td>
+                    <td><input type="checkbox" ng-change="multiChecked(live.checked)" value="{{live.occupancyId||live.transferId||live.exitRoomId}}" ng-disabled="live.status" ng-model="live.checked" /></td>
                 </tr>
             </tbody>
             <tfoot>
-                <tr>
-                    <td colspan="10" ng-hide="media.recordCount" class="empty">没有检索到相关登记纪录</td>
+                <tr ng-hide="media.recordCount">
+                    <td colspan="8" class="empty">没有检索到相关登记纪录</td>
+                </tr>
+                <tr ng-show="media.recordCount">
+                    <td class="multi-deal-box" colspan="8">
+                        <a ng-click="multiBack()" class="btn btn-stroke btn-danger">批量驳回</a>
+                        <a ng-click="multiPass()" class="btn btn-stroke btn-success">批量审批</a>
+                    </td>
                 </tr>
             </tfoot>
         </table>

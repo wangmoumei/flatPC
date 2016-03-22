@@ -156,7 +156,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
         })
     }
     //添加学生信息
-    $scope.studentAdd = function(){
+    $scope.studentAdd = function(fun){
         $rootScope.loading = true;
         return StudentService.addStudent({
             token:AppConfig.token,
@@ -184,6 +184,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
                 $scope.student.type = 1;
                 swal("提示", "添加成功！", "success"); 
                 refresh();
+                if(fun && typeof fun == 'function') fun();
             }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
@@ -223,7 +224,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
         })
     }
     //删除学生信息
-    $scope.studentDel = function(){       
+    $scope.studentDel = function(fun){       
         swal({   
                 title: "确认删除",   
                 text: "真的要删除吗？",   
@@ -245,6 +246,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
                     if(data.code == 0){
                         swal("提示", "删除成功！", "success"); 
                         refresh();
+                        if(fun && typeof fun == 'function') fun();
                     }
                     else
                         swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
@@ -380,7 +382,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
         uploadExcel = files[0];
         $scope.$digest();
     };
-    $scope.subImport = function(){
+    $scope.subImport = function(fun){
         if(!uploadExcel)return;
         var form = document.createElement('form');
         form.enctype = 'multipart/form-data';
@@ -397,6 +399,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
             //console.log(data);
             if(data.code == 0){
                 swal("提示","上传成功！", "success");
+                if(fun && typeof fun == 'function') fun();
             }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 

@@ -13,12 +13,12 @@
     <div class="bar-full" style="min-width:160px">
         {{media.title}}
     </div>
-    <div>
-        总人数：
+    <!div>
+        总人数：{{media.inRoomNum + media.notRoomNum}}
 
-        已住人数：
+        已住人数：{{media.inRoomNum}}
 
-        未住人数：
+        未住人数：{{media.notRoomNum}}
     </div>
 </div>
 <div class="page-main">
@@ -41,26 +41,27 @@
     </div>
     <div class="page-tabs" tabs style="left:225px">
         <ul class="page-tabs-nav">
-            <li ng-if="menuCheck(25)" class="active">人员分布</li>
-            <li ng-if="menuCheck(26)">人员查询</li>
+            <li class="active">人员分布</li>
+            <li>人员查询</li>
         </ul>
         <ul class="page-tabs-container">
-            <li ng-if="menuCheck(25)" class="fadeIn animated active">
-                <div id="mychart" pie></div>
+            <li class="fadeIn animated active">
                 <div class="chart-missing" ng-hide="media.recordCount">
                     暂无数据
                 </div>
+                <div id="mychart" pie style="height:300px"></div>
+                
             </li>
-            <li ng-if="menuCheck(26)" class="fadeIn animated">
+            <li class="fadeIn animated">
                 <div class="search-bar">
                     <div>
                         <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{media.search?'姓名':'学号'}} <span class="caret"></span>
+                                {{media.search?'学号':'姓名'}} <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" style="min-width:66px">
-                                <li ng-click="media.search=0"><a>学号</a></li>
-                                <li ng-click="media.search=1"><a>姓名</a></li>
+                                <li ng-click="media.search=0"><a>姓名</a></li>
+                                <li ng-click="media.search=1"><a>学号</a></li>
                             </ul>
                         </div>
                     </div>
@@ -87,7 +88,7 @@
                         </thead>
                         <tbody class="bg-white">
                             <tr ng-repeat="student in studentList || []">
-                                <td>{{student.studentNumber}}</td><td>{{student.name}}</td><td>{{student.collegeName + student.className + student.grade}}</td><td>{{student.campusName + student.liveAreaName + student.flatName + student.roomName}}</td><td>{{student.bedNum || student.bedName}}</td>
+                                <td>{{student.studentNumber}}</td><td>{{student.name}}</td><td>{{student.collegeName + student.className + student.grade}}</td><td>{{student.isRoom?'/':(student.campusName + student.liveAreaName + student.flatName + student.roomName)}}</td><td>{{student.bedNum || student.bedName}}</td>
                                 <td><a class="btn btn-link btn-xs" ng-click="showCard({selecter:'#studentDetail',before:loadInfo(student.studentKey)})">详情</a></td>
                             </tr>
                         </tbody>
