@@ -232,6 +232,16 @@ table{
             }
         }
     }
+    &.table-setting-form{
+        td{
+            padding: 10px;
+            label{
+                display: inline-block;
+                padding-right: 15px;
+                margin-bottom: 0;
+            }
+        }
+    }
     &.table.middle tbody td{
         vertical-align: middle;
         padding:4px 15px;
@@ -287,6 +297,16 @@ table{
             float: right;
             margin-left: 20px;
         }
+    }
+    td select.form-control{
+        display: inline-block;
+        width: auto;
+        height: 28px;
+    }
+    .form-tips{
+        display: inline-block;
+        font-size: 13px;
+        padding-top: 4px;
     }
 }
 

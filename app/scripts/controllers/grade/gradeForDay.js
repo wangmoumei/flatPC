@@ -1,5 +1,5 @@
 angular.module('flatpcApp')
-.controller('GradeCtrl', ['$scope','AppConfig','$rootScope', 'FlatService','TermService','$filter','GradeService','RoomService','PublicService',
+.controller('GradeForDayCtrl', ['$scope','AppConfig','$rootScope', 'FlatService','TermService','$filter','GradeService','RoomService','PublicService',
 function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeService,RoomService,PublicService) {
     
     $scope.media = {
@@ -222,7 +222,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
     $scope.cardMedia = {
         tab:1,
         setTab:function (n) {
-            if(n < 1 || n > 4) return;
+            if(n < 1 || n > 3) return;
             this.tab = n;
             switch(n){
                 case 1:
@@ -733,7 +733,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
     };
     function getSetting() {
         if(!$rootScope.treeGrade)
-            return GradeService.getSettingList().success(function(data){
+            return GradeService.getSettingList({type:0,isopen:1}).success(function(data){
                 if(data.code == 0){
                     $rootScope.treeGrade = data.data;
                     init();

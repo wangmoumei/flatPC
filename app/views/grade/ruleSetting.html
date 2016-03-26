@@ -1,0 +1,85 @@
+<div class="history-container">
+    <a class="return-btn" href="javascript:history.go(-1)">
+        <i class="ALiconfont icon-sortleft"></i>
+        返回
+    </a>
+    <ul class="history-list">
+        <li><a href="#index" ng-click="routerInit('flat')">公寓管理</a></li>
+        <li><a href="#index">宿舍考评</a></li>
+        <li>违章设置</li>
+    </ul>
+</div>
+<div class="page-main" style="top:49px;">
+    <div class="page-tabs" tabs>
+        <ul class="page-tabs-nav">
+            <li ng-class="{'active':media.tab == 1}" ng-click="media.setTab(1)">违章设置</li>
+            <li ng-class="{'active':media.tab == 2}" ng-click="media.setTab(2)">基础设置</li>
+        </ul>
+        <ul class="page-tabs-container">
+            <li ng-class="{'active':media.tab == 1}" class="fadeIn animated active">
+                <div class="page-tree" tree>
+                    <ul>
+                        <li class="open" ng-repeat="obj in treeRule">
+                            <a ng-class="{'branch':obj.subNodes,'leaf':!obj.subNodes}">{{obj.title}}</a>
+                            <ul ng-show="obj.subNodes">
+                                <li class="open" ng-repeat="category in obj.subNodes||[]">
+                                    <a ng-click="show(1,category)" ng-class="{'branch':category.subNodes,'leaf':!category.subNodes}">{{category.title}}</a>
+                                    <ul ng-show="category.subNodes">
+                                        <li class="open" ng-repeat="option in category.subNodes||[]">
+                                            <a ng-click="show(2,option,category.title)" ng-class="leaf">{{option.title}}</a>
+                                        </li>
+                                        <li><a class="add" ng-click="add(2,category)"><i class="ALiconfont icon-plus1"></i> 添加违章项</a></li>
+                                    </ul>
+                                </li>
+                                <li><a class="add" ng-click="add(1,obj)"><i class="ALiconfont icon-plus1"></i> 添加分类</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="from-container" style="left:225px;">
+                    <table class="table-form table-bordered bg-white">
+                        <tr ng-show="media.type==2">
+                            <td class="require">分类</td><td><input type="text" ng-model="media.parent" disabled /></td>
+                        </tr>
+                        <tr>
+                            <td class="require">{{media.type==2?'违章项目':'分类'}}</td><td><input type="text" ng-model="media.title"/></td>
+                        </tr>
+                        <tr>
+                            <td class="require">排序</td><td><input type="text" ng-model="media.listorder" /></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <div class="btn-box">
+                                    <button ng-show="media.status" ng-click="addSave()" class="btn btn-success">提交</button>
+                                    <button ng-hide="media.status" ng-click="editSave()" class="btn btn-info">保存</button>
+                                    <button ng-hide="media.status" ng-click="delete()" class="btn btn-danger">删除</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </li>
+            <li ng-class="{'active':media.tab == 5}" class="fadeIn animated">
+                <div class="from-container">
+                    <table class="table-form table-setting-form table-bordered bg-white">
+                        <tr>
+                            <td class="require" width="200">违章管理</td>
+                            <td>
+                                <input bs-switch ng-model="media.on" type="checkbox" switch-size="mini" switch-on-text="开" switch-off-text="关">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <div class="btn-box">
+                                    <button class="btn btn-info">保存</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </li>
+        </ul>
+</div>
+</div>

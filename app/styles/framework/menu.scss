@@ -33,6 +33,10 @@
                    background-color: #38adff;
                    color: #fff;
                    margin-bottom: 10px;
+                   &.icon-anquantishi::before{
+                       position: relative;
+                       top:-2px;
+                   }
                }
                &:hover{
                    background: #f0f0f0;

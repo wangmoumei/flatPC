@@ -41,10 +41,10 @@ angular.module('flatpcApp')
                         }else menus.push(' ');
                     }else if(menuCheck(3)){
                         menus.push('admin');
-                        if(menuCheck(12)){
-                            menus.push('role');
-                        }else if(menuCheck(13)){
+                        if(menuCheck(13)){
                             menus.push('admin');
+                        }else if(menuCheck(12)){
+                            menus.push('role');
                         }else menus.push(' ');
                     }
                     menus.push(' ')
@@ -80,9 +80,24 @@ angular.module('flatpcApp')
                     return ['flat','flat','check'];
                 else
                     return null;
-            case 'grade':
+            case 'gradeForWeek':
                 if(menuCheck(60))
-                    return ['flat','grade','grade'];
+                    return ['flat','grade','gradeForWeek'];
+                else
+                    return null;
+            case 'gradeForDay':
+                if(menuCheck(277))
+                    return ['flat','grade','gradeForDay'];
+                else
+                    return null;
+            case 'gradeForMonth':
+                if(menuCheck(278))
+                    return ['flat','grade','gradeForMonth'];
+                else
+                    return null;
+            case 'gradeForSpot':
+                if(menuCheck(279))
+                    return ['flat','grade','gradeForSpot'];
                 else
                     return null;
             case 'visit':
@@ -108,6 +123,11 @@ angular.module('flatpcApp')
             case 'gradeSetting':
                 if(menuCheck(62))
                     return ['flat','grade','gradeSetting'];
+                else
+                    return null;
+            case 'ruleSetting':
+                if(menuCheck(266))
+                    return ['flat','grade','ruleSetting'];
                 else
                     return null;
             case 'floor':

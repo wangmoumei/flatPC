@@ -217,6 +217,10 @@ angular.module('flatpcApp')
             if(data.code == 0){
                  swal("提示","保存成功！", "success"); 
                  refresh();
+                 if($scope.role.roleid == AppConfig.roleId){
+                     sessionStorage.nodeIds = nodeids;
+                     AppConfig.nodeIds = ',' + sessionStorage.nodeIds + ',';
+                 }
             }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 

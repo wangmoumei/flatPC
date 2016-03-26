@@ -53,7 +53,7 @@ angular.module('flatpcApp')
                             localStorage.remember = 1;
                         }
                         else {
-                            ocalStorage.username = "";
+                            localStorage.username = "";
                             localStorage.remember = 0;
                         }
                         
@@ -62,14 +62,14 @@ angular.module('flatpcApp')
                         //     $rootScope.loginSwitch = true;
                         // }
                         if(authority.check()){
-                            $rootScope.treeFlat = null;
-                            $rootScope.treeCollege = null;
-                            $rootScope.treeTerm = null;
-                            $rootScope.treeGrade = null;
-                            $rootScope.treeType = null;
-                            $rootScope.treeGroup = null;
-                            $rootScope.treeMenu = null;
-                            
+                            $rootScope.treeFlat = undefined;
+                            $rootScope.treeCollege = undefined;
+                            $rootScope.treeTerm = undefined;
+                            $rootScope.treeGrade = undefined;
+                            $rootScope.treeType = undefined;
+                            $rootScope.treeGroup = undefined;
+                            $rootScope.treeMenu = undefined;
+                            $rootScope.treeRule = undefined;
                             
                             location.href = '#index';
                             $rootScope.loginSwitch = true;

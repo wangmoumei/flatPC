@@ -23,8 +23,8 @@ angular
       //});
   })
   .constant('AppConfig',{
-      WEB_ROOT:'http://120.55.84.193/Geese_Apartment/',
-    //   WEB_ROOT:'http://test.houqinbao.com/gyxt_api/',
+    //   WEB_ROOT:'http://120.55.84.193/Geese_Apartment/',
+      WEB_ROOT:'http://test.houqinbao.com/gyxt_api/',
       schoolCode:0,
 	  token:'',
       adminId:0,
@@ -194,12 +194,63 @@ angular
             }
         }
     })
-    .state('grade', {
-        url: "/grade",
+    .state('gradeForWeek', {
+        url: "/gradeForWeek",
         views: {
             "": {
                 templateUrl: 'views/grade/grade.html',
-                controller: 'GradeCtrl'
+                controller: 'GradeForWeekCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('gradeForDay', {
+        url: "/gradeForDay",
+        views: {
+            "": {
+                templateUrl: 'views/grade/grade.html',
+                controller: 'GradeForDayCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('gradeForMonth', {
+        url: "/gradeForMonth",
+        views: {
+            "": {
+                templateUrl: 'views/grade/grade.html',
+                controller: 'GradeForMonthCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('gradeForSpot', {
+        url: "/gradeForSpot",
+        views: {
+            "": {
+                templateUrl: 'views/grade/grade.html',
+                controller: 'GradeForSpotCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",
@@ -234,6 +285,23 @@ angular
             "": {
                 templateUrl: 'views/grade/setting.html',
                 controller: 'GradeSettingCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('ruleSetting', {
+        url: "/ruleSetting",
+        views: {
+            "": {
+                templateUrl: 'views/grade/ruleSetting.html',
+                controller: 'RuleSettingCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",

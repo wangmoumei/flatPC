@@ -40,13 +40,13 @@
     <div class="from-container" style="left:225px">
         <div class="tool-bar" style="border-bottom:1px solid #dfe0e0">
             <div>
-                <select ng-model="media.schoolyearid" ng-change="media.yearSelect()">
+                <select class="form-control" ng-model="media.schoolyearid" ng-change="media.yearSelect()">
                     <option value="">请选择学年</option>
                     <option ng-repeat="year in treeTerm" value="{{year.schoolYearId}}">{{year.schoolYearName}}</option>
                 </select>
             </div>
             <div>
-                <select ng-model="media.semesterid" ng-change="media.termSelect()">
+                <select class="form-control" ng-model="media.semesterid" ng-change="media.termSelect()">
                     <option value="">全部</option>
                     <option ng-repeat="term in media.termList || []" value="{{term.semesterId}}">{{term.semesterName}}</option>
                 </select>

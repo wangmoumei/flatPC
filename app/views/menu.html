@@ -71,14 +71,32 @@
         <div class="menu-title">查宿舍</div>
         <ul class="menu-list">
             <li ng-if="menuCheck(60)">
-                <a href="#grade">
-                    <i class="ALiconfont icon-yixiangdengji" style="background-color:#ff9c00;font-size:26px"></i>
-                    卫生打分
+                <a href="#gradeForWeek">
+                    <i class="ALiconfont icon-yixiangdengji" style="background-color:#38adff;font-size:26px"></i>
+                    周评分
+                </a>
+            </li>
+            <li ng-if="menuCheck(277)">
+                <a href="#gradeForDay">
+                    <i class="ALiconfont icon-yixiangdengji" style="background-color:#38adff;font-size:26px"></i>
+                    日评分
+                </a>
+            </li>
+            <li ng-if="menuCheck(278)">
+                <a href="#gradeForMonth">
+                    <i class="ALiconfont icon-yixiangdengji" style="background-color:#38adff;font-size:26px"></i>
+                    月评分
+                </a>
+            </li>
+            <li ng-if="menuCheck(279)">
+                <a href="#gradeForSpot">
+                    <i class="ALiconfont icon-yixiangdengji" style="background-color:#38adff;font-size:26px"></i>
+                    抽查评分
                 </a>
             </li>
             <li ng-if="menuCheck(61)">
                 <a href="#scoreStatistics">
-                    <i class="ALiconfont icon-chart" style="background-color:#fc7257;font-size:26px"></i>
+                    <i class="ALiconfont icon-chart" style="background-color:#02cf97;font-size:26px"></i>
                     打分统计
                 </a>
             </li>
@@ -91,6 +109,12 @@
                 <a href="#gradeSetting">
                     <i class="ALiconfont icon-week1" style="background-color:#ff9c00;font-size:24px"></i>
                     打分设置
+                </a>
+            </li>
+            <li ng-if="menuCheck(266)">
+                <a href="#ruleSetting">
+                    <i class="ALiconfont icon-anquantishi" style="background-color:#fc7257;font-size:28px"></i>
+                    违章设置
                 </a>
             </li>
         </ul>

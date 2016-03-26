@@ -1,0 +1,133 @@
+<div class="history-container">
+    <a class="return-btn" href="javascript:history.go(-1)">
+        <i class="ALiconfont icon-sortleft"></i>
+        返回
+    </a>
+    <ul class="history-list">
+        <li><a href="#index" ng-click="routerInit('flat')">公寓管理</a></li>
+        <li><a href="#index">宿舍考评</a></li>
+        <li>打分设置</li>
+    </ul>
+</div>
+<div class="page-main" style="top:49px;">
+    <div class="page-tabs" tabs>
+        <ul class="page-tabs-nav">
+            <li ng-class="{'active':media.tab == 1}" ng-click="media.setTab(1)">违章设置</li>
+            <li ng-class="{'active':media.tab == 2}" ng-click="media.setTab(2)">基础设置</li>
+        </ul>
+        <ul class="page-tabs-container">
+            <li ng-class="{'active':media.tab == 1}" class="fadeIn animated active" ng-controller="GradeSettingForDayCtrl">
+                <div class="page-tree" tree>
+                    <ul>
+                        <li class="open" ng-repeat="obj in tree">
+                            <a ng-class="{'branch':obj.nodes,'leaf':!obj.nodes}">{{obj.title}}</a>
+                            <ul ng-show="obj.nodes">
+                                <li class="open" ng-repeat="category in obj.nodes||[]">
+                                    <a ng-class="{'branch':category.nodes,'leaf':!category.nodes}">{{category.title}}</a>
+                                    <ul ng-show="category.nodes">
+                                        <li class="open" ng-repeat="option in category.nodes||[]">
+                                            <a ng-class="{'branch':option.nodes,'leaf':!option.nodes}">{{option.title}}</a>
+                                            <ul ng-show="option.nodes">
+                                                <li class="open" ng-repeat="item in option.nodes||[]">
+                                                    <a class="leaf">{{item.title}}</a>
+                                                </li>
+                                                <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a class="add"><i class="ALiconfont icon-plus1"></i> {{$index==1?'添加打分项':'添加分类'}}</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加打分表</a></li>
+                    </ul>
+                </div>
+                <div class="from-container" style="left:225px;">
+                    <table class="table-form table-bordered bg-white">
+                        <tr>
+                            <td class="require" width="200">编号</td><td><input type="text" /></td>
+                        </tr>
+                        <tr>
+                            <td class="require">打分表</td><td><input type="text" /></td>
+                        </tr>
+                        <tr>
+                            <td class="require">分类</td><td><input type="text" /></td>
+                        </tr>
+                        <tr>
+                            <td class="require">打分项目</td><td><input type="text"/></td>
+                        </tr>
+                        <tr>
+                            <td class="require">合格条件</td>
+                            <td>
+                                <select class="form-control">
+                                    <option value="0">合格</option>
+                                    <option value="1">分值</option>
+                                </select>
+                                <input type="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="require">优秀条件</td>
+                            <td>
+                                <select class="form-control">
+                                    <option value="0">合格</option>
+                                    <option value="1">分值</option>
+                                </select>
+                                <input type="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="require">连续次数免检</td>
+                            <td>
+                                <select class="form-control">
+                                    <option value="0">合格</option>
+                                    <option value="1">分值</option>
+                                </select>
+                                <input type="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="require">免检次数</td><td><input type="text" /></td>
+                        </tr>
+                        <tr>
+                            <td class="require">分值</td><td><input type="text" /></td>
+                        </tr>
+                        <tr>
+                            <td class="require">排序</td><td><input type="text" /></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <div class="btn-box">
+                                    <button ng-show="media.status" ng-click="addSave()" class="btn btn-success">提交</button>
+                                    <button ng-hide="media.status" ng-click="editSave()" class="btn btn-info">保存</button>
+                                    <button ng-hide="media.status" ng-click="delete()" class="btn btn-danger">删除</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </li>
+            <li ng-class="{'active':media.tab == 5}" class="fadeIn animated">
+                <div class="from-container">
+                    <table class="table-form table-setting-form table-bordered bg-white">
+                        <tr>
+                            <td class="require" width="200">违章管理</td>
+                            <td>
+                                <input bs-switch ng-model="media.on" type="checkbox" switch-size="mini" switch-on-text="开" switch-off-text="关">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <div class="btn-box">
+                                    <button class="btn btn-info">保存</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </li>
+        </ul>
+</div>
+</div>
