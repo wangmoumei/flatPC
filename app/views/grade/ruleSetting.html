@@ -19,10 +19,10 @@
             <li ng-class="{'active':media.tab == 1}" class="fadeIn animated active">
                 <div class="page-tree" tree>
                     <ul>
-                        <li class="open" ng-repeat="obj in treeRule">
-                            <a ng-class="{'branch':obj.subNodes,'leaf':!obj.subNodes}">{{obj.title}}</a>
-                            <ul ng-show="obj.subNodes">
-                                <li class="open" ng-repeat="category in obj.subNodes||[]">
+                        <li class="open">
+                            <a class="branch">违章项目</a>
+                            <ul>
+                                <li class="open" ng-repeat="category in treeRule||[]">
                                     <a ng-click="show(1,category)" ng-class="{'branch':category.subNodes,'leaf':!category.subNodes}">{{category.title}}</a>
                                     <ul ng-show="category.subNodes">
                                         <li class="open" ng-repeat="option in category.subNodes||[]">

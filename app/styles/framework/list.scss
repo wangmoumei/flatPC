@@ -407,6 +407,7 @@ table{
                         }
                         padding-right:10px;
                     }
+                    
                     &.room-add{
                         color: #4bb622;
                         &::before{
@@ -421,7 +422,13 @@ table{
                     }
                     
                 }
-                
+                a.passed{
+                    color: #4bb622;
+                    background-color: #f2f2f2;
+                }
+                a.fail{
+                    color: #f33;
+                }
                 &>div:nth-of-type(2){
                     -webkit-box-flex:1;
                     box-flex:1;

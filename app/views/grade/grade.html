@@ -9,7 +9,7 @@
         <li>卫生打分</li>
     </ul>
 </div>
-<div class="date-bar">
+<div ng-if="media.source == 0" class="date-bar">
     <div class="term" ng-click="media.setYear(-1)" ng-class="{'prev':media.getYear(-1).year && media.getYear(-1).year}">
         {{media.getYear(-1).year || '没有'}}
         <br>
@@ -20,6 +20,48 @@
         <ul ng-repeat="weeks in media.weekList || []">
             <li ng-repeat="week in weeks" ng-click="media.setWeek(week)" ng-class="{'active':week == media.week,'on':treeTerm[media.yearIndex].semesterList[media.termIndex].isCurrent && week == treeTerm[media.yearIndex].semesterList[media.termIndex].currentWeek}">
                 第{{week}}周
+            </li>
+        </ul>
+    </div>
+    <div class="term" ng-click="media.setYear(1)" ng-class="{'next':media.getYear(1).year && media.getYear(1).year}">
+        {{media.getYear(1).year || '没有'}}
+        <br>
+        {{media.getYear(1).term || '更多的学期'}}
+        <i></i>
+    </div>
+</div>
+<div ng-if="media.source == 1" class="date-bar">
+    <div class="term prev" ng-click="media.setMonth(-1)" style="width:100px">
+        {{media.getMonth(-1).year}}
+        <br>
+        {{media.getMonth(-1).month}}月
+        <i></i>
+    </div>
+    <div class="week-list">
+        <ul ng-repeat="weeks in media.weekList || []">
+            <li ng-repeat="week in weeks" ng-click="media.setWeek(week)" ng-class="{'active':week.day == media.week.day &&week.month == media.week.month && week.year == media.week.year,'on':media.now(week)}">
+                {{week.day}}日
+            </li>
+        </ul>
+    </div>
+    <div class="term next" ng-click="media.setMonth(1)" style="width:100px">
+        {{media.getMonth(1).year}}
+        <br>
+        {{media.getMonth(1).month}}月
+        <i></i>
+    </div>
+</div>
+<div ng-if="media.source == 2" class="date-bar">
+    <div class="term" ng-click="media.setYear(-1)" ng-class="{'prev':media.getYear(-1).year && media.getYear(-1).year}">
+        {{media.getYear(-1).year || '没有'}}
+        <br>
+        {{media.getYear(-1).term || '更早的学期'}}
+        <i></i>
+    </div>
+    <div class="week-list">
+        <ul ng-repeat="weeks in media.weekList || []">
+            <li ng-repeat="week in weeks" ng-click="media.setWeek(week)" ng-class="{'active':week.month == media.week.month && week.year == media.week.year,'on':media.now(week)}">
+                {{week.month}}月
             </li>
         </ul>
     </div>
@@ -71,12 +113,12 @@
     </div>
     <div class="page-tabs" tabs style="left:225px">
         <ul class="page-tabs-nav">
-            <li ng-if="menuCheck(63)" ng-class="{'active':media.tab == 1}" class="" ng-click="media.setTab(1)">打分信息</li>
-            <li ng-if="menuCheck(64)" ng-class="{'active':media.tab == 2}" ng-click="media.setTab(2)">打分查询</li>
-            <li ng-if="menuCheck(65)" ng-class="{'active':media.tab == 3}" ng-click="media.setTab(3)">排行榜</li>
+            <li ng-if="(media.source==0 && menuCheck(63))||(media.source==1 && menuCheck(280))||(media.source==2 && menuCheck(283))" ng-class="{'active':media.tab == 1}" ng-click="media.setTab(1)">打分信息</li>
+            <li ng-if="(media.source==0 && menuCheck(64))||(media.source==1 && menuCheck(281))||(media.source==2 && menuCheck(284))" ng-class="{'active':media.tab == 2}" ng-click="media.setTab(2)">打分查询</li>
+            <li ng-if="(media.source==0 && menuCheck(65))||(media.source==1 && menuCheck(282))||(media.source==2 && menuCheck(285))" ng-class="{'active':media.tab == 3}" ng-click="media.setTab(3)">排行榜</li>
         </ul>
         <ul class="page-tabs-container">
-            <li ng-if="menuCheck(63)" class="fadeIn animated active" ng-class="{'active':media.tab == 1}">
+            <li ng-if="(media.source==0 && menuCheck(63))||(media.source==1 && menuCheck(280))||(media.source==2 && menuCheck(283))" class="fadeIn animated active" ng-class="{'active':media.tab == 1}">
                 <ul class="floor-list">
                     <li ng-repeat="floor in flat.floorList">
                         <div class="floor-title">
@@ -97,19 +139,23 @@
                         </div>
                         <ul class="room-list" ng-repeat="rooms in floor.roomList">
                             <li class="room-item" ng-repeat="room in rooms">
-                                <div ng-class="{'graded':room.roomScoreId}">{{room.roomNum}}</div>
+                                <div ng-class="{'graded':room.roomScoreId}">{{room.purpose?room.purpose:room.roomNum}}</div>
                                 <ul>
-                                    <li ng-if="!room.purpose"><a ng-click="showCard('#gradeCard',cardMedia.dataInit(room))">{{room.roomScoreId?room.score:'尚未打分'}}</a></li>
+                                    <li>
+                                        <a ng-if="room.grade!=2" ng-class="{'fail':room.grade==-1}" ng-click="showCard('#gradeCard',cardMedia.dataInit(room))">
+                                            {{room.roomScoreId?room.score:'尚未打分'}}
+                                        </a>
+                                        <a class="passed" ng-if="room.grade == 2">
+                                            免
+                                        </a>
+                                    </li>
                                 </ul>
-                                <div ng-if="room.purpose" style="min-height:30px">
-                                    <a>{{room.purpose}}</a>
-                                </div>
                             </li>
                         </ul>
                     </li>
                 </ul>
             </li>
-            <li ng-if="menuCheck(64)" class="fadeIn animated" ng-class="{'active':media.tab == 2}">
+            <li ng-if="(media.source==0 && menuCheck(64))||(media.source==1 && menuCheck(281))||(media.source==2 && menuCheck(284))" class="fadeIn animated" ng-class="{'active':media.tab == 2}">
                 <div class="search-bar">
                     <!--div>
                         <select class="form-control">
@@ -223,7 +269,7 @@
                     </div>
                 </div>
             </li>
-            <li ng-if="menuCheck(65)" class="fadeIn animated" ng-class="{'active':media.tab == 3}">
+            <li ng-if="(media.source==0 && menuCheck(65))||(media.source==1 && menuCheck(282))||(media.source==2 && menuCheck(285))" class="fadeIn animated" ng-class="{'active':media.tab == 3}">
                 <div class="search-bar">
                     <div class="bar-full">
                         <div class="btn-group" role="group" ng-show="media.flatid1">
@@ -299,7 +345,7 @@
     
 </div>
 <!--  -->
-<div class="info-card fadeIn animated" id="gradeCard" ng-class="{'grade-simple':media.tab>1 || !menuCheck(191)}" info-card>
+<div class="info-card fadeIn animated" id="gradeCard" ng-class="{'grade-simple':media.tab>1 || !((media.source==0 && menuCheck(191))||(media.source==1 && menuCheck(289))||(media.source==2 && menuCheck(296)))}" info-card>
     <div class="info-card-wrapper">
         <div class="info-card-dialog">
             <div class="info-card-content">
@@ -311,10 +357,10 @@
                     <div class="panel-body grade-panel">
                         <div class="page-tabs" tabs>
                             <ul class="page-tabs-nav">
-                                <li ng-if="menuCheck(188)" ng-click="cardMedia.setTab(1)" ng-class="{'active':cardMedia.tab ==1}">寝室分</li>
-                                <li ng-if="menuCheck(189)" ng-click="cardMedia.setTab(2)" ng-class="{'active':cardMedia.tab ==2}">床位分</li>
-                                <li ng-if="menuCheck(190)" ng-click="cardMedia.setTab(3)" ng-class="{'active':cardMedia.tab ==3}">照片</li>
-                                <li ng-if="menuCheck(265)" ng-click="cardMedia.setTab(4)" ng-class="{'active':cardMedia.tab ==4}">寝室违章</li>
+                                <li ng-if="(media.source==0 && menuCheck(188))||(media.source==1 && menuCheck(286))||(media.source==2 && menuCheck(293))" ng-click="cardMedia.setTab(1)" ng-class="{'active':cardMedia.tab ==1}">寝室分</li>
+                                <li ng-if="(media.source==0 && menuCheck(189))||(media.source==1 && menuCheck(287))||(media.source==2 && menuCheck(294))" ng-click="cardMedia.setTab(2)" ng-class="{'active':cardMedia.tab ==2}">床位分</li>
+                                <li ng-if="(media.source==0 && menuCheck(190))||(media.source==1 && menuCheck(288))||(media.source==2 && menuCheck(295))" ng-click="cardMedia.setTab(3)" ng-class="{'active':cardMedia.tab ==3}">照片</li>
+                                <li ng-if="(media.source==0 && menuCheck(265))||(media.source==1 && menuCheck(290))||(media.source==2 && menuCheck(297))" ng-click="cardMedia.setTab(4)" ng-class="{'active':cardMedia.tab ==4}">寝室违章</li>
                             </ul>
                             <ul class="page-tabs-container grade-container grade-tool-on" >
                                 <li ng-if="menuCheck(188)" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==1}">
@@ -325,13 +371,13 @@
                                         <tbody ng-repeat="category in cardMedia.room || []">
                                             <tr><th>{{category.typeName || category.title}}</th><th></th><th></th></tr>
                                             <tr ng-repeat="item in category.itemList || category.subNodes">
-                                                <td>{{$index + 1}}</td>
-                                                <td>{{item.title + '（' +  (item.maxScore||item.value) + '）'}}</td>
+                                                <td>{{item.number || ($index+1)}}</td>
+                                                <td>{{item.title + (item.standardType?'':('（' +  (item.maxScore||item.fullMark) + '）'))}}</td>
                                                 <td class="grade-handle">
                                                     <div>
-                                                        <div ng-click="cardMedia.grade(-1,item)"><i class="ALiconfont icon-minus3"></i></div>
-                                                        <div ng-class="{'minuses':item.score<(item.maxScore||item.value)}">{{item.score}}</div>
-                                                        <div ng-click="cardMedia.grade(1,item)"><i class="ALiconfont icon-plus3"></i></div>
+                                                        <div ng-if="item.score>-1" ng-click="cardMedia.grade(-1,item)"><i class="ALiconfont icon-minus3"></i></div>
+                                                        <div ng-click="cardMedia.grade(0,item)" ng-class="{'minuses':(item.score>-1 && item.score<(item.maxScore||item.fullMark)),'pass':item.score==-1,'fail':item.score==-2}">{{item.score>-1?item.score:''}}</div>
+                                                        <div ng-if="item.score>-1" ng-click="cardMedia.grade(1,item)"><i class="ALiconfont icon-plus3"></i></div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -358,14 +404,14 @@
                                             <tr><th>序号</th><th>打分项目</th><th>打分</th></tr>
                                         </thead>
                                         <tbody ng-repeat="bed in cardMedia.bed">
-                                            <tr><th>{{bed.bedName || bed.bedNum}}</th><th> -{{bed.studentName + '（' + bed.studentNumber + '）'}}</th><th class="grade-number">{{bed.totalScore}}</th></tr>
+                                            <tr><th>{{bed.bedName || bed.bedNum}}</th><th> -{{bed.studentName + '（' + bed.studentNumber + '）'}}</th><th class="grade-number">{{cardMedia.getBedSum(bed)}}</th></tr>
                                             <tr ng-repeat="item in bed.itemList">
-                                                <td>{{$index + 1}}</td><td>{{item.title + '（' + item.maxScore + '）'}}</td>
+                                                <td>{{item.number || ($index + 1)}}</td><td>{{item.title + (item.standardType?'':('（' + item.maxScore + '）'))}}</td>
                                                 <td class="grade-handle">
                                                     <div>
-                                                        <div ng-click="cardMedia.grade(-1,item)"><i class="ALiconfont icon-minus3"></i></div>
-                                                        <div ng-class="{'minuses':item.score<item.maxScore}">{{item.score}}</div>
-                                                        <div ng-click="cardMedia.grade(1,item)"><i class="ALiconfont icon-plus3"></i></div>
+                                                        <div ng-if="item.score>-1" ng-click="cardMedia.grade(-1,item)"><i class="ALiconfont icon-minus3"></i></div>
+                                                        <div ng-click="cardMedia.grade(0,item)" ng-class="{'minuses':(item.score>-1 && item.score<(item.maxScore||item.fullMark)),'pass':item.score==-1,'fail':item.score==-2}">{{item.score>-1?item.score:''}}</div>
+                                                        <div ng-if="item.score>-1" ng-click="cardMedia.grade(1,item)"><i class="ALiconfont icon-plus3"></i></div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -398,8 +444,53 @@
                                         <div class="album-empty" ng-show="(media.tab>1 || !menuCheck(191)) && cardMedia.img.length < 1">没有照片上传记录</div>
                                     </div>
                                 </li>
-                                <li ng-if="menuCheck(265)" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==4}">
-                                    aaa
+                                <li ng-if="menuCheck(265)" class="fadeIn animated" style="min-height:300px" ng-class="{'active':cardMedia.tab ==4}">
+                                    <table class="table table-bordered bg-white">
+                                        <tbody>
+                                            <tr>
+                                                <td style="min-width:100px">寝室违章</td>
+                                                <td class="rule-handle">
+                                                    <ul>
+                                                        <li class="rule-item" ng-repeat="item in cardMedia.rule.itemList" ng-click="cardMedia.removeRule(cardMedia.rule.itemList,$index)">{{item.itemName}}</li>
+                                                        <li ng-if="media.tab==1" class="dropdown">
+                                                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></button>
+                                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                                <li ng-repeat="rule in rules || []" ng-class="{'dropdown-header':!rule.fid}">
+                                                                    <a ng-if="rule.fid" ng-click="cardMedia.addRule(cardMedia.rule.itemList,rule)">{{rule.title}}</a>
+                                                                    <span ng-if="!rule.fid">{{rule.title}}</span>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr ng-repeat="bed in cardMedia.rule.bedList || []">
+                                                <td style="min-width:100px">{{bed.bedName + '-' + bed.name + '（' + bed.studentNumber + '）'}}</td>
+                                                <td class="rule-handle">
+                                                    <ul>
+                                                        <li class="rule-item" ng-repeat="item in bed.itemList" ng-click="cardMedia.removeRule(bed.itemList,$index)">{{item.itemName}}</li>
+                                                        <li ng-if="media.tab==1" class="dropdown">
+                                                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></button>
+                                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                                <li ng-repeat="rule in rules|| []" ng-class="{'dropdown-header':!rule.fid}">
+                                                                    <a ng-if="rule.fid" ng-click="cardMedia.addRule(bed.itemList,rule)">{{rule.title}}</a>
+                                                                    <span ng-if="!rule.fid">{{rule.title}}</span>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="10" ng-hide="cardMedia.rule" class="start" style="height:300px">加载中..</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10" ng-show="cardMedia.rule && cardMedia.rule.length < 1" style="height:300px" class="empty">没有记录</td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
                                 </li>
                             </ul>
                         </div>
@@ -408,7 +499,7 @@
                                 <a class="btn" ng-click="cardMedia.setTab(cardMedia.tab-1)" ng-class="{'btn-default disabled':cardMedia.tab-1<1,'btn-stroke btn-info':cardMedia.tab-1>0}"><i class="ALiconfont icon-sortleft"></i></a>
                             </div>
                             <div>
-                                <a ng-if="media.tab==1 && menuCheck(191)" class="btn btn-info" ng-click="cardMedia.gradeSave(closeCard('#gradeCard'))">保存并关闭</a>
+                                <a ng-if="media.tab==1 && (media.source==0 && menuCheck(191))||(media.source==1 && menuCheck(289))||(media.source==2 && menuCheck(296))" class="btn btn-info" ng-click="cardMedia.gradeSave(closeCard('#gradeCard'))">保存并关闭</a>
                             </div>
                             <div>
                                 <a class="btn" ng-click="cardMedia.setTab(cardMedia.tab+1)" ng-class="{'disabled btn-default':cardMedia.tab+1>3,'btn-stroke btn-info':cardMedia.tab+1<4}"><i class="ALiconfont icon-sortright"></i></a>

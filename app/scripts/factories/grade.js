@@ -31,13 +31,13 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });
     };
-    var setGrade = function (param) {
+    var setGrade = function (param,type) {
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolcode;
         param.adminid = param.adminid || AppConfig.adminid;
-        param.type = param.type || 0;
+        type = type || 0;
         var url = "";
-        switch (param.type) {
+        switch (type) {
             case 0:
                 url = AppConfig.WEB_ROOT + 'evaluation/weekscore/add_room_score/';
                 break;
@@ -64,13 +64,13 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });//.get(url,param);
     };
-    var editGrade = function (param) {
+    var editGrade = function (param,type) {
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolcode;
         param.adminid = param.adminid || AppConfig.adminid;
-        param.type = param.type || 0;
+        type = type || 0;
         var url = "";
-        switch (param.type) {
+        switch (type) {
             case 0:
                 url = AppConfig.WEB_ROOT + 'evaluation/weekscore/edit_room_score/';
                 break;
@@ -152,13 +152,13 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });
     };
-    var uploadImg = function (param) {
+    var uploadImg = function (param,type) {
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolcode;
         param.adminid = param.adminid || AppConfig.adminid;
-        param.type = param.type || 0;
+        type = type || 0;
         var url = "";
-        switch (param.type) {
+        switch (type) {
             case 0:
                 url = AppConfig.WEB_ROOT + 'evaluation/weekscore/upload_picture/';
                 break;
@@ -185,13 +185,13 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });//.get(url,param);
     };
-    var setBedGrade = function (param) {
+    var setBedGrade = function (param,type) {
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolcode;
         param.adminid = param.adminid || AppConfig.adminid;
-        param.type = param.type || 0;
+        type = type || 0;
         var url = "";
-        switch (param.type) {
+        switch (type) {
             case 0:
                 url = AppConfig.WEB_ROOT + 'evaluation/weekscore/add_bed_score/';
                 break;
@@ -218,11 +218,11 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });//.get(url,param);
     };
-    var editBedGrade = function (param) {
+    var editBedGrade = function (param,type) {
         param.token = param.token || AppConfig.token;
-        param.type = param.type || 0;
+        type = type || 0;
         var url = "";
-        switch (param.type) {
+        switch (type) {
             case 0:
                 url = AppConfig.WEB_ROOT + 'evaluation/weekscore/edit_bed_score/';
                 break;

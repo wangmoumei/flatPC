@@ -23,8 +23,8 @@ angular
       //});
   })
   .constant('AppConfig',{
-    //   WEB_ROOT:'http://120.55.84.193/Geese_Apartment/',
-      WEB_ROOT:'http://test.houqinbao.com/gyxt_api/',
+      WEB_ROOT:'http://120.55.84.193/Geese_Apartment/',
+    //   WEB_ROOT:'http://test.houqinbao.com/gyxt_api/',
       schoolCode:0,
 	  token:'',
       adminId:0,

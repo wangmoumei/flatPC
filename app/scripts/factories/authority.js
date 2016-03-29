@@ -116,7 +116,7 @@ angular.module('flatpcApp')
                 else
                     return null;
             case 'scoreStatistics':
-                if(menuCheck(61))
+                if(menuCheck(301))
                     return ['flat','grade','scoreStatistics'];
                 else
                     return null;
