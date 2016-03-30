@@ -33,7 +33,7 @@ angular.module('flatpcApp')
     };
     var setGrade = function (param,type) {
         param.token = param.token || AppConfig.token;
-        param.schoolcode = param.schoolcode || AppConfig.schoolcode;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
         param.adminid = param.adminid || AppConfig.adminid;
         type = type || 0;
         var url = "";
@@ -66,7 +66,7 @@ angular.module('flatpcApp')
     };
     var editGrade = function (param,type) {
         param.token = param.token || AppConfig.token;
-        param.schoolcode = param.schoolcode || AppConfig.schoolcode;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
         param.adminid = param.adminid || AppConfig.adminid;
         type = type || 0;
         var url = "";
@@ -129,17 +129,18 @@ angular.module('flatpcApp')
             case 0:
                 url = AppConfig.WEB_ROOT + 'evaluation/weekscore/get_pictures/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
+                + '&roomid=' + AppConfig.roomid
                 + '&semesterid=' + (param.semesterid || "") + '&currentweek=' + (param.currentweek || "");
                 break;
             case 1:
                 url = AppConfig.WEB_ROOT + 'evaluation/dayscore/get_pictures/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-                + '&date=' + (param.date || new Date().Format('yyyy-MM-dd'));
+                + '&roomid=' + AppConfig.roomid + '&date=' + (param.date || new Date().Format('yyyy-MM-dd'));
                 break;
             case 2:
                 url = AppConfig.WEB_ROOT + 'evaluation/monthscore/get_pictures/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-                + '&date=' + (param.date || new Date().Format('yyyy-MM'));
+                + '&roomid=' + AppConfig.roomid + '&date=' + (param.date || new Date().Format('yyyy-MM'));
                 break;
             case 3:
                 
@@ -154,7 +155,7 @@ angular.module('flatpcApp')
     };
     var uploadImg = function (param,type) {
         param.token = param.token || AppConfig.token;
-        param.schoolcode = param.schoolcode || AppConfig.schoolcode;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
         param.adminid = param.adminid || AppConfig.adminid;
         type = type || 0;
         var url = "";
@@ -187,7 +188,7 @@ angular.module('flatpcApp')
     };
     var setBedGrade = function (param,type) {
         param.token = param.token || AppConfig.token;
-        param.schoolcode = param.schoolcode || AppConfig.schoolcode;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
         param.adminid = param.adminid || AppConfig.adminid;
         type = type || 0;
         var url = "";
@@ -343,7 +344,7 @@ angular.module('flatpcApp')
             default:
                 break;
         }
-        url = url + 
+        url = url
         + '&epage=' + (param.epage || 1) + '&pagesize=' + (param.pagesize || 10)
         + (param.flatid?('&flatid='+param.flatid):'')
         + (param.floorid?('&floorid='+param.floorid):'')
@@ -383,7 +384,7 @@ angular.module('flatpcApp')
             default:
                 break;
         }
-        url = url + 
+        url = url
         + '&epage=' + (param.epage || 1) + '&pagesize=' + (param.pagesize || 10)
         + (param.flatid?('&flatid='+param.flatid):'')
         + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
@@ -395,7 +396,7 @@ angular.module('flatpcApp')
     };
     var downloadTopList = function (param) {
         param.token = param.token || AppConfig.token;
-        param.schoolcode = param.schoolcode || AppConfig.schoolcode;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
         param.type = param.type || 0;
         var url = "";
         switch (param.type) {
@@ -420,7 +421,7 @@ angular.module('flatpcApp')
             default:
                 break;
         }
-        url = url + 
+        url = url
         + '&epage=' + (param.epage || 1) + '&pagesize=' + (param.pagesize || 10)
         + (param.flatid?('&flatid='+param.flatid):'')
         + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
@@ -509,7 +510,7 @@ angular.module('flatpcApp')
         param = param || {type:0};
         var url = AppConfig.WEB_ROOT + 'evaluation/scsetups/get_list/?'
         + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-        + '&type=' + param.type || 0 
+        + '&type=' + (param.type || 0) 
         + (param.isopen?('&isopen=' + param.isopen):'');
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
@@ -517,7 +518,7 @@ angular.module('flatpcApp')
     };
     var addSetting = function (param) {
         param.token = param.token || AppConfig.token;
-        param.schoolcode = param.schoolcode || AppConfig.schoolcode;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
         var url = AppConfig.WEB_ROOT + 'evaluation/scsetups/add_item/';
         return $http({
             url:url,
@@ -532,7 +533,7 @@ angular.module('flatpcApp')
     };
     var editSetting = function (param) {
         param.token = param.token || AppConfig.token;
-        param.schoolcode = param.schoolcode || AppConfig.schoolcode;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
         var url = AppConfig.WEB_ROOT + 'evaluation/scsetups/edit_item/';
         return $http({
             url:url,
@@ -547,8 +548,8 @@ angular.module('flatpcApp')
     };
     var delSetting = function (param) {
         param.token = param.token || AppConfig.token;
-        param.schoolcode = param.schoolcode || AppConfig.schoolcode;
-        var url = AppConfig.WEB_ROOT + 'evaluation/scsetups/del/';
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
+        var url = AppConfig.WEB_ROOT + 'evaluation/scsetups/del_item/';
         return $http({
             url:url,
             method:"POST",
@@ -562,7 +563,7 @@ angular.module('flatpcApp')
     };
     var editSettingType = function (param) {
         param.token = param.token || AppConfig.token;
-        param.schoolcode = param.schoolcode || AppConfig.schoolcode;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
         var url = AppConfig.WEB_ROOT + 'evaluation/scsetups/edit_type/';
         return $http({
             url:url,
@@ -577,7 +578,7 @@ angular.module('flatpcApp')
     };
     var addSettingTable = function (param) {
         param.token = param.token || AppConfig.token;
-        param.schoolcode = param.schoolcode || AppConfig.schoolcode;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
         var url = AppConfig.WEB_ROOT + 'evaluation/scsetups/add_table/';
         return $http({
             url:url,
@@ -592,7 +593,7 @@ angular.module('flatpcApp')
     };
     var editSettingTable = function (param) {
         param.token = param.token || AppConfig.token;
-        param.schoolcode = param.schoolcode || AppConfig.schoolcode;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
         var url = AppConfig.WEB_ROOT + 'evaluation/scsetups/edit_table/';
         return $http({
             url:url,
@@ -607,8 +608,23 @@ angular.module('flatpcApp')
     };
     var delSettingTable = function (param) {
         param.token = param.token || AppConfig.token;
-        param.schoolcode = param.schoolcode || AppConfig.schoolcode;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
         var url = AppConfig.WEB_ROOT + 'evaluation/scsetups/del_table/';
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
+    };
+    var basicSetting = function (param) {
+        param.token = param.token || AppConfig.token;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
+        var url = AppConfig.WEB_ROOT + 'evaluation/scsetups/base_setup/';
         return $http({
             url:url,
             method:"POST",
@@ -643,6 +659,7 @@ angular.module('flatpcApp')
         editSettingTable:editSettingTable,
         delSettingTable:delSettingTable,
         getStatistics:getStatistics,
-        downloadStatistics:downloadStatistics
+        downloadStatistics:downloadStatistics,
+        basicSetting:basicSetting
     }
 }]);

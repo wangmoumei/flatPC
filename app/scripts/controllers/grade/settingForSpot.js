@@ -17,7 +17,7 @@ function($scope,AppConfig,$rootScope,GradeService) {
         tableTitle:'',
         isopen:true,
         title:'',
-        listorder:'',
+        listorder:1,
         typeid:0,
         itemid:0,
         number:'',
@@ -37,17 +37,17 @@ function($scope,AppConfig,$rootScope,GradeService) {
         $scope.media.status = 0;
         $scope.media.type = type;
         $scope.media.tableTitle = obj || item.title || '';
-        $scope.media.typeTitle = typeof category == 'number'?item.title || '' : category;
+        $scope.media.typeTitle = type>1?category.title || item.title: item.title || '';
         $scope.media.parentTitle = option || item.title || '';
         
         $scope.media.tableid = item.tableId || 0;
-        $scope.media.isopen = (item.isOpen || 0)?false:true;
+        $scope.media.isopen = (item.isOpen || 0)?true:false;
         $scope.media.typeid = item.typeId || 0;
         $scope.media.number = item.number || 0;
         $scope.media.fid = item.fid || 0;
-        $scope.media.fullmark=item.fullmark || 0;
+        $scope.media.fullmark=item.fullMark || 0;
         $scope.media.standardtype=(item.standardType || 0)  + '';
-        $scope.media.listorder=item.listOrder || 0;
+        $scope.media.listorder=item.listOrder || 1;
         $scope.media.title=item.title || '';
         $scope.media.itemid=item.itemId || 0;
         $scope.media.passvalue=item.passValue || 0;
@@ -92,6 +92,7 @@ function($scope,AppConfig,$rootScope,GradeService) {
         
         if((type == 2 && category==1) || type == 3){
             $scope.media.isLeaf = true;
+            $scope.media.standardtype=(type==2?item.standardType:category.standardType)+ '';
         }else{
             $scope.media.isLeaf = false;
         }
@@ -119,7 +120,7 @@ function($scope,AppConfig,$rootScope,GradeService) {
                     schoolcode:AppConfig.schoolCode,
                     type:3,
                     title:$scope.media.tableTitle,
-                    isopen:$scope.media.isopen?0:1,
+                    isopen:$scope.media.isopen?1:0,
                     listorder:$scope.media.listorder
                 })
         })().success(function(data){
@@ -164,7 +165,7 @@ function($scope,AppConfig,$rootScope,GradeService) {
             }else{
                 return GradeService.editSettingTable({
                     token:AppConfig.token,
-                    isopen:$scope.media.isopen?0:1,
+                    isopen:$scope.media.isopen?1:0,
                     title:$scope.media.tableTitle,
                     tableid:$scope.media.tableid,
                     listorder:$scope.media.listorder
@@ -203,13 +204,14 @@ function($scope,AppConfig,$rootScope,GradeService) {
                     else
                         return GradeService.delSettingTable({
                             token:AppConfig.token,
-                            itemid:$scope.media.tableid
+                            tableid:$scope.media.tableid
                         })
                 })().success(function(data){
                     $rootScope.loading = false;
                     if(data.code == 0){
                         swal("提示", "删除成功！", "success"); 
                         $scope.media.type=0;
+                        $scope.media.status=1;
                         refresh();
                     }
                     else
@@ -219,18 +221,17 @@ function($scope,AppConfig,$rootScope,GradeService) {
         });
     }
     
-    
-    if(!$rootScope.treeDay)
-        refresh();
-    else $rootScope.loading = false;
-    function refresh(){
+
+        refresh(true);
+    function refresh(option){
+        if(!option) $rootScope.treeSpot= undefined;
         $rootScope.loading = true;
         return GradeService.getSettingList({
             type:3
         }).success(function(data){
             console.log(data);
             if(data.code == 0){
-                $rootScope.treeDay = data.data;
+                $scope.spot = data.data;
             }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 

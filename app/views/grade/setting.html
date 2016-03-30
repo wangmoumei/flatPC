@@ -22,22 +22,31 @@
             <li ng-class="{'active':media.tab == 1}" class="fadeIn animated active" ng-controller="GradeSettingForWeekCtrl">
                 <div class="page-tree" tree>
                     <ul>
-                        <li class="open" ng-repeat="obj in treeDay">
+                        <li class="open" ng-repeat="obj in week">
                             <a ng-click="show(0,obj)" ng-class="{'branch':obj.typeList,'leaf':!obj.typeList}">{{obj.title}}</a>
                             <ul ng-show="obj.typeList">
-                                <li class="open" ng-repeat="category in obj.typeList||[]">
-                                    <a ng-click="show(1,category,obj.title,$index)" class="branch">{{category.title}}</a>
+                                <li class="open">
+                                    <a ng-click="show(1,obj.typeList[0],obj.title)" class="branch">{{obj.typeList[0].title}}</a>
                                     <ul>
-                                        <li class="open" ng-repeat="option in category.itemList || []">
-                                            <a ng-click="show(2,option,obj.title,category.title)" ng-class="{'branch':option.subNodes,'leaf':!option.subNodes}">{{option.title}}</a>
+                                        <li class="open" ng-repeat="option in obj.typeList[0].itemList || []">
+                                            <a ng-click="show(2,option,obj.title,obj.typeList[0],0)" ng-class="{'branch':option.subNodes,'leaf':!option.subNodes}">{{option.title}}</a>
                                             <ul ng-show="option.subNodes">
                                                 <li class="open" ng-repeat="item in option.subNodes||[]">
-                                                    <a ng-click="show(3,item,obj.title,category.title,option.title)" class="leaf">{{item.title}}</a>
+                                                    <a ng-click="show(3,item,obj.title,obj.typeList[0],option.title)" class="leaf">{{item.title}}</a>
                                                 </li>
-                                                <li><a class="add" ng-click="add(3,option,obj.title,category)"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
+                                                <li><a class="add" ng-click="add(3,option,obj.title,obj.typeList[0])"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
                                             </ul>
                                         </li>
-                                        <li><a class="add" ng-click="add(2,category,obj.title,$index)"><i class="ALiconfont icon-plus1"></i> {{$index==1?'添加打分项':'添加分类'}}</a></li>
+                                        <li><a class="add" ng-click="add(2,obj.typeList[0],obj.title,0)"><i class="ALiconfont icon-plus1"></i> 添加分类</a></li>
+                                    </ul>
+                                </li>
+                                <li class="open">
+                                    <a ng-click="show(1,obj.typeList[1],obj.title)" class="branch">{{obj.typeList[1].title}}</a>
+                                    <ul>
+                                        <li class="open" ng-repeat="option in obj.typeList[1].itemList || []">
+                                            <a ng-click="show(2,option,obj.title,obj.typeList[1],1)" ng-class="leaf">{{option.title}}</a>
+                                        </li>
+                                        <li><a class="add" ng-click="add(2,obj.typeList[1],obj.title,1)"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -68,7 +77,7 @@
                         <tr ng-show="media.isLeaf">
                             <td class="require">打分项目</td><td><input type="text" ng-model="media.title"/></td>
                         </tr>
-                        <tr ng-show="media.type==1&&media.isRoom">
+                        <tr ng-show="media.type==1">
                             <td class="require">合格条件</td>
                             <td>
                                 <select class="form-control" ng-model="media.standardtype">
@@ -80,7 +89,7 @@
                                 <span class="form-tips" ng-show="media.standardtype==1">达到“合格”所需要的打分项的合格数量</span>
                             </td>
                         </tr>
-                        <tr ng-show="media.type==1&&media.isRoom">
+                        <tr ng-show="media.type==1">
                             <td class="require">优秀条件</td>
                             <td>
                                 <select class="form-control" ng-model="media.standardtype">
@@ -92,17 +101,17 @@
                                 <span class="form-tips" ng-show="media.standardtype==1">达到“优秀”所需要的打分项的合格数量</span>
                             </td>
                         </tr>
-                        <tr ng-show="media.type==1&&media.isRoom">
+                        <tr ng-show="media.type==1">
                             <td class="require">免检条件</td>
                             <td>
                                 <input type="text" ng-model="media.passcontinuity" />
                                 <span class="form-tips">达到“免检”所需要的连续“优秀”评级的次数</span> 
                             </td>
                         </tr>
-                        <tr ng-show="media.type==1&&media.isRoom">
+                        <tr ng-show="media.type==1">
                             <td class="require">免检次数</td><td><input type="text" ng-model="media.passnumber" /></td>
                         </tr>
-                        <tr ng-show="media.isLeaf && !media.standardtype">
+                        <tr ng-show="media.isLeaf && media.standardtype==0">
                             <td class="require">分值</td><td><input type="text" ng-model="media.fullmark" /></td>
                         </tr>
                         <tr ng-hide="media.type==1">
@@ -113,8 +122,8 @@
                             <td>
                                 <div class="btn-box">
                                     <button ng-show="media.status" ng-click="addSave()" class="btn btn-success">提交</button>
-                                    <button ng-hide="media.status || (media.type==1&&!media.isRoom)" ng-click="editSave()" class="btn btn-info">保存</button>
-                                    <button ng-hide="media.status || (media.type==1&&!media.isRoom)" ng-click="delete()" class="btn btn-danger">删除</button>
+                                    <button ng-hide="media.status" ng-click="editSave()" class="btn btn-info">保存</button>
+                                    <button ng-hide="media.status" ng-click="delete()" class="btn btn-danger">删除</button>
                                 </div>
                             </td>
                         </tr>
@@ -124,22 +133,31 @@
             <li ng-class="{'active':media.tab == 2}" class="fadeIn animated" ng-controller="GradeSettingForDayCtrl">
                 <div class="page-tree" tree>
                     <ul>
-                        <li class="open" ng-repeat="obj in treeDay">
+                        <li class="open" ng-repeat="obj in day">
                             <a ng-click="show(0,obj)" ng-class="{'branch':obj.typeList,'leaf':!obj.typeList}">{{obj.title}}</a>
                             <ul ng-show="obj.typeList">
-                                <li class="open" ng-repeat="category in obj.typeList||[]">
-                                    <a ng-click="show(1,category,obj.title,$index)" class="branch">{{category.title}}</a>
+                                <li class="open">
+                                    <a ng-click="show(1,obj.typeList[0],obj.title)" class="branch">{{obj.typeList[0].title}}</a>
                                     <ul>
-                                        <li class="open" ng-repeat="option in category.itemList || []">
-                                            <a ng-click="show(2,option,obj.title,category.title)" ng-class="{'branch':option.subNodes,'leaf':!option.subNodes}">{{option.title}}</a>
+                                        <li class="open" ng-repeat="option in obj.typeList[0].itemList || []">
+                                            <a ng-click="show(2,option,obj.title,obj.typeList[0],0)" ng-class="{'branch':option.subNodes,'leaf':!option.subNodes}">{{option.title}}</a>
                                             <ul ng-show="option.subNodes">
                                                 <li class="open" ng-repeat="item in option.subNodes||[]">
-                                                    <a ng-click="show(3,item,obj.title,category.title,option.title)" class="leaf">{{item.title}}</a>
+                                                    <a ng-click="show(3,item,obj.title,obj.typeList[0],option.title)" class="leaf">{{item.title}}</a>
                                                 </li>
-                                                <li><a class="add" ng-click="add(3,option,obj.title,category)"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
+                                                <li><a class="add" ng-click="add(3,option,obj.title,obj.typeList[0])"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
                                             </ul>
                                         </li>
-                                        <li><a class="add" ng-click="add(2,category,obj.title,$index)"><i class="ALiconfont icon-plus1"></i> {{$index==1?'添加打分项':'添加分类'}}</a></li>
+                                        <li><a class="add" ng-click="add(2,obj.typeList[0],obj.title,0)"><i class="ALiconfont icon-plus1"></i> 添加分类</a></li>
+                                    </ul>
+                                </li>
+                                <li class="open">
+                                    <a ng-click="show(1,obj.typeList[1],obj.title)" class="branch">{{obj.typeList[1].title}}</a>
+                                    <ul>
+                                        <li class="open" ng-repeat="option in obj.typeList[1].itemList || []">
+                                            <a ng-click="show(2,option,obj.title,obj.typeList[1],1)" ng-class="leaf">{{option.title}}</a>
+                                        </li>
+                                        <li><a class="add" ng-click="add(2,obj.typeList[1],obj.title,1)"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -170,7 +188,7 @@
                         <tr ng-show="media.isLeaf">
                             <td class="require">打分项目</td><td><input type="text" ng-model="media.title"/></td>
                         </tr>
-                        <tr ng-show="media.type==1&&media.isRoom">
+                        <tr ng-show="media.type==1">
                             <td class="require">合格条件</td>
                             <td>
                                 <select class="form-control" ng-model="media.standardtype">
@@ -182,7 +200,7 @@
                                 <span class="form-tips" ng-show="media.standardtype==1">达到“合格”所需要的打分项的合格数量</span>
                             </td>
                         </tr>
-                        <tr ng-show="media.type==1&&media.isRoom">
+                        <tr ng-show="media.type==1">
                             <td class="require">优秀条件</td>
                             <td>
                                 <select class="form-control" ng-model="media.standardtype">
@@ -194,17 +212,17 @@
                                 <span class="form-tips" ng-show="media.standardtype==1">达到“优秀”所需要的打分项的合格数量</span>
                             </td>
                         </tr>
-                        <tr ng-show="media.type==1&&media.isRoom">
+                        <tr ng-show="media.type==1">
                             <td class="require">免检条件</td>
                             <td>
                                 <input type="text" ng-model="media.passcontinuity" />
                                 <span class="form-tips">达到“免检”所需要的连续“优秀”评级的次数</span> 
                             </td>
                         </tr>
-                        <tr ng-show="media.type==1&&media.isRoom">
+                        <tr ng-show="media.type==1">
                             <td class="require">免检次数</td><td><input type="text" ng-model="media.passnumber" /></td>
                         </tr>
-                        <tr ng-show="media.isLeaf && !media.standardtype">
+                        <tr ng-show="media.isLeaf && media.standardtype==0">
                             <td class="require">分值</td><td><input type="text" ng-model="media.fullmark" /></td>
                         </tr>
                         <tr ng-hide="media.type==1">
@@ -215,8 +233,8 @@
                             <td>
                                 <div class="btn-box">
                                     <button ng-show="media.status" ng-click="addSave()" class="btn btn-success">提交</button>
-                                    <button ng-hide="media.status || (media.type==1&&!media.isRoom)" ng-click="editSave()" class="btn btn-info">保存</button>
-                                    <button ng-hide="media.status || (media.type==1&&!media.isRoom)" ng-click="delete()" class="btn btn-danger">删除</button>
+                                    <button ng-hide="media.status" ng-click="editSave()" class="btn btn-info">保存</button>
+                                    <button ng-hide="media.status" ng-click="delete()" class="btn btn-danger">删除</button>
                                 </div>
                             </td>
                         </tr>
@@ -226,22 +244,31 @@
             <li ng-class="{'active':media.tab == 3}" class="fadeIn animated" ng-controller="GradeSettingForMonthCtrl">
                 <div class="page-tree" tree>
                     <ul>
-                        <li class="open" ng-repeat="obj in treeDay">
+                        <li class="open" ng-repeat="obj in month">
                             <a ng-click="show(0,obj)" ng-class="{'branch':obj.typeList,'leaf':!obj.typeList}">{{obj.title}}</a>
                             <ul ng-show="obj.typeList">
-                                <li class="open" ng-repeat="category in obj.typeList||[]">
-                                    <a ng-click="show(1,category,obj.title,$index)" class="branch">{{category.title}}</a>
+                                <li class="open">
+                                    <a ng-click="show(1,obj.typeList[0],obj.title)" class="branch">{{obj.typeList[0].title}}</a>
                                     <ul>
-                                        <li class="open" ng-repeat="option in category.itemList || []">
-                                            <a ng-click="show(2,option,obj.title,category.title)" ng-class="{'branch':option.subNodes,'leaf':!option.subNodes}">{{option.title}}</a>
+                                        <li class="open" ng-repeat="option in obj.typeList[0].itemList || []">
+                                            <a ng-click="show(2,option,obj.title,obj.typeList[0],0)" ng-class="{'branch':option.subNodes,'leaf':!option.subNodes}">{{option.title}}</a>
                                             <ul ng-show="option.subNodes">
                                                 <li class="open" ng-repeat="item in option.subNodes||[]">
-                                                    <a ng-click="show(3,item,obj.title,category.title,option.title)" class="leaf">{{item.title}}</a>
+                                                    <a ng-click="show(3,item,obj.title,obj.typeList[0],option.title)" class="leaf">{{item.title}}</a>
                                                 </li>
-                                                <li><a class="add" ng-click="add(3,option,obj.title,category)"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
+                                                <li><a class="add" ng-click="add(3,option,obj.title,obj.typeList[0])"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
                                             </ul>
                                         </li>
-                                        <li><a class="add" ng-click="add(2,category,obj.title,$index)"><i class="ALiconfont icon-plus1"></i> {{$index==1?'添加打分项':'添加分类'}}</a></li>
+                                        <li><a class="add" ng-click="add(2,obj.typeList[0],obj.title,0)"><i class="ALiconfont icon-plus1"></i> 添加分类</a></li>
+                                    </ul>
+                                </li>
+                                <li class="open">
+                                    <a ng-click="show(1,obj.typeList[1],obj.title)" class="branch">{{obj.typeList[1].title}}</a>
+                                    <ul>
+                                        <li class="open" ng-repeat="option in obj.typeList[1].itemList || []">
+                                            <a ng-click="show(2,option,obj.title,obj.typeList[1],1)" ng-class="leaf">{{option.title}}</a>
+                                        </li>
+                                        <li><a class="add" ng-click="add(2,obj.typeList[1],obj.title,1)"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -272,7 +299,7 @@
                         <tr ng-show="media.isLeaf">
                             <td class="require">打分项目</td><td><input type="text" ng-model="media.title"/></td>
                         </tr>
-                        <tr ng-show="media.type==1&&media.isRoom">
+                        <tr ng-show="media.type==1">
                             <td class="require">合格条件</td>
                             <td>
                                 <select class="form-control" ng-model="media.standardtype">
@@ -284,7 +311,7 @@
                                 <span class="form-tips" ng-show="media.standardtype==1">达到“合格”所需要的打分项的合格数量</span>
                             </td>
                         </tr>
-                        <tr ng-show="media.type==1&&media.isRoom">
+                        <tr ng-show="media.type==1">
                             <td class="require">优秀条件</td>
                             <td>
                                 <select class="form-control" ng-model="media.standardtype">
@@ -296,17 +323,17 @@
                                 <span class="form-tips" ng-show="media.standardtype==1">达到“优秀”所需要的打分项的合格数量</span>
                             </td>
                         </tr>
-                        <tr ng-show="media.type==1&&media.isRoom">
+                        <tr ng-show="media.type==1">
                             <td class="require">免检条件</td>
                             <td>
                                 <input type="text" ng-model="media.passcontinuity" />
                                 <span class="form-tips">达到“免检”所需要的连续“优秀”评级的次数</span> 
                             </td>
                         </tr>
-                        <tr ng-show="media.type==1&&media.isRoom">
+                        <tr ng-show="media.type==1">
                             <td class="require">免检次数</td><td><input type="text" ng-model="media.passnumber" /></td>
                         </tr>
-                        <tr ng-show="media.isLeaf && !media.standardtype">
+                        <tr ng-show="media.isLeaf && media.standardtype==0">
                             <td class="require">分值</td><td><input type="text" ng-model="media.fullmark" /></td>
                         </tr>
                         <tr ng-hide="media.type==1">
@@ -317,8 +344,8 @@
                             <td>
                                 <div class="btn-box">
                                     <button ng-show="media.status" ng-click="addSave()" class="btn btn-success">提交</button>
-                                    <button ng-hide="media.status || (media.type==1&&!media.isRoom)" ng-click="editSave()" class="btn btn-info">保存</button>
-                                    <button ng-hide="media.status || (media.type==1&&!media.isRoom)" ng-click="delete()" class="btn btn-danger">删除</button>
+                                    <button ng-hide="media.status" ng-click="editSave()" class="btn btn-info">保存</button>
+                                    <button ng-hide="media.status" ng-click="delete()" class="btn btn-danger">删除</button>
                                 </div>
                             </td>
                         </tr>
@@ -328,22 +355,31 @@
             <li ng-class="{'active':media.tab == 4}" class="fadeIn animated" ng-controller="GradeSettingForSpotCtrl">
                 <div class="page-tree" tree>
                     <ul>
-                        <li class="open" ng-repeat="obj in treeDay">
+                        <li class="open" ng-repeat="obj in spot">
                             <a ng-click="show(0,obj)" ng-class="{'branch':obj.typeList,'leaf':!obj.typeList}">{{obj.title}}</a>
                             <ul ng-show="obj.typeList">
-                                <li class="open" ng-repeat="category in obj.typeList||[]">
-                                    <a ng-click="show(1,category,obj.title,$index)" class="branch">{{category.title}}</a>
+                                <li class="open">
+                                    <a ng-click="show(1,obj.typeList[0],obj.title)" class="branch">{{obj.typeList[0].title}}</a>
                                     <ul>
-                                        <li class="open" ng-repeat="option in category.itemList || []">
-                                            <a ng-click="show(2,option,obj.title,category.title)" ng-class="{'branch':option.subNodes,'leaf':!option.subNodes}">{{option.title}}</a>
+                                        <li class="open" ng-repeat="option in obj.typeList[0].itemList || []">
+                                            <a ng-click="show(2,option,obj.title,obj.typeList[0],0)" ng-class="{'branch':option.subNodes,'leaf':!option.subNodes}">{{option.title}}</a>
                                             <ul ng-show="option.subNodes">
                                                 <li class="open" ng-repeat="item in option.subNodes||[]">
-                                                    <a ng-click="show(3,item,obj.title,category.title,option.title)" class="leaf">{{item.title}}</a>
+                                                    <a ng-click="show(3,item,obj.title,obj.typeList[0],option.title)" class="leaf">{{item.title}}</a>
                                                 </li>
-                                                <li><a class="add" ng-click="add(3,option,obj.title,category)"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
+                                                <li><a class="add" ng-click="add(3,option,obj.title,obj.typeList[0])"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
                                             </ul>
                                         </li>
-                                        <li><a class="add" ng-click="add(2,category,obj.title,$index)"><i class="ALiconfont icon-plus1"></i> {{$index==1?'添加打分项':'添加分类'}}</a></li>
+                                        <li><a class="add" ng-click="add(2,obj.typeList[0],obj.title,0)"><i class="ALiconfont icon-plus1"></i> 添加分类</a></li>
+                                    </ul>
+                                </li>
+                                <li class="open">
+                                    <a ng-click="show(1,obj.typeList[1],obj.title)" class="branch">{{obj.typeList[1].title}}</a>
+                                    <ul>
+                                        <li class="open" ng-repeat="option in obj.typeList[1].itemList || []">
+                                            <a ng-click="show(2,option,obj.title,obj.typeList[1],1)" ng-class="leaf">{{option.title}}</a>
+                                        </li>
+                                        <li><a class="add" ng-click="add(2,obj.typeList[1],obj.title,1)"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -374,7 +410,7 @@
                         <tr ng-show="media.isLeaf">
                             <td class="require">打分项目</td><td><input type="text" ng-model="media.title"/></td>
                         </tr>
-                        <tr ng-show="media.type==1&&media.isRoom">
+                        <tr ng-show="media.type==1">
                             <td class="require">合格条件</td>
                             <td>
                                 <select class="form-control" ng-model="media.standardtype">
@@ -386,7 +422,7 @@
                                 <span class="form-tips" ng-show="media.standardtype==1">达到“合格”所需要的打分项的合格数量</span>
                             </td>
                         </tr>
-                        <tr ng-show="media.type==1&&media.isRoom">
+                        <tr ng-show="media.type==1">
                             <td class="require">优秀条件</td>
                             <td>
                                 <select class="form-control" ng-model="media.standardtype">
@@ -398,17 +434,17 @@
                                 <span class="form-tips" ng-show="media.standardtype==1">达到“优秀”所需要的打分项的合格数量</span>
                             </td>
                         </tr>
-                        <tr ng-show="media.type==1&&media.isRoom">
+                        <tr ng-show="media.type==1">
                             <td class="require">免检条件</td>
                             <td>
                                 <input type="text" ng-model="media.passcontinuity" />
                                 <span class="form-tips">达到“免检”所需要的连续“优秀”评级的次数</span> 
                             </td>
                         </tr>
-                        <tr ng-show="media.type==1&&media.isRoom">
+                        <tr ng-show="media.type==1">
                             <td class="require">免检次数</td><td><input type="text" ng-model="media.passnumber" /></td>
                         </tr>
-                        <tr ng-show="media.isLeaf && !media.standardtype">
+                        <tr ng-show="media.isLeaf && media.standardtype==0">
                             <td class="require">分值</td><td><input type="text" ng-model="media.fullmark" /></td>
                         </tr>
                         <tr ng-hide="media.type==1">
@@ -419,8 +455,8 @@
                             <td>
                                 <div class="btn-box">
                                     <button ng-show="media.status" ng-click="addSave()" class="btn btn-success">提交</button>
-                                    <button ng-hide="media.status || (media.type==1&&!media.isRoom)" ng-click="editSave()" class="btn btn-info">保存</button>
-                                    <button ng-hide="media.status || (media.type==1&&!media.isRoom)" ng-click="delete()" class="btn btn-danger">删除</button>
+                                    <button ng-hide="media.status" ng-click="editSave()" class="btn btn-info">保存</button>
+                                    <button ng-hide="media.status" ng-click="delete()" class="btn btn-danger">删除</button>
                                 </div>
                             </td>
                         </tr>
@@ -433,41 +469,41 @@
                         <tr>
                             <td class="require" width="200">开启寝室实拍</td>
                             <td>
-                                <input bs-switch ng-model="media.on" type="checkbox" switch-size="mini" switch-on-text="开" switch-off-text="关">
+                                <input bs-switch ng-model="media.photo" type="checkbox" switch-size="mini" switch-on-text="开" switch-off-text="关">
                             </td>
                         </tr>
                         <tr>
                             <td class="require" width="200">是否必拍</td>
                             <td>
-                                <input bs-switch ng-model="media.on" type="checkbox" switch-size="mini" switch-on-text="是" switch-off-text="否">
+                                <input bs-switch ng-model="media.takephoto" type="checkbox" switch-size="mini" switch-on-text="是" switch-off-text="否">
                             </td>
                         </tr>
                         <tr>
                             <td class="require" width="200">考评周期</td>
                             <td>
-                                <label><input type="checkbox" /> 日</label>
-                                <label><input type="checkbox" /> 周</label>
-                                <label><input type="checkbox" /> 月</label>
-                                <label><input type="checkbox" /> 抽查</label>
+                                <label><input type="checkbox" ng-model="media.day" /> 日</label>
+                                <label><input type="checkbox" ng-model="media.week" /> 周</label>
+                                <label><input type="checkbox" ng-model="media.month" /> 月</label>
+                                <label><input type="checkbox" ng-model="media.check" /> 抽查</label>
                             </td>
                         </tr>
                         <tr>
                             <td class="require" width="200">床位分</td>
                             <td>
-                                <input bs-switch ng-model="media.on" type="checkbox" switch-size="mini" switch-on-text="开" switch-off-text="关">
+                                <input bs-switch ng-model="media.bed" type="checkbox" switch-size="mini" switch-on-text="开" switch-off-text="关">
                             </td>
                         </tr>
                         <tr>
                             <td class="require" width="200">开启免检</td>
                             <td>
-                                <input bs-switch ng-model="media.on" type="checkbox" switch-size="mini" switch-on-text="开" switch-off-text="关">
+                                <input bs-switch ng-model="media.pass" type="checkbox" switch-size="mini" switch-on-text="开" switch-off-text="关">
                             </td>
                         </tr>
                         <tr>
                             <td></td>
                             <td>
                                 <div class="btn-box">
-                                    <button class="btn btn-info">保存</button>
+                                    <button class="btn btn-info" ng-click="basicSave()">保存</button>
                                 </div>
                             </td>
                         </tr>

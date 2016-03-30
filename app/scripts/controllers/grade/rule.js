@@ -8,7 +8,7 @@
  * Controller of the flatpcApp
  */
 angular.module('flatpcApp')
-.controller('RuleSettingCtrl', ['$scope','AppConfig','$rootScope', 'RuleService',
+.controller('RuleCtrl', ['$scope','AppConfig','$rootScope', 'RuleService',
 function($scope,AppConfig,$rootScope,RuleService) {
     $scope.media = {
         tab:1,
@@ -20,8 +20,8 @@ function($scope,AppConfig,$rootScope,RuleService) {
         fid:0,
         parent:'',
         fullmark:0,
-        listorder:1,
-        title:'',
+        listorder:0,
+        title:0,
         itemid:0,
         on:false
     };
@@ -29,8 +29,8 @@ function($scope,AppConfig,$rootScope,RuleService) {
         $scope.media.status = 0;
         $scope.media.type = type;
         $scope.media.parent = parent || '';
-        $scope.media.fullmark=item.fullmark || 0;
-        $scope.media.listorder=item.listOrder || 1;
+        $scope.media.fullmark=item.fullmark;
+        $scope.media.listorder=item.listOrder;
         $scope.media.title=item.title;
         $scope.media.itemid=item.itemId;
     }
@@ -39,9 +39,10 @@ function($scope,AppConfig,$rootScope,RuleService) {
         $scope.media.type = type;
         $scope.media.parent = item.title || '';
         $scope.media.fid = item.itemId || 0;
-        $scope.media.fullmark = 0;
-        $scope.media.listorder =1;
+        $scope.media.fullmark = '';
+        $scope.media.listorder =' ';
         $scope.media.title = '';
+        $scope.media.fullmark = '';
     }
     $scope.addSave = function(){
         $rootScope.loading = true;
@@ -49,7 +50,7 @@ function($scope,AppConfig,$rootScope,RuleService) {
             token:AppConfig.token,
             schoolcode:AppConfig.schoolCode,
             fid:$scope.media.fid,
-            title:$scope.media.title,
+            title:$scope.media.semesterName,
             fullmark:$scope.media.fullmark,
             listorder:$scope.media.listorder
         }).success(function(data){
@@ -68,7 +69,7 @@ function($scope,AppConfig,$rootScope,RuleService) {
         return RuleService.editRule({
             token:AppConfig.token,
             itemid:$scope.media.itemid,
-            title:$scope.media.title,
+            title:$scope.media.semesterName,
             fullmark:$scope.media.fullmark,
             listorder:$scope.media.listorder
         }).success(function(data){

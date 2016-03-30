@@ -358,12 +358,12 @@
                         <div class="page-tabs" tabs>
                             <ul class="page-tabs-nav">
                                 <li ng-if="(media.source==0 && menuCheck(188))||(media.source==1 && menuCheck(286))||(media.source==2 && menuCheck(293))" ng-click="cardMedia.setTab(1)" ng-class="{'active':cardMedia.tab ==1}">寝室分</li>
-                                <li ng-if="(media.source==0 && menuCheck(189))||(media.source==1 && menuCheck(287))||(media.source==2 && menuCheck(294))" ng-click="cardMedia.setTab(2)" ng-class="{'active':cardMedia.tab ==2}">床位分</li>
-                                <li ng-if="(media.source==0 && menuCheck(190))||(media.source==1 && menuCheck(288))||(media.source==2 && menuCheck(295))" ng-click="cardMedia.setTab(3)" ng-class="{'active':cardMedia.tab ==3}">照片</li>
-                                <li ng-if="(media.source==0 && menuCheck(265))||(media.source==1 && menuCheck(290))||(media.source==2 && menuCheck(297))" ng-click="cardMedia.setTab(4)" ng-class="{'active':cardMedia.tab ==4}">寝室违章</li>
+                                <li ng-if="switch.bed && ((media.source==0 && menuCheck(189))||(media.source==1 && menuCheck(287))||(media.source==2 && menuCheck(294)))" ng-click="cardMedia.setTab(2)" ng-class="{'active':cardMedia.tab ==2}">床位分</li>
+                                <li ng-if="switch.photo && ((media.source==0 && menuCheck(190))||(media.source==1 && menuCheck(288))||(media.source==2 && menuCheck(295)))" ng-click="cardMedia.setTab(3)" ng-class="{'active':cardMedia.tab ==3}">照片</li>
+                                <li ng-if="switch.role && ((media.source==0 && menuCheck(265))||(media.source==1 && menuCheck(290))||(media.source==2 && menuCheck(297)))" ng-click="cardMedia.setTab(4)" ng-class="{'active':cardMedia.tab ==4}">寝室违章</li>
                             </ul>
                             <ul class="page-tabs-container grade-container grade-tool-on" >
-                                <li ng-if="menuCheck(188)" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==1}">
+                                <li ng-if="(media.source==0 && menuCheck(188))||(media.source==1 && menuCheck(286))||(media.source==2 && menuCheck(293))" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==1}">
                                     <table class="table table-bordered bg-white">
                                         <thead>
                                             <tr><th>序号</th><th>打分项目</th><th>打分</th></tr>
@@ -398,7 +398,7 @@
                                         </tfoot>
                                     </table>
                                 </li>
-                                <li ng-if="menuCheck(189)" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==2}">
+                                <li ng-if="switch.bed && ((media.source==0 && menuCheck(189))||(media.source==1 && menuCheck(287))||(media.source==2 && menuCheck(294)))" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==2}">
                                     <table class="table table-bordered bg-white">
                                         <thead>
                                             <tr><th>序号</th><th>打分项目</th><th>打分</th></tr>
@@ -429,7 +429,7 @@
                                         </tfoot>
                                     </table>
                                 </li>
-                                <li ng-if="menuCheck(190)" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==3}">
+                                <li ng-if="switch.photo && ((media.source==0 && menuCheck(190))||(media.source==1 && menuCheck(288))||(media.source==2 && menuCheck(295)))" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==3}">
                                     <div class="album" album>
                                         <ul>
                                             <li ng-repeat="img in cardMedia.img"><img src="{{img.picUrl}}" /></li>
@@ -444,7 +444,7 @@
                                         <div class="album-empty" ng-show="(media.tab>1 || !menuCheck(191)) && cardMedia.img.length < 1">没有照片上传记录</div>
                                     </div>
                                 </li>
-                                <li ng-if="menuCheck(265)" class="fadeIn animated" style="min-height:300px" ng-class="{'active':cardMedia.tab ==4}">
+                                <li ng-if="switch.role && ((media.source==0 && menuCheck(265))||(media.source==1 && menuCheck(290))||(media.source==2 && menuCheck(297)))" class="fadeIn animated" style="min-height:300px" ng-class="{'active':cardMedia.tab ==4}">
                                     <table class="table table-bordered bg-white">
                                         <tbody>
                                             <tr>

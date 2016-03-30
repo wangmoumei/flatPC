@@ -15,6 +15,54 @@ function($scope,AppConfig,$rootScope,GradeService) {
         setTab:function (n) {
             this.tab = n;
         },
-        on:false
+        week : AppConfig.week==1?false:true,
+        month : AppConfig.month==1?false:true,
+        day : AppConfig.day==1?false:true,
+        bed : AppConfig.bed==1?false:true,
+        pass : AppConfig.pass==1?false:true,
+        photo : AppConfig.photo==1?false:true,
+        takephoto : AppConfig.takephoto==1?false:true,
+        check : AppConfig.check==1?false:true,
+        role :  AppConfig.role==1?false:true,
     };
+    console.log(AppConfig);
+    $scope.basicSave = function(){
+        $rootScope.loading = true;
+        return GradeService.basicSetting({
+            week:$scope.media.week?0:1,
+            month:$scope.media.month?0:1,
+            day:$scope.media.day?0:1,
+            bed:$scope.media.bed?0:1,
+            pass:$scope.media.pass?0:1,
+            photo:$scope.media.photo?0:1,
+            takephoto:$scope.media.takephoto?0:1,
+            check:$scope.media.check?0:1,
+            role:$scope.media.role?0:1
+        }).success(function (data) {
+            if(data.code == 0){
+                sessionStorage.week = $scope.media.week?0:1;
+                sessionStorage.month = $scope.media.month?0:1;
+                sessionStorage.day = $scope.media.day?0:1;
+                sessionStorage.bed = $scope.media.bed?0:1;
+                sessionStorage.pass = $scope.media.pass?0:1;
+                sessionStorage.photo = $scope.media.photo?0:1;
+                sessionStorage.role = $scope.media.role?0:1;
+                sessionStorage.takephoto = $scope.media.takephoto?0:1;
+                sessionStorage.check = $scope.media.check?0:1;
+                
+                AppConfig.week = $scope.media.week?0:1;
+                AppConfig.month = $scope.media.month?0:1;
+                AppConfig.day = $scope.media.day?0:1;
+                AppConfig.bed = $scope.media.bed?0:1;
+                AppConfig.pass = $scope.media.pass?0:1;
+                AppConfig.photo = $scope.media.photo?0:1;
+                AppConfig.role = $scope.media.role?0:1;
+                AppConfig.takephoto = $scope.media.takephoto?0:1;
+                AppConfig.check = $scope.media.check?0:1;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            $rootScope.loading = false;
+        })
+    }
 }]);

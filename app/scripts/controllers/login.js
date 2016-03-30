@@ -48,6 +48,16 @@ angular.module('flatpcApp')
                         sessionStorage.roleId = data.data.roleId;
                         sessionStorage.userAccount = data.data.userAccount;
                         sessionStorage.isOpenBed = data.data.isOpenBed;
+                        
+                        sessionStorage.week = data.data.week;
+                        sessionStorage.month = data.data.month;
+                        sessionStorage.day = data.data.day;
+                        sessionStorage.bed = data.data.bed;
+                        sessionStorage.pass = data.data.pass;
+                        sessionStorage.photo = data.data.photo;
+                        sessionStorage.role = data.data.role;
+                        sessionStorage.takephoto = data.data.takephoto;
+                        sessionStorage.check = data.data.check;
                         if($scope.media.rem){
                             localStorage.username = $scope.media.user;
                             localStorage.remember = 1;
@@ -70,7 +80,10 @@ angular.module('flatpcApp')
                             $rootScope.treeGroup = undefined;
                             $rootScope.treeMenu = undefined;
                             $rootScope.treeRule = undefined;
-                            
+                            $rootScope.treeDay = undefined;
+                            $rootScope.treeMonth = undefined;
+                            $rootScope.treeMenu = undefined;
+                            $rootScope.treeRule = undefined;
                             location.href = '#index';
                             $rootScope.loginSwitch = true;
                         }

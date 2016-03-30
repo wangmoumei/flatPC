@@ -208,6 +208,16 @@ angular.module('flatpcApp')
         AppConfig.roleId = sessionStorage.roleId;
         AppConfig.userAccount = sessionStorage.userAccount;
         AppConfig.isOpenBed = sessionStorage.isOpenBed;
+        
+        AppConfig.week = sessionStorage.week || 1;
+        AppConfig.month = sessionStorage.month || 1;
+        AppConfig.day = sessionStorage.day || 1;
+        AppConfig.bed = sessionStorage.bed || 1;
+        AppConfig.pass = sessionStorage.pass || 1;
+        AppConfig.photo = sessionStorage.photo || 1;
+        AppConfig.role = sessionStorage.role || 1;
+        AppConfig.takephoto = sessionStorage.takephoto || 1;
+        AppConfig.check = sessionStorage.check || 1;
         if(AppConfig.adminId && AppConfig.token && AppConfig.nodeIds && AppConfig.schoolCode && AppConfig.userName && AppConfig.roleName && AppConfig.roleId && AppConfig.userAccount){
             return true;
         }
