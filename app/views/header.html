@@ -19,7 +19,7 @@
         </ul>
     </div>
     <div class="user-nav">
-        <a>{{media.name}}</a>
+        <div><a>{{media.name}}</a></div>
         <ul>
             <li ng-click="showCard('#newPassword')">修改密码</li>
             <li ng-click="logout()">退出登陆</li>
@@ -70,8 +70,8 @@
     $(document).click(function(){
         var a = event.target;
         $(".user-nav").removeClass("active");
-        if(a && a.parentNode && a.parentNode.className && a.parentNode.className == "user-nav"){
-            $(a.parentNode).addClass("active");
+        if(a && a.parentNode && a.parentNode.parentNode.className && a.parentNode.parentNode.className == "user-nav"){
+            $(a.parentNode.parentNode).addClass("active");
         }
     })
 </script>

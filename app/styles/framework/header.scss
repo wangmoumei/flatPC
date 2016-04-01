@@ -57,8 +57,13 @@
 	cursor: pointer;
 	border-left:1px solid rgba(0,0,0,.2); 
 }
+.page-navbar .user-nav>div{
+    display: table;
+}
 .page-navbar .user-nav a,.page-navbar .menu-nav a{
-	display: block;
+	display: table-cell;
+    line-height: 17px;
+    vertical-align: middle;
 	height: 50px;
 	padding: 0 10px;
 	color: #fff;

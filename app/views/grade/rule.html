@@ -71,6 +71,7 @@
             <thead>
                 <tr>
                     <th class="sort" ng-class="{'sort-up':media.orderfield=='checkTime' && media.ordertype=='asc','sort-down':media.orderfield=='checkTime' && media.ordertype=='desc'}" ng-click="setOrder('checkTime')">日期</th>
+                    <th class="sort" ng-class="{'sort-up':media.orderfield=='campusName' && media.ordertype=='asc','sort-down':media.orderfield=='campusName' && media.ordertype=='desc'}" ng-click="setOrder('campusName')">校区</th>
                     <th class="sort" ng-class="{'sort-up':media.orderfield=='liveAreaName' && media.ordertype=='asc','sort-down':media.orderfield=='liveAreaName' && media.ordertype=='desc'}" ng-click="setOrder('liveAreaName')">生活区</th>
                     <th class="sort" ng-class="{'sort-up':media.orderfield=='flatName' && media.ordertype=='asc','sort-down':media.orderfield=='flatName' && media.ordertype=='desc'}" ng-click="setOrder('flatName')">楼栋</th>
                     <th class="sort" ng-class="{'sort-up':media.orderfield=='roomName' && media.ordertype=='asc','sort-down':media.orderfield=='roomName' && media.ordertype=='desc'}" ng-click="setOrder('roomName')">宿舍号</th>
@@ -81,7 +82,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="item in list">
-                    <td>{{item.checkTime}}</td><td>{{item.liveAreaName}}</td><td>{{item.flatName}}</td><td>{{item.roomName}}</td><td>{{item.bedName}}</td><td>{{item.itemName}}</td>
+                    <td>{{item.checkTime}}</td><td>{{item.roomPath.split('-')[0]}}</td><td>{{item.roomPath.split('-')[1]}}</td><td>{{item.roomPath.split('-')[2]}}</td><td>{{item.roomPath.split('-')[3]}}</td><td>{{item.roomPath.split('-')[4]}}</td><td>{{item.itemName}}</td>
                     <td>
                         <button ng-if="menuCheck(314)" type="button" class="btn btn-link btn-xs" ng-click="showCard('#ruleEdit',detail(item))">编辑</button>
                     </td>
@@ -158,7 +159,7 @@
                             </ul>
                             <ul class="form-tabs-container">
                                 <li class="fadeIn animated active">
-                                    <form class="form-tabs-tool-bar" ng-submit="form.studentSearch()">
+                                    <form class="form-tabs-tool-bar" ng-submit="form.studentSearch(form.roomName)">
                                         <div>
                                             <select class="form-control" ng-change="selecter.campusSelecter()" ng-model="selecter.campusId">
                                                 <option value="">选择校区</option>
@@ -191,9 +192,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-show="form.room"><td>{{form.roomName}}</td><td>/</td><td>/</td><td><a ng-click="form.bedChoose()" class="btn btn-xs btn-link" data-role="next">选择</a></td></tr>
+                                            <tr ng-show="form.room && form.room.roomId"><td>{{form.room.roomNum}}</td><td>/</td><td>/</td><td><a ng-click="form.bedChoose()" class="btn btn-xs btn-link" data-role="next">选择</a></td></tr>
                                             <tr ng-repeat="bed in (form.room?form.room.bedList:[]) || []">
-                                                <td>{{form.roomName}}</td>
+                                                <td>{{form.room.roomNum}}</td>
                                                 <td>{{bed.bedName || bed.bedNum}}</td>
                                                 <td>{{bed.studentName}}（{{bed.studentNumber}}）</td>
                                                 <td><a ng-click="form.bedChoose(bed)" class="btn btn-xs btn-link" data-role="next">选择</a></td>
@@ -204,7 +205,7 @@
                                                 <td colspan="10" ng-hide="form.room" class="start">搜索一下</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="10" ng-show="form.room && form.room.length < 1" class="empty">没有检索到学生信息</td>
+                                                <td colspan="10" ng-show="form.room && !form.room.roomId" class="empty">没有检索到宿舍和学生信息</td>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -285,7 +286,7 @@
                                 <tr>
                                     <td class="require">时间</td>
                                     <td>
-                                        <input  datetimepicker type="text" ng-model="work.checkTime" />
+                                        <input datetimepicker type="text" ng-model="work.checkTime" />
                                     </td>
                                 </tr>
                                 <tr>

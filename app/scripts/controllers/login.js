@@ -40,25 +40,28 @@ angular.module('flatpcApp')
             sessionid:'',
             college:AppConfig.college
         }
-        PublicService.session({
+        /*PublicService.session({
             useraccount:$scope.media.user,
             password:$scope.media.pass,
             code:$scope.media.code
         }).success(function (data) {
             $rootScope.loading = false;
-            if(data.code == 0)
-                $scope.media.sessionid = 'http://120.55.84.193/Geese_Apartment/public/login/get_code/?sessionid=' + data.data.sessionid;
+            if(data.code == 0){
+                $scope.media.img =  'http://120.55.84.193/Geese_Apartment/public/login/get_code/?sessionid=' + data.data.sessionid;
+                $scope.media.sessionid =  data.data.sessionid;
+            }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-        })
+        })*/
+        $rootScope.loading = false;
         $scope.login = function () {
-            if($scope.media.user.length > 0 && $scope.media.pass.length > 0 && $scope.media.code.length > 0){
+            if($scope.media.user.length > 0 && $scope.media.pass.length > 0 /*&& $scope.media.code.length > 0*/){
                 $rootScope.loading = true;
                 PublicService.login({
                     useraccount:$scope.media.user,
                     password:$scope.media.pass,
-                    code:$scope.media.code,
-                    sessionid:$scope.media.sessionid
+                    code:$scope.media.code || '',
+                    sessionid:$scope.media.sessionid || ''
                 }).success(function (data) {
                     $rootScope.loading = false;
                     if(data.code == 0){

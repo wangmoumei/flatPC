@@ -104,7 +104,15 @@ function($scope,AppConfig,$rootScope,RuleService,FlatService,RoomService,$filter
     //查看详情
     $scope.work = {};
     $scope.detail = function(work){
-        $scope.work = work;
+        $scope.work = {
+            name:work.name || '',
+            studentNumber:work.studentNumber ||'',
+            roomPath:work.roomPath,
+            itemId : work.itemId + '',
+            lllegalId : work.lllegalId,
+            memo : work.memo,
+            checkTime : work.checkTime,
+        };
         return null;
     };
     $scope.editSave = function () {
@@ -114,7 +122,7 @@ function($scope,AppConfig,$rootScope,RuleService,FlatService,RoomService,$filter
             schoolcode:AppConfig.schoolCode,
             lllegalid:$scope.work.lllegalId,
             memo:$scope.work.memo,
-            itemid:$scope.work.itemid,
+            itemid:$scope.work.itemId,
             checktime:$scope.work.checkTime
         }).success(function (data) {
             $rootScope.loading = false;
@@ -203,7 +211,7 @@ function($scope,AppConfig,$rootScope,RuleService,FlatService,RoomService,$filter
         $scope.form.roomName = '';
         $scope.form.memo = '';
         $scope.form.itemid = '';
-        $scope.form.checktime = new Date().Format('yyyy-MM-dd');
+        $scope.form.checktime = new Date().Format('yyyy-MM-dd hh:mm');
     }
     $scope.form = {
         student:null,
@@ -211,8 +219,8 @@ function($scope,AppConfig,$rootScope,RuleService,FlatService,RoomService,$filter
         roomName:'',
         memo:'',
         itemid:'',
-        checktime:new Date().Format('yyyy-MM-dd'),
-        studentSearch:function () {
+        checktime:new Date().Format('yyyy-MM-dd hh:mm'),
+        studentSearch:function (search) {
             var that = this;
             if($scope.selecter.flatId.length < 1)return;
             $rootScope.loading = true;
@@ -224,6 +232,7 @@ function($scope,AppConfig,$rootScope,RuleService,FlatService,RoomService,$filter
                 $rootScope.loading = false;
                 if(data.code == 0){
                     that.room = data.data;
+                    if(that.room.roomId )that.room.roomNum = search;
                 }else if(data.code == 4037){
                             swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                             location.href="#login";$rootScope.loading = false;
