@@ -15,6 +15,11 @@ angular.module('flatpcApp')
         name = name || "";
         switch (name){
             case "login":
+            case "nbdx":
+            case "hzsf":
+            case "cslg":
+            case "sqxy":
+            case "sxwl":
                 return ['login'];
             case "index":
                 if($rootScope.sysMenu && $rootScope.sysMenu[0]!='login'){
@@ -100,6 +105,11 @@ angular.module('flatpcApp')
                     return ['flat','grade','gradeForSpot'];
                 else
                     return null;
+            case 'rule':
+                if(menuCheck(307))
+                    return ['flat','grade','rule'];
+                else
+                    return null;
             case 'visit':
                 if(menuCheck(73))
                     return ['flat','check','visit'];
@@ -120,6 +130,11 @@ angular.module('flatpcApp')
                     return ['flat','grade','scoreStatistics'];
                 else
                     return null;
+             case 'ruleStatistics':
+                if(menuCheck(303))
+                    return ['flat','grade','ruleStatistics'];
+                else
+                    return null;       
             case 'gradeSetting':
                 if(menuCheck(62))
                     return ['flat','grade','gradeSetting'];
@@ -225,6 +240,7 @@ angular.module('flatpcApp')
     }
     var menuCheck = function(menu){
         if(AppConfig.nodeIds.length < 2) $location.path('/login');
+        // console.log(AppConfig.nodeIds);
         return new RegExp(',' + menu + ',' ).test(AppConfig.nodeIds);
     }
     return {

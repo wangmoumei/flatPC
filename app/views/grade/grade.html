@@ -216,7 +216,7 @@
                                     <li ng-repeat="bed in room.bedList">{{bed.bedName}}</li>   
                                 </ul></td>
                                 <td class="multi"><ul>
-                                    <li ng-repeat="bed in room.bedList">{{bed.name}}</li>
+                                    <li ng-repeat="bed in room.bedList">{{bed.name + '（' + bed.studentNumber + '）'}}</li>
                                 </ul></td>
                                 <td class="multi"><ul>
                                     <li ng-repeat="bed in room.bedList">{{bed.bedScore}}</li>  
@@ -284,7 +284,10 @@
                 <div class="table-container" style="top:50px;background-color:#fff;">
                     <table class="table table-striped">
                         <thead>
-                            <th>排序</th><th>校区</th><th>生活区</th><th>楼栋</th><th ng-show="media.tobed">宿舍</th><th ng-show="media.tobed">床位</th><th>分数</th><th>操作</th>
+                            <th>排序</th><th>校区</th><th>生活区</th><th>楼栋</th>
+                            <th ng-show="media.type==3">宿舍</th>
+                            <th ng-show="media.tobed && media.type==3">床位</th><th>分数</th>
+                            <th ng-hide="media.type<3">操作</th>
                         </thead>
                         <tbody>
                             <tr ng-repeat="item in topList.dataList">
@@ -292,10 +295,10 @@
                                 <td>{{item.campusName}}</td>
                                 <td>{{item.liveAreaNmae}}</td>
                                 <td>{{item.flatName}}</td>
-                                <td ng-show="media.tobed">{{item.roomName}}</td>
-                                <td ng-show="media.tobed">{{item.bedName}}</td>
+                                <td ng-show="media.type==3">{{item.roomName}}</td>
+                                <td ng-show="media.tobed && media.type==3">{{item.bedName}}</td>
                                 <td>{{item.score}}</td>
-                                <td><a class="btn btn-link btn-xs" ng-click="showCard('#gradeCard',cardMedia.dataInit(item))">详情</a></td></tr>
+                                <td ng-hide="media.type<3"><a class="btn btn-link btn-xs" ng-click="showCard('#gradeCard',cardMedia.dataInit(item))">详情</a></td></tr>
                         </tbody>
                         <tfoot>
                             <tr>
@@ -372,7 +375,7 @@
                                             <tr><th>{{category.typeName || category.title}}</th><th></th><th></th></tr>
                                             <tr ng-repeat="item in category.itemList || category.subNodes">
                                                 <td>{{item.number || ($index+1)}}</td>
-                                                <td>{{item.title + (item.standardType?'':('（' +  (item.maxScore||item.fullMark) + '）'))}}</td>
+                                                <td>{{item.title + (item.standardType?'':('（' +  (item.maxScore||item.fullMark||0) + '）'))}}</td>
                                                 <td class="grade-handle">
                                                     <div>
                                                         <div ng-if="item.score>-1" ng-click="cardMedia.grade(-1,item)"><i class="ALiconfont icon-minus3"></i></div>
@@ -393,7 +396,7 @@
                                                 <td colspan="10" ng-show="cardMedia.room && cardMedia.room.length < 1" style="height:300px" class="empty">没有记录</td>
                                             </tr>
                                         </tfoot>
-                                        <tfoot ng-show="cardMedia.room">
+                                        <tfoot ng-show="cardMedia.room && cardMedia.room.length > 0 "">
                                             <tr><td></td><td>总计</td><td class="grade-number">{{cardMedia.getSum()}}</td></tr>
                                         </tfoot>
                                     </table>
@@ -406,7 +409,7 @@
                                         <tbody ng-repeat="bed in cardMedia.bed">
                                             <tr><th>{{bed.bedName || bed.bedNum}}</th><th> -{{bed.studentName + '（' + bed.studentNumber + '）'}}</th><th class="grade-number">{{cardMedia.getBedSum(bed)}}</th></tr>
                                             <tr ng-repeat="item in bed.itemList">
-                                                <td>{{item.number || ($index + 1)}}</td><td>{{item.title + (item.standardType?'':('（' + item.maxScore + '）'))}}</td>
+                                                <td>{{item.number || ($index + 1)}}</td><td>{{item.title + (item.standardType?'':('（' + item.maxScore||0 + '）'))}}</td>
                                                 <td class="grade-handle">
                                                     <div>
                                                         <div ng-if="item.score>-1" ng-click="cardMedia.grade(-1,item)"><i class="ALiconfont icon-minus3"></i></div>
@@ -432,7 +435,11 @@
                                 <li ng-if="switch.photo && ((media.source==0 && menuCheck(190))||(media.source==1 && menuCheck(288))||(media.source==2 && menuCheck(295)))" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==3}">
                                     <div class="album" album>
                                         <ul>
-                                            <li ng-repeat="img in cardMedia.img"><img src="{{img.picUrl}}" /></li>
+                                            <li class="album-item" ng-repeat="img in cardMedia.img">
+                                                <i class="ALiconfont icon-trash" ng-click="cardMedia.imgDel($index)"></i>
+                                                <img ng-if="img.picUrl" ng-src="{{img.picUrl}}" err-src="http://7xp0c4.com2.z0.glb.qiniucdn.com/default.png"/>
+                                                <p>{{img.checkTime}}</p>
+                                            </li>
                                             <li class="album-plus" input-file change="uploadImg()" ng-hide="media.tab>1 || !menuCheck(191)"><span class="ALiconfont icon-plus3"></span></li> 
                                         </ul>
                                         <div class="album-frame" style="bottom:50px;top:40px;">
@@ -499,10 +506,10 @@
                                 <a class="btn" ng-click="cardMedia.setTab(cardMedia.tab-1)" ng-class="{'btn-default disabled':cardMedia.tab-1<1,'btn-stroke btn-info':cardMedia.tab-1>0}"><i class="ALiconfont icon-sortleft"></i></a>
                             </div>
                             <div>
-                                <a ng-if="media.tab==1 && (media.source==0 && menuCheck(191))||(media.source==1 && menuCheck(289))||(media.source==2 && menuCheck(296))" class="btn btn-info" ng-click="cardMedia.gradeSave(closeCard('#gradeCard'))">保存并关闭</a>
+                                <a ng-if="media.tab==1 && ((media.source==0 && menuCheck(191))||(media.source==1 && menuCheck(289))||(media.source==2 && menuCheck(296)))" class="btn btn-info" ng-click="cardMedia.gradeSave(closeCard('#gradeCard'))">保存并关闭</a>
                             </div>
                             <div>
-                                <a class="btn" ng-click="cardMedia.setTab(cardMedia.tab+1)" ng-class="{'disabled btn-default':cardMedia.tab+1>3,'btn-stroke btn-info':cardMedia.tab+1<4}"><i class="ALiconfont icon-sortright"></i></a>
+                                <a class="btn" ng-click="cardMedia.setTab(cardMedia.tab+1)" ng-class="{'disabled btn-default':cardMedia.tab+1>4,'btn-stroke btn-info':cardMedia.tab+1<5}"><i class="ALiconfont icon-sortright"></i></a>
                             </div>
                         </div>
                     </div>

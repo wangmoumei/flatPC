@@ -8,14 +8,37 @@
  * Controller of the flatpcApp
  */
 angular.module('flatpcApp')
-  .controller('LoginCtrl',['$scope', 'PublicService','$rootScope','AppConfig','$location','authority',function($scope, PublicService,$rootScope,AppConfig,$location,authority) {
+  .controller('LoginCtrl',['$scope', 'PublicService','$rootScope','AppConfig','$location','authority','$state',
+  function($scope, PublicService,$rootScope,AppConfig,$location,authority,$state) {
+    //   console.log($state);
+        switch($state.current.name){
+            case 'nbdx':
+                AppConfig.college = '宁波大学';
+                break;
+            case 'hzsf':
+                AppConfig.college = '湖州师范学院';
+                break;
+            case 'cslg':
+                AppConfig.college = '长沙理工大学';
+                break;
+            case 'sqxy':
+                AppConfig.college = '新乡医学院三全学院';
+                break;
+            case 'sxwl':
+                AppConfig.college = '绍兴文理学院';
+                break;
+            
+        }
+    
+        AppConfig.college = AppConfig.college || '公寓管理系统';
         $rootScope.loginSwitch = false;
         $scope.media = {
             user:localStorage.username || "",
             pass:'',
             code:'',
             rem:localStorage.remember?true:false,
-            sessionid:''
+            sessionid:'',
+            college:AppConfig.college
         }
         PublicService.session({
             useraccount:$scope.media.user,
@@ -24,7 +47,7 @@ angular.module('flatpcApp')
         }).success(function (data) {
             $rootScope.loading = false;
             if(data.code == 0)
-                $scope.media.sessionid = data.data.sessionid;
+                $scope.media.sessionid = 'http://120.55.84.193/Geese_Apartment/public/login/get_code/?sessionid=' + data.data.sessionid;
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })

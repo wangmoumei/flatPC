@@ -13,12 +13,12 @@ angular.module('flatpcApp')
             case 1:
                 url = AppConfig.WEB_ROOT + 'evaluation/dayscore/get_list/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-                + '&flatid=' + (param.flatid || "") + '&date=' + (param.date || new Date().Format('yyyy-MM-dd'));
+                + '&flatid=' + (param.flatid || "") + '&date=' + ( new Date(param.date).Format('yyyy-MM-dd') || new Date().Format('yyyy-MM-dd'));
                 break;
             case 2:
                 url = AppConfig.WEB_ROOT + 'evaluation/monthscore/get_list/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-                + '&flatid=' + (param.flatid || "") + '&date=' + (param.date || new Date().Format('yyyy-MM'));
+                + '&flatid=' + (param.flatid || "") + '&date=' + (new Date(param.date + '-01').Format('yyyy-MM') || new Date().Format('yyyy-MM'));
                 break;
             case 3:
                 
@@ -35,7 +35,7 @@ angular.module('flatpcApp')
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolCode;
         param.adminid = param.adminid || AppConfig.adminid;
-        type = type || 0;
+        type = type || param.type || 0;
         var url = "";
         switch (type) {
             case 0:
@@ -68,7 +68,7 @@ angular.module('flatpcApp')
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolCode;
         param.adminid = param.adminid || AppConfig.adminid;
-        type = type || 0;
+        type = type || param.type || 0;
         var url = "";
         switch (type) {
             case 0:
@@ -129,18 +129,18 @@ angular.module('flatpcApp')
             case 0:
                 url = AppConfig.WEB_ROOT + 'evaluation/weekscore/get_pictures/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-                + '&roomid=' + AppConfig.roomid
+                + '&roomid=' + param.roomid
                 + '&semesterid=' + (param.semesterid || "") + '&currentweek=' + (param.currentweek || "");
                 break;
             case 1:
                 url = AppConfig.WEB_ROOT + 'evaluation/dayscore/get_pictures/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-                + '&roomid=' + AppConfig.roomid + '&date=' + (param.date || new Date().Format('yyyy-MM-dd'));
+                + '&roomid=' + param.roomid + '&date=' + ( new Date(param.date).Format('yyyy-MM-dd') || new Date().Format('yyyy-MM-dd'));
                 break;
             case 2:
                 url = AppConfig.WEB_ROOT + 'evaluation/monthscore/get_pictures/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-                + '&roomid=' + AppConfig.roomid + '&date=' + (param.date || new Date().Format('yyyy-MM'));
+                + '&roomid=' + param.roomid + '&date=' + (new Date(param.date + '-01').Format('yyyy-MM') || new Date().Format('yyyy-MM'));
                 break;
             case 3:
                 
@@ -157,7 +157,7 @@ angular.module('flatpcApp')
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolCode;
         param.adminid = param.adminid || AppConfig.adminid;
-        type = type || 0;
+        type = type || param.type || 0;
         var url = "";
         switch (type) {
             case 0:
@@ -190,7 +190,7 @@ angular.module('flatpcApp')
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolCode;
         param.adminid = param.adminid || AppConfig.adminid;
-        type = type || 0;
+        type = type || param.type || 0;
         var url = "";
         switch (type) {
             case 0:
@@ -221,7 +221,7 @@ angular.module('flatpcApp')
     };
     var editBedGrade = function (param,type) {
         param.token = param.token || AppConfig.token;
-        type = type || 0;
+        type = type || param.type || 0;
         var url = "";
         switch (type) {
             case 0:
@@ -260,11 +260,11 @@ angular.module('flatpcApp')
                 break;
             case 1:
                 url = AppConfig.WEB_ROOT + 'evaluation/dayscore/get_bed_message/?'
-                + 'date=' + (param.date || new Date().Format('yyyy-MM-dd'));
+                + 'date=' + ( new Date(param.date).Format('yyyy-MM-dd') || new Date().Format('yyyy-MM-dd'));
                 break;
             case 2:
                 url = AppConfig.WEB_ROOT + 'evaluation/monthscore/get_bed_message/?'
-                + 'date=' + (param.date || new Date().Format('yyyy-MM'));
+                + 'date=' + (new Date(param.date + '-01').Format('yyyy-MM') || new Date().Format('yyyy-MM'));
                 break;
             case 3:
                 
@@ -289,12 +289,12 @@ angular.module('flatpcApp')
             case 1:
                 url = AppConfig.WEB_ROOT + 'evaluation/dayscore/score_search/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-                + '&date=' + (param.date || new Date().Format('yyyy-MM-dd'));
+                + '&date=' + ( new Date(param.date).Format('yyyy-MM-dd') || new Date().Format('yyyy-MM-dd'));
                 break;
             case 2:
                 url = AppConfig.WEB_ROOT + 'evaluation/monthscore/score_search/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-                + '&date=' + (param.date || new Date().Format('yyyy-MM'));
+                + '&date=' + (new Date(param.date + '-01').Format('yyyy-MM') || new Date().Format('yyyy-MM'));
                 break;
             case 3:
                 
@@ -331,12 +331,12 @@ angular.module('flatpcApp')
             case 1:
                 url = AppConfig.WEB_ROOT + 'evaluation/dayscore/score_search_export/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-                + '&date=' + (param.date || new Date().Format('yyyy-MM-dd'));
+                + '&date=' + ( new Date(param.date).Format('yyyy-MM-dd') || new Date().Format('yyyy-MM-dd'));
                 break;
             case 2:
                 url = AppConfig.WEB_ROOT + 'evaluation/monthscore/score_search_export/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-                + '&date=' + (param.date || new Date().Format('yyyy-MM'));
+                + '&date=' + (new Date(param.date + '-01').Format('yyyy-MM') || new Date().Format('yyyy-MM'));
                 break;
             case 3:
                 
@@ -371,12 +371,12 @@ angular.module('flatpcApp')
             case 1:
                 url = AppConfig.WEB_ROOT + 'evaluation/dayscore/ranking_list/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-                + '&date=' + (param.date || new Date().Format('yyyy-MM-dd'));
+                + '&date=' + ( new Date(param.date).Format('yyyy-MM-dd') || new Date().Format('yyyy-MM-dd'));
                 break;
             case 2:
                 url = AppConfig.WEB_ROOT + 'evaluation/monthscore/ranking_list/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-                + '&date=' + (param.date || new Date().Format('yyyy-MM'));
+                + '&date=' + (new Date(param.date + '-01').Format('yyyy-MM') || new Date().Format('yyyy-MM'));
                 break;
             case 3:
                 
@@ -408,12 +408,12 @@ angular.module('flatpcApp')
             case 1:
                 url = AppConfig.WEB_ROOT + 'evaluation/dayscore/ranking_list_export/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-                + '&date=' + (param.date || new Date().Format('yyyy-MM-dd'));
+                + '&date=' + ( new Date(param.date).Format('yyyy-MM-dd') || new Date().Format('yyyy-MM-dd'));
                 break;
             case 2:
                 url = AppConfig.WEB_ROOT + 'evaluation/monthscore/ranking_list_export/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-                + '&date=' + (param.date || new Date().Format('yyyy-MM'));
+                + '&date=' + (new Date(param.date + '-01').Format('yyyy-MM') || new Date().Format('yyyy-MM'));
                 break;
             case 3:
                 
@@ -436,22 +436,25 @@ angular.module('flatpcApp')
         var url = "";
         switch (param.type) {
             case 0:
+            case '0':
                 url = AppConfig.WEB_ROOT + 'evaluation/statistics/get_week_list/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
                 + '&schoolyearid=' + (param.schoolyearid || '') 
                 + (param.semesterid?('&semesterid='+param.semesterid):'');
                 break;
             case 1:
+            case '1':
                 url = AppConfig.WEB_ROOT + 'evaluation/statistics/get_day_list/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-                + '&startdate=' + (param.startdate || new Date().Format('yyyy-MM'))
-                + '&enddate=' + (param.enddate || new Date().Format('yyyy-MM'));
+                + '&startdate=' + (param.starttime || new Date().Format('yyyy-MM-dd'))
+                + '&enddate=' + (param.endtime || new Date().Format('yyyy-MM-dd'));
                 break;
             case 2:
+            case '2':
                 url = AppConfig.WEB_ROOT + 'evaluation/statistics/get_month_list/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-                + '&startdate=' + (param.startdate || new Date().Format('yyyy-MM'))
-                + '&enddate=' + (param.enddate || new Date().Format('yyyy-MM'));
+                + '&startdate=' + (param.startmonth || new Date().Format('yyyy-MM-dd'))
+                + '&enddate=' + (param.endmonth || new Date().Format('yyyy-MM-dd'));
                 break;
             case 3:
                 
@@ -463,7 +466,7 @@ angular.module('flatpcApp')
         + (param.flatid?('&flatid='+param.flatid):'')
         + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
         + (param.campusid?('&campusid='+param.campusid):'');
-        
+        // alert(url);
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });
@@ -473,22 +476,25 @@ angular.module('flatpcApp')
         var url = "";
         switch (param.type) {
             case 0:
+            case '0':
                 url = AppConfig.WEB_ROOT + 'evaluation/statistics/get_week_export/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
                 + '&schoolyearid=' + (param.schoolyearid || '') 
                 + (param.semesterid?('&semesterid='+param.semesterid):'');
                 break;
             case 1:
+            case '1':
                 url = AppConfig.WEB_ROOT + 'evaluation/statistics/get_day_export/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-                + '&startdate=' + (param.startdate || new Date().Format('yyyy-MM'))
-                + '&enddate=' + (param.enddate || new Date().Format('yyyy-MM'));
+                + '&startdate=' + (param.startdate || new Date().Format('yyyy-MM-dd'))
+                + '&enddate=' + (param.enddate || new Date().Format('yyyy-MM-dd'));
                 break;
             case 2:
+            case '2':
                 url = AppConfig.WEB_ROOT + 'evaluation/statistics/get_month_export/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-                + '&startdate=' + (param.startdate || new Date().Format('yyyy-MM'))
-                + '&enddate=' + (param.enddate || new Date().Format('yyyy-MM'));
+                + '&startdate=' + (param.startdate || new Date().Format('yyyy-MM-dd'))
+                + '&enddate=' + (param.enddate || new Date().Format('yyyy-MM-dd'));
                 break;
             case 3:
                 

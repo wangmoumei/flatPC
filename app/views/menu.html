@@ -94,6 +94,12 @@
                     抽查评分
                 </a>
             </li>
+            <li ng-if="menuCheck(307)">
+                <a href="#rule">
+                    <i class="ALiconfont icon-yixiangdengji" style="background-color:#38adff;font-size:26px"></i>
+                    违章管理
+                </a>
+            </li>
         </ul>
     </li>
     <li ng-if="menuCheck(300)" ng-show="sysMenu[1]=='grade'">
@@ -103,6 +109,12 @@
                 <a href="#scoreStatistics">
                     <i class="ALiconfont icon-chart" style="background-color:#02cf97;font-size:26px"></i>
                     打分统计
+                </a>
+            </li>
+            <li ng-if="menuCheck(303)">
+                <a href="#ruleStatistics">
+                    <i class="ALiconfont icon-chart" style="background-color:#02cf97;font-size:26px"></i>
+                    违章统计
                 </a>
             </li>
         </ul>

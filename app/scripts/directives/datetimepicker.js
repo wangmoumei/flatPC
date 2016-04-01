@@ -31,6 +31,23 @@ angular.module('flatpcApp')
         }
     };
 })
+.directive('monthpicker', function() {
+    return {
+        restrict: 'A',
+        link:function(scope,iElement,iAttrs){
+            iElement.val(new Date().Format("yyyy-MM"));
+            iElement.datetimepicker({
+                format: "yyyy-mm",
+                language:'zh-CN',
+                autoclose: true,
+                todayBtn: true,
+                startView:'year',
+                minView:'year',
+                pickerPosition:'top-right'
+            });
+        }
+    };
+})
 .directive('yearpicker', function() {
     return {
         restrict: 'A',

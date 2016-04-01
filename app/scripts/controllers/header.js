@@ -12,6 +12,10 @@ angular.module('flatpcApp')
   function($scope,$rootScope,PublicService,AppConfig) {
         $scope.switch = function(t,name){
             $rootScope.frame = t?true:false;
+            if(name == 'pay'){
+                swal("提示","敬请期待", "info"); 
+                return;
+            }
             $rootScope.sysMenu[0] = name;
             $rootScope.sysMenu[1] = name;
         }

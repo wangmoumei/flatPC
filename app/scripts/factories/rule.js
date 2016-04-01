@@ -66,15 +66,16 @@ angular.module('flatpcApp')
         });//.get(url,param);
     }
     var getListByFlat = function (param) {
+        console.log(param);
         var url = AppConfig.WEB_ROOT + 'evaluation/lllegal/get_list/?'
         + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
         + '&epage=' + (param.epage || 1) + '&pagesize=' + (param.pagesize || 10)
-        + (param.enddate?('&enddate='+param.enddate):'')
-        + (param.startdate?('&startdate='+param.startdate):'')
+        + '&enddate=' + (param.endtime || new Date().Format('yyyy-MM-dd')) 
+        + '&startdate=' + (param.starttime || new Date().Format('yyyy-MM-dd'))
         + (param.campusid?('&campusid='+param.campusid):'')
         + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
         + (param.flatid?('&flatid='+param.flatid):'')
-        + (param.roomname?('&roomname='+param.roomname):'')
+        + (param.search?('&roomname='+param.search):'')
         + (param.source>-1?('&source='+param.source):'')
         + (param.orderfield?('&orderfield='+param.orderfield):'')
         + (param.ordertype?('&ordertype='+param.ordertype):'');
@@ -125,12 +126,12 @@ angular.module('flatpcApp')
         var url = AppConfig.WEB_ROOT + 'evaluation/lllegal/get_list_export/?'
         + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
         + '&epage=' + (param.epage || 1) + '&pagesize=' + (param.pagesize || 10)
-        + (param.enddate?('&enddate='+param.enddate):'')
-        + (param.startdate?('&startdate='+param.startdate):'')
+        + '&enddate=' + (param.endtime || new Date().Format('yyyy-MM-dd')) 
+        + '&startdate=' + (param.starttime || new Date().Format('yyyy-MM-dd'))
         + (param.campusid?('&campusid='+param.campusid):'')
         + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
         + (param.flatid?('&flatid='+param.flatid):'')
-        + (param.roomname?('&roomname='+param.roomname):'')
+        + (param.search?('&roomname='+param.search):'')
         + (param.source>-1?('&source='+param.source):'')
         + (param.orderfield?('&orderfield='+param.orderfield):'')
         + (param.ordertype?('&ordertype='+param.ordertype):'');
@@ -138,6 +139,65 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });
     }
+    var getStatistics = function(param){
+        param.type = param.type || 0;
+        var url = "";
+        // console.log(param);
+        switch (param.type) {
+            case 0:
+            case '0':
+            case 1:
+            case '1':
+            case 2:
+            case '2':
+                url = AppConfig.WEB_ROOT + 'evaluation/llstatistics/get_list/?'
+                + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
+                + (param.campusid?'&campusid='+param.campusid :'' ) + (param.liveareaid?'&liveareaid='+param.liveareaid :'' )
+                + '&startdate=' + (param.starttime || new Date().Format('yyyy-MM-dd'))
+                + '&enddate=' + (param.endtime || new Date().Format('yyyy-MM-dd'));
+                break;
+            case 3:
+                url = AppConfig.WEB_ROOT + 'evaluation/llstatistics/get_room_list/?'
+                + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
+                + (param.flatid?'&flatid='+param.flatid :'' )
+                + '&startdate=' + (param.starttime || new Date().Format('yyyy-MM-dd'))
+                + '&enddate=' + (param.endtime || new Date().Format('yyyy-MM-dd'));
+                break;
+            default:
+                break;
+        }
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
+    };
+    var getStatisticsData = function(param){
+        var url = "";
+        url = AppConfig.WEB_ROOT + 'evaluation/llstatistics/get_date_list/?'
+        + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
+        + '&startdate=' + (param.starttime || new Date().Format('yyyy-MM-dd'))
+        + '&enddate=' + (param.endtime || new Date().Format('yyyy-MM-dd'))
+        + (param.flatid?('&flatid='+param.flatid):'')
+        + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
+        + (param.campusid?('&campusid='+param.campusid):'')
+        + (param.roomid?('&roomid='+param.roomid):'');
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
+    };
+    var downloadStatistics = function(param){
+        var url = "";
+        url = AppConfig.WEB_ROOT + 'evaluation/llstatistics/get_date_export/?'
+        + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
+        + '&startdate=' + (param.starttime || new Date().Format('yyyy-MM'))
+        + '&enddate=' + (param.endtime || new Date().Format('yyyy-MM'))
+        + (param.flatid?('&flatid='+param.flatid):'')
+        + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
+        + (param.campusid?('&campusid='+param.campusid):'')
+        + (param.roomid?('&roomid='+param.roomid):'');
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
+    };
     return {
         getList:getList,
         addRule:addRule,
@@ -149,6 +209,9 @@ angular.module('flatpcApp')
         addCheck:addCheck,
         editCheck:editCheck,
         delCheck:delCheck,
-        download:download
+        download:download,
+        getStatistics:getStatistics,
+        getStatisticsData:getStatisticsData,
+        downloadStatistics:downloadStatistics
     }
 }]);

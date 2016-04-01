@@ -6,128 +6,303 @@
     <ul class="history-list">
         <li><a href="#index" ng-click="routerInit('flat')">公寓管理</a></li>
         <li><a href="#index">宿舍考评</a></li>
-        <li>打分设置</li>
+        <li>违章管理</li>
     </ul>
 </div>
-<div class="page-main" style="top:49px;">
-    <div class="page-tabs" tabs>
-        <ul class="page-tabs-nav">
-            <li ng-class="{'active':media.tab == 1}" ng-click="media.setTab(1)">违章设置</li>
-            <li ng-class="{'active':media.tab == 2}" ng-click="media.setTab(2)">基础设置</li>
+<div class="tool-bar">
+    <div class="bar-full">
+        <button ng-if="menuCheck(313)" class="btn btn-addon btn-success" ng-click="resetForm(dataInit)"><i class="glyphicon glyphicon-plus"></i>新增登记</button>
+    </div>
+    <div>
+        <input type="text" class="form-control" ng-model="media.starttime" datepicker>
+    </div>
+    <div>至</div>
+    <div>
+        <input type="text" class="form-control" ng-model="media.endtime" datepicker>
+    </div>
+    <div>
+        <select class="form-control" ng-model="media.source">
+            <option value="5">全部</option>
+            <option value="0">周打分</option>
+            <option value="1">日打分</option>
+            <option value="2">月打分</option>
+            <option value="4">普通</option>
+        </select>
+    </div>
+    <div class="search-bool">
+        <form  ng-submit="search(searchText)">
+            <div class="input-group">
+                <input type="text" class="form-control" ng-model="searchText" placeholder="检索寝室号">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                </span>
+            </div>
+        </form>
+    </div>
+    <div>
+        <a ng-click="download()" class="btn btn-default">数据导出</a>
+    </div>
+</div>
+<div class="page-main">
+    <div class="page-tree" tree>
+        <ul>
+            <li class="open">
+                <a ng-class="{'branch':treeFlat.cmpusList,'leaf':!treeFlat.cmpusList}" ng-click="show(0,treeFlat)">{{treeFlat.title}}</a>
+                <ul ng-show="treeFlat.cmpusList">
+                    <li class="open" ng-repeat="campus in treeFlat.cmpusList||[]">
+                        <a ng-class="{'branch':campus.liveAreaList,'leaf':!campus.liveAreaList}" ng-click="show(1,campus)">{{campus.title}}</a>
+                        <ul ng-show="campus.liveAreaList">
+                            <li class="open" ng-repeat="liveArea in campus.liveAreaList||[]">
+                                <a ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}" ng-click="show(2,liveArea)">{{liveArea.title}}</a>
+                                <ul ng-show="liveArea.flatList">
+                                    <li ng-repeat="flat in liveArea.flatList||[]">
+                                        <a class="leaf" ng-click="show(3,flat)">{{flat.title}}</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
         </ul>
-        <ul class="page-tabs-container">
-            <li ng-class="{'active':media.tab == 1}" class="fadeIn animated active" ng-controller="GradeSettingForDayCtrl">
-                <div class="page-tree" tree>
-                    <ul>
-                        <li class="open" ng-repeat="obj in tree">
-                            <a ng-class="{'branch':obj.nodes,'leaf':!obj.nodes}">{{obj.title}}</a>
-                            <ul ng-show="obj.nodes">
-                                <li class="open" ng-repeat="category in obj.nodes||[]">
-                                    <a ng-class="{'branch':category.nodes,'leaf':!category.nodes}">{{category.title}}</a>
-                                    <ul ng-show="category.nodes">
-                                        <li class="open" ng-repeat="option in category.nodes||[]">
-                                            <a ng-class="{'branch':option.nodes,'leaf':!option.nodes}">{{option.title}}</a>
-                                            <ul ng-show="option.nodes">
-                                                <li class="open" ng-repeat="item in option.nodes||[]">
-                                                    <a class="leaf">{{item.title}}</a>
-                                                </li>
-                                                <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加打分项</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a class="add"><i class="ALiconfont icon-plus1"></i> {{$index==1?'添加打分项':'添加分类'}}</a></li>
-                                    </ul>
+    </div>
+    <div class="table-container" style="left:225px;bottom:54px;">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th class="sort" ng-class="{'sort-up':media.orderfield=='checkTime' && media.ordertype=='asc','sort-down':media.orderfield=='checkTime' && media.ordertype=='desc'}" ng-click="setOrder('checkTime')">日期</th>
+                    <th class="sort" ng-class="{'sort-up':media.orderfield=='liveAreaName' && media.ordertype=='asc','sort-down':media.orderfield=='liveAreaName' && media.ordertype=='desc'}" ng-click="setOrder('liveAreaName')">生活区</th>
+                    <th class="sort" ng-class="{'sort-up':media.orderfield=='flatName' && media.ordertype=='asc','sort-down':media.orderfield=='flatName' && media.ordertype=='desc'}" ng-click="setOrder('flatName')">楼栋</th>
+                    <th class="sort" ng-class="{'sort-up':media.orderfield=='roomName' && media.ordertype=='asc','sort-down':media.orderfield=='roomName' && media.ordertype=='desc'}" ng-click="setOrder('roomName')">宿舍号</th>
+                    <th>床位</th>
+                    <th class="sort" ng-class="{'sort-up':media.orderfield=='itemName' && media.ordertype=='asc','sort-down':media.orderfield=='itemName' && media.ordertype=='desc'}" ng-click="setOrder('itemName')">违章项目</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in list">
+                    <td>{{item.checkTime}}</td><td>{{item.liveAreaName}}</td><td>{{item.flatName}}</td><td>{{item.roomName}}</td><td>{{item.bedName}}</td><td>{{item.itemName}}</td>
+                    <td>
+                        <button ng-if="menuCheck(314)" type="button" class="btn btn-link btn-xs" ng-click="showCard('#ruleEdit',detail(item))">编辑</button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="10" ng-hide="media.recordCount" class="empty">没有检索到相关登记纪录</td>
+                </tr>
+            </tfoot>
+        </table>
+        
+    </div>
+    <div class="page-controller" style="left:225px;">
+        <div class="page-number">
+             <ul class="pagination">
+                <li ng-class="{disabled:media.epage<2}">
+                    <a aria-label="Previous" ng-click="setPage(-1)">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li ng-show="media.epage-2>0"><a ng-click="setPage(-2)">{{media.epage-2}}</a></li>
+                <li ng-show="media.epage-1>0"><a ng-click="setPage(-1)">{{media.epage-1}}</a></li>
+                <li class="active" ng-show="media.epage>0"><a>{{media.epage}}</a></li>
+                <li ng-show="media.epage+1<=media.pageCount"><a ng-click="setPage(1)">{{media.epage+1}}</a></li>
+                <li ng-show="media.epage+2<=media.pageCount"><a ng-click="setPage(2)">{{media.epage+2}}</a></li>
+                <li ng-class="{disabled:media.epage>=media.pageCount}">
+                    <a aria-label="Next" ng-click="setPage(1)">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="page-size">
+            共{{media.recordCount}}条记录，每页显示
+            <div class="btn-group dropup">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{media.pagesize}} <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" style="min-width:54px">
+                    <li ng-click="setPageSize(10)"><a>10</a></li>
+                    <li ng-click="setPageSize(20)"><a>20</a></li>
+                    <li ng-click="setPageSize(30)"><a>30</a></li>
+                    <li ng-click="setPageSize(50)"><a>50</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="info-card fadeIn animated" info-card id="keyAdd">
+    <div class="info-card-wrapper">
+        <div class="info-card-dialog">
+            <div class="info-card-content">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        违章登记
+                        <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-tabs" form-tabs>
+                            <ul class="form-tabs-nav" style="margin-left:200px;margin-right:200px;">
+                                <li class="active">
+                                    <div data-role="transfer" data-transfer="1">
+                                        <div class="form-tabs-point"></div>
+                                        学生登记
+                                    </div>
+                                </li>
+                                <li class="tabs-nav">
+                                    <div data-role="transfer" data-transfer="form.student">
+                                        <div class="form-tabs-point"></div>
+                                        违章信息
+                                    </div>
                                 </li>
                             </ul>
-                        </li>
-                        <li><a class="add"><i class="ALiconfont icon-plus1"></i> 添加打分表</a></li>
-                    </ul>
+                            <ul class="form-tabs-container">
+                                <li class="fadeIn animated active">
+                                    <form class="form-tabs-tool-bar" ng-submit="form.studentSearch()">
+                                        <div>
+                                            <select class="form-control" ng-change="selecter.campusSelecter()" ng-model="selecter.campusId">
+                                                <option value="">选择校区</option>
+                                                <option ng-repeat="campus in treeFlat.cmpusList" value="{{campus.campusId}}">{{campus.title}}</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <select class="form-control" ng-change="selecter.liveAreaSelecter()" ng-model="selecter.liveAreaId">
+                                                <option value="">选择生活区</option>
+                                                <option ng-repeat="liveArea in selecter.liveAreaList" value="{{liveArea.liveAreaId}}">{{liveArea.title}}</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <select class="form-control" ng-model="selecter.flatId">
+                                                <option value="">选择楼栋</option>
+                                                <option ng-repeat="flat in selecter.flatList" value="{{flat.flatId}}">{{flat.title}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-tabs-full">
+                                            <input class="form-control" type="text" placeholder="宿舍号" ng-model="form.roomName" />
+                                        </div>
+                                        <div>
+                                            <button type="submit" class="btn btn-stroke btn-info">搜索</button>
+                                        </div>
+                                    </form>
+                                    <table class="table table-bordered bg-white">
+                                        <thead>
+                                            <tr>
+                                                <th>寝室号</th><th>床位</th><th>学生</th><th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-show="form.room"><td>{{form.roomName}}</td><td>/</td><td>/</td><td><a ng-click="form.bedChoose()" class="btn btn-xs btn-link" data-role="next">选择</a></td></tr>
+                                            <tr ng-repeat="bed in (form.room?form.room.bedList:[]) || []">
+                                                <td>{{form.roomName}}</td>
+                                                <td>{{bed.bedName || bed.bedNum}}</td>
+                                                <td>{{bed.studentName}}（{{bed.studentNumber}}）</td>
+                                                <td><a ng-click="form.bedChoose(bed)" class="btn btn-xs btn-link" data-role="next">选择</a></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="10" ng-hide="form.room" class="start">搜索一下</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10" ng-show="form.room && form.room.length < 1" class="empty">没有检索到学生信息</td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </li>
+                                <li class="fadeIn animated ">
+                                    <table class="table-bordered bg-white table-form">
+                                        <tbody>
+                                            <tr ng-show="form.student">
+                                                <td width="150">学生</td><td>{{form.student.studentName + '（' + form.student.studentNumber +'）'}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td width="150">寝室</td><td>{{form.room.campusName}} - {{form.room.liveAreaName}} - {{form.room.flatName}} - {{form.room.roomNum}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="require">违章项</td>
+                                                <td>
+                                                    <select class="form-control" ng-model="form.itemid">
+                                                        <option value="">请选择</option>
+                                                        <optgroup ng-repeat="group in treeRule" label="{{group.title}}">
+                                                            <option ng-repeat="rule in group.subNodes" value="{{rule.itemId}}">{{rule.title}}</option>
+                                                        </optgroup>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="require">时间</td>
+                                                <td>
+                                                    <input datetimepicker type="text" ng-model="form.checktime" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>备注</td>
+                                                <td><textarea class="form-control" rows="3" ng-model="form.memo"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td><td class="td-btn-box"><a class="btn btn-success" ng-click="form.sub(closeCard('#keyAdd'))">完成登记</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="from-container" style="left:225px;">
-                    <table class="table-form table-bordered bg-white">
-                        <tr>
-                            <td class="require" width="200">编号</td><td><input type="text" /></td>
-                        </tr>
-                        <tr>
-                            <td class="require">打分表</td><td><input type="text" /></td>
-                        </tr>
-                        <tr>
-                            <td class="require">分类</td><td><input type="text" /></td>
-                        </tr>
-                        <tr>
-                            <td class="require">打分项目</td><td><input type="text"/></td>
-                        </tr>
-                        <tr>
-                            <td class="require">合格条件</td>
-                            <td>
-                                <select class="form-control">
-                                    <option value="0">合格</option>
-                                    <option value="1">分值</option>
-                                </select>
-                                <input type="text" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="require">优秀条件</td>
-                            <td>
-                                <select class="form-control">
-                                    <option value="0">合格</option>
-                                    <option value="1">分值</option>
-                                </select>
-                                <input type="text" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="require">连续次数免检</td>
-                            <td>
-                                <select class="form-control">
-                                    <option value="0">合格</option>
-                                    <option value="1">分值</option>
-                                </select>
-                                <input type="text" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="require">免检次数</td><td><input type="text" /></td>
-                        </tr>
-                        <tr>
-                            <td class="require">分值</td><td><input type="text" /></td>
-                        </tr>
-                        <tr>
-                            <td class="require">排序</td><td><input type="text" /></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <div class="btn-box">
-                                    <button ng-show="media.status" ng-click="addSave()" class="btn btn-success">提交</button>
-                                    <button ng-hide="media.status" ng-click="editSave()" class="btn btn-info">保存</button>
-                                    <button ng-hide="media.status" ng-click="delete()" class="btn btn-danger">删除</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </li>
-            <li ng-class="{'active':media.tab == 5}" class="fadeIn animated">
-                <div class="from-container">
-                    <table class="table-form table-setting-form table-bordered bg-white">
-                        <tr>
-                            <td class="require" width="200">违章管理</td>
-                            <td>
-                                <input bs-switch ng-model="media.on" type="checkbox" switch-size="mini" switch-on-text="开" switch-off-text="关">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <div class="btn-box">
-                                    <button class="btn btn-info">保存</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </li>
-        </ul>
+            </div>
+        </div>
+    </div>
 </div>
+<div class="info-card fadeIn animated" info-card id="ruleEdit">
+    <div class="info-card-wrapper">
+        <div class="info-card-dialog">
+            <div class="info-card-content">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        违章记录编辑
+                        <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table-form table-bordered bg-white">
+                            <tbody>
+                                <tr ng-show="work.name && work.studentNumber">
+                                    <td>学生</td><td>{{work.name + '（'+work.studentNumber+'）'}}</td>
+                                </tr>
+                                <tr>
+                                    <td>宿舍</td><td>{{work.roomPath}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="require">违章项</td>
+                                    <td>
+                                        <select class="form-control" ng-model="work.itemId">
+                                            <option value="">请选择</option>
+                                            <optgroup ng-repeat="group in treeRule" label="{{group.title}}">
+                                                <option ng-repeat="rule in group.subNodes" value="{{rule.itemId}}">{{rule.title}}</option>
+                                            </optgroup>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="require">时间</td>
+                                    <td>
+                                        <input  datetimepicker type="text" ng-model="work.checkTime" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>备注</td>
+                                    <td><textarea class="form-control" rows="3" ng-model="work.memo"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td></td><td class="td-btn-box">
+                                        <a class="btn btn-info" ng-click="editSave(closeCard('#ruleEdit'))">确认修改</a>
+                                        <a ng-if="menuCheck(315)" class="btn btn-danger" ng-click="delete(closeCard('#ruleEdit'))">删除</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

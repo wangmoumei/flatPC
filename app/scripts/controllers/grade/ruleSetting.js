@@ -8,8 +8,8 @@
  * Controller of the flatpcApp
  */
 angular.module('flatpcApp')
-.controller('RuleSettingCtrl', ['$scope','AppConfig','$rootScope', 'RuleService',
-function($scope,AppConfig,$rootScope,RuleService) {
+.controller('RuleSettingCtrl', ['$scope','AppConfig','$rootScope', 'RuleService','GradeService',
+function($scope,AppConfig,$rootScope,RuleService,GradeService) {
     $scope.media = {
         tab:1,
         setTab:function (n) {
@@ -23,7 +23,7 @@ function($scope,AppConfig,$rootScope,RuleService) {
         listorder:1,
         title:'',
         itemid:0,
-        on:false
+        role:AppConfig.role==0?true:false
     };
     $scope.show = function(type,item,parent){
         $scope.media.status = 0;
@@ -111,7 +111,30 @@ function($scope,AppConfig,$rootScope,RuleService) {
                 
         });
     }
-    
+    $scope.basicSave = function () {
+         $rootScope.loading = true;
+        return GradeService.basicSetting({
+            week:AppConfig.week?0:1,
+            month:AppConfig.month?0:1,
+            day:AppConfig.day?0:1,
+            bed:AppConfig.bed?0:1,
+            pass:AppConfig.pass?0:1,
+            photo:AppConfig.photo?0:1,
+            takephoto:AppConfig.takephoto?0:1,
+            check:AppConfig.check?0:1,
+            role:$scope.media.role?0:1
+        }).success(function (data) {
+            if(data.code == 0){
+                swal("提示","保存成功！", "success"); 
+                sessionStorage.role = $scope.media.role?0:1;
+                
+                AppConfig.role = $scope.media.role?0:1;
+            }
+            else
+                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            $rootScope.loading = false;
+        })
+    }
     
     if(!$rootScope.treeRule)
         refresh();

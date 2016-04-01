@@ -5,12 +5,11 @@ angular.module('flatpcApp')
         link:function(scope,iElement,iAttrs){
             iElement.find('ul').click(function(){
                 var e = event.target;
-                if(e.tagName != 'LI'){
+                // alert(e.tagName);
+                if(e.tagName != 'LI' && e.tagName != 'I'){
                     e = $(e).closest('li').get(0);
                 }
-                if($(e).hasClass('album-plus')){
-                    //$(e).find('input').get(0).click();
-                }else{
+                if($(e).hasClass('album-item')){
                     iElement.find('.album-frame').addClass('show-frame').html('<div>'+$(e).html()+'</div>');
                     iElement.find('.album-frame-off').show();
                 }
@@ -22,4 +21,14 @@ angular.module('flatpcApp')
             });
         }
     };
+}).directive('errSrc', function() {
+  return {
+    link: function(scope, element, attrs) {
+      element.bind('error', function() {
+        if (attrs.src != attrs.errSrc) {
+          attrs.$set('src', attrs.errSrc);
+        }
+      });
+    }
+  }
 });

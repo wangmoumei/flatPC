@@ -29,9 +29,8 @@ angular
 	  token:'',
       adminId:0,
       nodeIds:''
-  }).run(['$rootScope', '$location', 'AppConfig','authority',
-		function($rootScope, $location, AppConfig,authority) {
-            //$rootScope.sysMenu = ['flat','flat',''];
+  }).run(['$rootScope', '$location', 'AppConfig','authority','$stateParams',
+		function($rootScope, $location, AppConfig,authority,$stateParams) {
             $rootScope.routerInit = function(menu){
                 $rootScope.sysMenu = [menu,menu,""];
             }
@@ -65,6 +64,51 @@ angular
     $stateProvider
     .state('login', {
         url: "/login",
+        views: {
+            "login": {
+                templateUrl: 'views/login.html',
+                controller: 'LoginCtrl'
+            }
+        }
+    })
+    .state('nbdx', {
+        url: "/nbdx",
+        views: {
+            "login": {
+                templateUrl: 'views/login.html',
+                controller: 'LoginCtrl'
+            }
+        }
+    })
+    .state('hzsf', {
+        url: "/hzsf",
+        views: {
+            "login": {
+                templateUrl: 'views/login.html',
+                controller: 'LoginCtrl'
+            }
+        }
+    })
+    .state('cslg', {
+        url: "/cslg",
+        views: {
+            "login": {
+                templateUrl: 'views/login.html',
+                controller: 'LoginCtrl'
+            }
+        }
+    })
+    .state('sqxy', {
+        url: "/sqxy",
+        views: {
+            "login": {
+                templateUrl: 'views/login.html',
+                controller: 'LoginCtrl'
+            }
+        }
+    })
+    .state('sxwl', {
+        url: "/sxwl",
         views: {
             "login": {
                 templateUrl: 'views/login.html',
@@ -262,12 +306,46 @@ angular
             }
         }
     })
+    .state('rule', {
+        url: "/rule",
+        views: {
+            "": {
+                templateUrl: 'views/grade/rule.html',
+                controller: 'RuleCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
     .state('scoreStatistics', {
         url: "/scoreStatistics",
         views: {
             "": {
                 templateUrl: 'views/grade/statistics.html',
                 controller: 'StatisticsCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('ruleStatistics', {
+        url: "/ruleStatistics",
+        views: {
+            "": {
+                templateUrl: 'views/grade/ruleStatistics.html',
+                controller: 'RuleStatisticsCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",

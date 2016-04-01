@@ -138,8 +138,8 @@
                                                     <a ng-class="{'branch':(item2.subNodes || []).length>0,'leaf':(item2.subNodes || []).length<1}" ng-click="goHash(item2.nodeId)">{{item2.remark}}</a>
                                                     <ul>
                                                         <li class="open" ng-repeat="item3 in item2.subNodes||[]" >
-                                                            <a ng-class="{'branch':(item3.subNodes || []).length>0,'leaf':(item3.subNodes || []).length<1}" ng-click="goHash(item3.nodeId)">{{item3.remark}}</a>
-                                                            <ul>
+                                                            <a class="leaf" ng-click="goHash(item3.nodeId)">{{item3.remark}}</a>
+                                                            <!--ul> ng-class="{'branch':(item3.subNodes || []).length>0,'leaf':(item3.subNodes || []).length<1}"
                                                                 <li class="open" ng-repeat="item4 in item3.subNodes||[]" >
                                                                     <a ng-class="{'branch':(item4.subNodes || []).length>0,'leaf':(item4.subNodes || []).length<1}" ng-click="goHash(item4.nodeId)">{{item4.remark}}</a>
                                                                     <ul>
@@ -148,7 +148,7 @@
                                                                         </li>
                                                                     </ul>
                                                                 </li>
-                                                            </ul>
+                                                            </ul-->
                                                         </li>
                                                     </ul>
                                                 </li>

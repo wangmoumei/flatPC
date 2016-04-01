@@ -66,14 +66,14 @@
                         <tr>
                             <td class="require" width="200">违章管理</td>
                             <td>
-                                <input bs-switch ng-model="media.on" type="checkbox" switch-size="mini" switch-on-text="开" switch-off-text="关">
+                                <input bs-switch ng-model="media.role" type="checkbox" switch-size="mini" switch-on-text="开" switch-off-text="关">
                             </td>
                         </tr>
                         <tr>
                             <td></td>
                             <td>
                                 <div class="btn-box">
-                                    <button class="btn btn-info">保存</button>
+                                    <button class="btn btn-info" ng-click="basicSave()">保存</button>
                                 </div>
                             </td>
                         </tr>

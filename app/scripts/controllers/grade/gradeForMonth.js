@@ -64,7 +64,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             this.studentnumber = this.search?'':search;
             this.name = this.search == 1?search:'';
             this.roomname = this.search == 2?search:'';
-            // console.log(this);
+            // //console.log(this);
             refresh();
         },
         yearIndex:0,
@@ -215,7 +215,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     }
                     else
                         swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-                    //console.log(data);
+                    ////console.log(data);
                 });
             }else if(this.tab == 3){
                 GradeService.downloadTopList({
@@ -238,7 +238,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     }
                     else
                         swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-                    //console.log(data);
+                    ////console.log(data);
                 });
             }
         }
@@ -323,14 +323,14 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             //打分初始化相关
             this.item = item;
             this.tab = 1;
-            // console.log(item);
+            // //console.log(item);
             this.img = null;
             this.bed = null;
             this.room = null;
             this.rule = null;
             return this.setTab(1);
         },
-        getData:function (n) {
+        getData:function (n,fun) {
             var that = this;
             this.tab = n || this.tab;
             
@@ -353,7 +353,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         }
                             else
                                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-                            //console.log(data);
+                            ////console.log(data);
                         });
                     }
                     else{
@@ -367,7 +367,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         else
                             that.room = [];
                         
-                        console.log($rootScope.treeMonth[0]);
+                        //console.log($rootScope.treeMonth[0]);
                         
                     }
                     break;
@@ -376,17 +376,17 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     return GradeService.getBedGrade({
                         token:AppConfig.token,
                         roomid:this.item.roomId,
-                        date:$scope.media.week.year + '-' + $scope.media.week.month,
+                        date:new Date($scope.media.week.year + '-' + $scope.media.week.month + '-01').Format('yyyy-MM'),
                         type:2
                     }).success(function (data) {
                         $rootScope.loading = false;
                         if(data.code == 0){
                             that.bed = data.data;
-                            that.bedscoreid = 1;
+                            that.bedScoreId = 1;
                             if(data.data.length>0){
                                 that.bed.forEach(function (bed) {
                                     if(bed.itemList.length < 1){
-                                        that.bedscoreid = 0;
+                                        that.bedScoreId = 0;
                                         bed.itemList = [];
                                         bed.totalScore = 0;
                                         var options = [];
@@ -398,13 +398,14 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                                         }    
                                         else
                                             options = [];
-                                            // console.log(options);
+                                            // //console.log(options);
                                         options.forEach(function (item) {
                                             bed.itemList.push({
-                                                typeId:item.typeId,
+                                                itemId:item.itemId,
                                                 title:item.title,
                                                 maxScore:item.standardType?-1:item.fullMark,
-                                                score:item.standardType?-1:item.fullMark
+                                                score:item.standardType?-1:item.fullMark,
+                                                    standardType:item.standardType
                                             })
                                             bed.totalScore += item.standardType?1:item.fullMark;
                                         })
@@ -417,27 +418,28 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         }
                         else
                             swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-                        //console.log(data);
+                        ////console.log(data);
                     });
                 case 3:
                     $rootScope.loading = true;
                     return GradeService.getGradeImgs({
                         token:AppConfig.token,
                         roomid:this.item.roomId,
-                        date:$scope.media.week.year + '-' + $scope.media.week.month,
+                        date:new Date($scope.media.week.year + '-' + $scope.media.week.month + '-01').Format('yyyy-MM'),
                         type:2
                     }).success(function (data) {
                         $rootScope.loading = false;
                         
                         if(data.code == 0){
                             that.img = data.data;
+                            if(fun && typeof fun == "function") fun();
                         }else if(data.code == 4037){
                             swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                             location.href="#login";$rootScope.loading = false;
                         }
                         else
                             swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-                        //console.log(data);
+                        ////console.log(data);
                     });
                 case 4:
                     $rootScope.loading = true;
@@ -456,7 +458,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         }
                         else
                             swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-                        //console.log(data);
+                        ////console.log(data);
                     });
             }
             return null;
@@ -500,7 +502,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     bed.totalScore = 0;
                     for(var i=0;i < bed.itemList.length;i++){
                         if(bed.itemList[i].standardType){
-                            if(bed.itemList.score == -1)
+                            if(bed.itemList[i].score == -1)
                             bed.totalScore+= 1;
                         }else
                             bed.totalScore+= bed.itemList[i].score;
@@ -550,18 +552,19 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     return null;
                 }   
             }
-            if(this.room)
+            if(this.room&& this.room.length>0){
                 this.roomGrade(fun);
-            else if(this.bed && this.bed.length>0) this.roomGrade(fun);
-            else if(this.img)this.roomGrade(fun);
+            }
+            else if(this.bed && this.bed.length>0) this.bedGrade(fun);
+            else if(this.img)this.gradeImg(fun);
             else if(this.rule)this.ruleSave(fun);
         },
         roomGrade:function(fun){
             var grades = "[",that = this;
-            // console.log(this.room);
+            // //console.log(this.room);
             this.room.forEach(function (item,i) {
                 var list = item.itemList || item.subNodes;
-                console.log(list);
+                //console.log(list);
                 for(var j = 0;j < list.length; j++){
                     grades += '{"itemid":' + list[j].itemId + ',"score":' + list[j].score +'},';
                 }
@@ -569,7 +572,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             if(grades.length > 2)
                 grades = grades.substring(0,grades.length-1) + ']';
             else return;
-            // console.log(grades); 
+            // //console.log(grades); 
             if(grades.length > 0){
                 $rootScope.loading = true;
                 if(this.item.roomScoreId){
@@ -583,7 +586,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         if(data.code == 0){
                             if(that.bed && that.bed.length>0){
                                 that.bedGrade(fun);
-                            }else if(that.img){
+                            }else if(that.img && that.img.length>0){
                                 that.gradeImg(fun);
                             }
                             else if(that.rule)that.ruleSave(fun);
@@ -607,7 +610,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         token:AppConfig.token,
                         schoolcode:AppConfig.schoolCode,
                         roomid:this.item.roomId,
-                        date:$scope.media.week.year + '-' + $scope.media.week.month,
+                        date:new Date($scope.media.week.year + '-' + $scope.media.week.month + '-01').Format('yyyy-MM'),
                         adminid:AppConfig.adminId,
                         scoreitem:grades,
                         typeid:$rootScope.treeMonth[0].typeList[0].typeId,
@@ -647,10 +650,10 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                 else if(that.rule)that.ruleSave(fun);
                 return;
             }
-            // console.log(this.room);
+            // //console.log(this.room);
             this.bed.forEach(function (item,i) {
                 var list = item.itemList;
-                console.log(list);
+                //console.log(list);
                 for(var j = 0;j < list.length; j++){
                     grades += '{"itemid":' + list[j].itemId + ',"studentkey":"' + item.studentKey +  '","bedid":"' + item.bedId + '","score":' + list[j].score +'},';
                 }
@@ -658,15 +661,17 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             if(grades.length > 2)
                 grades = grades.substring(0,grades.length-1) + ']';
             else return;
-            // console.log(grades);
+            // //console.log(grades);
             if(grades.length > 0){
                 $rootScope.loading = true;
-                if(this.item.bedScoreId){
+                if(this.bedScoreId){
                     GradeService.editBedGrade({
                         token:AppConfig.token,
                         roomid:this.item.roomId,
-                        date:$scope.media.week.year + '-' + $scope.media.week.month,
+                        date:new Date($scope.media.week.year + '-' + $scope.media.week.month + '-01').Format('yyyy-MM'),
                         scoreitem:grades,
+                        typeid:$rootScope.treeMonth[0].typeList[1].typeId,
+                        tableid:$rootScope.treeMonth[0].tableId,
                         type:2
                     }).success(function(data){
                         $rootScope.loading = false;
@@ -694,7 +699,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         token:AppConfig.token,
                         schoolcode:AppConfig.schoolCode,
                         roomid:this.item.roomId,
-                        date:$scope.media.week.year + '-' + $scope.media.week.month,
+                        date:new Date($scope.media.week.year + '-' + $scope.media.week.month + '-01').Format('yyyy-MM'),
                         adminid:AppConfig.adminId,
                         scoreitem:grades,
                         typeid:$rootScope.treeMonth[0].typeList[1].typeId,
@@ -732,14 +737,13 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             })
             if(imgs.length > 0)
                 imgs = imgs.substring(0,imgs.length-1);
-            else return;
-            console.log(imgs);
+            //console.log(imgs);
             $rootScope.loading = true;
             GradeService.uploadImg({
                 token:AppConfig.token,
                 schoolcode:AppConfig.schoolCode,
                 roomid:this.item.roomId,
-                date:$scope.media.week.year + '-' + $scope.media.week.month,
+                date:new Date($scope.media.week.year + '-' + $scope.media.week.month + '-01').Format('yyyy-MM'),
                 adminid:AppConfig.adminId,
                 fileids:imgs,
                 type:2
@@ -800,6 +804,9 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                 }
             });
         },
+        imgDel:function (index) {
+            this.img.splice(index,1);
+        },
         menuCheck:function(){
             
             
@@ -822,7 +829,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
         
         fdata.append('token', AppConfig.token);
         fdata.append('schoolcode', AppConfig.schoolCode);
-        console.log(fdata);
+        //console.log(fdata);
         $rootScope.loading = true;
         return PublicService.imgUpload(fdata).success(function(data){
             $rootScope.loading = false;
@@ -832,7 +839,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     picUrl:data.data.serverPath,
                     fileId:data.data.fileId
                 });
-                console.log($scope.cardMedia.img);
+                //console.log($scope.cardMedia.img);
             }else if(data.code == 4037){
                             swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                             location.href="#login";$rootScope.loading = false;
@@ -848,7 +855,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
     //界面初始化相关
     if(!$rootScope.treeTerm)
         TermService.getList().success(function(data){
-            console.log(data);
+            //console.log(data);
             if(data.code == 0){
                 $rootScope.treeTerm = data.data;
                 getFlat();
@@ -867,7 +874,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
     function getFlat() {
        if(!$rootScope.treeFlat){
             FlatService.getList(AppConfig.schoolCode).success(function(data){
-                //console.log(data);
+                ////console.log(data);
                 if(data.code == 0){
                     $rootScope.treeFlat = data.data;
                     getSetting();
@@ -961,7 +968,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     }
                     //$scope.media.week = $rootScope.treeTerm[i].semesterList[j].currentWeek || 1;
                     $scope.media.weekList  = $filter('sliceMonth')($rootScope.treeTerm[$scope.media.yearIndex].semesterList[$scope.media.termIndex]);
-                    // console.log($scope.media.weekList);
+                    // //console.log($scope.media.weekList);
                     if($rootScope.menuCheck(283)){
                         $scope.media.tab = 1;
                     }else if($rootScope.menuCheck(284)){
@@ -988,7 +995,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
         if($scope.media.tab == 1){
             GradeService.getListByFlat({
                 flatid:$scope.media.flatid,
-                date:$scope.media.week.year + '-' + $scope.media.week.month,
+                date:new Date($scope.media.week.year + '-' + $scope.media.week.month + '-01').Format('yyyy-MM'),
                 type:2
             }).success(function (data) {
                 $rootScope.loading = false;
@@ -997,7 +1004,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     data.list.floorList.forEach(function(list,index){
                         list.roomList = list.roomList || [];
                         list.roomList =  $filter('sliceArray')(list.roomList,10,index);
-                        // console.log(index);
+                        // //console.log(index);
                     });
                     $scope.flat = data.list;
                     $scope.flat.flatName = $scope.media.campus + '-' + $scope.media.liveArea + '-' + $scope.media.title;
@@ -1008,7 +1015,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                 
-                console.log(data);
+                //console.log(data);
             })
         }else if($scope.media.tab == 2){
             GradeService.getList({
@@ -1022,7 +1029,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                 orderfield:$scope.media.orderfield,
                 ordertype:$scope.media.ordertype,
                 flatid:$scope.media.flatid1,
-                date:$scope.media.week.year + '-' + $scope.media.week.month,
+                date:new Date($scope.media.week.year + '-' + $scope.media.week.month + '-01').Format('yyyy-MM'),
                 type:2
             }).success(function (data) {
                 $rootScope.loading = false;
@@ -1037,7 +1044,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-                // console.log(data);
+                // //console.log(data);
             })
         }else if($scope.media.tab == 3){
             GradeService.getTopList({
@@ -1051,7 +1058,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                 orderfield:$scope.media.orderfield,
                 ordertype:$scope.media.ordertype,
                 flatid:$scope.media.flatid1,
-                date:$scope.media.week.year + '-' + $scope.media.week.month,
+                date:new Date($scope.media.week.year + '-' + $scope.media.week.month + '-01').Format('yyyy-MM'),
                 tobed:$scope.media.tobed,
                 type:2
             }).success(function (data) {
@@ -1067,7 +1074,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                 
-                // console.log(data);
+                // //console.log(data);
             })
         }
     };

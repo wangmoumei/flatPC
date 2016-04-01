@@ -16,6 +16,7 @@
 </div>
 <div class="page-main" style="top:100px;">
     <div class="page-tree" tree style="top:-50px;">
+        
         <ul>
             <li class="open">
                 <a ng-click="show(treeFlat)" ng-class="{'branch':treeFlat.cmpusList,'leaf':!treeFlat.cmpusList}">{{treeFlat.title}}</a>
@@ -38,20 +39,44 @@
         </ul>
     </div>
     <div class="from-container" style="left:225px">
-        <div class="tool-bar" style="border-bottom:1px solid #dfe0e0">
+        <form class="tool-bar" style="border-bottom:1px solid #dfe0e0" ng-submit="media.sub()">
             <div>
+                <select class="form-control" ng-model="media.type" ng-change="media.typeSelecter()">
+                    <option value="0">周打分</option>
+                    <option value="1">日打分</option>
+                    <option value="2">月打分</option>
+                </select>
+            </div>
+            <div ng-show="media.type==0">
                 <select class="form-control" ng-model="media.schoolyearid" ng-change="media.yearSelect()">
                     <option value="">请选择学年</option>
                     <option ng-repeat="year in treeTerm" value="{{year.schoolYearId}}">{{year.schoolYearName}}</option>
                 </select>
             </div>
-            <div>
+            <div ng-show="media.type==0">
                 <select class="form-control" ng-model="media.semesterid" ng-change="media.termSelect()">
                     <option value="">全部</option>
                     <option ng-repeat="term in media.termList || []" value="{{term.semesterId}}">{{term.semesterName}}</option>
                 </select>
             </div>
-        </div>
+            <div ng-show="media.type==1">
+                <input type="text" class="form-control" ng-model="media.starttime" datepicker>
+            </div>
+            <div ng-show="media.type==2">
+                <input type="text" class="form-control" ng-model="media.startmonth" monthpicker>
+            </div>
+            <div ng-hide="media.type==0">至</div>
+            <div ng-show="media.type==1">
+                <input type="text" class="form-control" ng-model="media.endtime" datepicker>
+            </div>
+            
+            <div ng-show="media.type==2">
+                <input type="text" class="form-control" ng-model="media.endmonth" monthpicker>
+            </div>
+            <div ng-hide="media.type==0">
+                <button type="submit" class="btn btn-icon btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            </div>
+        </form>
         <div id="mychart" chart style="height:300px;border-bottom:1px solid #dfe0e0"></div>
         <div class="tool-bar" style="background:#f6f7f8">
             <div>
@@ -59,27 +84,34 @@
             </div>
         </div>
         <div class="table-container" style="top:400px">
-            <table class="table table-bordered table-hover">
+            <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>学期</th>
-                        <th>周数</th>
+                        <td ng-show="media.type>0">日期</td>
+                        <th ng-hide="media.type>0">学期</th>
+                        <th ng-hide="media.type>0">周数</th>
                         <th ng-show="media.campusid || media.liveareaid || media.flatid">校区</th>
                         <th ng-show="media.liveareaid || media.flatid">生活区</th>
                         <th ng-show="media.flatid">楼栋</th>
-                        <th class="sort">平均分</th>
+                        <th>平均分</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
                     <tr ng-repeat="item in media.data">
-                        <td>{{item.semesterName}}</td>
-                        <td>{{item.currentWeek}}</td>
+                        <td ng-show="media.type>0">{{item.date}}</td>
+                        <td ng-hide="media.type>0">{{item.semesterName}}</td>
+                        <td ng-hide="media.type>0">{{item.currentWeek}}</td>
                         <td ng-show="media.campusid || media.liveareaid || media.flatid">{{item.campusName}}</td>
                         <td ng-show="media.liveareaid || media.flatid">{{item.liveAreaNmae}}</td>
                         <td ng-show="media.flatid">{{item.flatName}}</td>
                         <td>{{item.score}}</td>
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="10" ng-hide="media.data && media.data.length>0" class="empty">没有统计到相关数据</td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>

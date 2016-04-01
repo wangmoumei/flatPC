@@ -156,6 +156,13 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });
     }
+    var getBedByRoomName = function (param) {
+        var url = AppConfig.WEB_ROOT + 'flatdata/rooms/get_roomname_people/?' 
+        + 'token=' + (param.token || AppConfig.token) + '&flatid=' + (param.flatid || "")+ '&roomname=' + (param.roomname || "");
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
+    }
     return {
         getList:getList,  //寝室列表
         addFloor:addFloor,
@@ -170,6 +177,7 @@ angular.module('flatpcApp')
         editType:editType,
         delType:delType,
         getListByName:getListByName,
-        getStudentByRoomId:getStudentByRoomId
+        getStudentByRoomId:getStudentByRoomId,
+        getBedByRoomName:getBedByRoomName
     }
 }]);

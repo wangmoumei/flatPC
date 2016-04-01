@@ -377,11 +377,11 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         $rootScope.loading = false;
                         if(data.code == 0){
                             that.bed = data.data;
-                            that.bedscoreid = 1;
+                            that.bedScoreId = 1;
                             if(data.data.length>0){
                                 that.bed.forEach(function (bed) {
                                     if(bed.itemList.length < 1){
-                                        that.bedscoreid = 0;
+                                        that.bedScoreId = 0;
                                         bed.itemList = [];
                                         bed.totalScore = 0;
                                         var options = [];
@@ -549,10 +549,11 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     return null;
                 }   
             }
-            if(this.room)
+            if(this.room&& this.room.length>0){
                 this.roomGrade(fun);
-            else if(this.bed && this.bed.length>0) this.roomGrade(fun);
-            else if(this.img)this.roomGrade(fun);
+            }
+            else if(this.bed && this.bed.length>0) this.bedGrade(fun);
+            else if(this.img)this.gradeImg(fun);
             else if(this.rule)this.ruleSave(fun);
         },
         roomGrade:function(fun){
@@ -661,7 +662,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             // console.log(grades);
             if(grades.length > 0){
                 $rootScope.loading = true;
-                if(this.item.bedScoreId){
+                if(this.bedScoreId){
                     GradeService.editBedGrade({
                         token:AppConfig.token,
                         roomid:this.item.roomId,

@@ -13,12 +13,17 @@ angular.module('flatpcApp')
     
     
     $scope.media = {
+        type:'0',
         schoolyearid:'',
         semesterid:'',
         flatid:'',
         liveareaid:'',
         campusid:'',
         data:[],
+        starttime:new Date(new Date() - 1000*60*60*24*30).Format('yyyy-MM-dd'),
+        endtime:new Date().Format('yyyy-MM-dd'),
+        startmonth:new Date().Format('yyyy-MM'),
+        endmonth:new Date().Format('yyyy-MM'),
         getYear:function(n) {
             var that = this;
             this.semesterid = '';
@@ -78,6 +83,25 @@ angular.module('flatpcApp')
         },
         termSelect: function () {
             refresh();
+        },
+        typeSelecter:function () {
+            refresh();
+        },
+        sub:function () {
+            switch(this.type){
+                case '0':
+                
+                    break;
+                case '1':
+                    if(new Date(this.starttime) <=  new Date(this.endtime))
+                        refresh();
+                    break;
+                case '2':
+                    if(new Date(this.startmonth + '-01') <=  new Date(this.endmonth + '-01'))
+                        refresh();
+                    break;   
+            }
+            
         }
     }
     $scope.show = function (item,campus,liveArea) {
@@ -95,7 +119,10 @@ angular.module('flatpcApp')
                 if(data.code == 0){
                     $scope.media.data = data.list;
                     chartInit();
-                }
+                }else if(data.code == 4037){
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                            location.href="#login";$rootScope.loading = false;
+                        }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             })
@@ -166,7 +193,10 @@ angular.module('flatpcApp')
             
             if(data.code == 0){
                 getTerm();
-            }
+            }else if(data.code == 4037){
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                            location.href="#login";$rootScope.loading = false;
+                        }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         });
@@ -181,7 +211,10 @@ angular.module('flatpcApp')
                     $rootScope.treeTerm = data.data;
                     $scope.media.getYear(1);
                     $scope.show($rootScope.treeFlat || {});
-                }
+                }else if(data.code == 4037){
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                            location.href="#login";$rootScope.loading = false;
+                        }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             });
@@ -197,7 +230,10 @@ angular.module('flatpcApp')
             $rootScope.loading = false;
             if(data.code == 0){
                 location.href = data.data.fileUrl;
-            }
+            }else if(data.code == 4037){
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                            location.href="#login";$rootScope.loading = false;
+                        }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })

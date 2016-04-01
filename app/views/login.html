@@ -1,5 +1,5 @@
 <div class="login-container">
-    <div class="logo">公寓管理系统</div>
+    <div class="logo">{{media.college}}</div>
     <div class="title">登录你的管理账号</div>
     <form ng-submit="login()">
         <div>
@@ -11,7 +11,8 @@
             <div id="spanPassword"></div>
         </div>
         <div>
-            <input type="text" id="code" ng-model="media.code" placeholder="验证码"> <img ng-if="media.sessionid" class="code" ng-src="{{media.sessionid?'http://120.55.84.193/Geese_Apartment/public/login/get_code/?sessionid='+media.sessionid:''}}" />
+            <input type="text" id="code" ng-model="media.code" placeholder="验证码"> 
+            <img ng-if="media.sessionid" class="code" src="{{media.sessionid}}" />
             <div id="spanPassword"></div>
         </div>
         <div class="remember">

@@ -40,6 +40,7 @@ function($scope,AppConfig,$rootScope,GradeService) {
             role:$scope.media.role?0:1
         }).success(function (data) {
             if(data.code == 0){
+                swal("提示","保存成功！", "success"); 
                 sessionStorage.week = $scope.media.week?0:1;
                 sessionStorage.month = $scope.media.month?0:1;
                 sessionStorage.day = $scope.media.day?0:1;
