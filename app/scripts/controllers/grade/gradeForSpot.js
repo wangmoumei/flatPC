@@ -812,7 +812,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
     }
     //上传打分图片，并将返回的img url显示
     $scope.uploadImg = function(){
-        var files = event.target.files;
+        var e = arguments.callee.caller.arguments[0] || window.event;var files = e.target.files;
         var s = files[0].name.split(".").pop();
         if(s != "jpg" && s != "png" && s != "jpeg"){
             swal('提示', '文件格式不正确！请上传*.jpg或*.png文件', 'error'); 

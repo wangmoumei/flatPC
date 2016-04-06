@@ -8,8 +8,8 @@
  * Controller of the flatpcApp
  */
 angular.module('flatpcApp')
-  .controller('LoginCtrl',['$scope', 'PublicService','$rootScope','AppConfig','$location','authority','$state',
-  function($scope, PublicService,$rootScope,AppConfig,$location,authority,$state) {
+  .controller('LoginCtrl',['$scope', 'PublicService','$rootScope','AppConfig','$location','authority','$state','$cookieStore',
+  function($scope, PublicService,$rootScope,AppConfig,$location,authority,$state,$cookieStore) {
     //   console.log($state);
         switch($state.current.name){
             case 'nbdx':

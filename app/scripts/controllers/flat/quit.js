@@ -21,7 +21,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
     $scope.setPage = function(n){
         if($scope.media.epage + n >0 && $scope.media.epage + n <= $scope.media.pageCount){
             $scope.media.epage += n;
-            refresh();
+            refresh(1);
         } 
     };
     //调整每页显示量
@@ -94,14 +94,18 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         refresh();
     }
     //渲染list
-    function refresh(){
+    function refresh(n){
+        if(!n)$scope.media.epage = 1;
         $rootScope.loading = true;
         DailyService.getQuitList($scope.media).success(function(data){
             if(data.code == 0){
                 $scope.list = data.data.list;
                 $scope.media.recordCount = data.data.recordCount;
                 $scope.media.pageCount = data.data.pageCount;
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error");
             
@@ -146,6 +150,9 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
                     swal("提示", "审批成功！", "success"); 
                     refresh();
                     if(fun && typeof fun == 'function')fun();
+                }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
                 }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error");
@@ -168,7 +175,10 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
                 swal("提示", "驳回成功！", "success"); 
                 refresh();
                 if(fun && typeof fun == 'function')fun();
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error");
             
@@ -198,6 +208,9 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
                     swal("提示", "已取消！", "success"); 
                     refresh();
                     if(fun && typeof fun == 'function')fun();
+                }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
                 }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error");
@@ -237,6 +250,9 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
                 
                 if(data.code == 0){
                     $rootScope.treeCollege = data.data;
+                }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
                 }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error");
@@ -263,6 +279,9 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
                 $rootScope.loading = false;
                 if(data.code == 0){
                     that.studentList = data.list;
+                }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
                 }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error");
@@ -287,6 +306,9 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
                     swal("提示", "提交成功！", "success"); 
                     refresh();
                     if(fun && typeof fun == 'function')fun();
+                }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
                 }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error");

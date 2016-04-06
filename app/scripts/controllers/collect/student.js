@@ -20,7 +20,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
     $scope.setPage = function(n){
         if($scope.media.epage + n >0 && $scope.media.epage + n <= $scope.media.pageCount){
             $scope.media.epage += n;
-            refresh();
+            refresh(1);
         } 
     };
     //调整每页显示量
@@ -46,6 +46,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
         + (type > 1?'-':'') + (item.className || '');
         $scope.media.collegeid = item.collegeId || "";
         $scope.media.classid = item.classId || "";
+        
         refresh();
     };
     //检索功能
@@ -97,7 +98,10 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
                 $rootScope.treeCollege = data.data;
                 $scope.media.title = data.data[0].name;
                 refresh();
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             
@@ -149,7 +153,10 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
                 $scope.selecter.collegeId = data.data.collegeId;
                 $scope.selecter.collegeSelecter();
                 $scope.selecter.classId = '' + data.data.classId;
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             $rootScope.loading = false;
@@ -185,7 +192,10 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
                 swal("提示", "添加成功！", "success"); 
                 refresh();
                 if(fun && typeof fun == 'function') fun();
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })
@@ -218,7 +228,10 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
             if(data.code == 0){
                 swal("提示", "修改成功！", "success"); 
                 refresh();
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })
@@ -247,14 +260,17 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
                         swal("提示", "删除成功！", "success"); 
                         refresh();
                         if(fun && typeof fun == 'function') fun();
-                    }
+                    }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
                     else
                         swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                 });
         });
     }
     //上传头像图片，并将返回的img url显示
-    $scope.uploadImg = function(){
+    $scope.uploadImg = function(event){
         var files = event.target.files;
         var s = files[0].name.split(".").pop();
         if(s != "jpg" && s != "png" && s != "jpeg"){
@@ -276,7 +292,10 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
             if(data.code == 0){
                 $scope.student.headImgurl = data.data.serverPath;
                 $scope.student.fileid = data.data.fileId;
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })
@@ -290,7 +309,10 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
             $rootScope.loading = false;
             if(data.code == 0){
                 location.href=data.data.fileUrl;
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })
@@ -298,14 +320,18 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
     }
     
     //渲染list
-    function refresh(){
+    function refresh(n){
+        if(!n)$scope.media.epage = 1;
         $rootScope.loading = true;
         StudentService.getList($scope.media).success(function(data){
             if(data.code == 0){
                 $scope.studentList = data.data.list;
                 $scope.media.recordCount = data.data.recordCount;
                 $scope.media.pageCount = data.data.pageCount;
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             
@@ -350,7 +376,10 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
             //console.log(data.data.fileUrl);
             if(data.code == 0){
                 location.href=data.data.fileUrl;
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             $rootScope.loading = false;
@@ -363,7 +392,10 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
             //console.log(data.data.fileUrl);
             if(data.code == 0){
                 location.href=data.data.fileUrl;
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             $rootScope.loading = false;
@@ -371,7 +403,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
         
     }
     var uploadExcel = null;
-    $scope.uploadFile = function(){
+    $scope.uploadFile = function(event){
         var files = event.target.files;
         ////console.log(files);
         if(files[0].name.split(".").pop() != "xls" && files[0].name.split(".").pop() != "xlsx"){
@@ -400,7 +432,10 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
             if(data.code == 0){
                 swal("提示","上传成功！", "success");
                 if(fun && typeof fun == 'function') fun();
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             $rootScope.loading = false;
@@ -418,7 +453,10 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter) {
                 $scope.importList = data.data.list;
                 $scope.media.recordCount = data.data.recordCount;
                 $scope.media.pageCount = data.data.pageCount;
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             

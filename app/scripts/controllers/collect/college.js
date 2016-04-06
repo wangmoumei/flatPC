@@ -82,7 +82,10 @@ angular.module('flatpcApp')
             if(data.code == 0){
                 swal("提示", "添加成功！", "success"); 
                 refresh();
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             
@@ -117,7 +120,10 @@ angular.module('flatpcApp')
              if(data.code == 0){
                 swal("提示", "修改成功！", "success"); 
                 refresh();
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             
@@ -155,7 +161,10 @@ angular.module('flatpcApp')
                         swal("提示", "删除成功！", "success"); 
                         $scope.media.type=0;
                         refresh();
-                    }
+                    }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
                     else
                         swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                 })
@@ -182,7 +191,10 @@ angular.module('flatpcApp')
             console.log(data);
             if(data.code == 0){
                 $rootScope.treeCollege = data.data;
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             

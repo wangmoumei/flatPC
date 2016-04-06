@@ -20,7 +20,7 @@ angular.module('flatpcApp')
     $scope.setPage = function(n){
         if($scope.media.epage + n >0 && $scope.media.epage + n <= $scope.media.pageCount){
             $scope.media.epage += n;
-            refresh();
+            refresh(1);
         } 
     };
     //调整每页显示量
@@ -77,14 +77,18 @@ angular.module('flatpcApp')
             if(data.code == 0){
                 $scope.student = data.data;
                 $rootScope.loading = false;
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             console.log(data);
             
         })
     }
-    function refresh() {
+    function refresh(n) {
+        if(!n)$scope.media.epage = 1;
         $rootScope.loading = true;
         StudentService.getListWithBedByClass($scope.media).success(function (data) {
             if(data.code == 0){
@@ -103,7 +107,10 @@ angular.module('flatpcApp')
                 })
                 console.log($scope.option);
                 $scope.myChart.setOption($scope.option); 
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             

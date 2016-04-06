@@ -43,7 +43,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
         setPage:function(n){
             if(this.epage + n >0 && this.epage + n <= this.pageCount){
                 this.epage += n;
-                refresh();
+                refresh(1);
             } 
         },
         setPageSize:function(n){
@@ -815,7 +815,8 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
         }
     }
     //上传打分图片，并将返回的img url显示
-    $scope.uploadImg = function(){
+    $scope.uploadImg = function(event){
+        // var e = arguments.callee.caller.arguments[0] || window.event; 
         var files = event.target.files;
         var s = files[0].name.split(".").pop();
         if(s != "jpg" && s != "png" && s != "jpeg"){
@@ -975,6 +976,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
     };
     function refresh() {
         if($scope.media.flatid.length<1)return;
+        if(!n)$scope.media.epage = 1;
         $rootScope.loading = true;
         if($scope.media.tab == 1){
             GradeService.getListByFlat({

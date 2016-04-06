@@ -13,8 +13,8 @@ angular.module('flatpcApp')
                 input.click();
             });
             if(iAttrs.change)
-                input.addEventListener("change",function(){
-                    var reback= scope.$eval(iAttrs.change);
+                input.addEventListener("change",function(event){
+                    var reback= scope.$eval(iAttrs.change)(event);
                     if(reback && reback.then)
                         reback.then(function(){
                             form.reset();

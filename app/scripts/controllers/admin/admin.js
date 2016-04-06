@@ -87,7 +87,10 @@ angular.module('flatpcApp')
                 $scope.media.status = 0;
                 $scope.media.adminid = data.adminId;
                 refresh();
-            }
+            }else if(data.code == 4037){
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                            location.href="#login";$rootScope.loading = false;
+                        }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             $rootScope.loading = false;
@@ -111,7 +114,10 @@ angular.module('flatpcApp')
             if(data.code == 0){
                 swal("提示"," 修改成功！", "success"); 
                 refresh();
-            }
+            }else if(data.code == 4037){
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                            location.href="#login";$rootScope.loading = false;
+                        }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             $rootScope.loading = false;
@@ -137,7 +143,10 @@ angular.module('flatpcApp')
                 if(data.code == 0){
                     swal("提示"," 删除成功！", "success"); 
                     refresh();
-                }
+                }else if(data.code == 4037){
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                            location.href="#login";$rootScope.loading = false;
+                        }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                 $rootScope.loading = false;
@@ -157,7 +166,10 @@ angular.module('flatpcApp')
         return AdminService.getList().success(function(data){
             if(data.code == 0){
                 $scope.admins = data.list;
-            }
+            }else if(data.code == 4037){
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                            location.href="#login";$rootScope.loading = false;
+                        }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             $rootScope.loading = false;

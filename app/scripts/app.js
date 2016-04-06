@@ -29,8 +29,9 @@ angular
 	  token:'',
       adminId:0,
       nodeIds:''
-  }).run(['$rootScope', '$location', 'AppConfig','authority','$stateParams',
-		function($rootScope, $location, AppConfig,authority,$stateParams) {
+  }).run(['$rootScope', '$location', 'AppConfig','authority','$stateParams','$http',
+		function($rootScope, $location, AppConfig,authority,$stateParams,$http) {
+            console.log($http.defaults.transformResponse);
             $rootScope.routerInit = function(menu){
                 $rootScope.sysMenu = [menu,menu,""];
             }
@@ -117,7 +118,7 @@ angular
         }
     })
     .state('index', {
-        url: "/index",
+        url: "/index?p",
         views: {
             "": {
                 templateUrl: 'views/menu.html',

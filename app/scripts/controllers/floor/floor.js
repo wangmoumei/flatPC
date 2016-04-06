@@ -98,7 +98,10 @@ angular.module('flatpcApp')
             if(data.code == 0){
                 swal("提示", "添加成功！", "success"); 
                 refresh();
-            }else{
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }else{
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             }
         })
@@ -133,7 +136,10 @@ angular.module('flatpcApp')
             if(data.code == 0){
                 swal("提示", "修改成功！", "success"); 
                 refresh();
-            }else{
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }else{
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             }
         })
@@ -173,7 +179,10 @@ angular.module('flatpcApp')
                     if(data.code == 0){
                         swal("提示", "删除成功！", "success"); 
                         refresh();
-                    }else{
+                    }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }else{
                         swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     }
                 })
@@ -195,7 +204,10 @@ angular.module('flatpcApp')
             //console.log(data);
             if(data.code == 0)
                 $rootScope.treeFlat = data.data;
-            else
+            else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             $rootScope.loading = false;
         });

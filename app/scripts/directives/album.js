@@ -4,7 +4,8 @@ angular.module('flatpcApp')
         restrict: 'A',
         link:function(scope,iElement,iAttrs){
             iElement.find('ul').click(function(){
-                var e = event.target;
+                var even = arguments.callee.caller.arguments[0] || window.event; 
+                var e = even.target;
                 // alert(e.tagName);
                 if(e.tagName != 'LI' && e.tagName != 'I'){
                     e = $(e).closest('li').get(0);

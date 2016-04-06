@@ -60,7 +60,10 @@ function($scope,AppConfig,$rootScope,GradeService) {
                 AppConfig.role = $scope.media.role?0:1;
                 AppConfig.takephoto = $scope.media.takephoto?0:1;
                 AppConfig.check = $scope.media.check?0:1;
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             $rootScope.loading = false;

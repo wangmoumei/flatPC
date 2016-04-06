@@ -40,7 +40,10 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
             if(data.code == 0){
                 $rootScope.treeFlat = data.data;
                 refresh();
-            }else
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error");
         });
     }
@@ -89,7 +92,10 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     if(data.code == 0 ){
                         swal("提示", "添加成功！", "success"); 
                         refresh($scope.media.flatid);
-                    }else{
+                    }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }else{
                         swal("提示","错误代码："+ data.code + '，' + data.msg, "error");
                         $rootScope.loading = false;
                     }
@@ -109,7 +115,10 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     if(data.code == 0){
                         swal("提示", "添加成功！", "success");
                         refresh($scope.media.flatid);
-                    }
+                    }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
                     else{
                         swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     }
@@ -132,6 +141,9 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                 if(data.code == 0){
                     swal("提示", "修改成功！", "success");
                     refresh($scope.media.flatid);
+                }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
                 }
                 else{
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
@@ -159,7 +171,10 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     if(data.code == 0){
                         swal("提示", "删除成功！", "success");
                         refresh($scope.media.flatid);
-                    }
+                    }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
                     else{
                         swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     }
@@ -222,6 +237,9 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                 if(data.code == 0){
                     swal("提示", "添加成功！", "success");
                     refresh($scope.media.flatid);
+                }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
                 }
                 else{
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
@@ -251,6 +269,9 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                 if(data.code == 0){
                     swal("提示", "修改成功！", "success"); 
                     refresh($scope.media.flatid);
+                }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
                 }
                 else{
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
@@ -278,7 +299,10 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     if(data.code == 0){
                         swal("提示", "删除成功！", "success");
                         refresh($scope.media.flatid);
-                    }
+                    }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
                     else{
                         swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     }
@@ -294,7 +318,10 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
             RoomService.getTypeList().success(function(data){
                 if(data.code == 0)
                     $rootScope.treeType = data.data;
-                else{
+                else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }else{
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                 }
                 $rootScope.loading = false;
@@ -337,7 +364,10 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     }
                 });
                 $scope.flat = data.data;
-            }else{
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }else{
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             }
             $rootScope.loading = false;

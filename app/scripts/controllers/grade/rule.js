@@ -30,7 +30,7 @@ function($scope,AppConfig,$rootScope,RuleService,FlatService,RoomService,$filter
     $scope.setPage = function(n){
         if($scope.media.epage + n >0 && $scope.media.epage + n <= $scope.media.pageCount){
             $scope.media.epage += n;
-            refresh();
+            refresh(1);
         } 
     };
     //调整每页显示量
@@ -81,7 +81,8 @@ function($scope,AppConfig,$rootScope,RuleService,FlatService,RoomService,$filter
         getRule();
     }
     //渲染list
-    function refresh(){
+    function refresh(n){
+        if(!n)$scope.media.epage = 1;
         $rootScope.loading = true;
         // console.log($scope.media);
         RuleService.getListByFlat($scope.media).success(function(data){

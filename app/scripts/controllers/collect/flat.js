@@ -12,7 +12,7 @@ function($scope,$rootScope,FlatService,AppConfig) {
     $scope.setPage = function(n){
         if($scope.media.epage + n >0 && $scope.media.epage + n <= $scope.media.pageCount){
             $scope.media.epage += n;
-            refresh();
+            refresh(true);
         } 
     };
     $scope.setPageSize = function(n){
@@ -35,7 +35,10 @@ function($scope,$rootScope,FlatService,AppConfig) {
             console.log(data.data.fileUrl);
             if(data.code == 0){
                 location.href=data.data.fileUrl;
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             
@@ -49,7 +52,10 @@ function($scope,$rootScope,FlatService,AppConfig) {
             console.log(data.data.fileUrl);
             if(data.code == 0){
                 location.href=data.data.fileUrl;
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             
@@ -57,7 +63,7 @@ function($scope,$rootScope,FlatService,AppConfig) {
         })
     }
     var uploadExcel = null;
-    $scope.uploadFile = function(){
+    $scope.uploadFile = function(event){
         var files = event.target.files;
         //console.log(files);
         if(files[0].name.split(".").pop() != "xls" && files[0].name.split(".").pop() != "xlsx"){
@@ -83,7 +89,10 @@ function($scope,$rootScope,FlatService,AppConfig) {
         return FlatService.importFlat(fdata).success(function(data){
             if(data.code == 0){
                 swal("提示","上传成功！", "success");
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             console.log(data);
@@ -96,14 +105,18 @@ function($scope,$rootScope,FlatService,AppConfig) {
         $scope.importName = '';
     }
     refresh();
-    function refresh(){
+    function refresh(n){
+        if(!n)$scope.media.epage = 1;
         $rootScope.loading = true;
         FlatService.getImport($scope.media).success(function(data){
             if(data.code == 0){
                 $scope.importList = data.data.list;
                 $scope.media.recordCount = data.data.recordCount;
                 $scope.media.pageCount = data.data.pageCount;
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
 

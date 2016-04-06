@@ -4,7 +4,8 @@ angular.module('flatpcApp')
         restrict: 'A',
         link:function(scope,iElement,iAttrs){
             iElement.click(function(){
-                var a = event.target;
+                var even = arguments.callee.caller.arguments[0] || window.event; 
+                var e = even.target;
                 if(a.tagName == 'A'){
                     if($(a).hasClass('branch')){
                         var n = a.parentNode.className;

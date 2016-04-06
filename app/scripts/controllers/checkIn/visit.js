@@ -20,7 +20,7 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
     $scope.setPage = function(n){
         if($scope.media.epage + n >0 && $scope.media.epage + n <= $scope.media.pageCount){
             $scope.media.epage += n;
-            refresh();
+            refresh(1);
         } 
     };
     //调整每页显示量
@@ -44,7 +44,7 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
         $scope.media.campusid = item.campusId || "";
         $scope.media.liveareaid = item.liveAreaId || "";
         $scope.media.flatid = item.flatId || "";
-
+        
         refresh();
     };
     //检索功能
@@ -71,7 +71,8 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
         $rootScope.loading = false;
     }
     //渲染list
-    function refresh(){
+    function refresh(n){
+        if(!n)$scope.media.epage = 1;
         $rootScope.loading = true;
         console.log($scope.media);
         CheckInService.getVisitList($scope.media).success(function(data){
@@ -79,7 +80,10 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
                 $scope.list = data.data.list;
                 $scope.media.recordCount = data.data.recordCount;
                 $scope.media.pageCount = data.data.pageCount;
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             
@@ -115,7 +119,10 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
             if(data.code == 0){
                 swal("提示", "修改成功！", "success"); 
                 refresh();
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })
@@ -143,6 +150,9 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
                     swal("提示", "删除成功！", "success"); 
                     if(fun && typeof fun == 'function') fun();
                     refresh();
+                }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
                 }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
@@ -163,7 +173,10 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
                 swal("提示", "处理成功！", "success"); 
                 if(fun && typeof fun == 'function') fun();
                 refresh();
-            }
+            }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         });
@@ -239,6 +252,9 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
                 
                 if(data.code == 0){
                     that.studentList = data.list;
+                }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
                 }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
@@ -270,6 +286,9 @@ function($scope,AppConfig,$rootScope,FlatService,CheckInService,$filter,StudentS
                     swal("提示", "提交成功！", "success"); 
                     refresh();
                     if(fun && typeof fun == 'function') fun();
+                }else if(data.code == 4037){
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
                 }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
