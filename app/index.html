@@ -16,7 +16,7 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-    <link rel="stylesheet" href="http://7xp0c4.com2.z0.glb.qiniucdn.com/iconfont-1.36.css" />
+    <link rel="stylesheet" href="http://7xp0c4.com2.z0.glb.qiniucdn.com/iconfont-1.37.css" />
   </head>
   <body ng-app="flatpcApp">
     <!--[if lte IE 8]>
@@ -55,20 +55,16 @@
             
         </iframe>
     </div>
+    <iframe name="test" style="display:none;z-index:1000000;position:fixed;top:100px;left:100px;width:100px;height:100px;background:#f33;"></iframe>
     <div class="login-view" ui-view='login' ng-hide="loginSwitch"></div>
     <script src="http://cdn.bootcss.com/echarts/3.0.0/echarts.common.js"></script>
+    <script src="http://7xp0c4.com2.z0.glb.qiniucdn.com/jquery.min.js"></script>
+    <script src="http://7xp0c4.com2.z0.glb.qiniucdn.com/angular.min.js"></script>
+    <script src="http://7xp0c4.com2.z0.glb.qiniucdn.com/angular-ui-router.min.js"></script>
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
+    
     <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/sweetalert/dist/sweetalert.min.js"></script>
     <script src="bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
     <script src="bower_components/angular-bootstrap-switch/dist/angular-bootstrap-switch.js"></script>
@@ -95,6 +91,7 @@
     <script src="scripts/controllers/grade/gradeForWeek.js"></script>
     <script src="scripts/controllers/grade/gradeForDay.js"></script>
     <script src="scripts/controllers/grade/gradeForMonth.js"></script>
+    <script src="scripts/controllers/grade/spot.js"></script>
     <script src="scripts/controllers/grade/gradeForSpot.js"></script>
     <script src="scripts/controllers/grade/rule.js"></script>
     <script src="scripts/controllers/grade/setting.js"></script>
@@ -108,6 +105,7 @@
     <script src="scripts/controllers/checkIn/visit.js"></script>
     <script src="scripts/controllers/checkIn/key.js"></script>
     <script src="scripts/controllers/checkIn/late.js"></script>
+    <script src="scripts/controllers/flatManager/manager.js"></script>
     <script src="scripts/controllers/floor/floor.js"></script>
     <script src="scripts/controllers/floor/room.js"></script>
     <script src="scripts/controllers/floor/type.js"></script>

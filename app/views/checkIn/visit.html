@@ -69,7 +69,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="item in list">
-                    <td>{{item.startTime}}</td><td>{{item.peopleName}}</td><td>{{item.name + '（'+ item.studentNumber +'）'}}</td><td>{{item.roomPath}}</td>
+                    <td>{{item.startTime}}</td><td>{{item.name}}</td><td>{{item.peopleName + '（'+ item.studentNumber +'）'}}</td><td>{{item.roomPath}}</td>
                     <td>
                         <button ng-if="menuCheck(98)" type="button" class="btn btn-link btn-xs" ng-click="showCard('#visitEdit',detail(item))">编辑</button>
                         <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#visitDetail',detail(item))">查看</button>
@@ -265,11 +265,11 @@
                                         <div><span>登记人：</span>{{work.spersonnelName}}</div>
                                     </div>
                                     <table class="table table-bordered bg-white">
-                                        <tr><td>访客</td><td>{{work.peopleName}}</td></tr>
+                                        <tr><td>访客</td><td>{{work.name}}</td></tr>
                                         <tr><td>联系方式</td><td>{{work.phone}}</td></tr>
                                         <tr ng-show="work.credentialType"><td>访客身份证</td><td>{{work.credential}}</td></tr>
                                         <tr ng-hide="work.credentialType"><td>访客学号</td><td>{{work.credential}}</td></tr>
-                                        <tr><td>被访人员</td><td>{{work.name + '（' + work.studentNumber + '）'}}</td></tr>
+                                        <tr><td>被访人员</td><td>{{work.peopleName + '（' + work.studentNumber + '）'}}</td></tr>
                                         <tr><td>被访寝室</td><td>{{work.roomPath}}</td></tr>
                                         <tr><td>备注</td><td>{{work.memo}}</td></tr>
                                     </table>

@@ -88,8 +88,9 @@
                     月评分
                 </a>
             </li>
-            <li ng-if="menuCheck(279)" style="display:none">
-                <a href="#gradeForSpot">
+            <li ng-if="menuCheck(279)">
+                <!--<li>-->
+                <a href="#spot">
                     <i class="ALiconfont icon-yixiangdengji" style="background-color:#38adff;font-size:26px"></i>
                     抽查评分
                 </a>
@@ -159,7 +160,19 @@
             </li>
         </ul>
     </li>
-    
+    <li ng-if="menuCheck(322)" ng-show="sysMenu[1]=='flatManager'">
+    <!--<li ng-show="sysMenu[1]=='flatManager'">-->
+        <div class="menu-title">人员管理</div>
+        <ul class="menu-list">
+            <li ng-if="menuCheck(323)">
+            <!--<li>-->
+                <a href="#flatManager">
+                    <i class="ALiconfont icon-zhanghaoguanli" style="background-color:#fc7257;font-size:28px"></i>
+                    楼栋管理员
+                </a>
+            </li>
+        </ul>
+    </li>
     
     <li ng-if="menuCheck(106)" ng-show="sysMenu[1]=='admin'">
         <div class="menu-title">帐号管理</div>

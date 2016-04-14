@@ -10,80 +10,325 @@
     </ul>
 </div>
 <div class="page-main" style="top:49px;">
-    <div class="page-tree" tree>
-        <ul>
-            <li class="open">
-                <a class="branch">所有</a>
-                <ul>
-                    <li class="open" ng-repeat="admin in admins||[]" >
-                        <a ng-class="{'branch':admin.adminList,'leaf':!admin.adminList}">{{admin.adminTypeName}}</a>
-                        <ul ng-show="admin.adminList">
-                            <li ng-repeat="item in admin.adminList||[]" >
-                                <a class="leaf" ng-click="show(2,item,admin)">{{item.userName}}</a>
+    <div class="page-tabs" tabs>
+        <ul class="page-tabs-nav">
+            <li class="active">超级管理员设置</li>
+            <li>超级管理员角色设置</li>
+        </ul>
+        <ul class="page-tabs-container">
+            <li class="fadeIn animated active">
+                <div class="page-tree" tree>
+                    <ul>
+                        <li class="open">
+                            <a class="branch">所有</a>
+                            <ul>
+                                <li class="open" ng-repeat="admin in admins||[]" >
+                                    <a ng-click="show(1,admin,{})" ng-class="{'branch':admin.adminList,'leaf':!admin.adminList}">{{admin.adminTypeName}}</a>
+                                    <ul ng-show="admin.adminList">
+                                        <li ng-repeat="item in admin.adminList||[]" >
+                                            <a class="leaf" ng-click="show(2,item,admin)">{{item.userName}}</a>
+                                        </li>
+                                        <li><a class="add" ng-click="add(2,admin)"><i class="ALiconfont icon-plus1"></i> 添加帐号</a></li>
+                                    </ul>
+                                </li>
+                                <li><a class="add" ng-click="add(1,{})"><i class="ALiconfont icon-plus1"></i> 添加分组</a></li>
+                            </ul>
+                        </li>
+                        
+                    </ul>
+                </div>
+                <div class="from-container" style="left:225px;">
+                    <table class="table-form table-bordered bg-white">
+                        <tr>
+                            <td class="require" width="200">分类</td><td><input ng-disabled="media.type==2" type="text" ng-model="media.admintypename" /></td>
+                        </tr>
+                        <tr ng-show="media.type == 1">
+                            <td class="require" width="200">排序</td><td><input type="text" ng-model="media.listorder" /></td>
+                        </tr>
+                        <tr ng-hide="media.type == 1">
+                            <td class="require" width="200">学校</td><td><input type="text" ng-model="media.username" /></td>
+                        </tr>
+                        <tr ng-hide="media.type == 1">
+                            <td class="require" width="200">学校编码</td><td><input type="text" ng-model="media.universityid" /></td>
+                        </tr>
+                        <tr ng-hide="media.type == 1">
+                            <td width="200">学校人数</td>
+                            <td>
+                                <select ng-model="media.schoolnumber">
+                                    <option value="">请选择</option>
+                                    <option value="1万以下">1万以下</option>
+                                    <option value="1-2万">1-2万</option>
+                                    <option value="2-3万">2-3万</option>
+                                    <option value="3-5万">3-5万</option>
+                                    <option value="5万及以上">5万及以上</option>
+                                    <option value="其他">其他</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr ng-hide="media.type == 1">
+                            <td width="200">学校类型</td>
+                            <td>
+                                <select ng-model="media.schooltype">
+                                    <option value="">请选择</option>
+                                    <option value="985、211">985、211</option>
+                                    <option value="普通本科">普通本科</option>
+                                    <option value="专科">专科</option>
+                                    <option value="其他">其他</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr ng-hide="media.type == 1 && media.type == 1">
+                            <td class="require" width="200">帐号</td><td><input type="text" ng-disabled="!media.status" ng-model="media.useraccount" /></td>
+                        </tr>
+                        <tr ng-show="media.type == 2 && media.status">
+                            <td class="require" width="200">密码</td><td><input type="password" ng-model="media.password" /></td>
+                        </tr>
+                        <tr ng-show="media.type == 2 && media.status">
+                            <td class="require" width="200">确认密码</td><td><input type="password" ng-model="media.password1" /></td>
+                        </tr>
+                        <tr ng-hide="media.type == 1">
+                            <td width="200">角色</td>
+                            <td>
+                                <select ng-model="media.roleid">
+                                    <option value="">请选择</option>
+                                    <option ng-repeat="role in roleList || []" value="{{role.roleId}}">{{role.remark}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td><td>
+                                <div class="btn-box">
+                                    <button ng-show="media.status" ng-click="addSave()" class="btn btn-success">提交</button>
+                                    <button ng-hide="media.status" ng-click="editSave()" class="btn btn-info">保存</button>
+                                    <button ng-hide="media.status" ng-click="delete()" class="btn btn-danger">删除</button>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                    </table>
+                </div>
+            </li>
+            <li class="fadeIn animated">
+                <div class="search-bar">
+                    <div>
+                        <button class="btn btn-success" ng-click="showCard('#roleAdd',roleInit())"><i class="glyphicon glyphicon-file"></i> 添加</button>
+                    </div>
+                </div>
+                <div class="table-container" style="top:49px;bottom:54px;">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>角色</th>
+                                <th>描述</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="role in list || []">
+                                <td>{{role.title}}</td><td>{{role.remark}}</td><td>{{role.status?'已禁用':'使用中'}}</td>
+                                <td>
+                                    <a class="btn btn-link btn-xs" ng-click="showCard({selecter:'#menuSetting',before:menuInit(role)})">配置权限</a>
+                                    <a class="btn btn-link btn-xs" ng-click="showCard('#roleAdd',roleInit(role))">编辑</a>
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="10" ng-hide="roleMedia.recordCount" class="empty">没有检索到角色信息</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    
+                </div>
+                <div class="page-controller">
+                    <div class="page-number">
+                        <ul class="pagination">
+                            <li ng-class="{disabled:roleMedia.epage<2}">
+                                <a aria-label="Previous" ng-click="setPage(-1)">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
                             </li>
-                            <li><a class="add" ng-click="add(2,admin)"><i class="ALiconfont icon-plus1"></i> 添加帐号</a></li>
+                            <li ng-show="roleMedia.epage-2>0"><a ng-click="setPage(-2)">{{roleMedia.epage-2}}</a></li>
+                            <li ng-show="roleMedia.epage-1>0"><a ng-click="setPage(-1)">{{roleMedia.epage-1}}</a></li>
+                            <li class="active"><a>{{roleMedia.epage}}</a></li>
+                            <li ng-show="roleMedia.epage+1<=roleMedia.pageCount"><a ng-click="setPage(1)">{{roleMedia.epage+1}}</a></li>
+                            <li ng-show="roleMedia.epage+2<=roleMedia.pageCount"><a ng-click="setPage(2)">{{roleMedia.epage+2}}</a></li>
+                            <li ng-class="{disabled:roleMedia.epage>=roleMedia.pageCount}">
+                                <a aria-label="Next" ng-click="setPage(1)">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
                         </ul>
-                    </li>
-                </ul>
+                    </div>
+                    <div class="page-size">
+                        共 {{roleMedia.recordCount}} 条记录，每页显示
+                        <div class="btn-group dropup">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{roleMedia.pagesize}} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" style="min-width:54px">
+                                <li ng-click="setPageSize(10)"><a>10</a></li>
+                                <li ng-click="setPageSize(20)"><a>20</a></li>
+                                <li ng-click="setPageSize(30)"><a>30</a></li>
+                                <li ng-click="setPageSize(50)"><a>50</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </li>
         </ul>
     </div>
-    <div class="from-container" style="left:225px;">
-        <table class="table-form table-bordered bg-white">
-            <tr>
-                <td class="require" width="200">分类</td><td><input disabled type="text" placeholder="请选择" ng-model="media.admintypename" /></td>
-            </tr>
-            <tr>
-                <td class="require" width="200">学校</td><td><input type="text" ng-model="media.username" /></td>
-            </tr>
-            <tr>
-                <td class="require" width="200">学校编码</td><td><input type="text" ng-model="media.universityid" /></td>
-            </tr>
-            <tr>
-                <td width="200">学校人数</td>
-                <td>
-                    <select ng-model="media.schoolnumber">
-                        <option value="">请选择</option>
-                        <option value="1万以下">1万以下</option>
-                        <option value="1-2万">1-2万</option>
-                        <option value="2-3万">2-3万</option>
-                        <option value="3-5万">3-5万</option>
-                        <option value="5万及以上">5万及以上</option>
-                        <option value="其他">其他</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td width="200">学校类型</td>
-                <td>
-                    <select ng-model="media.schooltype">
-                        <option value="">请选择</option>
-                        <option value="985、211">985、211</option>
-                        <option value="普通本科">普通本科</option>
-                        <option value="专科">专科</option>
-                        <option value="其他">其他</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="require" width="200">帐号</td><td><input type="text" ng-disabled="!media.status" ng-model="media.useraccount" /></td>
-            </tr>
-            <tr ng-show="media.status">
-                <td class="require" width="200">密码</td><td><input type="password" ng-model="media.password" /></td>
-            </tr>
-            <tr ng-show="media.status">
-                <td class="require" width="200">确认密码</td><td><input type="password" ng-model="media.password1" /></td>
-            </tr>
-            <tr>
-                <td></td><td>
-                    <div class="btn-box">
-                        <button ng-show="media.status" ng-click="addSave()" class="btn btn-success">提交</button>
-                        <button ng-hide="media.status" ng-click="editSave()" class="btn btn-info">保存</button>
-                        <button ng-hide="media.status" ng-click="delete()" class="btn btn-danger">删除</button>
+</div>
+<div class="info-card fadeIn animated" id="roleAdd" info-card>
+    <div class="info-card-wrapper">
+        <div class="info-card-dialog">
+            <div class="info-card-content">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        {{roleMedia.status?'修改角色':'添加角色'}}
+                        <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
                     </div>
-                </td>
-            </tr>
-            
-        </table>
+                    <div class="panel-body">
+                        <table class="table-form table-bordered bg-white">
+                            <tbody>
+                                <tr>
+                                    <td class="require">角色名称</td><td><input type="text" ng-model="role.title" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="require">角色描述</td><td><input type="text" ng-model="role.remark" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="require">状态</td><td><input bs-switch ng-model="role.status" type="checkbox" switch-size="mini" switch-on-text="开启" switch-off-text="关闭"></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td class="td-btn-box">
+                                        <a ng-show="roleMedia.status" ng-click="roleMedia.addSave(closeCard('#roleAdd'))" class="btn btn-success">提交</a>
+                                        <a ng-hide="roleMedia.status" ng-click="roleMedia.editSave(closeCard('#roleAdd'))" class="btn btn-info">保存</a>
+                                        <a ng-hide="roleMedia.status" ng-click="roleMedia.delete(closeCard('#roleAdd'))" class="btn btn-danger">删除</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="info-card fadeIn animated" id="menuSetting" info-card>
+    <div class="info-card-wrapper">
+        <div class="info-card-dialog" style="width:800px;">
+            <div class="info-card-content">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        权限配置
+                        <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
+                    </div>
+                    <div class="panel-body menu-setting">
+                       <div class="page-tree" style="bottom:50px;">
+                            <ul>
+                                <li class="open" ng-repeat="item in treeMenus || []">
+                                    <a ng-class="{'branch':(item.subNodes || []).length>0,'leaf':(item.subNodes || []).length<1}" ng-click="goHash(item.nodeId)">{{item.remark}}</a>
+                                    <ul>
+                                        <li class="open" ng-repeat="item1 in item.subNodes || []" >
+                                            <a ng-class="{'branch':(item1.subNodes || []).length>0,'leaf':(item1.subNodes || []).length<1}" ng-click="goHash(item1.nodeId)">{{item1.remark}}</a>
+                                            <ul>
+                                                <li class="open" ng-repeat="item2 in item1.subNodes || []">
+                                                    <a ng-class="{'branch':(item2.subNodes || []).length>0,'leaf':(item2.subNodes || []).length<1}" ng-click="goHash(item2.nodeId)">{{item2.remark}}</a>
+                                                    <ul>
+                                                        <li class="open" ng-repeat="item3 in item2.subNodes||[]" >
+                                                            <a class="leaf" ng-click="goHash(item3.nodeId)">{{item3.remark}}</a>
+                                                            <!--ul> ng-class="{'branch':(item3.subNodes || []).length>0,'leaf':(item3.subNodes || []).length<1}"
+                                                                <li class="open" ng-repeat="item4 in item3.subNodes||[]" >
+                                                                    <a ng-class="{'branch':(item4.subNodes || []).length>0,'leaf':(item4.subNodes || []).length<1}" ng-click="goHash(item4.nodeId)">{{item4.remark}}</a>
+                                                                    <ul>
+                                                                        <li ng-repeat="item5 in item4.subNodes||[]" >
+                                                                            <a class="leaf" ng-click="goHash(item5.nodeId)">{{item5.remark}}</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul-->
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="menu-setting-container" style="background-color:#f6f7f8;">
+                            <ul class="list-group" style="margin:20px;">
+                                <li ng-repeat="item in treeMenus || []">
+                                    <a class="list-group-item b-l-primary" id="{{'menu' + item.nodeId}}">
+                                        {{item.remark}}
+                                        <div style="float:right">
+                                            <input ng-change="menuChange(item)" bs-switch ng-model="item.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                        </div>
+                                    </a>
+                                    <ul class="list-group" style="margin-left:10px;">
+                                        <li ng-repeat="item1 in item.subNodes || []">
+                                            <a class="list-group-item b-l-warning" id="{{'menu' + item1.nodeId}}">
+                                                {{item1.remark}}
+                                                <div style="float:right">
+                                                    <input ng-change="menuChange(item1,item)" bs-switch ng-model="item1.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                                </div>
+                                            </a>
+                                            <ul class="list-group" style="margin:0 0 15px 10px;">
+                                                <li ng-repeat="item2 in item1.subNodes || []">
+                                                    <a class="list-group-item b-l-success" id="{{'menu' + item2.nodeId}}">
+                                                        {{item2.remark}}
+                                                        <div style="float:right">
+                                                            <input ng-change="menuChange(item2,item1,item)" bs-switch ng-model="item2.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                                        </div>
+                                                    </a>
+                                                    <ul class="list-group" style="margin:0 0 10px 10px;">
+                                                        <li ng-repeat="item3 in item2.subNodes || []">
+                                                            <a class="list-group-item b-l-danger" id="{{'menu' + item3.nodeId}}">
+                                                                {{item3.remark}}
+                                                                <div style="float:right">
+                                                                    <input ng-change="menuChange(item3,item2,item1,item)" bs-switch ng-model="item3.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                                                </div>
+                                                            </a>
+                                                            <ul class="list-group" style="margin:0 0 5px 10px;">
+                                                                <li ng-repeat="item4 in item3.subNodes || []">
+                                                                    <a class="list-group-item b-l-info" id="{{'menu' + item4.nodeId}}">
+                                                                        {{item4.remark}}
+                                                                        <div style="float:right">
+                                                                            <input ng-change="menuChange(item4,item3,item2,item1,item)" bs-switch ng-model="item4.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                                                        </div>
+                                                                    </a>
+                                                                    <ul class="list-group" style="margin:0 0 0 10px;">
+                                                                        <li ng-repeat="item5 in item4.subNodes || []">
+                                                                            <a class="list-group-item" id="{{'menu' + item5.nodeId}}">
+                                                                                {{item5.remark}} 
+                                                                                <div style="float:right">
+                                                                                    <input ng-change="menuChange(item5,item4,item3,item2,item1,item)" bs-switch ng-model="item5.open" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                                                                </div>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="btn-tool">
+                            <a class="btn btn-info" ng-click="menuSave()">保存</a>
+                            <a class="btn btn-default" ng-click="menuReset()">重置</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

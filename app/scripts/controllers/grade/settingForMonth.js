@@ -42,9 +42,9 @@ function($scope,AppConfig,$rootScope,GradeService) {
         }else{
             $scope.media.isLeaf = false;
         }
-        $scope.media.tableTitle = obj || item.title || '';
-        $scope.media.typeTitle = type>1?category.title || item.title: item.title || '';
-        $scope.media.parentTitle = option || item.title || '';
+        $scope.media.tableTitle = type?(obj || item?item.title:"" || ''):"";
+        $scope.media.typeTitle = type?(category==1?item.title:(category.title||item.title||'')):"";
+        $scope.media.parentTitle = type?(type==2?'' : item.title):"";
         
         $scope.media.tableid = item.tableId || 0;
         $scope.media.isopen = (item.isOpen || 0)?true:false;
@@ -65,15 +65,15 @@ function($scope,AppConfig,$rootScope,GradeService) {
         $scope.media.status = 1;
         $scope.media.type = type;
         
-        $scope.media.tableTitle = obj || item.title || '';
-        $scope.media.typeTitle = (category==1?item.title:(category.title||item.title||''));
-        $scope.media.parentTitle = type==2?'' : item.title;
+        $scope.media.tableTitle = type?(obj || item?item.title:"" || ''):"";
+        $scope.media.typeTitle = type?(category==1?item.title:(category.title||item.title||'')):"";
+        $scope.media.parentTitle = type?(type==2?'' : item.title):"";
         
         $scope.media.tableid = 0;
         $scope.media.isopen = true;
         $scope.media.number = 0;
-        $scope.media.fid = item.itemId || 0;
-        $scope.media.typeid = item.typeId || category.typeId || 0;
+        $scope.media.fid = type?(item.itemId || 0):0;
+        $scope.media.typeid = type?(item.typeId || category.typeId || 0):0;
         $scope.media.fullmark=0;
         $scope.media.standardtype=0  + '';
         $scope.media.listorder= 0;
@@ -125,7 +125,10 @@ function($scope,AppConfig,$rootScope,GradeService) {
                 $scope.media.status = 0;
                 $scope.media.tableid = data.data.tableId || 0;
                 $scope.media.itemid = data.data.itemId || 0;
-            }
+            }else if(data.code == 4037){
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                            location.href="#login";$rootScope.loading = false;
+                        }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })
@@ -170,7 +173,10 @@ function($scope,AppConfig,$rootScope,GradeService) {
             if(data.code == 0){
                 swal("提示", "修改成功！", "success"); 
                 refresh();
-            }
+            }else if(data.code == 4037){
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                            location.href="#login";$rootScope.loading = false;
+                        }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             
@@ -207,7 +213,10 @@ function($scope,AppConfig,$rootScope,GradeService) {
                         $scope.media.type=0;
                         $scope.media.status=1;
                         refresh();
-                    }
+                    }else if(data.code == 4037){
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                            location.href="#login";$rootScope.loading = false;
+                        }
                     else
                         swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                 })
@@ -228,7 +237,10 @@ function($scope,AppConfig,$rootScope,GradeService) {
             console.log(data);
             if(data.code == 0){
                 $scope.month = data.data;
-            }
+            }else if(data.code == 4037){
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                            location.href="#login";$rootScope.loading = false;
+                        }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             $rootScope.loading = false;

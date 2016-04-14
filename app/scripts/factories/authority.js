@@ -100,7 +100,10 @@ angular.module('flatpcApp')
                     return ['flat','grade','gradeForMonth'];
                 else
                     return null;
+            case 'spot':
+            return ['flat','grade','spot'];
             case 'gradeForSpot':
+            // return ['flat','grade','gradeForSpot'];
                 if(menuCheck(279))
                     return ['flat','grade','gradeForSpot'];
                 else
@@ -123,6 +126,12 @@ angular.module('flatpcApp')
             case 'late':
                 if(menuCheck(75))
                     return ['flat','check','late'];
+                else
+                    return null;
+            case 'flatManager':
+            // return ['flat','flatManager','flatManager'];
+                if(menuCheck(323))
+                    return ['flat','flatManager','flatManager'];
                 else
                     return null;
             case 'scoreStatistics':

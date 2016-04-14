@@ -29,7 +29,13 @@
 }
 .page-navbar .top-navigation ul{
     display: box;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-box;
     display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
 }
 .page-navbar .top-navigation ul li{
     width:100px;
@@ -59,6 +65,7 @@
 }
 .page-navbar .user-nav>div{
     display: table;
+        width: 100%;
 }
 .page-navbar .user-nav a,.page-navbar .menu-nav a{
 	display: table-cell;

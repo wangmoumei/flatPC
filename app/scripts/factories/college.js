@@ -9,7 +9,7 @@ angular.module('flatpcApp')
     var getGrade = function(){
         var grades = [];
         var now = new Date().getFullYear();
-        for(var i = 2012 ; i < now + 3 ; i++ ){
+        for(var i = 2010 ; i < now + 3 ; i++ ){
             grades.push(i+'级');
         }
         return grades;

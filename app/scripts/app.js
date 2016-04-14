@@ -11,17 +11,13 @@
 angular
   .module('flatpcApp', [
     //'ngAnimate',
-    'ngCookies',
-    'ngResource',
-    'ngSanitize',
+    // 'ngCookies',
+    // 'ngResource',
+    // 'ngSanitize',
     'ui.router',
-    'ngTouch',
+    // 'ngTouch',
     'frapontillo.bootstrap-switch'
-  ],function($provide){
-      //$provide.factory('authority',function(){
-      //    return "aaaaa";
-      //});
-  })
+  ])
   .constant('AppConfig',{
       WEB_ROOT:'http://120.55.84.193/Geese_Apartment/',
     //   WEB_ROOT:'http://test.houqinbao.com/gyxt_api/',
@@ -31,7 +27,7 @@ angular
       nodeIds:''
   }).run(['$rootScope', '$location', 'AppConfig','authority','$stateParams','$http',
 		function($rootScope, $location, AppConfig,authority,$stateParams,$http) {
-            console.log($http.defaults.transformResponse);
+            // console.loxg($http.defaults.transformResponse);
             $rootScope.routerInit = function(menu){
                 $rootScope.sysMenu = [menu,menu,""];
             }
@@ -290,6 +286,23 @@ angular
             }
         }
     })
+    .state('spot', {
+        url: "/spot",
+        views: {
+            "": {
+                templateUrl: 'views/grade/spot.html',
+                controller: 'SpotCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
     .state('gradeForSpot', {
         url: "/gradeForSpot",
         views: {
@@ -432,6 +445,23 @@ angular
             "": {
                 templateUrl: 'views/checkIn/late.html',
                 controller: 'LateCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('flatManager', {
+        url: "/flatManager",
+        views: {
+            "": {
+                templateUrl: 'views/flatManager/manager.html',
+                controller: 'FlatManagerCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",

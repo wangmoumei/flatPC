@@ -3,8 +3,8 @@ angular.module('flatpcApp')
     return {
         restrict: 'A',
         link:function(scope,iElement,iAttrs){
-            iElement.click(function(){
-                var even = arguments.callee.caller.arguments[0] || window.event; 
+            iElement.click(function(event){
+                var even =window.event ||  event; 
                 var e = even.target;
                 if(e.className == 'form-tabs-point') e = e.parentNode;
                 if($(e).attr('data-role')){

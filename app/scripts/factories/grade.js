@@ -21,7 +21,9 @@ angular.module('flatpcApp')
                 + '&flatid=' + (param.flatid || "") + '&date=' + (new Date(param.date + '-01').Format('yyyy-MM') || new Date().Format('yyyy-MM'));
                 break;
             case 3:
-                
+                url = AppConfig.WEB_ROOT + 'evaluation/scorecheck/get_list/?'
+                + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
+                + '&flatid=' + (param.flatid || "") + '&checkid=' + (param.checkid || "");
                 break;
             default:
                 break;
@@ -48,7 +50,7 @@ angular.module('flatpcApp')
                 url = AppConfig.WEB_ROOT + 'evaluation/monthscore/add_room_score/';
                 break;
             case 3:
-                
+                url = AppConfig.WEB_ROOT + 'evaluation/scorecheck/add_room_score/';
                 break;
             default:
                 break;
@@ -81,7 +83,7 @@ angular.module('flatpcApp')
                 url = AppConfig.WEB_ROOT + 'evaluation/monthscore/edit_room_score/';
                 break;
             case 3:
-                
+                url = AppConfig.WEB_ROOT + 'evaluation/scorecheck/edit_room_score/';
                 break;
             default:
                 break;
@@ -111,7 +113,7 @@ angular.module('flatpcApp')
                 url = AppConfig.WEB_ROOT + 'evaluation/monthscore/get_room_message/?';
                 break;
             case 3:
-                
+                url = AppConfig.WEB_ROOT + 'evaluation/scorecheck/get_room_message/?';
                 break;
             default:
                 break;
@@ -143,7 +145,9 @@ angular.module('flatpcApp')
                 + '&roomid=' + param.roomid + '&date=' + (new Date(param.date + '-01').Format('yyyy-MM') || new Date().Format('yyyy-MM'));
                 break;
             case 3:
-                
+                url = AppConfig.WEB_ROOT + 'evaluation/scorecheck/get_pictures/?'
+                + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
+                + '&roomid=' + param.roomid  + '&checkid=' + (param.checkid || "");
                 break;
             default:
                 break;
@@ -170,7 +174,7 @@ angular.module('flatpcApp')
                 url = AppConfig.WEB_ROOT + 'evaluation/monthscore/upload_picture/';
                 break;
             case 3:
-                
+                url = AppConfig.WEB_ROOT + 'evaluation/scorecheck/upload_picture/';
                 break;
             default:
                 break;
@@ -203,7 +207,7 @@ angular.module('flatpcApp')
                 url = AppConfig.WEB_ROOT + 'evaluation/monthscore/add_bed_score/';
                 break;
             case 3:
-                
+                url = AppConfig.WEB_ROOT + 'evaluation/scorecheck/add_bed_score/';
                 break;
             default:
                 break;
@@ -234,7 +238,7 @@ angular.module('flatpcApp')
                 url = AppConfig.WEB_ROOT + 'evaluation/monthscore/edit_bed_score/';
                 break;
             case 3:
-                
+                url = AppConfig.WEB_ROOT + 'evaluation/scorecheck/edit_bed_score/';
                 break;
             default:
                 break;
@@ -267,7 +271,8 @@ angular.module('flatpcApp')
                 + 'date=' + (new Date(param.date + '-01').Format('yyyy-MM') || new Date().Format('yyyy-MM'));
                 break;
             case 3:
-                
+                url = AppConfig.WEB_ROOT + 'evaluation/scorecheck/get_bed_message/?'
+                 + '&checkid=' + (param.checkid || "");
                 break;
             default:
                 break;
@@ -297,7 +302,9 @@ angular.module('flatpcApp')
                 + '&date=' + (new Date(param.date + '-01').Format('yyyy-MM') || new Date().Format('yyyy-MM'));
                 break;
             case 3:
-                
+                url = AppConfig.WEB_ROOT + 'evaluation/scorecheck/score_search/?'
+                + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
+                 + '&checkid=' + (param.checkid || "");
                 break;
             default:
                 break;
@@ -339,7 +346,9 @@ angular.module('flatpcApp')
                 + '&date=' + (new Date(param.date + '-01').Format('yyyy-MM') || new Date().Format('yyyy-MM'));
                 break;
             case 3:
-                
+                url = AppConfig.WEB_ROOT + 'evaluation/scorecheck/score_search_export/?'
+                + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
+                 + '&checkid=' + (param.checkid || "");
                 break;
             default:
                 break;
@@ -379,7 +388,9 @@ angular.module('flatpcApp')
                 + '&date=' + (new Date(param.date + '-01').Format('yyyy-MM') || new Date().Format('yyyy-MM'));
                 break;
             case 3:
-                
+                url = AppConfig.WEB_ROOT + 'evaluation/scorecheck/ranking_list/?'
+                + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
+                 + '&checkid=' + (param.checkid || "");
                 break;
             default:
                 break;
@@ -416,7 +427,9 @@ angular.module('flatpcApp')
                 + '&date=' + (new Date(param.date + '-01').Format('yyyy-MM') || new Date().Format('yyyy-MM'));
                 break;
             case 3:
-                
+                url = AppConfig.WEB_ROOT + 'evaluation/scorecheck/ranking_list_export/?'
+                + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
+                + '&checkid=' + (param.checkid || "");
                 break;
             default:
                 break;
@@ -642,6 +655,81 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });//.get(url,param);
     };
+    var getSettingListByTableId = function(param){
+        param = param || {type:0};
+        var url = AppConfig.WEB_ROOT + 'evaluation/scsetups/get_list_table/?'
+        + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
+        + '&tableid=' + (param.tableid || 0) 
+        + (param.isopen?('&isopen=' + param.isopen):'');
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
+    };
+    var getSpotList = function(param){
+        param = param || {type:0};
+        var url = AppConfig.WEB_ROOT + 'evaluation/scorecheck/get_list_scorecheck/?'
+        + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
+        + '&epage=' + (param.epage || 1) + '&pagesize=' + (param.pagesize || 10) 
+        + (param.schoolyearid?('&schoolyearid=' + param.schoolyearid):'')
+        + (param.semesterid?('&semesterid=' + param.semesterid):'');
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
+    };
+    var addSpot = function (param) {
+        param.token = param.token || AppConfig.token;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
+        var url = AppConfig.WEB_ROOT + 'evaluation/scorecheck/add_scorecheck/';
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
+    };
+    var editSpot = function (param) {
+        param.token = param.token || AppConfig.token;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
+        var url = AppConfig.WEB_ROOT + 'evaluation/scorecheck/edit_scorecheck/';
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
+    };
+    var delSpot = function (param) {
+        param.token = param.token || AppConfig.token;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
+        var url = AppConfig.WEB_ROOT + 'evaluation/scorecheck/del_scorecheck/';
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
+    };
+    var getFlatByCheckId = function(param){
+        param = param || {type:0};
+        var url = AppConfig.WEB_ROOT + 'evaluation/scorecheck/get_flatBycheck/?'
+        + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
+        + '&checkid=' + (param.checkid || 0);
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
+    };
     return {
         getListByFlat:getListByFlat,
         setGrade:setGrade,
@@ -666,6 +754,12 @@ angular.module('flatpcApp')
         delSettingTable:delSettingTable,
         getStatistics:getStatistics,
         downloadStatistics:downloadStatistics,
-        basicSetting:basicSetting
+        basicSetting:basicSetting,
+        getSettingListByTableId:getSettingListByTableId,
+        getSpotList:getSpotList,
+        addSpot:addSpot,
+        editSpot:editSpot,
+        delSpot:delSpot,
+        getFlatByCheckId:getFlatByCheckId
     }
 }]);

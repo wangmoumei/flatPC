@@ -40,6 +40,8 @@
             }
             .panel-body{
                 padding:0;
+                max-height: 600px;
+                overflow: auto;
                 .page-tabs-container{
                     background-color: #fff;
                     padding: 20px;

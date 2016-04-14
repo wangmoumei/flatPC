@@ -14,6 +14,11 @@
             <i class="ALiconfont icon-order" style="font-size:20px"></i> 登记管理
         </a>
     </li>
+    <li ng-class="{'active':sysMenu[1]=='flatManager'}" ng-click="switch('flatManager')">
+        <a href="#index">
+            <i class="ALiconfont icon-addresslist" style="font-size:20px"></i> 人员管理
+        </a>
+    </li>
 </ul>
 <ul ng-show="sysMenu[0]=='data'">
     <li ng-if="menuCheck(9)" ng-class="{'active':sysMenu[1]=='data'}" ng-click="switch('data')">

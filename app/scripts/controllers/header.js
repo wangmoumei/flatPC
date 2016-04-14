@@ -11,10 +11,56 @@ angular.module('flatpcApp')
   .controller('HeaderCtrl', ['$scope','$rootScope','PublicService','AppConfig',
   function($scope,$rootScope,PublicService,AppConfig) {
         $scope.switch = function(t,name){
-            $rootScope.frame = t?true:false;
-            if(name == 'pay'){
-                swal("提示","敬请期待", "info"); 
-                return;
+            $rootScope.frame = false;
+            switch(name){
+                case 'wechat':
+                    if(!$rootScope.menuCheck(318)){
+                        swal("提示","请联系客服电话0571-28256212 开通权限", "info"); 
+                        return;
+                    }
+                    location.href="/index.php?s=/addon/HomePage/HomePage/lists.html";
+                    break;
+                case 'food':
+                    if(!$rootScope.menuCheck(317)){
+                        swal("提示","请联系客服电话0571-28256212 开通权限", "info"); 
+                        return;
+                    }
+                    location.href="/index.php?s=/addon/Dingcan/Dingcan/lists.html";
+                    break;
+                case 'flat':
+                    if(!$rootScope.menuCheck(1)){
+                        swal("提示","请联系客服电话0571-28256212 开通权限", "info"); 
+                        return;
+                    }
+                    break;
+                case 'repair':
+                    if(!$rootScope.menuCheck(4)){
+                        swal("提示","请联系客服电话0571-28256212 开通权限", "info"); 
+                        return;
+                    }
+                    location.href="/index.php?s=/addon/RepairSystem/RepairSystem/lists.html";
+                    break;
+                case 'pay':
+                    if(!$rootScope.menuCheck(5)){
+                        swal("提示","请联系客服电话0571-28256212 开通权限", "info"); 
+                        return;
+                    }
+                    
+                    swal("提示","敬请期待", "info"); 
+                    return;
+                    
+                case 'data':
+                    if(!$rootScope.menuCheck(2)){
+                        swal("提示","请联系客服电话0571-28256212 开通权限", "info"); 
+                        return;
+                    }
+                    break;
+                case 'admin':
+                    if(!$rootScope.menuCheck(3)){
+                        swal("提示","请联系客服电话0571-28256212 开通权限", "info"); 
+                        return;
+                    }
+                    break;
             }
             $rootScope.sysMenu[0] = name;
             $rootScope.sysMenu[1] = name;
@@ -32,7 +78,14 @@ angular.module('flatpcApp')
                         localStorage.roleId = "";
                         localStorage.userAccount = "";
                         localStorage.isOpenBed = "";
+                        var form = document.createElement("form");
+                        form.target = "test";
+                        form.method = "post";
+                        form.action = "/index.php?s=/Home/User/logout.html";
+                        
+                        form.submit();
                         location.href = '#login';
+                        
                     }
                     else
                         swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
@@ -43,6 +96,9 @@ angular.module('flatpcApp')
             newPassword:'',
             confirm:'',
             name:AppConfig.userName
+        }
+        $scope.change = function name(params) {
+            swal("提示","请联系客服电话0571-28256212 修改密码", "info"); 
         }
         $scope.editSave = function (fun) {
             if($scope.media.old.length > 0 && $scope.media.newPassword.length > 0 && $scope.media.confirm.length > 0)

@@ -1,5 +1,5 @@
 <div class="history-container">
-    <a class="return-btn" href="javascript:history.go(-1)">
+    <a class="return-btn" href="{{media.source==3?'#spot':'#index'}}">
         <i class="ALiconfont icon-sortleft"></i>
         返回
     </a>
@@ -88,13 +88,13 @@
         <span>{{media.tab == 1 ? flat.average : (media.tab == 2 ? rooms.average : '')}}</span>分
     </div>
 </div>
-<div class="page-main" style="top:150px;">
+<div class="page-main" style="top:{{media.source==3?100:150}}px;">
     <div class="page-tree" tree style="top:-50px;">
         <ul>
             <li class="open">
-                <a ng-class="{'branch':treeFlat.cmpusList,'leaf':!treeFlat.cmpusList}">{{treeFlat.title}}</a>
-                <ul ng-show="treeFlat.cmpusList">
-                    <li class="open" ng-repeat="campus in treeFlat.cmpusList||[]">
+                <a class="branch">{{treeFlat.title}}</a>
+                <ul>
+                    <li class="open" ng-repeat="campus in (media.source==3?spotSlat.cmpusList:treeFlat.cmpusList)||[]">
                         <a ng-click="media.show(1,campus)" ng-class="{'branch':campus.liveAreaList,'leaf':!campus.liveAreaList}">{{campus.title}}</a>
                         <ul ng-show="campus.liveAreaList">
                             <li class="open" ng-repeat="liveArea in campus.liveAreaList||[]">
@@ -112,13 +112,18 @@
         </ul>
     </div>
     <div class="page-tabs" tabs style="left:225px">
+        <div ng-hide="media.menuCheck(0)">
+            <table class="table table-bordered bg-white">
+                <tfoot><tr><td colspan="10" style="height:300px;vertical-align: middle;" class="empty">没有任何权限</td></tr></tfoot>
+            </table>
+        </div>
         <ul class="page-tabs-nav">
-            <li ng-if="(media.source==0 && menuCheck(63))||(media.source==1 && menuCheck(280))||(media.source==2 && menuCheck(283))" ng-class="{'active':media.tab == 1}" ng-click="media.setTab(1)">打分信息</li>
-            <li ng-if="(media.source==0 && menuCheck(64))||(media.source==1 && menuCheck(281))||(media.source==2 && menuCheck(284))" ng-class="{'active':media.tab == 2}" ng-click="media.setTab(2)">打分查询</li>
-            <li ng-if="(media.source==0 && menuCheck(65))||(media.source==1 && menuCheck(282))||(media.source==2 && menuCheck(285))" ng-class="{'active':media.tab == 3}" ng-click="media.setTab(3)">排行榜</li>
+            <li ng-if="media.menuCheck(1)" ng-class="{'active':media.tab == 1}" ng-click="media.setTab(1)">打分信息</li>
+            <li ng-if="media.menuCheck(2)" ng-class="{'active':media.tab == 2}" ng-click="media.setTab(2)">打分查询</li>
+            <li ng-if="media.menuCheck(3)" ng-class="{'active':media.tab == 3}" ng-click="media.setTab(3)">排行榜</li>
         </ul>
         <ul class="page-tabs-container">
-            <li ng-if="(media.source==0 && menuCheck(63))||(media.source==1 && menuCheck(280))||(media.source==2 && menuCheck(283))" class="fadeIn animated active" ng-class="{'active':media.tab == 1}">
+            <li ng-if="media.menuCheck(1)" class="fadeIn animated active" ng-class="{'active':media.tab == 1}">
                 <ul class="floor-list">
                     <li ng-repeat="floor in flat.floorList">
                         <div class="floor-title">
@@ -155,7 +160,7 @@
                     </li>
                 </ul>
             </li>
-            <li ng-if="(media.source==0 && menuCheck(64))||(media.source==1 && menuCheck(281))||(media.source==2 && menuCheck(284))" class="fadeIn animated" ng-class="{'active':media.tab == 2}">
+            <li ng-if="media.menuCheck(2)" class="fadeIn animated" ng-class="{'active':media.tab == 2}">
                 <div class="search-bar">
                     <!--div>
                         <select class="form-control">
@@ -191,7 +196,7 @@
                         </form>
                     </div>
                     <div>
-                        <a ng-click="media.downloadGrade()" class="btn btn-default">数据导出</a>
+                        <a ng-if="media.menuCheck(4)" ng-click="media.downloadGrade()" class="btn btn-default">数据导出</a>
                     </div>
                 </div>
                 <div class="table-container" style="top:50px;bottom:50px;background-color:#fff;">
@@ -269,7 +274,7 @@
                     </div>
                 </div>
             </li>
-            <li ng-if="(media.source==0 && menuCheck(65))||(media.source==1 && menuCheck(282))||(media.source==2 && menuCheck(285))" class="fadeIn animated" ng-class="{'active':media.tab == 3}">
+            <li ng-if="media.menuCheck(3)" class="fadeIn animated" ng-class="{'active':media.tab == 3}">
                 <div class="search-bar">
                     <div class="bar-full">
                         <div class="btn-group" role="group" ng-show="media.flatid1">
@@ -278,7 +283,7 @@
                         </div>
                     </div>
                     <div>
-                        <a ng-click="media.downloadGrade()" class="btn btn-default">数据导出</a>
+                        <a ng-if="media.menuCheck(5)" ng-click="media.downloadGrade()" class="btn btn-default">数据导出</a>
                     </div>
                 </div>
                 <div class="table-container" style="top:50px;background-color:#fff;">
@@ -348,7 +353,7 @@
     
 </div>
 <!--  -->
-<div class="info-card fadeIn animated" id="gradeCard" ng-class="{'grade-simple':media.tab>1 || !((media.source==0 && menuCheck(191))||(media.source==1 && menuCheck(289))||(media.source==2 && menuCheck(296)))}" info-card>
+<div class="info-card fadeIn animated" id="gradeCard" ng-class="{'grade-simple':!(media.tab==1 && cardMedia.menuCheck(5))}" info-card>
     <div class="info-card-wrapper">
         <div class="info-card-dialog">
             <div class="info-card-content">
@@ -358,15 +363,20 @@
                         <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
                     </div>
                     <div class="panel-body grade-panel">
-                        <div class="page-tabs" tabs>
+                        <div ng-hide="cardMedia.menuCheck(0)">
+                            <table class="table table-bordered bg-white">
+                                <tfoot><tr><td colspan="10" style="height:300px;vertical-align: middle;" class="empty">没有任何权限</td></tr></tfoot>
+                            </table>
+                        </div>
+                        <div class="page-tabs" tabs ng-show="cardMedia.menuCheck(0)">
                             <ul class="page-tabs-nav">
-                                <li ng-if="(media.source==0 && menuCheck(188))||(media.source==1 && menuCheck(286))||(media.source==2 && menuCheck(293))" ng-click="cardMedia.setTab(1)" ng-class="{'active':cardMedia.tab ==1}">寝室分</li>
-                                <li ng-if="switch.bed && ((media.source==0 && menuCheck(189))||(media.source==1 && menuCheck(287))||(media.source==2 && menuCheck(294)))" ng-click="cardMedia.setTab(2)" ng-class="{'active':cardMedia.tab ==2}">床位分</li>
-                                <li ng-if="switch.photo && ((media.source==0 && menuCheck(190))||(media.source==1 && menuCheck(288))||(media.source==2 && menuCheck(295)))" ng-click="cardMedia.setTab(3)" ng-class="{'active':cardMedia.tab ==3}">照片</li>
-                                <li ng-if="switch.role && ((media.source==0 && menuCheck(265))||(media.source==1 && menuCheck(290))||(media.source==2 && menuCheck(297)))" ng-click="cardMedia.setTab(4)" ng-class="{'active':cardMedia.tab ==4}">寝室违章</li>
+                                <li ng-if="cardMedia.menuCheck(1)" ng-click="cardMedia.setTab(1)" ng-class="{'active':cardMedia.tab ==1}">寝室分</li>
+                                <li ng-if="cardMedia.menuCheck(2)" ng-click="cardMedia.setTab(2)" ng-class="{'active':cardMedia.tab ==2}">床位分</li>
+                                <li ng-if="cardMedia.menuCheck(3)" ng-click="cardMedia.setTab(3)" ng-class="{'active':cardMedia.tab ==3}">照片</li>
+                                <li ng-if="cardMedia.menuCheck(4)" ng-click="cardMedia.setTab(4)" ng-class="{'active':cardMedia.tab ==4}">寝室违章</li>
                             </ul>
                             <ul class="page-tabs-container grade-container grade-tool-on" >
-                                <li ng-if="(media.source==0 && menuCheck(188))||(media.source==1 && menuCheck(286))||(media.source==2 && menuCheck(293))" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==1}">
+                                <li ng-if="cardMedia.menuCheck(1)" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==1}">
                                     <table class="table table-bordered bg-white">
                                         <thead>
                                             <tr><th>序号</th><th>打分项目</th><th>打分</th></tr>
@@ -401,7 +411,7 @@
                                         </tfoot>
                                     </table>
                                 </li>
-                                <li ng-if="switch.bed && ((media.source==0 && menuCheck(189))||(media.source==1 && menuCheck(287))||(media.source==2 && menuCheck(294)))" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==2}">
+                                <li ng-if="cardMedia.menuCheck(2)" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==2}">
                                     <table class="table table-bordered bg-white">
                                         <thead>
                                             <tr><th>序号</th><th>打分项目</th><th>打分</th></tr>
@@ -432,7 +442,7 @@
                                         </tfoot>
                                     </table>
                                 </li>
-                                <li ng-if="switch.photo && ((media.source==0 && menuCheck(190))||(media.source==1 && menuCheck(288))||(media.source==2 && menuCheck(295)))" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==3}">
+                                <li ng-if="cardMedia.menuCheck(3)" class="fadeIn animated" ng-class="{'active':cardMedia.tab ==3}">
                                     <div class="album" album>
                                         <ul>
                                             <li class="album-item" ng-repeat="img in cardMedia.img">
@@ -451,7 +461,7 @@
                                         <div class="album-empty" ng-show="(media.tab>1 || !menuCheck(191)) && cardMedia.img.length < 1">没有照片上传记录</div>
                                     </div>
                                 </li>
-                                <li ng-if="switch.role && ((media.source==0 && menuCheck(265))||(media.source==1 && menuCheck(290))||(media.source==2 && menuCheck(297)))" class="fadeIn animated" style="min-height:300px" ng-class="{'active':cardMedia.tab ==4}">
+                                <li ng-if="cardMedia.menuCheck(4)" class="fadeIn animated" style="min-height:300px" ng-class="{'active':cardMedia.tab ==4}">
                                     <table class="table table-bordered bg-white">
                                         <tbody>
                                             <tr>
@@ -506,7 +516,7 @@
                                 <a class="btn" ng-click="cardMedia.setTab(cardMedia.tab-1)" ng-class="{'btn-default disabled':cardMedia.tab-1<1,'btn-stroke btn-info':cardMedia.tab-1>0}"><i class="ALiconfont icon-sortleft"></i></a>
                             </div>
                             <div>
-                                <a ng-if="media.tab==1 && ((media.source==0 && menuCheck(191))||(media.source==1 && menuCheck(289))||(media.source==2 && menuCheck(296)))" class="btn btn-info" ng-click="cardMedia.gradeSave(closeCard('#gradeCard'))">保存并关闭</a>
+                                <a ng-if="media.tab==1 && cardMedia.menuCheck(5)" class="btn btn-info" ng-click="cardMedia.gradeSave(closeCard('#gradeCard'))">保存并关闭</a>
                             </div>
                             <div>
                                 <a class="btn" ng-click="cardMedia.setTab(cardMedia.tab+1)" ng-class="{'disabled btn-default':cardMedia.tab+1>4,'btn-stroke btn-info':cardMedia.tab+1<5}"><i class="ALiconfont icon-sortright"></i></a>

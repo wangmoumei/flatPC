@@ -48,6 +48,48 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });//.get(url,param);
     }
+    var addAdminGroup = function(param){
+        param.token = param.token || AppConfig.token;
+        var url = AppConfig.WEB_ROOT + 'accountmanage/admins/add_type/';
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
+    }
+    var editAdminGroup  = function(param){
+        param.token = param.token || AppConfig.token;
+        var url = AppConfig.WEB_ROOT + 'accountmanage/admins/edit_type/';
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
+    }
+    var delAdminGroup  = function(param){
+        param.token = param.token || AppConfig.token;
+        var url = AppConfig.WEB_ROOT + 'accountmanage/admins/del_type/';
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
+    }
     var getDictionary = function () {
         var url = AppConfig.WEB_ROOT + 'public/dictionary/get_list/?schoolcode='+AppConfig.schoolCode;
         return $http.get(url).error(function (error) {
@@ -59,6 +101,9 @@ angular.module('flatpcApp')
         addAdmin:addAdmin,
         editAdmin:editAdmin,
         delAdmin:delAdmin,
+        addAdminGroup:addAdminGroup,
+        editAdminGroup:editAdminGroup,
+        delAdminGroup:delAdminGroup,
         getDictionary:getDictionary
     }
 }]);

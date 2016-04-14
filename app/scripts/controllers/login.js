@@ -8,8 +8,8 @@
  * Controller of the flatpcApp
  */
 angular.module('flatpcApp')
-  .controller('LoginCtrl',['$scope', 'PublicService','$rootScope','AppConfig','$location','authority','$state','$cookieStore',
-  function($scope, PublicService,$rootScope,AppConfig,$location,authority,$state,$cookieStore) {
+  .controller('LoginCtrl',['$scope', 'PublicService','$rootScope','AppConfig','$location','authority','$state',
+  function($scope, PublicService,$rootScope,AppConfig,$location,authority,$state) {
     //   console.log($state);
         switch($state.current.name){
             case 'nbdx':
@@ -110,7 +110,24 @@ angular.module('flatpcApp')
                             $rootScope.treeMonth = undefined;
                             $rootScope.treeMenu = undefined;
                             $rootScope.treeRule = undefined;
-                            location.href = '#index';
+                            
+                            var form = document.createElement("form");
+                            form.target = "test";
+                            form.method = "post";
+                            form.action = "/index.php?s=/Home/User/login.html";
+                            var input1 = document.createElement("input"),input2 = document.createElement("input");
+                            input1.name = "username";
+                            input1.value = $scope.media.user;
+                            
+                            input2.name = "password";
+                            input2.value = $scope.media.pass;
+                            
+                            form.appendChild(input1);
+                            form.appendChild(input2);
+                            
+                            form.submit();
+                            
+                            location.href="#index";
                             $rootScope.loginSwitch = true;
                         }
                         

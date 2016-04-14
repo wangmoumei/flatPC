@@ -529,6 +529,19 @@ table{
         display: block;
     }
 }
+.remove-flat{
+    background: #fff;
+    color: #ccc;
+    cursor: pointer;
+    position: relative;
+    top: 4px;
+    &:hover{
+        color:#aaa;
+    }
+    i{
+        font-size: 20px;
+    }
+}
 @import "tree.scss";
 @import "weeks.scss";
 @import "tabs.scss";

@@ -20,6 +20,49 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             this.epage = 1;
             refresh();
         },
+        menuCheck:function(item){
+            switch(item){
+                case 1:
+                    return (
+                        (this.source==0 && $rootScope.menuCheck(63))
+                        ||(this.source==1 && $rootScope.menuCheck(280))
+                        ||(this.source==2 && $rootScope.menuCheck(283))
+                        ||(this.source==3 && $rootScope.menuCheck(325))
+                    );
+                case 2:
+                    return (
+                        (this.source==0 && $rootScope.menuCheck(64))
+                        ||(this.source==1 && $rootScope.menuCheck(281))
+                        ||(this.source==2 && $rootScope.menuCheck(284))
+                        ||(this.source==3 && $rootScope.menuCheck(326))
+                    )
+                case 3:
+                    return (
+                        (this.source==0 && $rootScope.menuCheck(65))
+                        ||(this.source==1 && $rootScope.menuCheck(282))
+                        ||(this.source==2 && $rootScope.menuCheck(285))
+                        ||(this.source==3 && $rootScope.menuCheck(327))
+                    )
+                case 4:
+                    return (
+                        (this.source==0 && $rootScope.menuCheck(192))
+                        ||(this.source==1 && $rootScope.menuCheck(291))
+                        ||(this.source==2 && $rootScope.menuCheck(298))
+                        ||(this.source==3 && $rootScope.menuCheck(333))
+                    )
+                case 5:
+                    return (
+                        (this.source==0 && $rootScope.menuCheck(193))
+                        ||(this.source==1 && $rootScope.menuCheck(292))
+                        ||(this.source==2 && $rootScope.menuCheck(299))
+                        ||(this.source==3 && $rootScope.menuCheck(334))
+                    )
+                    
+                case 0:
+                default:
+                    return this.menuCheck(1)||this.menuCheck(2)||this.menuCheck(3)
+            }
+        },
         type:3,
         flatid:'',
         flatid1:'',
@@ -470,7 +513,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             }
         },
         grade:function (n,item) {
-            if($scope.media.tab == 1 && $rootScope.menuCheck(191)){
+            if($scope.media.tab == 1 && this.menuCheck(5)){
                 if(item.score < 0){
                     item.score = item.score==-1?-2:-1;
                 }else
@@ -616,7 +659,19 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             })
             if(grades.length > 2)
                 grades = grades.substring(0,grades.length-1) + ']';
-            else return;
+            else if(that.img){
+                that.gradeImg(fun);
+                return;
+            }
+            else if(that.rule){
+                that.ruleSave(fun);
+                return;
+            }
+            else {
+                swal("提示","保存成功！", "success");
+                if(fun && typeof fun == 'function') fun();
+                return;
+            }
             // console.log(grades);
             if(grades.length > 0){
                 $rootScope.loading = true;
@@ -742,7 +797,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                 token:AppConfig.token,
                 schoolcode:AppConfig.schoolCode,
                 roomid:this.item.roomId,
-                specialid:this.item.roomId+'-'+$scope.media.week.year+'-'+$scope.media.week.month+'-'+$scope.media.week.day,
+                specialid:this.item.roomId+'-'+new Date($scope.media.week.year + '-' + $scope.media.week.month + '-' + $scope.media.week.day).Format('yyyy-MM-dd'),
                 adminid:AppConfig.adminId,
                 itemlist:items,
                 source:0
@@ -764,10 +819,54 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
         imgDel:function (index) {
             this.img.splice(index,1);
         },
-        menuCheck:function(){
-            
-            
-            return false;
+        menuCheck:function(item){
+            switch(item){
+                case 1:
+                    return (
+                        ($scope.media.source==0 && $rootScope.menuCheck(188))
+                        ||($scope.media.source==1 && $rootScope.menuCheck(286))
+                        ||($scope.media.source==2 && $rootScope.menuCheck(293))
+                        ||($scope.media.source==3 && $rootScope.menuCheck(328)) 
+                    );
+                case 2:
+                    return ($scope.switch.bed && 
+                        (
+                            ($scope.media.source==0 && $rootScope.menuCheck(189))
+                            ||($scope.media.source==1 && $rootScope.menuCheck(287))
+                            ||($scope.media.source==2 && $rootScope.menuCheck(294)) 
+                            ||($scope.media.source==3 && $rootScope.menuCheck(329)) 
+                        )
+                    )
+                case 3:
+                    return ($scope.switch.photo && 
+                        (
+                            ($scope.media.source==0 && $rootScope.menuCheck(190))
+                            ||($scope.media.source==1 && $rootScope.menuCheck(288))
+                            ||($scope.media.source==2 && $rootScope.menuCheck(295)) 
+                            || ($scope.media.source==3 && $rootScope.menuCheck(330)) 
+                        )
+                    )
+                case 4:
+                    return ($scope.switch.role && 
+                        (
+                            ($scope.media.source==0 && $rootScope.menuCheck(265))
+                            ||($scope.media.source==1 && $rootScope.menuCheck(290))
+                            ||($scope.media.source==2 && $rootScope.menuCheck(297)) 
+                            ||($scope.media.source==3 && $rootScope.menuCheck(331)) 
+                        )
+                    )
+                case 5:
+                    return (
+                        ($scope.media.source==0 && $rootScope.menuCheck(191))
+                        ||($scope.media.source==1 && $rootScope.menuCheck(289))
+                        ||($scope.media.source==2 && $rootScope.menuCheck(296)) 
+                        ||($scope.media.source==3 && $rootScope.menuCheck(332)) 
+                    )
+                    
+                case 0:
+                default:
+                    return this.menuCheck(1)||this.menuCheck(2)||this.menuCheck(3)||this.menuCheck(4)
+            }
         }
     }
     //上传打分图片，并将返回的img url显示

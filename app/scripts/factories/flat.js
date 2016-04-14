@@ -13,6 +13,8 @@ angular.module('flatpcApp')
         });
     }
     var addCampus = function(param){
+        param.token = param.token || AppConfig.token;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
         var url = AppConfig.WEB_ROOT + 'flatdata/school/add_campus/';
         console.log(param);
         return $http({
@@ -27,6 +29,7 @@ angular.module('flatpcApp')
         });//.post(url,param,{'Content-Type':'application/x-www-form-urlencoded'});
     }
     var editCampus = function(param){
+        param.token = param.token || AppConfig.token;
         var url = AppConfig.WEB_ROOT + 'flatdata/school/edit_campus/';
         return $http({
             url:url,
@@ -164,6 +167,67 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });
     };
+    
+    var getManagerList = function(param){
+        var url = AppConfig.WEB_ROOT + 'management/flatadmin/get_list_flat/?'
+        + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
+        + '&epage=' + (param.epage || 1) + '&pagesize=' + (param.pagesize || 10)
+        + (param.useraccount?('&useraccount='+param.useraccount):'')
+        + (param.username?('&username='+param.username):'')
+        + (param.jobnumber?('&jobnumber='+param.jobnumber):'')
+        + (param.flatid?('&flatid='+param.flatid):'')
+        + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
+        + (param.campusid?('&campusid='+param.campusid):'')
+        + (param.orderfield?('&orderfield='+param.orderfield):'')
+        + (param.ordertype?('&ordertype='+param.ordertype):'');
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
+    }
+    var addManager = function(param){
+        param.token = param.token || AppConfig.token;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
+        var url = AppConfig.WEB_ROOT + 'management/flatadmin/add_flat_admin/';
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.post(url,param,{'Content-Type':'application/x-www-form-urlencoded'});
+    }
+    var editManager = function(param){
+        param.token = param.token || AppConfig.token;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
+        var url = AppConfig.WEB_ROOT + 'management/flatadmin/edit_flat_admin/';
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.post(url,param,{'Content-Type':'application/x-www-form-urlencoded'});
+    }
+    var delManager = function(param){
+        param.token = param.token || AppConfig.token;
+        var url = AppConfig.WEB_ROOT + 'Managerdata/school/del_Manager/';
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.post(url,param,{'Content-Type':'application/x-www-form-urlencoded'});
+    }
     return {
         getList:getList,
         getFlat:getFlat,
@@ -179,6 +243,10 @@ angular.module('flatpcApp')
         getImport:getImport,
         downloadImport:downloadImport,
         importFlat:importFlat,
-        downloadExcel:downloadExcel
+        downloadExcel:downloadExcel,
+        getManagerList:getManagerList,
+        addManager:addManager,
+        editManager:editManager,
+        delManager:delManager
     }
 }]);
