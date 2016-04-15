@@ -489,7 +489,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     return RuleService.getListByRoom({
                         token:AppConfig.token,
                         schoolcode:AppConfig.schoolCode,
-                        specialid:this.item.roomId+'-'+$scope.media.week.year+'-'+$scope.media.week.month
+                        specialid:this.item.roomId+'-'+new Date($scope.media.week.year + '-' + $scope.media.week.month + '-01').Format('yyyy-MM')
                     }).success(function (data) {
                         $rootScope.loading = false;
                         
@@ -899,7 +899,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         )
                     )
                 case 5:
-                    return (
+                    return $scope.switch.month && (
                         ($scope.media.source==0 && $rootScope.menuCheck(191))
                         ||($scope.media.source==1 && $rootScope.menuCheck(289))
                         ||($scope.media.source==2 && $rootScope.menuCheck(296)) 
@@ -1087,10 +1087,11 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             }
             
         }
-        
+        swal("提示","没有设置学期", "error"); 
+        $rootScope.loading = false;
     };
     function refresh(n) {
-        if($scope.media.flatid.length<1)return;
+        if($scope.media.flatid.length<1 || !$scope.media.week || !$scope.media.week)return;
         if(!n)$scope.media.epage = 1;
         $rootScope.loading = true;
         if($scope.media.tab == 1){

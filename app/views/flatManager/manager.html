@@ -162,7 +162,7 @@
                                     <td>
                                         <select ng-model="form.roleid">
                                             <option value="">请选择角色</option>
-                                            <option ng-repeat="role in roles || []" value="{{role.roleId}}" ng-selected="form.roleid == role.roleId">{{role.remark}}</option>
+                                            <option ng-repeat="role in roles || []" value="{{role.roleId}}" ng-selected="form.roleid == role.roleId">{{role.title}}</option>
                                         </select>
                                     </td>
                                 </tr>

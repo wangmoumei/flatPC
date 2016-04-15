@@ -42,9 +42,9 @@ function($scope,AppConfig,$rootScope,GradeService) {
         }else{
             $scope.media.isLeaf = false;
         }
-        $scope.media.tableTitle = type?(obj || item?item.title:"" || ''):"";
-        $scope.media.typeTitle = type?(category==1?item.title:(category.title||item.title||'')):"";
-        $scope.media.parentTitle = type?(type==2?'' : item.title):"";
+        $scope.media.tableTitle = obj || item.title || '';
+        $scope.media.typeTitle = type>1?category.title || item.title: item.title || '';
+        $scope.media.parentTitle = option || item.title || '';
         
         $scope.media.tableid = item.tableId || 0;
         $scope.media.isopen = (item.isOpen || 0)?true:false;
@@ -65,7 +65,7 @@ function($scope,AppConfig,$rootScope,GradeService) {
         $scope.media.status = 1;
         $scope.media.type = type;
         
-        $scope.media.tableTitle = type?(obj || item?item.title:"" || ''):"";
+        $scope.media.tableTitle = type?(obj || (item?item.title:"") || ''):"";
         $scope.media.typeTitle = type?(category==1?item.title:(category.title||item.title||'')):"";
         $scope.media.parentTitle = type?(type==2?'' : item.title):"";
         

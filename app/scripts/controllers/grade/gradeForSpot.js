@@ -236,8 +236,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     orderfield:this.orderfield,
                     ordertype:this.ordertype,
                     flatid:this.flatid1,
-                    semesterid:$rootScope.treeTerm[this.yearIndex].semesterList[this.termIndex].semesterId,
-                    currentweek:this.week,
+                    checkid:$rootScope.spot.checkId,
                     type:3
                 }).success(function (data) {
                     $rootScope.loading = false;
@@ -261,8 +260,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     orderfield:this.orderfield,
                     ordertype:this.ordertype,
                     flatid:this.flatid1,
-                    semesterid:$rootScope.treeTerm[this.yearIndex].semesterList[this.termIndex].semesterId,
-                    currentweek:this.week,
+                    checkid:$rootScope.spot.checkId,
                     tobed:this.tobed,
                     type:3
                 }).success(function (data) {
@@ -404,7 +402,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         else
                             that.room = [];
                         
-                        console.log(that.room);
+                        // console.log(that.room);
                         
                     }
                     break;
@@ -784,7 +782,6 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             })
             if(imgs.length > 0)
                 imgs = imgs.substring(0,imgs.length-1);
-            else return;
             // console.log(imgs);
             $rootScope.loading = true;
             GradeService.uploadImg({
@@ -889,7 +886,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         )
                     )
                 case 5:
-                    return (
+                    return $scope.switch.pass && (
                         ($scope.media.source==0 && $rootScope.menuCheck(191))
                         ||($scope.media.source==1 && $rootScope.menuCheck(289))
                         ||($scope.media.source==2 && $rootScope.menuCheck(296)) 
@@ -903,8 +900,8 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
         }
     }
     //上传打分图片，并将返回的img url显示
-    $scope.uploadImg = function(){
-        var e = arguments.callee.caller.arguments[0] || window.event;var files = e.target.files;
+    $scope.uploadImg = function(event){
+         var files = event.target.files;
         var s = files[0].name.split(".").pop();
         if(s != "jpg" && s != "png" && s != "jpeg"){
             swal('提示', '文件格式不正确！请上传*.jpg或*.png文件', 'error'); 
@@ -1011,8 +1008,8 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
         }
     }
     function init() {
-        if($rootScope.treeFlat.cmpusList[0]&&$rootScope.treeFlat.cmpusList[0].liveAreaList[0]&&$rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList[0]&&$rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList[0].flatId){
-            $scope.media.show(3,$rootScope.treeFlat.cmpusList[0].liveAreaList[0].flatList[0],$rootScope.treeFlat.cmpusList[0],$rootScope.treeFlat.cmpusList[0].liveAreaList[0]);
+        if($scope.spotSlat.cmpusList[0]&&$scope.spotSlat.cmpusList[0].liveAreaList[0]&&$scope.spotSlat.cmpusList[0].liveAreaList[0].flatList[0]&&$scope.spotSlat.cmpusList[0].liveAreaList[0].flatList[0].flatId){
+            $scope.media.show(3,$scope.spotSlat.cmpusList[0].liveAreaList[0].flatList[0],$scope.spotSlat.cmpusList[0],$scope.spotSlat.cmpusList[0].liveAreaList[0]);
         }else
             $rootScope.loading = false;
         
@@ -1043,7 +1040,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                 
-                console.log(data);
+                // console.log(data);
             })
         }else if($scope.media.tab == 2){
             GradeService.getList({

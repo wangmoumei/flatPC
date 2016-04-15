@@ -36,6 +36,12 @@ function($scope,AppConfig,$rootScope,GradeService) {
     $scope.show = function(type,item,obj,category,option){
         $scope.media.status = 0;
         $scope.media.type = type;
+        
+        if((type == 2 && option) || type == 3){
+            $scope.media.isLeaf = true;
+        }else{
+            $scope.media.isLeaf = false;
+        }
         $scope.media.tableTitle = obj || item.title || '';
         $scope.media.typeTitle = type>1?category.title || item.title: item.title || '';
         $scope.media.parentTitle = option || item.title || '';
@@ -46,7 +52,7 @@ function($scope,AppConfig,$rootScope,GradeService) {
         $scope.media.number = item.number || 0;
         $scope.media.fid = item.fid || 0;
         $scope.media.fullmark=item.fullMark || 0;
-        $scope.media.standardtype=(item.standardType || 0)  + '';
+        $scope.media.standardtype=(item.standardType || (category?category.standardType || 0:0))  + '';
         $scope.media.listorder=item.listOrder || 1;
         $scope.media.title=item.title || '';
         $scope.media.itemid=item.itemId || 0;
@@ -54,24 +60,12 @@ function($scope,AppConfig,$rootScope,GradeService) {
         $scope.media.bettervalue=item.betterValue || 0;
         $scope.media.passcontinuity=item.passContinuity || 0;
         $scope.media.passnumber=item.passNumber || 0;
-        
-        if((type == 2 && !item.subNodes) || type == 3){
-            $scope.media.isLeaf = true;
-        }else{
-            $scope.media.isLeaf = false;
-        }
-        
-        if(type == 1 && category == 0){
-            $scope.media.isRoom = true;
-        }else{
-            $scope.media.isRoom = false;
-        }
     }
     $scope.add = function(type,item,obj,category){
         $scope.media.status = 1;
         $scope.media.type = type;
-        
-        $scope.media.tableTitle = type?(obj || item?item.title:"" || ''):"";
+        console.log(arguments);
+        $scope.media.tableTitle = type?(obj || (item?item.title:"") || ''):"";
         $scope.media.typeTitle = type?(category==1?item.title:(category.title||item.title||'')):"";
         $scope.media.parentTitle = type?(type==2?'' : item.title):"";
         

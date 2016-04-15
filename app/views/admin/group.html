@@ -39,7 +39,7 @@
                 <td>
                     <ul style="width:160px;max-height:200px;overflow-y:auto;">
                         <li ng-repeat="role in roles">
-                            <label><input bs-switch switch-active="{{(media.status&&menuCheck(236)) || (!media.status&&menuCheck(237))}}" ng-model="role.checked" type="checkbox" switch-size="mini" switch-on-text="on" switch-off-text="off"> {{role.remark}}</label>
+                            <label><input bs-switch switch-active="{{(media.status&&menuCheck(236)) || (!media.status&&menuCheck(237))}}" ng-model="role.checked" type="checkbox" switch-size="mini" switch-on-text="on" switch-off-text="off"> {{role.title}}</label>
                         </li>
                     </ul>
                 </td>

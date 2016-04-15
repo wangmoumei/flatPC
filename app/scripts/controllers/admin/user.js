@@ -31,8 +31,8 @@ angular.module('flatpcApp')
         $scope.form.useraccount=user.userAccount || '';
         $scope.form.phone=user.phone || '';
         $scope.form.jobnumber=user.jobNumber || '';
-        $scope.form.roleid= '' + user.roleId || '';
-        $scope.form.groupid=user.groupId || $scope.media.groupid || '';
+        $scope.form.roleid= '' + (user.roleId || '');
+        $scope.form.groupid=(user.groupId || $scope.media.groupid || '') +"";
         $scope.groupSelect();
         $scope.form.adminid=user.adminId || '';
     }

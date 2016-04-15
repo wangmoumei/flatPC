@@ -28,6 +28,29 @@ angular.module('flatpcApp')
                 minView:'month',
                 pickerPosition:'top-right'
             });
+            if(iAttrs.change){
+                iElement.datetimepicker({
+                    format: "yyyy-mm-dd",
+                    language:'zh-CN',
+                    autoclose: true,
+                    todayBtn: true,
+                    startView:'year',
+                    minView:'month',
+                    pickerPosition:'top-right'
+                }).on('changeDate', function(ev){
+                    scope.$eval(iAttrs.change);
+                });
+            }else{
+                iElement.datetimepicker({
+                    format: "yyyy-mm-dd",
+                    language:'zh-CN',
+                    autoclose: true,
+                    todayBtn: true,
+                    startView:'year',
+                    minView:'month',
+                    pickerPosition:'top-right'
+                });
+            }
         }
     };
 })

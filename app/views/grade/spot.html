@@ -4,14 +4,14 @@
         返回
     </a>
     <ul class="history-list">
-        <li><a href="#index">权限</a></li>
-        <li><a href="#index" ng-click="routerInit('admin')">帐号管理</a></li>
-        <li>帐号管理</li>
+        <li><a href="#index">公寓管理</a></li>
+        <li><a href="#index" ng-click="routerInit('grade')">宿舍考评</a></li>
+        <li>卫生打分</li>
     </ul>
 </div>
 <div class="tool-bar">
-    <div ng-if="menuCheck(233)">
-        <button class="btn btn-success" ng-click="showCard('#spotForm',dataInit)">新建抽查</button>
+    <div>
+        <button ng-if="menuCheck(336)" class="btn btn-success" ng-click="showCard('#spotForm',dataInit)">新建抽查</button>
     </div>
 
 </div>
@@ -57,7 +57,7 @@
                     </td>
                     <td style="vertical-align:middle">{{item.nature}}</td>
                     <td style="vertical-align:middle">
-                        <button type="button" class="btn btn-link btn-xs" ng-if="media.dateCheck(item)" ng-click="showCard('#spotForm',dataInit(item))">编辑</button>
+                        <button type="button" class="btn btn-link btn-xs" ng-if="menuCheck(337)" ng-click="showCard('#spotForm',dataInit(item))">编辑</button>
                         <button type="button" class="btn btn-link btn-xs" ng-click="setSpot(item)">打分</button>
                     </td>
                 </tr>
@@ -132,9 +132,9 @@
                                             </select>
                                         </div>
                                         <div>
-                                            <input type="text" datepicker ng-model="form.starttime">
+                                            <input type="text" data-change="form.timeCheck(0)" datepicker ng-model="form.starttime">
                                             至
-                                            <input type="text" datepicker ng-model="form.endtime">
+                                            <input type="text" data-change="form.timeCheck(1)" datepicker ng-model="form.endtime">
                                         </div>
                                     </td>
                                 </tr>
@@ -188,7 +188,7 @@
                                     <td>
                                         <ul style="width:160px;max-height:140px;overflow-y:auto;">
                                             <li ng-repeat="role in roles">
-                                                <label><input bs-switch ng-model="role.checked" type="checkbox" switch-size="mini" switch-on-text="on" switch-off-text="off"> {{role.remark}}</label>
+                                                <label><input bs-switch ng-model="role.checked" type="checkbox" switch-size="mini" switch-on-text="on" switch-off-text="off"> {{role.title}}</label>
                                             </li>
                                         </ul>
                                     </td>

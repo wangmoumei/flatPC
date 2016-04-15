@@ -59,6 +59,22 @@ angular.module('flatpcApp')
             })
             ids = ids.length>0?ids.toString():"";
             return ids;
+        },
+        timeCheck:function (n) {
+            if(new Date(this.starttime) > new Date(this.endtime)){
+                try{
+                    if(n){
+                        this.starttime = this.endtime;
+                    }else{
+                        this.endtime = this.starttime;
+                    }
+                    $scope.$digest();
+                }
+                catch(e){
+                    this.starttime = new Date().Format('yyyy-MM-dd');
+                    this.endtime = new Date().Format('yyyy-MM-dd');
+                }
+            }
         }
     }
     $scope.dataInit = function (item) {
@@ -160,7 +176,15 @@ angular.module('flatpcApp')
                 var yearList = $filter('filter')($rootScope.treeTerm,{schoolYearId:this.schoolYearId});
                 this.termList = (yearList.length>0 && yearList[0].semesterList)?yearList[0].semesterList : [];
             }else{
-                
+                for(var i = 0;i < $rootScope.treeTerm.length;i ++){
+                    for(var j = 0; j < $rootScope.treeTerm[i].semesterList.length ; j ++ ){
+                        if(($rootScope.treeTerm[i].semesterList[j].isCurrent) || (i == $rootScope.treeTerm.length-1 && j == $rootScope.treeTerm[i].semesterList.length-1)){
+                            this.termList = $rootScope.treeTerm[i].semesterList;
+                            this.schoolYearId = $rootScope.treeTerm[i].schoolYearId;
+                            $scope.form.semesterid = $rootScope.treeTerm[i].semesterList[j].semesterId;
+                        }
+                    }
+                }
             }
         }
     }

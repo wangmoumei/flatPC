@@ -64,7 +64,7 @@ function($scope,AppConfig,$rootScope,GradeService) {
         $scope.media.status = 1;
         $scope.media.type = type;
         
-        $scope.media.tableTitle = type?(obj || item?item.title:"" || ''):"";
+        $scope.media.tableTitle = type?(obj || (item?item.title:"") || ''):"";
         $scope.media.typeTitle = type?(category==1?item.title:(category.title||item.title||'')):"";
         $scope.media.parentTitle = type?(type==2?'' : item.title):"";
         

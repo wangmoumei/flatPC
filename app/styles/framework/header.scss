@@ -10,7 +10,8 @@
     z-index: 100;
 }
 .page-navbar .logo-nav{
-	float: left;
+	position: absolute;
+    left: 0;
     background-color: #0e4ea9;
     width: 50px;
     text-align: center;
@@ -19,12 +20,14 @@
     width: 20px;
 }
 .page-navbar .title-nav{
-    float: left;
+    position: absolute;
+    left: 50px;
     padding-left: 20px;
     width: 100px;
 }
 .page-navbar .top-navigation{
-    float: left;
+    position: absolute;
+    left: 150px;
     margin-left: 20px;
 }
 .page-navbar .top-navigation ul{
@@ -56,7 +59,8 @@
     background-color: #0e4ea9;
 }
 .page-navbar .user-nav,.page-navbar .menu-nav{
-	float: right;
+	position: absolute;
+    right: 0;
 	height: 50px;
 	width: 120px;
 	text-align: center;

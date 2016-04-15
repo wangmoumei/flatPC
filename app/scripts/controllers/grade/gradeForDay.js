@@ -443,7 +443,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     return RuleService.getListByRoom({
                         token:AppConfig.token,
                         schoolcode:AppConfig.schoolCode,
-                        specialid:this.item.roomId+'-'+$scope.media.week.year+'-'+$scope.media.week.month+'-'+$scope.media.week.day
+                        specialid:this.item.roomId+'-'+new Date($scope.media.week.year + '-' + $scope.media.week.month + '-' + $scope.media.week.day).Format('yyyy-MM-dd')
                     }).success(function (data) {
                         $rootScope.loading = false;
                         
@@ -856,7 +856,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         )
                     )
                 case 5:
-                    return (
+                    return $scope.switch.day && (
                         ($scope.media.source==0 && $rootScope.menuCheck(191))
                         ||($scope.media.source==1 && $rootScope.menuCheck(289))
                         ||($scope.media.source==2 && $rootScope.menuCheck(296)) 

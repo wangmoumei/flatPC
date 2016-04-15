@@ -3,8 +3,8 @@ angular.module('flatpcApp')
     return {
         restrict: 'A',
         link:function(scope,iElement,iAttrs){
-            iElement.find('ul').click(function(){
-                var even = arguments.callee.caller.arguments[0] || window.event; 
+            iElement.find('ul').click(function(event){
+                var even = event || window.event; 
                 var e = even.target;
                 // alert(e.tagName);
                 if(e.tagName != 'LI' && e.tagName != 'I'){
