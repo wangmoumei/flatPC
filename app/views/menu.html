@@ -45,6 +45,23 @@
             </li>
         </ul>
     </li>
+     <li ng-if="menuCheck(17)" ng-show="sysMenu[1]=='flat'">
+        <div class="menu-title">毕业退宿管理</div>
+        <ul class="menu-list">
+            <li ng-if="menuCheck(32)">
+                <a href="#graduation">
+                    <i class="ALiconfont icon-tuisu" style="line-height: 45px;background-color:#ff9c00;font-size:32px"></i>
+                    毕业退宿
+                </a>
+            </li>
+            <li ng-if="menuCheck(342)">
+                <a href="#arrearage">
+                    <i class="ALiconfont icon-board" style="line-height: 45px;background-color:#fc7257;font-size:28px"></i>
+                    违欠信息
+                </a>
+            </li>
+        </ul>
+    </li>
     <li ng-if="menuCheck(16)" ng-show="sysMenu[1]=='flat'">
         <div class="menu-title">新生入学管理</div>
         <ul class="menu-list">
@@ -56,17 +73,7 @@
             </li>
         </ul>
     </li>
-    <li ng-if="menuCheck(17)" ng-show="sysMenu[1]=='flat'">
-        <div class="menu-title">毕业退宿管理</div>
-        <ul class="menu-list">
-            <li >
-                <a>
-                    <i class="glyphicon glyphicon-console" style="background-color:#d3d6d9;font-size:20px"></i>
-                    开发中...
-                </a>
-            </li>
-        </ul>
-    </li>
+   
     <li ng-if="menuCheck(58)" ng-show="sysMenu[1]=='grade'">
         <div class="menu-title">查宿舍</div>
         <ul class="menu-list">
@@ -169,6 +176,12 @@
                 <a href="#flatManager">
                     <i class="ALiconfont icon-zhanghaoguanli" style="background-color:#fc7257;font-size:28px"></i>
                     楼栋管理员
+                </a>
+            </li>
+            <li ng-if="menuCheck(340)">
+                <a href="#counselor">
+                    <i class="ALiconfont icon-zhanghaoguanli" style="background-color:#02cf97;font-size:28px"></i>
+                    辅导员
                 </a>
             </li>
         </ul>

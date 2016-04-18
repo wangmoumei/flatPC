@@ -85,6 +85,18 @@ angular.module('flatpcApp')
                     return ['flat','flat','check'];
                 else
                     return null;
+            case 'graduation':
+            return ['flat','flat','graduation'];
+                if(menuCheck(32))
+                    return ['flat','flat','graduation'];
+                else
+                    return null;
+            case 'arrearage':
+            return ['flat','flat','arrearage'];
+                if(menuCheck(342))
+                    return ['flat','flat','arrearage'];
+                else
+                    return null;
             case 'gradeForWeek':
                 if(menuCheck(60))
                     return ['flat','grade','gradeForWeek'];
@@ -101,7 +113,7 @@ angular.module('flatpcApp')
                 else
                     return null;
             case 'spot':
-            return ['flat','grade','spot'];
+            // return ['flat','grade','spot'];
             case 'gradeForSpot':
             // return ['flat','grade','gradeForSpot'];
                 if(menuCheck(279))
@@ -132,6 +144,12 @@ angular.module('flatpcApp')
             // return ['flat','flatManager','flatManager'];
                 if(menuCheck(323))
                     return ['flat','flatManager','flatManager'];
+                else
+                    return null;
+            case 'counselor':
+            return ['flat','flatManager','counselor'];
+                if(menuCheck(340))
+                    return ['flat','flatManager','counselor'];
                 else
                     return null;
             case 'scoreStatistics':

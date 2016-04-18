@@ -235,6 +235,40 @@ angular
             }
         }
     })
+    .state('graduation', {
+        url: "/graduation",
+        views: {
+            "": {
+                templateUrl: 'views/flat/graduation.html',
+                controller: 'GraduationCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('arrearage', {
+        url: "/arrearage",
+        views: {
+            "": {
+                templateUrl: 'views/flat/arrearage.html',
+                controller: 'ArrearageCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
     .state('gradeForWeek', {
         url: "/gradeForWeek",
         views: {
@@ -462,6 +496,23 @@ angular
             "": {
                 templateUrl: 'views/flatManager/manager.html',
                 controller: 'FlatManagerCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('counselor', {
+        url: "/counselor",
+        views: {
+            "": {
+                templateUrl: 'views/flatManager/counselor.html',
+                controller: 'CounselorCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",

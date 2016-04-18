@@ -15,10 +15,10 @@ angular.module('flatpcApp')
                         else {
                             $(a).siblings("ul").slideDown("fast",function(){$(a.parentNode).addClass('open')});
                         }
-                    }else{
+                    }
                         iElement.find("a.active").removeClass("active");
                         $(a).addClass("active");
-                    }
+                    
                 }
             })
         }

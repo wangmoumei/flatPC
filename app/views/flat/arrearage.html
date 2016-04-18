@@ -1,0 +1,355 @@
+<div class="history-container">
+    <a class="return-btn" href="javascript:history.go(-1)">
+        <i class="ALiconfont icon-sortleft"></i>
+        返回
+    </a>
+    <ul class="history-list">
+        <li><a href="#index" ng-click="routerInit('flat')">数据中心</a></li>
+        <li><a href="#index">毕业退宿管理</a></li>
+        <li>违欠信息</li>
+    </ul>
+</div>
+<div class="tool-bar" style="margin-left:225px;">
+    <div class="bar-full" style="min-width:160px">
+        {{media.title}}
+    </div>
+</div>
+<div class="page-main">
+    <div class="page-tree" tree style="top:-50px;">
+        <ul>
+            <li class="open">
+                <a ng-click="show(0,{})" ng-class="{'branch':treeFlat.cmpusList,'leaf':!treeFlat.cmpusList}">{{treeFlat.title}}</a>
+                <ul ng-show="treeFlat.cmpusList">
+                    <li class="open" ng-repeat="campus in treeFlat.cmpusList||[]">
+                        <a ng-click="show(1,campus)" ng-class="{'branch':campus.liveAreaList,'leaf':!campus.liveAreaList}">{{campus.title}}</a>
+                        <ul ng-show="campus.liveAreaList">
+                            <li class="open" ng-repeat="liveArea in campus.liveAreaList||[]">
+                                <a ng-click="show(2,liveArea,campus)" ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}">{{liveArea.title}}</a>
+                                <ul ng-show="liveArea.flatList">
+                                    <li ng-repeat="flat in liveArea.flatList||[]">
+                                        <a class="leaf" ng-click="show(3,flat,campus,liveArea)">{{flat.title}}</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="page-tabs" tabs style="left:225px">
+        <ul class="page-tabs-nav">
+            <li class="active">违欠信息</li>
+            <li>数据导入</li>
+        </ul>
+        <ul class="page-tabs-container">
+            <li class="fadeIn animated active">
+                <div class="tool-bar">
+                    <div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{media.search?'姓名':'学号'}} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" style="min-width:66px">
+                                <li ng-click="media.search=0"><a>学号</a></li>
+                                <li ng-click="media.search=1"><a>姓名</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="bar-full">
+                        <div class="input-group search-bool">
+                            <input type="text" class="form-control" ng-model="searchText" placeholder="检索">
+                            <span class="input-group-btn">
+                                <button ng-click="search(searchText)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-container" style="top:50px;background-color:#fff;">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>学号</th>
+                                <th>姓名</th>
+                                <th>班级</th>
+                                <th>入住床位</th>
+                                <th>违欠类型</th>
+                                <th>违欠性质</th>
+                                <th>违欠费用</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            <tr ng-repeat="student in studentList">
+                                <td>{{student.studentNumber}}</td>
+                                <td>{{student.name}}</td>
+                                <td>{{student.grade}}</td>
+                                <td>{{student.collegeName}}</td>
+                                <td>{{student.className}}</td>
+                                <td>{{student.className}}</td>
+                                <td>{{student.className}}</td>
+                                <td>
+                                    <a ng-click="showCard({selecter:'#studentForm',before:loadInfo(student.studentKey)})" class="btn btn-link btn-xs">{{menuCheck(216)?'编辑':'查看'}}</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="10" ng-hide="media.recordCount" class="empty">没有检索到学生信息</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="page-controller">
+                    <div class="page-number">
+                        <ul class="pagination">
+                            <li ng-class="{disabled:media.epage<2}">
+                                <a aria-label="Previous" ng-click="setPage(-1)">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li ng-show="media.epage-2>0"><a ng-click="setPage(-2)">{{media.epage-2}}</a></li>
+                            <li ng-show="media.epage-1>0"><a ng-click="setPage(-1)">{{media.epage-1}}</a></li>
+                            <li class="active"><a>{{media.epage}}</a></li>
+                            <li ng-show="media.epage+1<=media.pageCount"><a ng-click="setPage(1)">{{media.epage+1}}</a></li>
+                            <li ng-show="media.epage+2<=media.pageCount"><a ng-click="setPage(2)">{{media.epage+2}}</a></li>
+                            <li ng-class="{disabled:media.epage>=media.pageCount}">
+                                <a aria-label="Next" ng-click="setPage(1)">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="page-size">
+                        共{{media.recordCount}}条记录，每页显示
+                        <div class="btn-group dropup">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{media.pagesize}} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" style="min-width:54px">
+                                <li ng-click="setPageSize(10)"><a>10</a></li>
+                                <li ng-click="setPageSize(20)"><a>20</a></li>
+                                <li ng-click="setPageSize(30)"><a>30</a></li>
+                                <li ng-click="setPageSize(50)"><a>50</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="fadeIn animated" ng-controller="StudentImportCtrl">
+                <div class="tool-bar">
+                    <div ng-if="menuCheck(218)">
+                        <a class="btn btn-success" ng-click="showCard('#multiAdd',importInit)">数据导入</a>
+                    </div>
+                    <div ng-if="menuCheck(219)">
+                        <a class="btn btn-default" ng-click="downloadOriginal()">下载样表</a>
+                    </div>
+                </div>
+                <div class="table-container" style="top:50px;background-color:#fff;">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="sort"  ng-class="{'sort-up':media.orderfield=='title' && media.ordertype=='asc','sort-down':media.orderfield=='title' && media.ordertype=='desc'}" ng-click="setOrder('title')">导入名称</th>
+                                <th>导入类型</th>
+                                <th class="sort" ng-class="{'sort-up':media.orderfield=='addTime' && media.ordertype=='asc','sort-down':media.orderfield=='addTime' && media.ordertype=='desc'}" ng-click="setOrder('addTime')">创建时间</th>
+                                <th>错误日志</th>
+                                <th>查看</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            <tr ng-repeat="import in importList">
+                                <td>{{import.title}}</td>
+                                <td>{{import.importType}}</td>
+                                <td>{{import.addTime}}</td>
+                                <td>{{import.errorNumber}}个错误信息</td><td><a ng-if="menuCheck(220)" class="btn btn-link btn-xs" ng-click="download(import.importId)">导出错误数据</a></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="10" ng-hide="media.recordCount" class="empty">没有检索到导入历史纪录</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="page-controller">
+                    <div class="page-number">
+                        <ul class="pagination">
+                            <li ng-class="{disabled:media.epage<2}">
+                                <a aria-label="Previous" ng-click="setPage(-1)">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li ng-show="media.epage-2>0"><a ng-click="setPage(-2)">{{media.epage-2}}</a></li>
+                            <li ng-show="media.epage-1>0"><a ng-click="setPage(-1)">{{media.epage-1}}</a></li>
+                            <li class="active"><a>{{media.epage}}</a></li>
+                            <li ng-show="media.epage+1<=media.pageCount"><a ng-click="setPage(1)">{{media.epage+1}}</a></li>
+                            <li ng-show="media.epage+2<=media.pageCount"><a ng-click="setPage(2)">{{media.epage+2}}</a></li>
+                            <li ng-class="{disabled:media.epage>=media.pageCount}">
+                                <a aria-label="Next" ng-click="setPage(1)">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="page-size">
+                        共 {{media.recordCount}} 条记录，每页显示
+                        <div class="btn-group dropup">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{media.pagesize}} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" style="min-width:54px">
+                                <li ng-click="setPageSize(10)"><a>10</a></li>
+                                <li ng-click="setPageSize(20)"><a>20</a></li>
+                                <li ng-click="setPageSize(30)"><a>30</a></li>
+                                <li ng-click="setPageSize(50)"><a>50</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="info-card fadeIn animated" id="studentForm" info-card>
+    <div class="info-card-wrapper">
+        <div class="info-card-dialog">
+            <div class="info-card-content">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        {{student.type?'编辑学生':'添加学生'}}
+                        <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table-form table-bordered bg-white">
+                            <tbody>
+                                <tr>
+                                    <td class="require" width="100">班级</td>
+                                    <td colspan="3">
+                                         <select ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-change="selecter.collegeSelecter()" ng-model="selecter.collegeId">
+                                             <option value="">请选择学院</option>
+                                             <option ng-repeat="college in treeCollege[0].collegeList || []" value="{{college.collegeId}}" ng-selected="selecter.collegeId == college.collegeId">{{college.collegeName}}</option>
+                                         </select>
+                                         <select ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="selecter.classId">
+                                             <option value="">请选择班级</option>
+                                             <option ng-repeat="cla in selecter.classList || []" value="{{cla.classId}}" ng-selected="selecter.classId == cla.classId">{{cla.className}}</option>
+                                         </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="require">学号</td><td><input type="text" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.studentNumber" /></td>
+                                    <td rowspan="5" colspan="2">
+                                        <div><img style="max-width:{{student.headImgurl?200:100}}px;" src="{{student.headImgurl || 'http://7xp0c4.com2.z0.glb.qiniucdn.com/default.png'}}" /></div>
+                                        <div class="btn btn-primary btn-sm" ng-hide="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" style="margin-top:10px;" input-file change="uploadImg">点击上传照片</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="require">姓名</td><td><input type="text" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.name"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="require">性别</td>
+                                    <td>
+                                        <label><input type="radio" name="sex" value="男" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" checked="checked"/> 男</label>
+                                        <label><input type="radio" name="sex" value="女" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" /> 女</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>联系电话</td>
+                                    <td>
+                                        <input type="text" ng-model="student.phone" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>出生日期</td>
+                                    <td>
+                                        <input type="text" datepicker ng-model="student.birthDay" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>政治面貌</td>
+                                    <td>
+                                        <input type="text"  ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.political"/>
+                                    </td>
+                                    <td>民族</td>
+                                    <td>
+                                        <input type="text"  ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.nation"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>类型</td>
+                                    <td>
+                                        <input type="text"  ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.studentType"/>
+                                    </td>
+                                    <td>婚姻状况</td>
+                                    <td>
+                                        <input type="text"  ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.marital"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>身份证号</td>
+                                    <td>
+                                        <input type="text"  ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.identityCard"/>
+                                    </td>
+                                    <td>籍贯</td>
+                                    <td>
+                                        <input type="text"  ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.origin"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>家庭住址</td>
+                                    <td colspan="3">
+                                        <textarea class="form-control" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.homeAddress">{{student.homeAddress}}</textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>备注</td>
+                                    <td colspan="3">
+                                        <textarea class="form-control" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.memo">{{student.memo}}</textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <a ng-if="menuCheck(214)" class="btn btn-success" ng-show="!student.type" ng-click="studentAdd(closeCard('#studentForm'))">提交</a>
+                                        <a ng-if="menuCheck(216)" class="btn btn-info" ng-show="student.type" ng-click="studentEdit()">保存修改</a>
+                                        <a ng-if="menuCheck(215)" class="btn btn-danger" ng-show="student.type" ng-click="studentDel(closeCard('#studentForm'))">删除</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="info-card fadeIn animated" id="multiAdd" info-card>
+    <div class="info-card-wrapper">
+        <div class="info-card-dialog">
+            <div class="info-card-content">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        数据导入
+                        <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
+                    </div>
+                    <div class="panel-body" ng-controller="StudentImportCtrl">
+                        <table class="table-form table-bordered bg-white">
+                            <tbody>
+                                <tr>
+                                    <td class="require">导入名称</td><td><input type="text" ng-model="importName" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="require">选择文件</td>
+                                    <td>{{importFileName}} <div class="btn btn-primary btn-sm" input-file change = "uploadFile">点击选择</div></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <a class="btn btn-success" ng-click="subImport(closeCard('#multiAdd'))">确认导入</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
