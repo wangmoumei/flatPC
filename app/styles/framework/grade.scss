@@ -143,6 +143,10 @@
         }
         &>div:first-of-type,&>div:last-of-type{
             display: none;
+            &.pass,&.fail{
+                display: block;
+                
+            }
         }
     }
     .rule-item{

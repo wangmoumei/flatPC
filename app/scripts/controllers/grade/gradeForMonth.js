@@ -400,7 +400,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         });
                     }
                     else{
-                        if($rootScope.treeMonth[0] && $rootScope.treeMonth[0].typeList && $rootScope.treeMonth[0].typeList[0].itemList)
+                        if($rootScope.treeMonth[0] && $rootScope.treeMonth[0].typeList && $rootScope.treeMonth[0].typeList[0].itemList && $scope.media.tab==1)
                         {
                             that.room = $rootScope.treeMonth[0].typeList[0].itemList;
                             that.getSum(true);
@@ -426,7 +426,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         if(data.code == 0){
                             that.bed = data.data;
                             that.bedScoreId = 1;
-                            if(data.data.length>0){
+                            if(data.data.length>0 && $scope.media.tab==1){
                                 that.bed.forEach(function (bed) {
                                     if(bed.itemList.length < 1){
                                         that.bedScoreId = 0;
@@ -577,6 +577,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             })
         },
         removeRule:function (list,index) {
+            if($scope.media.tab <2)
             list.splice(index,1);
         },
         gradeSave:function (fun) {

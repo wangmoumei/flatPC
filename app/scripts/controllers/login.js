@@ -107,6 +107,7 @@ angular.module('flatpcApp')
                             $rootScope.treeMenu = undefined;
                             $rootScope.treeRule = undefined;
                             $rootScope.treeDay = undefined;
+                            $rootScope.treeSpot = undefined;
                             $rootScope.treeMonth = undefined;
                             $rootScope.treeMenu = undefined;
                             $rootScope.treeRule = undefined;

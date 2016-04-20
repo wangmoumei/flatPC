@@ -19,8 +19,8 @@ angular
     'frapontillo.bootstrap-switch'
   ])
   .constant('AppConfig',{
-    //   WEB_ROOT:'http://120.55.84.193/Geese_Apartment/',
-      WEB_ROOT:'http://ap.houqinbao.com/Geese_Apartment/',
+      WEB_ROOT:'http://120.55.84.193/Geese_Apartment/',
+    //   WEB_ROOT:'http://ap.houqinbao.com/Geese_Apartment/',
       schoolCode:0,
 	  token:'',
       adminId:0,

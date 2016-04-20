@@ -28,10 +28,14 @@ angular.module('flatpcApp')
                     }
                 }
             });
-            scope.resetForm = scope.resetForm || function(fun){
-                iElement.closest('.info-card').addClass('show');
-                iElement.find('.form-tabs-container>li').eq(0).addClass('active').siblings().removeClass('active');
-                iElement.find('.form-tabs-nav>li').eq(0).addClass('active').siblings().removeClass('active');
+            scope.resetForm = scope.resetForm || function(str,fun){
+                var e;
+                if(str && typeof str == 'string') e = $(str);
+                else e = iElement;
+                e.closest('.info-card').addClass('show');
+                e.find('.form-tabs-container>li').eq(0).addClass('active').siblings().removeClass('active');
+                e.find('.form-tabs-nav>li').eq(0).addClass('active').siblings().removeClass('active');
+                if(str && typeof str == 'function') str();
                 if(fun && typeof fun == 'function') fun();
             }
             

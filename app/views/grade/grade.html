@@ -429,7 +429,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td colspan="10" ng-show="bed.itemList.length < 1" class="empty">{{media.item.bedScoreId?'没有打分记录':'没有设置床位打分项'}}</td>
+                                                <td colspan="10" ng-show="bed.itemList.length < 1" class="empty">{{cardMedia.bedScoreId?'没有床位打分记录':'没有设置床位打分项'}}</td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
@@ -450,7 +450,7 @@
                                                 <img ng-if="img.picUrl" ng-src="{{img.picUrl}}" err-src="http://7xp0c4.com2.z0.glb.qiniucdn.com/default.png"/>
                                                 <p>{{img.checkTime}}</p>
                                             </li>
-                                            <li class="album-plus" input-file change="uploadImg" ng-hide="media.tab>1 || !menuCheck(191)"><span class="ALiconfont icon-plus3"></span></li> 
+                                            <li class="album-plus" input-file change="uploadImg" ng-hide="media.tab>1 || !cardMedia.menuCheck(3)"><span class="ALiconfont icon-plus3"></span></li> 
                                         </ul>
                                         <div class="album-frame" style="bottom:50px;top:40px;">
                                             <div>
@@ -458,7 +458,7 @@
                                             </div>
                                         </div>
                                         <div class="album-frame-off" style="top:50px;"><i class="ALiconfont icon-close"></i></div>
-                                        <div class="album-empty" ng-show="(media.tab>1 || !menuCheck(191)) && cardMedia.img.length < 1">没有照片上传记录</div>
+                                        <div class="album-empty" ng-show="(media.tab>1 || !cardMedia.menuCheck(3)) && cardMedia.img.length < 1">没有照片上传记录</div>
                                     </div>
                                 </li>
                                 <li ng-if="cardMedia.menuCheck(4)" class="fadeIn animated" style="min-height:300px" ng-class="{'active':cardMedia.tab ==4}">
@@ -478,6 +478,9 @@
                                                                 </li>
                                                             </ul>
                                                         </li>
+                                                        <li ng-if="media.tab>1 &&cardMedia.rule.itemList.length<1" class="dropdown">
+                                                            <button class="btn btn-default" type="button"></button>
+                                                        </li>
                                                     </ul>
                                                 </td>
                                             </tr>
@@ -487,13 +490,16 @@
                                                     <ul>
                                                         <li class="rule-item" ng-repeat="item in bed.itemList" ng-click="cardMedia.removeRule(bed.itemList,$index)">{{item.itemName}}</li>
                                                         <li ng-if="media.tab==1" class="dropdown">
-                                                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></button>
+                                                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></button>
                                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                                                 <li ng-repeat="rule in rules|| []" ng-class="{'dropdown-header':!rule.fid}">
                                                                     <a ng-if="rule.fid" ng-click="cardMedia.addRule(bed.itemList,rule)">{{rule.title}}</a>
                                                                     <span ng-if="!rule.fid">{{rule.title}}</span>
                                                                 </li>
                                                             </ul>
+                                                        </li>
+                                                        <li ng-if="media.tab>1 && bed.itemList.length<1" class="dropdown">
+                                                            <button class="btn btn-default" type="button" ></button>
                                                         </li>
                                                     </ul>
                                                 </td>

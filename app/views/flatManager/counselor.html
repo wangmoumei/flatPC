@@ -6,7 +6,7 @@
     <ul class="history-list">
         <li><a href="#index">公寓管理</a></li>
         <li><a href="#index" ng-click="routerInit('admin')">人员管理</a></li>
-        <li>楼栋管理员</li>
+        <li>辅导员</li>
     </ul>
 </div>
 <div class="tool-bar">
@@ -19,18 +19,13 @@
     <div class="page-tree" tree>
         <ul>
             <li class="open">
-                <a ng-class="{'branch':treeFlat.cmpusList,'leaf':!treeFlat.cmpusList}" ng-click="show(0,treeFlat)">{{treeFlat.title}}</a>
-                <ul ng-show="treeFlat.cmpusList">
-                    <li class="open" ng-repeat="campus in treeFlat.cmpusList||[]">
-                        <a ng-class="{'branch':campus.liveAreaList,'leaf':!campus.liveAreaList}" ng-click="show(1,campus)">{{campus.title}}</a>
-                        <ul ng-show="campus.liveAreaList">
-                            <li class="open" ng-repeat="liveArea in campus.liveAreaList||[]">
-                                <a ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}" ng-click="show(2,liveArea)">{{liveArea.title}}</a>
-                                <ul ng-show="liveArea.flatList">
-                                    <li ng-repeat="flat in liveArea.flatList||[]">
-                                        <a class="leaf" ng-click="show(3,flat)">{{flat.title}}</a>
-                                    </li>
-                                </ul>
+                <a ng-class="{'branch':treeCollege[0].collegeList,'leaf':!treeCollege[0].collegeList}" ng-click="show(0,treeCollege[0])">{{treeCollege[0].name}}</a>
+                <ul ng-show="treeCollege[0].collegeList">
+                    <li class="open" ng-repeat="college in treeCollege[0].collegeList||[]">
+                        <a ng-click="show(1,college)" ng-class="{'branch':college.classList,'leaf':!college.classList}">{{college.collegeName}}</a>
+                        <ul ng-show="college.classList">
+                            <li ng-repeat="cla in college.classList||[]">
+                                <a ng-click="show(2,cla,college)" class="leaf">{{cla.className}}</a>
                             </li>
                         </ul>
                     </li>
@@ -53,7 +48,7 @@
             <tbody>
                 <tr ng-repeat="item in list">
                     <td style="vertical-align:middle">{{item.userAccount}}</td>
-                    <td style="vertical-align:middle">{{item.remark}}</td>
+                    <td style="vertical-align:middle">{{item.roleName}}</td>
                     <td style="vertical-align:middle">{{item.userName}}</td>
                     <td style="vertical-align:middle">{{item.jobNumber}}</td>
                     <td style="vertical-align:middle">
@@ -138,22 +133,18 @@
                                     <td class="require">楼栋</td>
                                     <td>
                                         <ul>    
-                                            <li style="padding:5px 0" ng-repeat="flat in form.flats">
-                                                <select class="form-control" ng-change="selecter.campusSelecter(flat)" ng-model="flat.campusId">
-                                                    <option value="">选择校区</option>
-                                                    <option ng-repeat="campus in treeFlat.cmpusList" value="{{campus.campusId}}">{{campus.title}}</option>
+                                            <li style="padding:5px 0" ng-repeat="cla in form.classes">
+                                                <select class="form-control" ng-change="selecter.collegeSelecter(cla)" ng-model="cla.collegeId">
+                                                    <option value="">选择学院</option>
+                                                    <option ng-repeat="college in treeCollege[0].collegeList" value="{{college.collegeId}}">{{college.collegeName}}</option>
                                                 </select>
-                                                <select class="form-control" ng-change="selecter.liveAreaSelecter(flat)" ng-model="flat.liveAreaId">
-                                                    <option value="">选择生活区</option>
-                                                    <option ng-repeat="liveArea in flat.liveAreaList" value="{{liveArea.liveAreaId}}">{{liveArea.title}}</option>
+                                                <select class="form-control" ng-model="cla.classId">
+                                                    <option value="">选择班级</option>
+                                                    <option ng-repeat="item in cla.classList" value="{{item.classId}}">{{item.className}}</option>
                                                 </select>
-                                                <select class="form-control" ng-model="flat.flatId">
-                                                    <option value="">选择楼栋</option>
-                                                    <option ng-repeat="flat in flat.flatList" value="{{flat.flatId}}">{{flat.title}}</option>
-                                                </select>
-                                                <a ng-if="form.flats.length>1" class="remove-flat" ng-click="form.removeFlat($index)"><i class="ALiconfont icon-close1"></i></a>
+                                                <a ng-if="form.classes.length>1" class="remove-flat" ng-click="form.removeClass($index)"><i class="ALiconfont icon-close1"></i></a>
                                             </li>
-                                            <li style="padding-top:5px"><a class="btn btn-href btn-xs" ng-click="form.addFlat()">新增楼栋</a></li>
+                                            <li style="padding-top:5px"><a class="btn btn-href btn-xs" ng-click="form.addClass()">新增班级</a></li>
                                         </ul>
                                     </td>
                                 </tr>

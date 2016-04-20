@@ -1,6 +1,6 @@
 angular.module('flatpcApp')
-.controller('GraduationCtrl', ['$scope','AppConfig','$rootScope', 'FlatService','DailyService','$filter','CollegeService','RoomService',"StudentService",
-function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeService,RoomService,StudentService) {
+.controller('GraduationCtrl', ['$scope','AppConfig','$rootScope', 'FlatService','GraduationService','$filter','CollegeService','RoomService',"StudentService",
+function($scope,AppConfig,$rootScope,FlatService,GraduationService,$filter,CollegeService,RoomService,StudentService) {
     //基础的页码、排序等等选项
     $scope.media = {
         epage:1,
@@ -140,7 +140,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
     function refresh(n){
         if(!n)$scope.media.epage = 1;
         $rootScope.loading = true;
-        DailyService.getLiveList($scope.media).success(function(data){
+        GraduationService.getList($scope.media).success(function(data){
             if(data.code == 0){
                 $scope.list = data.data.list;
                 $scope.media.recordCount = data.data.recordCount;
@@ -185,7 +185,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         }, 
         function(){   
             $rootScope.loading = true;
-            DailyService.passLive({
+            GraduationService.passLive({
                 token:AppConfig.token,
                 occupancyid:$scope.work.occupancyId || '',
                 adminid:AppConfig.adminId
@@ -209,7 +209,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
     //驳回
     $scope.returnWork = function(fun){
         $rootScope.loading = true;
-        DailyService.backLive({
+        GraduationService.backLive({
             token:AppConfig.token,
             occupancyid:$scope.work.occupancyId || '',
             backmessage:$scope.work.returnMessage,
@@ -243,7 +243,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         }, 
         function(){   
             $rootScope.loading = true;
-            return DailyService.cancelLive({
+            return GraduationService.cancelLive({
                 token:AppConfig.token,
                 occupancyid:$scope.work.occupancyId || '',
                 adminid:AppConfig.adminId
@@ -398,7 +398,7 @@ function($scope,AppConfig,$rootScope,FlatService,DailyService,$filter,CollegeSer
         },
         sub:function (fun) {
             $rootScope.loading = true;
-            DailyService.addLive({
+            GraduationService.addLive({
                 token:AppConfig.token,
                 schoolcode:AppConfig.schoolCode,
                 bedid:this.bed.bedId,

@@ -92,6 +92,66 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });//.get(url,param);
     }
+    
+    var getManagerList = function(param){
+        var url = AppConfig.WEB_ROOT + 'management/instructor/get_list_instructor/?'
+        + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
+        + '&epage=' + (param.epage || 1) + '&pagesize=' + (param.pagesize || 10)
+        + (param.useraccount?('&useraccount='+param.useraccount):'')
+        + (param.username?('&username='+param.username):'')
+        + (param.jobnumber?('&jobnumber='+param.jobnumber):'')
+        + (param.collegeid?('&collegeid='+param.collegeid):'')
+        + (param.classid?('&classid='+param.classid):'')
+        + (param.orderfield?('&orderfield='+param.orderfield):'')
+        + (param.ordertype?('&ordertype='+param.ordertype):'');
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
+    }
+    var addManager = function(param){
+        param.token = param.token || AppConfig.token;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
+        var url = AppConfig.WEB_ROOT + 'management/instructor/add_instructor_admin/';
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.post(url,param,{'Content-Type':'application/x-www-form-urlencoded'});
+    }
+    var editManager = function(param){
+        param.token = param.token || AppConfig.token;
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
+        var url = AppConfig.WEB_ROOT + 'management/instructor/edit_instructor_admin/';
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.post(url,param,{'Content-Type':'application/x-www-form-urlencoded'});
+    }
+    var delManager = function(param){
+        param.token = param.token || AppConfig.token;
+        var url = AppConfig.WEB_ROOT + 'management/instructor/del_instructor_admin/';
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.post(url,param,{'Content-Type':'application/x-www-form-urlencoded'});
+    }
     return {
         getList:getList,
         addCollege:addCollege,
@@ -100,6 +160,10 @@ angular.module('flatpcApp')
         addClass:addClass,
         editClass:editClass,
         delClass:delClass,
-        getGrade:getGrade
+        getGrade:getGrade,
+        getManagerList:getManagerList,
+        addManager:addManager,
+        editManager:editManager,
+        delManager:delManager
     }
 }]);
