@@ -47,7 +47,7 @@ function($scope,AppConfig,$rootScope,GradeService) {
         $scope.media.parentTitle = option || item.title || '';
         
         $scope.media.tableid = item.tableId || 0;
-        $scope.media.isopen = (item.isOpen || 0)?true:false;
+        $scope.media.isopen = (item.isOpen==1)?true:false;
         $scope.media.typeid = item.typeId || 0;
         $scope.media.number = item.number || 0;
         $scope.media.fid = item.fid || 0;

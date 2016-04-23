@@ -61,6 +61,13 @@ angular.module('flatpcApp')
                         return;
                     }
                     break;
+                case 'message':
+                    if(!$rootScope.menuCheck(319)){
+                        swal("提示","请联系客服电话0571-28256212 开通权限", "info"); 
+                        return;
+                    }
+                    location.href="/messageadmin";
+                    break;
             }
             $rootScope.sysMenu[0] = name;
             $rootScope.sysMenu[1] = name;

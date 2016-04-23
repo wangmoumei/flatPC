@@ -203,6 +203,38 @@
                         </div>
                     </div>
                 </div>
+                <div class="info-card fadeIn animated" id="multiAdd" info-card>
+                    <div class="info-card-wrapper">
+                        <div class="info-card-dialog">
+                            <div class="info-card-content">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        数据导入
+                                        <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
+                                    </div>
+                                    <div class="panel-body" >
+                                        <table class="table-form table-bordered bg-white">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="require">导入名称</td><td><input type="text" ng-model="importName" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="require">选择文件</td>
+                                                    <td>{{importFileName}} <div class="btn btn-primary btn-sm" input-file change = "uploadFile">点击选择</div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <a class="btn btn-success" ng-click="subImport(closeCard('#multiAdd'))">确认导入</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </li>
         </ul>
     </div>
@@ -222,18 +254,20 @@
                                 <tr>
                                     <td class="require" width="100">班级</td>
                                     <td colspan="3">
-                                         <select ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-change="selecter.collegeSelecter()" ng-model="selecter.collegeId">
+                                         <select disabled ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-change="selecter.collegeSelecter()" ng-model="selecter.collegeId">
+                                             <!--<select ng-disabled="student.type" ng-change="selecter.collegeSelecter()" ng-model="selecter.collegeId">-->
                                              <option value="">请选择学院</option>
                                              <option ng-repeat="college in treeCollege[0].collegeList || []" value="{{college.collegeId}}" ng-selected="selecter.collegeId == college.collegeId">{{college.collegeName}}</option>
                                          </select>
-                                         <select ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="selecter.classId">
+                                         <select disabled ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="selecter.classId">
+                                            <!--<select ng-disabled="student.type" ng-model="selecter.classId">-->
                                              <option value="">请选择班级</option>
                                              <option ng-repeat="cla in selecter.classList || []" value="{{cla.classId}}" ng-selected="selecter.classId == cla.classId">{{cla.className}}</option>
                                          </select>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="require">学号</td><td><input type="text" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.studentNumber" /></td>
+                                    <td class="require">学号</td><td><input type="text" ng-disabled="(student.type) || (!student.type && !menuCheck(214))" ng-model="student.studentNumber" /></td>
                                     <td rowspan="5" colspan="2">
                                         <div><img style="max-width:{{student.headImgurl?200:100}}px;" src="{{student.headImgurl || 'http://7xp0c4.com2.z0.glb.qiniucdn.com/default.png'}}" /></div>
                                         <div class="btn btn-primary btn-sm" ng-hide="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" style="margin-top:10px;" input-file change="uploadImg">点击上传照片</div>
@@ -308,38 +342,6 @@
                                         <a ng-if="menuCheck(214)" class="btn btn-success" ng-show="!student.type" ng-click="studentAdd(closeCard('#studentForm'))">提交</a>
                                         <a ng-if="menuCheck(216)" class="btn btn-info" ng-show="student.type" ng-click="studentEdit()">保存修改</a>
                                         <a ng-if="menuCheck(215)" class="btn btn-danger" ng-show="student.type" ng-click="studentDel(closeCard('#studentForm'))">删除</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="info-card fadeIn animated" id="multiAdd" info-card>
-    <div class="info-card-wrapper">
-        <div class="info-card-dialog">
-            <div class="info-card-content">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        数据导入
-                        <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
-                    </div>
-                    <div class="panel-body" ng-controller="StudentImportCtrl">
-                        <table class="table-form table-bordered bg-white">
-                            <tbody>
-                                <tr>
-                                    <td class="require">导入名称</td><td><input type="text" ng-model="importName" /></td>
-                                </tr>
-                                <tr>
-                                    <td class="require">选择文件</td>
-                                    <td>{{importFileName}} <div class="btn btn-primary btn-sm" input-file change = "uploadFile">点击选择</div></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <a class="btn btn-success" ng-click="subImport(closeCard('#multiAdd'))">确认导入</a>
                                     </td>
                                 </tr>
                             </tbody>

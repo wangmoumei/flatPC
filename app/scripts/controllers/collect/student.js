@@ -206,7 +206,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
         return StudentService.editStudent({
             token:AppConfig.token,
             studentkey:$scope.student.studentKey,
-            studentnumber:$scope.student.studentNumber,
+            // studentnumber:$scope.student.studentNumber,
             name:$scope.student.name,
             fileid:$scope.student.fileid,
             sex:$scope.student.sex,

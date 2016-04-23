@@ -86,13 +86,13 @@ angular.module('flatpcApp')
                 else
                     return null;
             case 'graduation':
-            return ['flat','flat','graduation'];
+            // return ['flat','flat','graduation'];
                 if(menuCheck(32))
                     return ['flat','flat','graduation'];
                 else
                     return null;
             case 'arrearage':
-            return ['flat','flat','arrearage'];
+            // return ['flat','flat','arrearage'];
                 if(menuCheck(342))
                     return ['flat','flat','arrearage'];
                 else
@@ -147,7 +147,7 @@ angular.module('flatpcApp')
                 else
                     return null;
             case 'counselor':
-            return ['flat','flatManager','counselor'];
+            // return ['flat','flatManager','counselor'];
                 if(menuCheck(340))
                     return ['flat','flatManager','counselor'];
                 else

@@ -29,14 +29,13 @@ angular.module('flatpcApp')
         },
         addClass:function () {
             var cla = {
-                campusId:$scope.media.campusid || '',
-                campusList:$rootScope.treeCollege,
-                liveAreaId:$scope.media.liveareaid || '',
-                liveAreaList:[],
-                classId:$scope.media.classid || '',
+                collegeId:($scope.media.collegeid || '') + "",
+                collegeList:$rootScope.treeCollege[0].collegeList,
+                classId:($scope.media.classid || '') + "",
                 classList:[],
             }
             $scope.selecter.classSelecter(cla);
+            console.log(cla);
             this.classes.push(cla);
         },
         getClass:function(){
@@ -63,10 +62,14 @@ angular.module('flatpcApp')
         $scope.form.phone=user.phone || '';
         $scope.form.jobnumber=user.jobNumber || '';
         $scope.form.roleid= '' + (user.roleId || '');
-        $scope.form.classes = user.classIds || []
+        $scope.form.classes = [];
         if(user.classIds && user.classIds.length>0){
-            $scope.form.classes.forEach(function (cla) {
-                $scope.selecter.classSelecter(cla);
+            user.classIds.forEach(function (cla) {
+                var item = {
+                    classId:cla.classId
+                }
+                $scope.selecter.classSelecter(item);
+                $scope.form.classes.push(item);
             })
         }else{
             $scope.form.addClass();
@@ -85,14 +88,19 @@ angular.module('flatpcApp')
         },
         classSelecter : function(cla){
             //用classId反向获取collegeId和classList
-            var college = $rootScope.treeCollege[0].collegeList;
-            for(var i=0 ; i < college.length;i++){
-                var list = cla.classId?$filter('filter')(college[i].classList,{classId:cla.classId}):[];
-                if(list.length > 0){
-                    cla.collegeId = college[i].collegeId;
-                    cla.classList = college[i].classList;
-                    break;
+            if(cla.classId){
+                var college = $rootScope.treeCollege[0].collegeList;
+                for(var i=0 ; i < college.length;i++){
+                    var list = cla.classId?$filter('filter')(college[i].classList,{classId:cla.classId}):[];
+                    if(list.length > 0){
+                        cla.collegeId = college[i].collegeId + "";
+                        cla.classList = college[i].classList;
+                        cla.classId = cla.classId + "";
+                        break;
+                    }
                 }
+            }else if(cla.collegeId){
+                this.collegeSelecter(cla);
             }
         }
     }
@@ -133,7 +141,7 @@ angular.module('flatpcApp')
         CollegeService.editManager({
             adminid:$scope.form.adminid,
             username:$scope.form.username,
-            flatids:ids,
+            classids:ids,
             phone:$scope.form.phone,
             jobnumber:$scope.form.jobnumber,
             roleid:$scope.form.roleid
@@ -188,7 +196,8 @@ angular.module('flatpcApp')
         pageCount:1,
         recordCount:1,
         pagesize:10,
-
+        collegeid:'',
+        classid:'',
         orderfield:'',
         ordertype:'',
         title:''
@@ -218,9 +227,8 @@ angular.module('flatpcApp')
     }
     //调整查询规则，按学院或者班级查询
     $scope.show = function(type,item){
-        $scope.media.campusid = item.campusId || '';
-        $scope.media.liveareaid = item.liveAreaId || '';
-        $scope.media.flatid = item.flatId || '';
+        $scope.media.classid = item.classId || '';
+        $scope.media.collegeid = item.collegeId || '';
         refresh();
     };
     

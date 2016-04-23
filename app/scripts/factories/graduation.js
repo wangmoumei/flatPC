@@ -9,7 +9,7 @@ angular.module('flatpcApp')
         + (param.flatid?('&flatid='+param.flatid):'')
         + (param.collegeid?('&collegeid='+param.collegeid):'')
         + (param.classid?('&classid='+param.classid):'')
-        + (param.status?('&status='+param.status):'')
+        + (param.status>0?('&status='+param.status):'')
         + (param.orderfield?('&orderfield='+param.orderfield):'')
         + (param.ordertype?('&ordertype='+param.ordertype):'');
         return $http.get(url).error(function (error) {
@@ -39,10 +39,7 @@ angular.module('flatpcApp')
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolCode;
         var url = "";
-        if(param.type)
-            url = AppConfig.WEB_ROOT + 'apartment/checkout/add_exitroom/';
-        else
-            url = AppConfig.WEB_ROOT + 'apartment/checkout/audit_exitroom/';
+        url = AppConfig.WEB_ROOT + 'apartment/checkout/audit_exitroom/';
         return $http({
             url:url,
             method:"POST",
@@ -54,8 +51,12 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });//.get(url,param);
     }
-    var importData = function(param){
-        var url = AppConfig.WEB_ROOT + 'apartment/arrears/import_room_arrears_data/';
+    var importData = function(param,type){
+        var url="";
+        if(type)
+            url = AppConfig.WEB_ROOT + 'apartment/arrears/import_room_arrears_data/';
+        else 
+            url = AppConfig.WEB_ROOT + 'apartment/arrears/import_student_arrears_data/';
         return $http({
             url:url,
             method:"POST",
@@ -76,8 +77,10 @@ angular.module('flatpcApp')
         return $http.get(url,param);
     }
     var downloadOriginal = function(param){
-        var url = AppConfig.WEB_ROOT + 'apartment/arrears/room_sample_table/?'
-        + 'schoolcode='+ AppConfig.schoolCode + '&token=' + AppConfig.token;
+        var url = "";
+        if(param) url = AppConfig.WEB_ROOT + 'apartment/arrears/room_sample_table/?';
+        else  url = AppConfig.WEB_ROOT + 'apartment/arrears/student_sample_table/?';
+        url += 'schoolcode='+ AppConfig.schoolCode + '&token=' + AppConfig.token;
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });
@@ -92,7 +95,13 @@ angular.module('flatpcApp')
     var getListByStudent = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/arrears/get_stu_arrears_list/?schoolcode=' + AppConfig.schoolCode
         +'&token='+AppConfig.token
-        + (param && param.groupid?('&groupid=' + param.groupid):'');
+        + '&epage=' + (param.epage || 1) + '&pagesize=' + (param.pagesize || 10)
+        + '&arrearstype=' + (param.arrearstype1 || 0)
+        + (param.name?('&name='+param.name):'')
+        + (param.studentnumber?('&studentnumber='+param.studentnumber):'')
+        + (param.campusid?('&campusid='+param.campusid):'')
+        + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
+        + (param.flatid?('&flatid='+param.flatid):'');
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });
@@ -100,7 +109,12 @@ angular.module('flatpcApp')
     var getListByRoom = function(param){
         var url = AppConfig.WEB_ROOT + 'apartment/arrears/get_room_arrears_list/?schoolcode=' + AppConfig.schoolCode
         +'&token='+AppConfig.token
-        + (param && param.groupid?('&groupid=' + param.groupid):'');
+        + '&epage=' + (param.epage || 1) + '&pagesize=' + (param.pagesize || 10)
+        + '&arrearstype=' + (param.arrearstype2 || 0)
+        + (param.roomname?('&roomname='+param.roomname):'')
+        + (param.campusid?('&campusid='+param.campusid):'')
+        + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
+        + (param.flatid?('&flatid='+param.flatid):'');
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });

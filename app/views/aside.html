@@ -1,50 +1,50 @@
 <ul ng-show="sysMenu[0]=='flat'">
     <li ng-if="menuCheck(6)" ng-class="{'active':sysMenu[1]=='flat'}" ng-click="switch('flat')">
-        <a href="#index">
+        <a href="#index" title="公寓管理">
             <i class="ALiconfont icon-shangwuqu"></i> 公寓管理
         </a>
     </li>
     <li ng-if="menuCheck(7)" ng-class="{'active':sysMenu[1]=='grade'}" ng-click="switch('grade')">
-        <a href="#index">
+        <a href="#index" title="公寓管理">
             <i class="ALiconfont icon-xinyongfen"></i> 宿舍考评
         </a>
     </li>
     <li ng-if="menuCheck(8)" ng-class="{'active':sysMenu[1]=='check'}" ng-click="switch('check')">
-        <a href="#index">
+        <a href="#index" title="登记管理">
             <i class="ALiconfont icon-order" style="font-size:20px"></i> 登记管理
         </a>
     </li>
     <li ng-if="menuCheck(321)" ng-class="{'active':sysMenu[1]=='flatManager'}" ng-click="switch('flatManager')">
-        <a href="#index">
+        <a href="#index" title="人员管理">
             <i class="ALiconfont icon-addresslist" style="font-size:20px"></i> 人员管理
         </a>
     </li>
 </ul>
 <ul ng-show="sysMenu[0]=='data'">
     <li ng-if="menuCheck(9)" ng-class="{'active':sysMenu[1]=='data'}" ng-click="switch('data')">
-        <a href="#index">
+        <a href="#index" title="基础设置">
             <i class="ALiconfont icon-set" style="font-size:20px"></i> 基础设置
         </a>
     </li>
     <li ng-if="menuCheck(10)" ng-class="{'active':sysMenu[1]=='collect'}" ng-click="switch('collect')">
-        <a href="#index">
+        <a href="#index" title="师生信息">
             <i class="ALiconfont icon-user" style="font-size:20px"></i> 师生信息
         </a>
     </li>
     <li ng-if="menuCheck(11)" ng-class="{'active':sysMenu[1]=='floor'}" ng-click="switch('floor')">
-        <a href="#index">
+        <a href="#index" title="楼栋数据">
             <i class="ALiconfont icon-loudong"></i> 楼栋数据
         </a>
     </li>
 </ul>
 <ul ng-show="sysMenu[0]=='admin'">
     <li ng-if="menuCheck(13)" ng-class="{'active':sysMenu[1]=='admin'}" ng-click="switch('admin')">
-        <a href="#index">
+        <a href="#index" title="账号管理">
             <i class="ALiconfont icon-zhanghaoguanli" style="line-height:33px"></i> 账号管理
         </a>
     </li>
     <li ng-if="menuCheck(12)" ng-class="{'active':sysMenu[1]=='role'}" ng-click="switch('role')">
-        <a href="#index">
+        <a href="#index" title="角色管理">
             <i class="ALiconfont icon-jiaoseshezhi" style="font-size:22px"></i> 角色管理
         </a>
     </li>

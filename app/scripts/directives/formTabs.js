@@ -32,7 +32,9 @@ angular.module('flatpcApp')
                 var e;
                 if(str && typeof str == 'string') e = $(str);
                 else e = iElement;
-                e.closest('.info-card').addClass('show');
+                if(!e.hasClass("info-card"))
+                    e = e.closest('.info-card');
+                e.addClass('show');
                 e.find('.form-tabs-container>li').eq(0).addClass('active').siblings().removeClass('active');
                 e.find('.form-tabs-nav>li').eq(0).addClass('active').siblings().removeClass('active');
                 if(str && typeof str == 'function') str();

@@ -63,7 +63,7 @@ angular.module('flatpcApp')
                     code:$scope.media.code || '',
                     sessionid:$scope.media.sessionid || ''
                 }).success(function (data) {
-                    $rootScope.loading = false;
+                    
                     if(data.code == 0){
                         sessionStorage.adminId = data.data.adminId;
                         sessionStorage.token = data.data.token;
@@ -128,8 +128,7 @@ angular.module('flatpcApp')
                             
                             form.submit();
                             
-                            location.href="#index";
-                            $rootScope.loginSwitch = true;
+                            login();
                         }
                         
                     }
@@ -138,5 +137,31 @@ angular.module('flatpcApp')
                 })
             }
             
+        };
+        function login() {
+            PublicService.loginMessage({
+                account:$scope.media.user,
+                password:$scope.media.pass
+            }).success(function (data) {
+                $rootScope.loading = false;
+                if(data.code == 0){
+                    // sessionStorage.staffkey = data.data.staffkey;
+                    sessionStorage.tokenMessage = data.data.token;
+                    sessionStorage.schoolCode = data.data.schoolcode;
+                    sessionStorage.schoolname = data.data.schoolname || 'test';
+                    sessionStorage.roleName = data.data.rolename;
+                    
+                    // AppConfig.staffkey = data.data.staffkey;
+                    AppConfig.token = data.data.token;
+                    AppConfig.schoolCode = data.data.schoolcode;
+                    AppConfig.schoolname = data.data.schoolname || 'test';
+                    AppConfig.roleName = data.data.rolename;
+                    
+                    $rootScope.loginSwitch = true;
+                    location.href = '#index';
+                }
+                else
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            })
         }
     }]);

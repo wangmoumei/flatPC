@@ -41,7 +41,7 @@
                     <th>角色</th>
                     <th>姓名</th>
                     <th>工号</th>
-                    <th>管理楼栋</th>
+                    <th>管理班级</th>
                     <th>操作</th>
                 </tr>
             </thead>
@@ -53,7 +53,7 @@
                     <td style="vertical-align:middle">{{item.jobNumber}}</td>
                     <td style="vertical-align:middle">
                         <ul>
-                            <li ng-repeat="flat in item.flatIds">{{flat.flatName}}</li>
+                            <li ng-repeat="cla in item.classIds">{{cla.className}}</li>
                         </ul>
                     </td>
                     <td style="vertical-align:middle">

@@ -406,7 +406,8 @@
                                                 <td colspan="10" ng-show="cardMedia.room && cardMedia.room.length < 1" style="height:300px" class="empty">没有记录</td>
                                             </tr>
                                         </tfoot>
-                                        <tfoot ng-show="cardMedia.room && cardMedia.room.length > 0 "">
+                                        
+                                        <tfoot ng-show="cardMedia.room && cardMedia.room.length > 0 ">
                                             <tr><td></td><td>总计</td><td class="grade-number">{{cardMedia.getSum()}}</td></tr>
                                         </tfoot>
                                     </table>

@@ -39,7 +39,8 @@
     </div>
     <div class="page-tabs" tabs style="left:225px">
         <ul class="page-tabs-nav">
-            <li class="active">违欠信息</li>
+            <li ng-click="setTab(1)" class="active">个人违欠信息</li>
+            <li ng-click="setTab(2)">宿舍违欠信息</li>
             <li>数据导入</li>
         </ul>
         <ul class="page-tabs-container">
@@ -64,6 +65,14 @@
                             </span>
                         </div>
                     </div>
+                    <div class="group-tool">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-info" ng-click="setStatus(0)" ng-class="{'btn-stroke':media.arrearstype1!=0}">全部</button>
+                            <button type="button" class="btn btn-info" ng-click="setStatus(1)" ng-class="{'btn-stroke':media.arrearstype1!=1}">物资损坏</button>
+                            <button type="button" class="btn btn-info" ng-click="setStatus(2)" ng-class="{'btn-stroke':media.arrearstype1!=2}">其它费用</button>
+                            <button type="button" class="btn btn-info" ng-click="setStatus(3)" ng-class="{'btn-stroke':media.arrearstype1!=3}">无违欠</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="table-container" style="top:50px;background-color:#fff;">
                     <table class="table table-hover">
@@ -74,28 +83,29 @@
                                 <th>班级</th>
                                 <th>入住床位</th>
                                 <th>违欠类型</th>
-                                <th>违欠性质</th>
                                 <th>违欠费用</th>
-                                <th>操作</th>
+                                <th ng-if="menuCheck(347)">操作</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white">
                             <tr ng-repeat="student in studentList">
                                 <td>{{student.studentNumber}}</td>
                                 <td>{{student.name}}</td>
-                                <td>{{student.grade}}</td>
-                                <td>{{student.collegeName}}</td>
                                 <td>{{student.className}}</td>
-                                <td>{{student.className}}</td>
-                                <td>{{student.className}}</td>
-                                <td>
-                                    <a ng-click="showCard({selecter:'#studentForm',before:loadInfo(student.studentKey)})" class="btn btn-link btn-xs">{{menuCheck(216)?'编辑':'查看'}}</a>
+                                <td>{{student.roomPath}}</td>
+                                <td>{{student.arrearsNature}}</td>
+                                <td>{{student.arrearsCost}}</td>
+                                <td ng-if="menuCheck(347)">
+                                    <a ng-if="student.status==0" ng-click="deal(student)" class="btn btn-link btn-xs">处理</a>
+                                    <span ng-if="student.status>0" style="font-size: 12px;color:#aaa">
+                                        {{student.status==1?"处理":"已缴清"}}
+                                    </span>
                                 </td>
                             </tr>
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="10" ng-hide="media.recordCount" class="empty">没有检索到学生信息</td>
+                                <td colspan="10" ng-hide="media.recordCount" class="empty">没有检索到学生违欠信息</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -136,13 +146,110 @@
                     </div>
                 </div>
             </li>
-            <li class="fadeIn animated" ng-controller="StudentImportCtrl">
+            <li class="fadeIn animated">
                 <div class="tool-bar">
-                    <div ng-if="menuCheck(218)">
-                        <a class="btn btn-success" ng-click="showCard('#multiAdd',importInit)">数据导入</a>
+                    <div class="bar-full">
+                        <div class="input-group search-bool">
+                            <input type="text" class="form-control" ng-model="searchText1" placeholder="输入寝室号">
+                            <span class="input-group-btn">
+                                <button ng-click="search(searchText1)" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                            </span>
+                        </div>
                     </div>
-                    <div ng-if="menuCheck(219)">
-                        <a class="btn btn-default" ng-click="downloadOriginal()">下载样表</a>
+                    <div class="group-tool">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-info" ng-click="setStatus(0)" ng-class="{'btn-stroke':media.arrearstype2!=0}">全部</button>
+                            <button type="button" class="btn btn-info" ng-click="setStatus(1)" ng-class="{'btn-stroke':media.arrearstype2!=1}">物资损坏</button>
+                            <button type="button" class="btn btn-info" ng-click="setStatus(2)" ng-class="{'btn-stroke':media.arrearstype2!=2}">其它费用</button>
+                            <button type="button" class="btn btn-info" ng-click="setStatus(3)" ng-class="{'btn-stroke':media.arrearstype2!=3}">无违欠</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-container" style="top:50px;background-color:#fff;">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>校区</th>
+                                <th>生活区</th>
+                                <th>楼栋</th>
+                                <th>寝室</th>
+                                <th>违欠类型</th>
+                                <th>违欠费用</th>
+                                <th ng-if="menuCheck(347)">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            <tr ng-repeat="student in roomList">
+                                <td>{{student.campusName}}</td>
+                                <td>{{student.liveAreaName}}</td>
+                                <td>{{student.flatName}}</td>
+                                <td>{{student.roomName}}</td>
+                                <td>{{student.arrearsNature}}</td>
+                                <td>{{student.arrearsCost}}</td>
+                                <td ng-if="menuCheck(347)">
+                                    <a ng-if="student.status==0" ng-click="deal(student)" class="btn btn-link btn-xs">处理</a>
+                                    <span ng-if="student.status>0" style="font-size: 12px;color:#aaa">
+                                        {{student.status==1?"处理":"已缴清"}}
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="10" ng-hide="media.recordCount" class="empty">没有检索到宿舍违欠信息</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="page-controller">
+                    <div class="page-number">
+                        <ul class="pagination">
+                            <li ng-class="{disabled:media.epage<2}">
+                                <a aria-label="Previous" ng-click="setPage(-1)">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li ng-show="media.epage-2>0"><a ng-click="setPage(-2)">{{media.epage-2}}</a></li>
+                            <li ng-show="media.epage-1>0"><a ng-click="setPage(-1)">{{media.epage-1}}</a></li>
+                            <li class="active"><a>{{media.epage}}</a></li>
+                            <li ng-show="media.epage+1<=media.pageCount"><a ng-click="setPage(1)">{{media.epage+1}}</a></li>
+                            <li ng-show="media.epage+2<=media.pageCount"><a ng-click="setPage(2)">{{media.epage+2}}</a></li>
+                            <li ng-class="{disabled:media.epage>=media.pageCount}">
+                                <a aria-label="Next" ng-click="setPage(1)">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="page-size">
+                        共{{media.recordCount}}条记录，每页显示
+                        <div class="btn-group dropup">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{media.pagesize}} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" style="min-width:54px">
+                                <li ng-click="setPageSize(10)"><a>10</a></li>
+                                <li ng-click="setPageSize(20)"><a>20</a></li>
+                                <li ng-click="setPageSize(30)"><a>30</a></li>
+                                <li ng-click="setPageSize(50)"><a>50</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li ng-if="menuCheck(345)" class="fadeIn animated" ng-controller="ArrearageImportCtrl">
+                <div class="tool-bar">
+                    <div ng-if="menuCheck(345)">
+                        <a class="btn btn-success" ng-click="showCard('#multiAdd',importInit(0))">数据导入（个人）</a>
+                    </div>
+                    <div ng-if="menuCheck(345)">
+                        <a class="btn btn-success" ng-click="showCard('#multiAdd',importInit(1))">数据导入（寝室）</a>
+                    </div>
+                    <div ng-if="menuCheck(345)">
+                        <a class="btn btn-default" ng-click="downloadOriginal(0)">下载样表（个人）</a>
+                    </div>
+                    <div ng-if="menuCheck(345)">
+                        <a class="btn btn-default" ng-click="downloadOriginal(1)">下载样表（寝室）</a>
                     </div>
                 </div>
                 <div class="table-container" style="top:50px;background-color:#fff;">
@@ -206,150 +313,40 @@
                         </div>
                     </div>
                 </div>
+                <div class="info-card fadeIn animated" id="multiAdd" info-card>
+                    <div class="info-card-wrapper">
+                        <div class="info-card-dialog">
+                            <div class="info-card-content">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        数据导入（{{title}}）
+                                        <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table class="table-form table-bordered bg-white">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="require">导入名称</td><td><input type="text" ng-model="importName" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="require">选择文件</td>
+                                                    <td>{{importFileName}} <div class="btn btn-primary btn-sm" input-file change = "uploadFile">点击选择</div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <a class="btn btn-success" ng-click="subImport(closeCard('#multiAdd'))">确认导入</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </li>
         </ul>
     </div>
 </div>
-<div class="info-card fadeIn animated" id="studentForm" info-card>
-    <div class="info-card-wrapper">
-        <div class="info-card-dialog">
-            <div class="info-card-content">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        {{student.type?'编辑学生':'添加学生'}}
-                        <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
-                    </div>
-                    <div class="panel-body">
-                        <table class="table-form table-bordered bg-white">
-                            <tbody>
-                                <tr>
-                                    <td class="require" width="100">班级</td>
-                                    <td colspan="3">
-                                         <select ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-change="selecter.collegeSelecter()" ng-model="selecter.collegeId">
-                                             <option value="">请选择学院</option>
-                                             <option ng-repeat="college in treeCollege[0].collegeList || []" value="{{college.collegeId}}" ng-selected="selecter.collegeId == college.collegeId">{{college.collegeName}}</option>
-                                         </select>
-                                         <select ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="selecter.classId">
-                                             <option value="">请选择班级</option>
-                                             <option ng-repeat="cla in selecter.classList || []" value="{{cla.classId}}" ng-selected="selecter.classId == cla.classId">{{cla.className}}</option>
-                                         </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="require">学号</td><td><input type="text" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.studentNumber" /></td>
-                                    <td rowspan="5" colspan="2">
-                                        <div><img style="max-width:{{student.headImgurl?200:100}}px;" src="{{student.headImgurl || 'http://7xp0c4.com2.z0.glb.qiniucdn.com/default.png'}}" /></div>
-                                        <div class="btn btn-primary btn-sm" ng-hide="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" style="margin-top:10px;" input-file change="uploadImg">点击上传照片</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="require">姓名</td><td><input type="text" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.name"/></td>
-                                </tr>
-                                <tr>
-                                    <td class="require">性别</td>
-                                    <td>
-                                        <label><input type="radio" name="sex" value="男" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" checked="checked"/> 男</label>
-                                        <label><input type="radio" name="sex" value="女" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" /> 女</label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>联系电话</td>
-                                    <td>
-                                        <input type="text" ng-model="student.phone" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>出生日期</td>
-                                    <td>
-                                        <input type="text" datepicker ng-model="student.birthDay" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>政治面貌</td>
-                                    <td>
-                                        <input type="text"  ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.political"/>
-                                    </td>
-                                    <td>民族</td>
-                                    <td>
-                                        <input type="text"  ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.nation"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>类型</td>
-                                    <td>
-                                        <input type="text"  ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.studentType"/>
-                                    </td>
-                                    <td>婚姻状况</td>
-                                    <td>
-                                        <input type="text"  ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.marital"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>身份证号</td>
-                                    <td>
-                                        <input type="text"  ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.identityCard"/>
-                                    </td>
-                                    <td>籍贯</td>
-                                    <td>
-                                        <input type="text"  ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.origin"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>家庭住址</td>
-                                    <td colspan="3">
-                                        <textarea class="form-control" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.homeAddress">{{student.homeAddress}}</textarea>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>备注</td>
-                                    <td colspan="3">
-                                        <textarea class="form-control" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.memo">{{student.memo}}</textarea>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">
-                                        <a ng-if="menuCheck(214)" class="btn btn-success" ng-show="!student.type" ng-click="studentAdd(closeCard('#studentForm'))">提交</a>
-                                        <a ng-if="menuCheck(216)" class="btn btn-info" ng-show="student.type" ng-click="studentEdit()">保存修改</a>
-                                        <a ng-if="menuCheck(215)" class="btn btn-danger" ng-show="student.type" ng-click="studentDel(closeCard('#studentForm'))">删除</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="info-card fadeIn animated" id="multiAdd" info-card>
-    <div class="info-card-wrapper">
-        <div class="info-card-dialog">
-            <div class="info-card-content">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        数据导入
-                        <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
-                    </div>
-                    <div class="panel-body" ng-controller="StudentImportCtrl">
-                        <table class="table-form table-bordered bg-white">
-                            <tbody>
-                                <tr>
-                                    <td class="require">导入名称</td><td><input type="text" ng-model="importName" /></td>
-                                </tr>
-                                <tr>
-                                    <td class="require">选择文件</td>
-                                    <td>{{importFileName}} <div class="btn btn-primary btn-sm" input-file change = "uploadFile">点击选择</div></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <a class="btn btn-success" ng-click="subImport(closeCard('#multiAdd'))">确认导入</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+

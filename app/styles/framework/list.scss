@@ -308,6 +308,18 @@ table{
         font-size: 13px;
         padding-top: 4px;
     }
+    td.itemBox{
+        li.item{
+            float: left;
+            border-radius: 4px;
+            border:1px solid rgb(252,54,29);
+            color: rgb(252,54,29);
+            font-size: 13px;
+            padding: 4px;
+            margin: 4px;
+        }
+    }
+    
 }
 
 .floor-list{

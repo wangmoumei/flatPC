@@ -63,10 +63,14 @@ angular.module('flatpcApp')
         $scope.form.phone=user.phone || '';
         $scope.form.jobnumber=user.jobNumber || '';
         $scope.form.roleid= '' + (user.roleId || '');
-        $scope.form.flats = user.flatIds || []
+        $scope.form.flats = []
         if(user.flatIds && user.flatIds.length>0){
-            $scope.form.flats.forEach(function (flat) {
-                $scope.selecter.flatSelecter(flat);
+            user.flatIds.forEach(function (flat) {
+                var item = {
+                    flatId:flat.flatId
+                }
+                $scope.selecter.flatSelecter(item);
+                $scope.form.flats.push(item);
             })
         }else{
             $scope.form.addFlat();

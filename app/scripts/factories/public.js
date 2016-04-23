@@ -27,6 +27,19 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });
     }
+    var loginMessage = function(param){
+        var url = AppConfig.WEB_ROOT_MESSAGE + 'message/account/pcaccountlogin/';
+        return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });//.get(url,param);
+    }
     var logout = function(param){
         var url = AppConfig.WEB_ROOT + 'public/login/login_out/?token=' + AppConfig.token || '';
         
@@ -60,6 +73,7 @@ angular.module('flatpcApp')
         login:login,
         logout:logout,
         password:password,
-        session:session
+        session:session,
+        loginMessage:loginMessage
     }
 }]);

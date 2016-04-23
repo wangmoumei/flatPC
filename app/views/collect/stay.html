@@ -156,6 +156,38 @@
                         </div>
                     </div>
                 </div>
+                <div class="info-card fadeIn animated" info-card id="multiAdd">
+                    <div class="info-card-wrapper">
+                        <div class="info-card-dialog">
+                            <div class="info-card-content">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        数据导入
+                                        <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table class="table-form table-bordered bg-white">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="require">导入名称</td><td><input type="text" ng-model="importName" /></td>
+                                                </tr>
+                <tr>
+                                                    <td class="require">选择文件</td>
+                                                    <td>{{importFileName}}  <div class="btn btn-primary btn-sm" input-file change = "uploadFile">点击选择</div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <a class="btn btn-success" ng-click="subImport()">确认导入</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </li>
         </ul>
     </div>
@@ -200,38 +232,6 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="info-card fadeIn animated" info-card id="multiAdd">
-    <div class="info-card-wrapper">
-        <div class="info-card-dialog">
-            <div class="info-card-content">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        数据导入
-                        <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
-                    </div>
-                    <div class="panel-body" ng-controller="FlatImportCtrl">
-                        <table class="table-form table-bordered bg-white">
-                            <tbody>
-                                <tr>
-                                    <td class="require">导入名称</td><td><input type="text" ng-model="importName" /></td>
-                                </tr>
-<tr>
-                                    <td class="require">选择文件</td>
-                                    <td>{{importFileName}}  <div class="btn btn-primary btn-sm" input-file change = "uploadFile">点击选择</div></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <a class="btn btn-success" ng-click="subImport()">确认导入</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>

@@ -249,7 +249,7 @@
                                         <div>
                                             <select class="form-control" ng-change="selecter.collegeSelecter()" ng-model="selecter.collegeId">
                                                 <option value="">请选择学院</option>
-                                                <option ng-repeat="college in treeCollege[0].collegeList || []" value="{{college.collegeId}}" ng-selected="selecter.collegeId == college.collegeId">{{college.collegeName}}</option>
+                                                <option ng-repeat="college in treeCollege[0].collegeList || []" value="{{college.collegeId}}" ng-selected="selecter.collegeId == college.collegeId">{{college.collegeName | stringLength}}</option>
                                             </select>
                                         </div>
                                         <div>

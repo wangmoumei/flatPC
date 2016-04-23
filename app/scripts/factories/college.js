@@ -92,7 +92,12 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });//.get(url,param);
     }
-    
+    var getListByGrade = function(schoolcode){
+        var url = AppConfig.WEB_ROOT + 'stmessage/collegeclass/get_list_class/?schoolcode='+schoolcode+'&token=' + AppConfig.token;
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
+    }
     var getManagerList = function(param){
         var url = AppConfig.WEB_ROOT + 'management/instructor/get_list_instructor/?'
         + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
@@ -161,6 +166,7 @@ angular.module('flatpcApp')
         editClass:editClass,
         delClass:delClass,
         getGrade:getGrade,
+        getListByGrade:getListByGrade,
         getManagerList:getManagerList,
         addManager:addManager,
         editManager:editManager,

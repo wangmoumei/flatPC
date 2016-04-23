@@ -11,13 +11,13 @@
 </div>
 <div class="tool-bar">
     <div>
-        <button ng-if="menuCheck(33)" class="btn btn-addon btn-info" ng-click="resetForm('#import',dataInit)">
+        <button ng-if="menuCheck(33)" class="btn btn-addon btn-info" ng-click="resetForm('#multi',dataInit)">
             <i class="glyphicon glyphicon-plus"></i>
             批量退宿
         </button>
     </div>
     <div class="bar-full">
-        <button ng-if="menuCheck(33)" class="btn btn-addon btn-info" ng-click="resetForm('#multi',dataInit)">
+        <button ng-if="menuCheck(33)" class="btn btn-addon btn-info" ng-click="resetForm('#addQuit',dataInit)">
             <i class="glyphicon glyphicon-plus"></i>
             单个退宿
         </button>
@@ -31,7 +31,7 @@
             <button type="button" class="btn btn-info" ng-click="setStatus(3)" ng-class="{'btn-stroke':media.status!=3}">已审批</button>
         </div>
     </div>
-    <div class="search-option">
+    <!--<div class="search-option">
         <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{media.search?'学号':'姓名'}} <span class="caret"></span>
@@ -49,7 +49,7 @@
                 <button type="submit" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
             </span>
         </form>
-    </div>
+    </div>-->
 </div>
 <div class="page-main">
     <div class="page-tree" tree>
@@ -88,32 +88,49 @@
         </ul>
     </div>
     <div class="table-container" style="left:225px;bottom:54px;">
-        <table class="table table-bordered table-hover bg-white" style="margin:-1px 0 0 -1px">
+        <table class="table table-hover bg-white" style="margin:-1px 0 0 -1px">
             <thead>
                 <tr>
                     <th>状态</th>
-                    <th class="sort" ng-class="{'sort-up':media.orderfield=='addTime' && media.ordertype=='asc','sort-down':media.orderfield=='addTime' && media.ordertype=='desc'}" ng-click="setOrder('addTime')">日期</th>
-                    <th class="sort" ng-class="{'sort-up':media.orderfield=='name' && media.ordertype=='asc','sort-down':media.orderfield=='name' && media.ordertype=='desc'}" ng-click="setOrder('name')">姓名</th>
-                    <th class="sort" ng-class="{'sort-up':media.orderfield=='studentNumber' && media.ordertype=='asc','sort-down':media.orderfield=='studentNumber' && media.ordertype=='desc'}" ng-click="setOrder('studentNumber')">学号</th>
+                    <th>学号</th>
+                    <th>姓名</th>
+                    <th>班级</th>
                     <th>入住床位</th>
-                    <th>备注</th>
+                    <th>个人违欠</th>
+                    <th>寝室违欠</th>
                     <th>操作</th>
+                    <th><input ng-model="media.multi" type="checkbox" ng-change="multiCheck()"  /></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="live in list">
-                    <td ng-class="{'planing':live.status==0,'checked':live.status==1,'cancel':live.status==2,'return':live.status==3}">
+                <tr ng-repeat="item in list">
+                    <td width="80" ng-class="{'planing':item.status==0,'checked':item.status==2,'cancel':item.status==3,'return':item.status==1}">
                         <div>
-                            {{live.status==0?'计划中':(live.status==1?'已审批':(live.status==2?'已取消':'已驳回'))}}
+                            {{item.status==0?'计划中':(item.status==1?'有欠费':(item.status==2?'无欠费':'已审批'))}}
                         </div>
                     </td>
-                    <td>{{live.addTime}}</td><td>{{live.name}}</td><td>{{live.studentNumber}}</td><td>{{live.roomPath}}</td><td>{{live.memo}}</td>
-                    <td><button type="button" class="btn btn-link btn-xs" ng-click="showCard('#setCheck',detail(live))">查看详情</button></td>
+                    <td>{{item.studentNumBer}}</td><td>{{item.name}}</td><td>{{item.collegeName+item.grade+item.className}}</td><td>{{item.campusName+item.flatName+item.roomName+"-"+item.bedName}}</td>
+                    <td class="itemBox">
+                        {{item.status==0||item.status==1?(item.listBed.length>0?(media.getSum(item.listBed)==0?"待评估":media.getSum(item.listBed)):(item.status==0?"暂无，请导入":"无违欠信息")):"无违欠信息"}}
+                    </td>
+                    <td class="itemBox">
+                        {{item.status==0||item.status==1?(item.listRoom.length>0?(media.getSum(item.listRoom)==0?"待评估":media.getSum(item.listRoom)):(item.status==0?"暂无，请导入":"无违欠信息")):"无违欠信息"}}
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-link btn-xs" ng-click="showCard('#setCheck',detail(item))">查看</button>
+                    </td>                    
+                    <td><input type="checkbox" ng-change="multiChecked(item.checked)" value="{{item.exitId}}" ng-disabled="item.status!=2" ng-model="item.checked" /></td>
+
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="10" ng-hide="media.recordCount" class="empty">没有检索到相关登记纪录</td>
+                    <td colspan="10" ng-hide="media.recordCount" class="empty">没有检索到相关退宿记录</td>
+                </tr>
+                <tr ng-show="media.recordCount&&multiPass()">
+                    <td class="multi-deal-box" colspan="9">
+                        <a ng-click="passWork(multiPass())" class="btn btn-stroke btn-success">批量审批</a>
+                    </td>
                 </tr>
             </tfoot>
         </table>
@@ -172,54 +189,65 @@
                                     <div class="check-info-title">
                                         <div class="check-info-tip">计划提交</div> 
                                         <div>{{work.addTime}}</div>
-                                        <div><span>提交人：</span>{{work.addAdminName}}</div>
+                                        <div><span>提交人：</span>{{work.userName}}</div>
                                     </div>
                                     <table class="table table-bordered bg-white">
-                                        <tr><td>业务类型</td><td>{{work.businessType}}</td></tr>
-                                        <tr><td>人员</td><td>{{work.name + '(' + work.studentNumber + ')'}}</td></tr>
-                                        <tr><td>人员信息</td><td>{{work.classPath}}</td></tr>
-                                        <tr><td>入住床位</td><td>{{work.roomPath}}</td></tr>
-                                        <tr><td>备注</td><td>{{work.memo}}</td></tr>
+                                        <tr><td>业务类型</td><td>退宿</td></tr>
+                                        <tr><td>人员</td><td>{{work.name + '(' + work.studentNumBer + ')'}}</td></tr>
+                                        <tr><td>人员信息</td><td>{{work.collegeName+work.grade+work.className}}</td></tr>
+                                        <tr><td>入住床位</td><td>{{work.campusName+work.flatName+work.roomName+"-"+work.bedName}}</td></tr>
+                                        <tr>
+                                            <td>个人违欠</td>
+                                            <td class="itemBox">
+                                                <ul>
+                                                    <li class="item" ng-repeat="item in work.listBed">
+                                                        {{item.nature}}
+                                                    </li>
+                                                    <li ng-show="work.listBed.length<1">
+                                                        {{work.status?"无违欠信息":'暂无，请导入'}}
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>寝室违欠</td>
+                                            <td class="itemBox">
+                                                <ul>
+                                                    <li class="item" ng-repeat="item in work.listRoom">
+                                                        {{item.nature}}
+                                                    </li>
+                                                    <li ng-show="work.listRoom.length<1">
+                                                        {{work.status?"无违欠信息":'暂无，请导入'}}
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
                                     </table>
                                 </div>
                             </li>
-                            <li ng-class="{'passed':work.status==1,'canceled':work.status==2,'returned':work.status==3}">
+                            <li ng-class="{'passed':work.status==3,'canceled':work.status==1}">
                                 <div class="check-point"></div>
-                                <div class="check-info"  ng-if="work.status > 0">
+                                <div class="check-info"  ng-if="work.status ==3">
                                    <div class="check-info-title">
-                                        <div class="check-info-tip">{{work.status==1?'审批':(work.status==2?'取消':'驳回')}}</div>
-                                        <div>{{work.backTime||work.cancelTime||work.passTime}}</div>
-                                        <div><span>{{work.status==1?'审批':(work.status==2?'执行':'驳回')}}人：</span>{{work.backAdminName||work.passAdminName||work.cancelAdminName}}</div>
+                                        <div class="check-info-tip">审批</div>
+                                        <div>{{work.passTime}}</div>
+                                        <div><span>审批人：</span>{{work.passAdminName}}</div>
                                     </div>
-                                    <table class="table table-bordered bg-white" ng-show="work.status == 3">
-                                        <tr><td width="100">驳回理由</td><td>{{work.backMessage}}</td></tr>
-                                    </table>
                                 </div>
-                                <div ng-if="work.status == 0 && (menuCheck(36) || menuCheck(35) || menuCheck(37))">
+                                <div ng-if="work.status<3">
                                     <div class="check-btn-box" ng-hide="returnSwitch">
-                                        <div ng-if="menuCheck(35)">
+                                        <div ng-if="work.status==0||(work.status==2&&!menuCheck(350))">
+                                            <button disabled class="btn btn-addon btn-default"><i class="glyphicon glyphicon-ok"></i>审批</button>
+                                        </div>
+                                        <div ng-if="work.status==2&&menuCheck(350)">
                                             <a class="btn btn-addon btn-success" ng-click="passWork(closeCard('#setCheck'))"><i class="glyphicon glyphicon-ok"></i>审批</a>
                                         </div>
-                                        <div ng-if="menuCheck(36)">
-                                            <a class="btn btn-addon btn-warning" ng-click="returnSwitchChange()"><i class="glyphicon glyphicon-remove"></i>驳回</a>
+                                        <div ng-if="work.status==1">
+                                            <button disabled class="btn btn-addon btn-default" ng-click="warning()"><i class="glyphicon glyphicon-bell"></i>催缴</button>
                                         </div>
-                                        <div ng-if="menuCheck(37)">
+                                        <!--<div ng-if="menuCheck(350)">
                                             <a class="btn btn-addon btn-default" ng-click="cancelWork(closeCard('#setCheck'))"><i class="glyphicon glyphicon-off"></i>取消</a>
-                                        </div>
-                                    </div>
-                                    <div ng-if="menuCheck(36)" class="check-input-box" ng-show="returnSwitch">
-                                        <div>
-                                            驳回理由：
-                                        </div>
-                                        <div>
-                                            <input type="text" class="form-control" ng-model="work.returnMessage"/>
-                                        </div>
-                                        <div>
-                                            <a class="btn btn-warning" ng-click="returnWork(closeCard('#setCheck'))">驳回</a>
-                                        </div>
-                                        <div>
-                                            <a class="btn btn-default" ng-click="returnSwitchChange()">取消</a>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div>
                             </li>
@@ -236,22 +264,22 @@
             <div class="info-card-content">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        入住
+                        退宿
                         <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
                     </div>
                     <div class="panel-body">
                         <div class="form-tabs" form-tabs>
-                            <ul class="form-tabs-nav">
-                                <li class="tabs-nav">
-                                    <div data-role="transfer" data-transfer="form.bed">
+                            <ul class="form-tabs-nav" style="margin-left:200px;margin-right:200px;">
+                                <li class="active">
+                                    <div data-role="transfer" data-transfer="1">
                                         <div class="form-tabs-point"></div>
-                                        学生入住
+                                        人员选择
                                     </div>
                                 </li>
                                 <li class="tabs-nav">
-                                    <div data-role="transfer" data-transfer="form.bed && form.student">
+                                    <div data-role="transfer" data-transfer="form.student">
                                         <div class="form-tabs-point"></div>
-                                        入住确认
+                                        退宿确认
                                     </div>
                                 </li>
                             </ul>
@@ -261,13 +289,13 @@
                                         <div>
                                             <select class="form-control" ng-change="selecter.collegeSelecter()" ng-model="selecter.collegeId">
                                                 <option value="">请选择学院</option>
-                                                <option ng-repeat="college in treeCollege[0].collegeList || []" value="{{college.collegeId}}" ng-selected="selecter.collegeId == college.collegeId">{{college.collegeName}}</option>
+                                                <option ng-repeat="college in treeCollege[0].collegeList || []" value="{{college.collegeId}}" ng-selected="selecter.collegeId == college.collegeId">{{college.collegeName | stringLength}}</option>
                                             </select>
                                         </div>
                                         <div>
                                             <select class="form-control" ng-model="selecter.classId">
                                                 <option value="">请选择班级</option>
-                                                <option ng-repeat="cla in selecter.classList || []" value="{{cla.classId}}" ng-selected="selecter.classId == cla.classId">{{cla.className}}</option>
+                                                <option ng-repeat="cla in selecter.classList || []" value="{{cla.classId}}" ng-selected="selecter.classId == cla.classId">{{cla.className | stringLength}}</option>
                                             </select>
                                         </div>
                                         <div class="form-tabs-full">
@@ -286,7 +314,7 @@
                                         <tbody>
                                             <tr ng-repeat="student in form.studentList || []">
                                                 <td>{{student.studentNumber}}</td><td>{{student.name}}</td><td>{{student.collegeName}}</td><td>{{student.className}}</td>
-                                                <td><a class="btn btn-xs btn-link" data-role="next" ng-click="form.studentChoose(student)">入住</a></td>
+                                                <td><a class="btn btn-xs btn-link" data-role="next" ng-click="form.studentChoose(student)">退宿</a></td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
@@ -308,11 +336,7 @@
                                         <tbody>
                                             <tr><td>入住人员</td><td>{{form.student.name}}（{{form.student.studentNumber}}）</td></tr>
                                             <tr><td>人员信息</td><td>{{form.student.collegeName}} - {{form.student.grade + form.student.className}} </td></tr>
-                                            <tr><td>入住床位</td><td>{{form.bed.campusName}} - {{form.bed.liveAreaName}} - {{form.bed.flatName}} - {{form.bed.roomNum}} - {{form.bed.bedName || form.bed.bedNum}}</td></tr>
-                                            <tr>
-                                                <td>备注</td>
-                                                <td><textarea class="form-control" rows="3" ng-model="form.memo"></textarea></td>
-                                            </tr>
+                                            <tr><td>入住床位</td><td>{{form.student.campusName}} - {{form.student.liveAreaName}} - {{form.student.flatName}} - {{form.student.roomName}} - {{form.student.bedName || form.student.bedNum}}</td></tr>
                                         </tbody>
                                     </table>
                                 </li>
@@ -330,22 +354,22 @@
             <div class="info-card-content">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        入住
+                        批量退宿
                         <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
                     </div>
                     <div class="panel-body">
                         <div class="form-tabs" form-tabs>
-                            <ul class="form-tabs-nav">
-                                <li class="tabs-nav">
-                                    <div data-role="transfer" data-transfer="form.bed">
+                            <ul class="form-tabs-nav" style="margin-left:200px;margin-right:200px;">
+                                <li class="active">
+                                    <div data-role="transfer" data-transfer="1">
                                         <div class="form-tabs-point"></div>
-                                        学生入住
+                                        班级选择
                                     </div>
                                 </li>
                                 <li class="tabs-nav">
-                                    <div data-role="transfer" data-transfer="form.bed && form.student">
+                                    <div data-role="transfer" data-transfer="(form.classList.length>0)">
                                         <div class="form-tabs-point"></div>
-                                        入住确认
+                                        退宿确认
                                     </div>
                                 </li>
                             </ul>
@@ -353,42 +377,51 @@
                                 <li class="fadeIn animated">
                                     <form class="form-tabs-tool-bar" ng-submit="form.studentSearch()">
                                         <div>
-                                            <select class="form-control" ng-change="selecter.collegeSelecter()" ng-model="selecter.collegeId">
-                                                <option value="">请选择学院</option>
-                                                <option ng-repeat="college in treeCollege[0].collegeList || []" value="{{college.collegeId}}" ng-selected="selecter.collegeId == college.collegeId">{{college.collegeName}}</option>
+                                            <select class="form-control" ng-change="selecter.gradeSelecter()" ng-model="selecter.grade">
+                                                <option value="">请选择年级</option>
+                                                <option ng-repeat="grade in college || []" value="{{grade.grade}}">{{grade.grade}}</option>
                                             </select>
                                         </div>
                                         <div>
-                                            <select class="form-control" ng-model="selecter.classId">
-                                                <option value="">请选择班级</option>
-                                                <option ng-repeat="cla in selecter.classList || []" value="{{cla.classId}}" ng-selected="selecter.classId == cla.classId">{{cla.className}}</option>
+                                            <select class="form-control" ng-change="selecter.collegeSelecter(1)" ng-model="selecter.collegeId">
+                                                <option value="">请选择学院</option>
+                                                <option ng-repeat="college in selecter.collegeList || []" value="{{college.collegId}}">{{college.collegeName | stringLength}}</option>
                                             </select>
                                         </div>
                                         <div class="form-tabs-full">
-                                            <input class="form-control" type="text" placeholder="学号或姓名" ng-model="form.studentName" />
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                                    请选择班级 <i class="caret"></i>
+                                                </button>
+                                                <ul class="dropdown-menu" style="min-width:66px;max-height:{{100+(form.classList.length>5?5:form.classList.length)*40}}px;overflow-y:auto;">
+                                                    <li ng-repeat="cla in selecter.listClass || []" style="width:200px;">
+                                                        <label style="padding:5px 10px;">
+                                                            <input type="checkbox" ng-model="cla.check" ng-change="form.addClass(cla)" name="cla" >
+                                                            {{cla.className|stringLength}}
+                                                        </label>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                         <div>
-                                            <button type="submit" class="btn btn-stroke btn-info">搜索</button>
+                                            <button ng-show="form.classList.length>0" data-role="next" class="btn btn-stroke btn-info">下一步</button>
                                         </div>
                                     </form>
                                     <table class="table table-bordered bg-white">
                                         <thead>
                                             <tr>
-                                                <th>学号</th><th>姓名</th><th>学院</th><th>班级</th><th>操作</th>
+                                                <th>年级</th><th>学院</th><th>班级</th><th>操作</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="student in form.studentList || []">
-                                                <td>{{student.studentNumber}}</td><td>{{student.name}}</td><td>{{student.collegeName}}</td><td>{{student.className}}</td>
-                                                <td><a class="btn btn-xs btn-link" data-role="next" ng-click="form.studentChoose(student)">入住</a></td>
+                                            <tr class="fadeIn animated" ng-repeat="cla in form.classList || []">
+                                                <td>{{cla.grade}}</td><td>{{cla.collegeName}}</td><td>{{cla.className}}</td>
+                                                <td><a class="btn btn-xs btn-link" data-role="next" ng-click="form.delClass(cla)">删除</a></td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <td colspan="10" ng-hide="form.studentList" class="start">搜索一下</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="10" ng-show="form.studentList && form.studentList.length < 1" class="empty">没有检索到相关学生</td>
+                                                <td colspan="10" ng-hide="form.classList&&form.classList.length>0" class="empty">请选择班级</td>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -396,18 +429,24 @@
                                 <li class="fadeIn animated">
                                     <div class="form-tabs-tool-bar">
                                         <div class="form-tabs-full"><span>计划确认</span></div>
-                                        <div><a class="btn btn-addon btn-success" ng-click="form.sub(closeCard('#addLive'))"><i class="glyphicon glyphicon-plus"></i>提交</a></div>
+                                        <div><a class="btn btn-addon btn-success" ng-click="form.multiSub(closeCard('#multi'))"><i class="glyphicon glyphicon-plus"></i>提交</a></div>
                                     </div>
                                     <table class="table table-bordered bg-white">
-                                        <tbody>
-                                            <tr><td>入住人员</td><td>{{form.student.name}}（{{form.student.studentNumber}}）</td></tr>
-                                            <tr><td>人员信息</td><td>{{form.student.collegeName}} - {{form.student.grade + form.student.className}} </td></tr>
-                                            <tr><td>入住床位</td><td>{{form.bed.campusName}} - {{form.bed.liveAreaName}} - {{form.bed.flatName}} - {{form.bed.roomNum}} - {{form.bed.bedName || form.bed.bedNum}}</td></tr>
+                                        <thead>
                                             <tr>
-                                                <td>备注</td>
-                                                <td><textarea class="form-control" rows="3" ng-model="form.memo"></textarea></td>
+                                                <th>年级</th><th>学院</th><th>班级</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="fadeIn animated" ng-repeat="cla in form.classList || []">
+                                                <td>{{cla.grade}}</td><td>{{cla.collegeName}}</td><td>{{cla.className}}</td>
                                             </tr>
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="10" ng-hide="form.classList&&form.classList.length>0" class="empty">请选择班级</td>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </li>
                             </ul>
