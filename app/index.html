@@ -16,7 +16,7 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-    <link rel="stylesheet" href="http://7xp0c4.com2.z0.glb.qiniucdn.com/iconfont-1.37.css" />
+    <link rel="stylesheet" href="http://7xp0c4.com2.z0.glb.qiniucdn.com/iconfont-1.4.css" />
   </head>
   <body ng-app="flatpcApp">
     <!--[if lte IE 8]>
@@ -26,7 +26,7 @@
     <!-- Add your site or application content here -->
     <div class="page-header"  ui-view="header">
     </div>
-    <div class="page-aside"  ui-view="aside" ng-hide="frame"></div>
+    <div class="page-aside" ng-class="{'mini':miniAside}" ui-view="aside" ng-hide="frame"></div>
     <div class="page-container" ng-hide="frame">
         <div ui-view="" class="fadeIn animated"></div>
     </div>

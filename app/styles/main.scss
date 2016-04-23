@@ -46,11 +46,16 @@ input:disabled, textarea:disabled {
     border-right:1px solid #dee0e0;
     background-color: #e4eaf4;
     position: fixed;
-    z-index: 2;
+    z-index: 4;
     top:50px;
     left: 0;
     bottom: 0;
-    overflow-y: auto;
+    &.mini{
+        width: 50px;
+        &+div.page-container{
+            left:50px;
+        }
+    }
 }
 .page-container{
     position: fixed;

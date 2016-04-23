@@ -14,4 +14,7 @@ angular.module('flatpcApp')
         $scope.switch = function(name){
             $rootScope.sysMenu[1] = name;
         }
+        $scope.changeMini = function () {
+            $rootScope.miniAside = $rootScope.miniAside?false:true;
+        }
     }]);

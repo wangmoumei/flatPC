@@ -28,7 +28,10 @@ angular
       nodeIds:''
   }).run(['$rootScope', '$location', 'AppConfig','authority','$stateParams','$http',
 		function($rootScope, $location, AppConfig,authority,$stateParams,$http) {
-            // console.loxg($http.defaults.transformResponse);
+            //侧边栏收缩控制
+            var w = document.documentElement.clientWidth||document.body.clientWidth;
+            if(w < 1024) $rootScope.miniAside = true;
+            
             $rootScope.routerInit = function(menu){
                 $rootScope.sysMenu = [menu,menu,""];
             }

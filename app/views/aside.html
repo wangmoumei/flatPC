@@ -1,3 +1,4 @@
+<div class="page-aside-container">
 <ul ng-show="sysMenu[0]=='flat'">
     <li ng-if="menuCheck(6)" ng-class="{'active':sysMenu[1]=='flat'}" ng-click="switch('flat')">
         <a href="#index" title="公寓管理">
@@ -5,7 +6,7 @@
         </a>
     </li>
     <li ng-if="menuCheck(7)" ng-class="{'active':sysMenu[1]=='grade'}" ng-click="switch('grade')">
-        <a href="#index" title="公寓管理">
+        <a href="#index" title="宿舍考评">
             <i class="ALiconfont icon-xinyongfen"></i> 宿舍考评
         </a>
     </li>
@@ -49,4 +50,5 @@
         </a>
     </li>
 </ul>
-
+</div>
+<i class="collapse" ng-click="changeMini()"></i>
