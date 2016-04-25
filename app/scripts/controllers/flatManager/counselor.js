@@ -268,7 +268,7 @@ angular.module('flatpcApp')
         })
     }
     function refresh(n) {
-        $scope.media.epage = n || $scope.media.epage;
+        if(!n)$scope.media.epage =1;
         $rootScope.loading = true;
         CollegeService.getManagerList($scope.media).success(function (data) {
             if(data.code == 0){

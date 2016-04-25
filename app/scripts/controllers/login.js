@@ -144,6 +144,8 @@ angular.module('flatpcApp')
                 password:$scope.media.pass
             }).success(function (data) {
                 $rootScope.loading = false;
+                $rootScope.loginSwitch = true;
+                location.href = '#index';
                 if(data.code == 0){
                     // sessionStorage.staffkey = data.data.staffkey;
                     sessionStorage.tokenMessage = data.data.token;
@@ -156,12 +158,7 @@ angular.module('flatpcApp')
                     AppConfig.schoolCode = data.data.schoolcode;
                     AppConfig.schoolname = data.data.schoolname || 'test';
                     AppConfig.roleName = data.data.rolename;
-                    
-                    $rootScope.loginSwitch = true;
-                    location.href = '#index';
                 }
-                else
-                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             })
         }
     }]);
