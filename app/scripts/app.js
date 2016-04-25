@@ -683,7 +683,23 @@ angular
         }
     })
     //认证方式
-    
+      .state('form', {
+        url: "/form",
+        views: {
+            "": {
+                templateUrl: 'views/frame.html',
+                controller: 'formCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
     .state('user', {
         url: "/user",
         views: {

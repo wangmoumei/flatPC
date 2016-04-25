@@ -2,16 +2,16 @@
 
 /**
  * @ngdoc function
- * @name flatpcApp.controller:verifyCtrl
+ * @name flatpcApp.controller:formCtrl
  * @description
- * # verifyCtrl
+ * # formCtrl
  * Controller of the flatpcApp
  */
 angular.module('flatpcApp')
-.controller('verifyCtrl', ['$scope','$rootScope',function($scope,$rootScope) {
+.controller('formCtrl', ['$scope','$rootScope',function($scope,$rootScope) {
         //存储列表头到frame.html中
     $scope.menus = [
-        '数据中心','用户中心','审核列表'
+        '系统设置','帐号管理'
     ];
     //跳转到什么地方去
     $scope.parent = "data";
