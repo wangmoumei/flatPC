@@ -92,7 +92,7 @@ angular.module('flatpcApp')
                 var college = $rootScope.treeCollege[0].collegeList;
                 for(var i=0 ; i < college.length;i++){
                     var list = cla.classId?$filter('filter')(college[i].classList,{classId:cla.classId}):[];
-                    if(list.length > 0){
+                    if(list.length > 0 && list[0].classId==cla.classId){
                         cla.collegeId = college[i].collegeId + "";
                         cla.classList = college[i].classList;
                         cla.classId = cla.classId + "";

@@ -244,6 +244,40 @@
             </li>
         </ul>
     </li>
+    <li ng-if="menuCheck(355)" ng-show="sysMenu[1]=='center'">
+        <div class="menu-title">综合查询</div>
+        <ul class="menu-list">
+            <li ng-if="menuCheck(357)">
+                <a href="#userList">
+                    <i class="ALiconfont icon-zhanghuanquan" style="background-color:#02cf97;font-size:25px"></i>
+                    用户列表
+                </a>
+            </li>
+            <li ng-if="menuCheck(358)">
+                <a href="#verify">
+                    <i class="ALiconfont icon-zhanghuanquan" style="background-color:#02cf97;font-size:25px"></i>
+                    实名审核
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li ng-if="menuCheck(356)" ng-show="sysMenu[1]=='center'">
+        <div class="menu-title">设置</div>
+        <ul class="menu-list">
+            <li ng-if="menuCheck(359)">
+                <a href="#verifySetting">
+                    <i class="ALiconfont icon-zhanghuanquan" style="background-color:#02cf97;font-size:25px"></i>
+                    认证方式
+                </a>
+            </li>
+            <li ng-if="menuCheck(360)">
+                <a>
+                    <i class="ALiconfont icon-zhanghuanquan" style="background-color:#d3d6d9;font-size:25px"></i>
+                    统一身份配置
+                </a>
+            </li>
+        </ul>
+    </li>
     <li ng-if="menuCheck(109)" ng-show="sysMenu[1]=='floor'">
         <div class="menu-title">楼栋信息</div>
         <ul class="menu-list">

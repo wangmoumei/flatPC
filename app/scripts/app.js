@@ -647,6 +647,23 @@ angular
             }
         }
     })
+    .state('userList', {
+        url: "/userList",
+        views: {
+            "": {
+                templateUrl: 'views/frame.html',
+                controller: 'UserListCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
     .state('user', {
         url: "/user",
         views: {
