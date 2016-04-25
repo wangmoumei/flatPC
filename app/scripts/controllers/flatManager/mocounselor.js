@@ -7,9 +7,12 @@
  * # MainCtrl
  * Controller of the flatpcApp
  */
+
+//写入对应的控制器
 angular.module('flatpcApp')
-  .controller('CounselorCtrl', ['$scope','$rootScope','CollegeService','$filter','RoleService','AppConfig',
-  function ($scope,$rootScope,CollegeService,$filter,RoleService,AppConfig) {
+  .controller('mocounselorCtrl', ['$scope','$rootScope','moCollegeService','$filter','RoleService','AppConfig',
+  function ($scope,$rootScope,moCollegeService,$filter,RoleService,AppConfig) {
+     
     $scope.form = {
         status:0,
         username:'',
@@ -92,7 +95,7 @@ angular.module('flatpcApp')
                 var college = $rootScope.treeCollege[0].collegeList;
                 for(var i=0 ; i < college.length;i++){
                     var list = cla.classId?$filter('filter')(college[i].classList,{classId:cla.classId}):[];
-                    if(list.length > 0 && list[0].classId==cla.classId){
+                    if(list.length > 0){
                         cla.collegeId = college[i].collegeId + "";
                         cla.classList = college[i].classList;
                         cla.classId = cla.classId + "";
@@ -112,7 +115,7 @@ angular.module('flatpcApp')
             return;
         }
         $rootScope.loading = true;
-        CollegeService.addManager({
+        moCollegeService.addManager({
             username:$scope.form.username,
             password:$scope.form.password,
             useraccount:$scope.form.useraccount,
@@ -138,7 +141,7 @@ angular.module('flatpcApp')
         var ids = $scope.form.getClass();
         if($scope.form.username.length < 1 || $scope.form.jobnumber.length < 1 || $scope.form.phone.length < 1 || $scope.form.roleid.length < 1 || $scope.form.useraccount.length < 1 || ids.length < 1)return;
         $rootScope.loading = true;
-        CollegeService.editManager({
+        moCollegeService.editManager({
             adminid:$scope.form.adminid,
             username:$scope.form.username,
             classids:ids,
@@ -235,7 +238,7 @@ angular.module('flatpcApp')
     
     //初始化树+列表
     if(!$rootScope.treeCollege){
-        CollegeService.getList(AppConfig.schoolCode).success(function(data){
+        moCollegeService.getList(AppConfig.schoolCode).success(function(data){
             if(data.code == 0){
                 $rootScope.treeCollege = data.data;
                 getRole();
@@ -268,9 +271,9 @@ angular.module('flatpcApp')
         })
     }
     function refresh(n) {
-        if(!n)$scope.media.epage =1;
+        $scope.media.epage = n || $scope.media.epage;
         $rootScope.loading = true;
-        CollegeService.getManagerList($scope.media).success(function (data) {
+        moCollegeService.getManagerList($scope.media).success(function (data) {
             if(data.code == 0){
                 $scope.list = data.list.dataList;
                 $scope.media.recordCount = data.list?data.list.recordCount:0;

@@ -27,6 +27,11 @@
             <i class="ALiconfont icon-set" style="font-size:20px"></i> 基础设置
         </a>
     </li>
+    <li ng-if="menuCheck(353)" ng-class="{'active':sysMenu[1]=='center'}" ng-click="switch('center')">
+        <a href="#index" title="用户中心">
+            <i class="ALiconfont icon-users" style="font-size:20px"></i> 用户中心
+        </a>
+    </li>
     <li ng-if="menuCheck(10)" ng-class="{'active':sysMenu[1]=='collect'}" ng-click="switch('collect')">
         <a href="#index" title="师生信息">
             <i class="ALiconfont icon-user" style="font-size:20px"></i> 师生信息
