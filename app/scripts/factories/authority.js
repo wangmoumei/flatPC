@@ -212,6 +212,11 @@ angular.module('flatpcApp')
                     return ['data','center','userList'];
                 else
                     return null;
+           case 'verify':
+                if(menuCheck(358))
+                    return ['data','center','verify'];
+                else
+                    return null;
             case 'user':
                 if(menuCheck(114))
                     return ['admin','admin','user'];

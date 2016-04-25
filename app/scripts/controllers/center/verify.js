@@ -8,10 +8,10 @@
  * Controller of the flatpcApp
  */
 angular.module('flatpcApp')
-.controller('UserListCtrl', ['$scope','$rootScope',function($scope,$rootScope) {
+.controller('TreeCtrl', ['$scope','$rootScope',function($scope,$rootScope) {
         //存储列表头到frame.html中
     $scope.menus = [
-        '数据中心','用户中心','用户列表'
+        '数据中心','用户中心','审核列表'
     ];
     //跳转到什么地方去
     $scope.parent = "data";
