@@ -187,37 +187,37 @@ angular.module('flatpcApp')
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })
     }
-    // $scope.delete = function (fun) {
-    //     swal({   
-    //         title: "确认删除",   
-    //         text: "真的要删除吗？",   
-    //         type: "warning",   
-    //         showCancelButton: true,   
-    //         confirmButtonColor: "#DD6B55",   
-    //         confirmButtonText: "删除",   
-    //         cancelButtonText: "取消",   
-    //         closeOnConfirm: false 
-    //     }, 
-    //     function(){   
-    //         $rootScope.loading = true;
-    //         return FlatService.delManager({
-    //             adminid:$scope.form.adminid
-    //         }).success(function (data) {
-    //             $rootScope.loading = false;
-    //             if(data.code == 0){
-    //                 swal("提示", "删除成功！", "success"); 
-    //                 refresh();
-    //                 if(fun && typeof fun == 'function') fun();
-    //             }else if(data.code == 4037){
-    //                         swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-    //                         location.href="#login";$rootScope.loading = false;
-    //                     }
-    //             else
-    //                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-    //         })
-    //     });
+    $scope.delete = function (fun) {
+        swal({   
+            title: "确认删除",   
+            text: "真的要删除吗？",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "删除",   
+            cancelButtonText: "取消",   
+            closeOnConfirm: false 
+        }, 
+        function(){   
+            $rootScope.loading = true;
+            return FlatService.delManager({
+                adminid:$scope.form.adminid
+            }).success(function (data) {
+                $rootScope.loading = false;
+                if(data.code == 0){
+                    swal("提示", "删除成功！", "success"); 
+                    refresh();
+                    if(fun && typeof fun == 'function') fun();
+                }else if(data.code == 4037){
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                            location.href="#login";$rootScope.loading = false;
+                        }
+                else
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            })
+        });
         
-    // }
+    }
     //基础的页码、排序等等选项
     $scope.media = {
         epage:1,

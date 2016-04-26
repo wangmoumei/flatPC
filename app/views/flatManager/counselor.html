@@ -130,7 +130,7 @@
                                     <td><input type="text" ng-model="form.phone" /></td>
                                 </tr>
                                 <tr>
-                                    <td class="require">楼栋</td>
+                                    <td class="require">管理班级</td>
                                     <td>
                                         <ul>    
                                             <li style="padding:5px 0" ng-repeat="cla in form.classes">
@@ -174,7 +174,7 @@
                                     <td class="td-btn-box">
                                         <a ng-hide="form.status" class="btn btn-success" ng-click="addSave(closeCard())">提交</a>
                                         <a ng-show="form.status" class="btn btn-primary" ng-click="editSave(closeCard())">保存</a>
-                                        <!--<a ng-show="form.status" class="btn btn-danger" ng-click="delete(closeCard())">删除</a>-->
+                                        <a ng-show="form.status" class="btn btn-danger" ng-click="delete(closeCard())">删除</a>
                                     </td>
                                 </tr>
                             </tbody>

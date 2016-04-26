@@ -111,7 +111,7 @@
         </ul>
     </li>
     <li ng-if="menuCheck(300)" ng-show="sysMenu[1]=='grade'">
-        <div class="menu-title">统计分析</div>
+        <div class="menu-title">按楼栋统计</div>
         <ul class="menu-list">
             <li ng-if="menuCheck(301)">
                 <a href="#scoreStatistics">
@@ -123,6 +123,35 @@
                 <a href="#ruleStatistics">
                     <i class="ALiconfont icon-chart" style="background-color:#54d5eb;font-size:26px"></i>
                     违章统计
+                </a>
+            </li>
+            <li ng-if="menuCheck(304)">
+                <a href="#ruleStatistics">
+                    <i class="ALiconfont icon-chart" style="background-color:#38adff;font-size:26px"></i>
+                    考核统计
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li ng-if="menuCheck(362)" ng-show="sysMenu[1]=='grade'">
+        <div class="menu-title">按学院统计</div>
+        <ul class="menu-list">
+            <li ng-if="menuCheck(364)">
+                <a href="#scoreStatistics">
+                    <i class="ALiconfont icon-chart" style="background-color:#02cf97;font-size:26px"></i>
+                    打分统计
+                </a>
+            </li>
+            <li ng-if="menuCheck(365)">
+                <a href="#ruleStatistics">
+                    <i class="ALiconfont icon-chart" style="background-color:#54d5eb;font-size:26px"></i>
+                    违章统计
+                </a>
+            </li>
+            <li ng-if="menuCheck(363)">
+                <a href="#ruleStatistics">
+                    <i class="ALiconfont icon-chart" style="background-color:#38adff;font-size:26px"></i>
+                    考核统计
                 </a>
             </li>
         </ul>
@@ -140,6 +169,12 @@
                 <a href="#ruleSetting">
                     <i class="ALiconfont icon-anquantishi" style="background-color:#fc7257;font-size:28px"></i>
                     违章设置
+                </a>
+            </li>
+            <li ng-if="menuCheck(361)">
+                <a href="#ruleSetting">
+                    <i class="ALiconfont icon-anquantishi" style="background-color:#9c59b8;font-size:28px"></i>
+                    考核设置
                 </a>
             </li>
         </ul>
