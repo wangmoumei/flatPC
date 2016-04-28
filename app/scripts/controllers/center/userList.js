@@ -15,7 +15,7 @@ angular.module('flatpcApp')
     $scope.parent = "data";
     $rootScope.loading = false;
     var a = document.createElement('a');
-    a.href = "http://code.houqinbao.com/flat/statistics.html";
+    a.href = "http://code.houqinbao.com/flat/computeSetting.html";
     a.target="page-frame";
     a.click();
 }]);
