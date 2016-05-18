@@ -43,7 +43,7 @@ angular.module('flatpcApp')
         $scope.media.status = 0;
         $scope.media.adminid = item.adminId;
         $scope.media.admintypename = item.adminTypeName || admin.adminTypeName || "";
-        $scope.media.admintypeid =item.adminTypeId || admin.adminTypeId || "";
+        $scope.media.admintypeid =(item.adminTypeId || admin.adminTypeId || "") + "";
         $scope.media.listorder  =item.listorder ||item.listOrder || 0;
         $scope.media.username = item.userName;
         $scope.media.useraccount = item.userAccount;
@@ -152,7 +152,7 @@ angular.module('flatpcApp')
                 return AdminService.editAdmin({
                     adminid : $scope.media.adminid,
                     username : $scope.media.username,
-                    //useraccount : $scope.media.useraccount,
+                    admintypeid : $scope.media.admintypeid,
                     roleid : $scope.media.roleid,
                     schooltype : $scope.media.schooltype,
                     schoolnumber : $scope.media.schoolnumber,

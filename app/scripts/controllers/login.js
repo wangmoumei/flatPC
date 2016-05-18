@@ -53,6 +53,7 @@ angular.module('flatpcApp')
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
         })*/
+        var lo = 0;
         $rootScope.loading = false;
         $scope.login = function () {
             if($scope.media.user.length > 0 && $scope.media.pass.length > 0 /*&& $scope.media.code.length > 0*/){
@@ -115,7 +116,8 @@ angular.module('flatpcApp')
                             var form = document.createElement("form");
                             form.target = "test";
                             form.method = "post";
-                            form.action = "/index.php?s=/Home/User/login.html";
+                            form.action = "http://www.houqinbao.com/index.php?s=/Home/User/login.html";
+                            // form.action = "/index.php?s=/Home/User/login.html";
                             var input1 = document.createElement("input"),input2 = document.createElement("input");
                             input1.name = "username";
                             input1.value = $scope.media.user;
@@ -128,7 +130,14 @@ angular.module('flatpcApp')
                             
                             form.submit();
                             
-                            login();
+                            
+                            document.getElementById("login-frame").onload = function () {
+                                if(lo == 1){
+                                    login();
+                                }
+                                lo++;
+                            }
+                            
                         }
                         
                     }

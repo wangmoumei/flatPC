@@ -98,11 +98,20 @@ angular.module('flatpcApp')
                         swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
             })
         }
+        var toggles = localStorage.toggles || "";
         $scope.media = {
             old:'',
             newPassword:'',
             confirm:'',
-            name:AppConfig.userName
+            name:AppConfig.userName,
+            wechat:!new RegExp(",wechat,").test(","+toggles+","),
+            flat:!new RegExp(",flat,").test(","+toggles+","),
+            repair:!new RegExp(",repair,").test(","+toggles+","),
+            food:!new RegExp(",food,").test(","+toggles+","),
+            pay:!new RegExp(",pay,").test(","+toggles+","),
+            data:!new RegExp(",data,").test(","+toggles+","),
+            admin:!new RegExp(",admin,").test(","+toggles+","),
+            message:!new RegExp(",message,").test(","+toggles+",")
         }
         $scope.change = function name(params) {
             swal("提示","请联系客服电话0571-28256212 修改密码", "info"); 
@@ -135,5 +144,20 @@ angular.module('flatpcApp')
                     })
                 }
             }
+        }
+        $scope.toggleSave = function () {
+            var str = "";
+            if(!$scope.media.wechat)str += "wechat,";
+            if(!$scope.media.flat)str += "flat,";
+            if(!$scope.media.repair)str += "repair,";
+            if(!$scope.media.food)str += "food,";
+            if(!$scope.media.pay)str += "pay,";
+            if(!$scope.media.data)str += "data,";
+            if(!$scope.media.admin)str += "admin,";
+            if(!$scope.media.message)str += "message,";
+            if(str.length>0){
+                localStorage.toggles = str.substring(0,str.length-1);
+            }else localStorage.toggles ="";
+            if($scope.topResize)$scope.topResize();
         }
     }]);

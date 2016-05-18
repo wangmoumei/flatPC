@@ -55,7 +55,7 @@
             
         </iframe>
     </div>
-    <iframe name="test" style="display:none;z-index:1000000;position:fixed;top:100px;left:100px;width:100px;height:100px;background:#f33;"></iframe>
+    <iframe name="test" id="login-frame" style="display:none;z-index:1000000;position:fixed;top:100px;left:100px;width:100px;height:100px;background:#f33;"></iframe>
     <div class="login-view" ui-view='login' ng-hide="loginSwitch"></div>
     <script src="http://7xp0c4.com2.z0.glb.qiniucdn.com/echarts.common.min.js"></script>
     <!-- build:js(.) scripts/vendor.js -->
@@ -133,6 +133,7 @@
     <script src="scripts/directives/pie.js"></script>
     <script src="scripts/directives/inputFile.js"></script>
     <script src="scripts/directives/focus.js"></script>
+    <script src="scripts/directives/header.js"></script>
     
     <script src="scripts/factories/authority.js"></script>
     <script src="scripts/factories/room.js"></script>
