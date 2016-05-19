@@ -664,6 +664,42 @@ angular
             }
         }
     })
+    //实名审核
+    .state('verify', {
+        url: "/verify",
+        views: {
+            "": {
+                templateUrl: 'views/frame.html',
+                controller: 'verifyCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    //认证方式
+      .state('form', {
+        url: "/form",
+        views: {
+            "": {
+                templateUrl: 'views/frame.html',
+                controller: 'formCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
     .state('user', {
         url: "/user",
         views: {

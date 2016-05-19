@@ -7,9 +7,12 @@
  * # MainCtrl
  * Controller of the flatpcApp
  */
+
+//写入对应的控制器
 angular.module('flatpcApp')
-  .controller('FlatManagerCtrl', ['$scope','$rootScope','FlatService','$filter','RoleService','AppConfig',
-  function ($scope,$rootScope,FlatService,$filter,RoleService,AppConfig) {
+  .controller('mocounselorCtrl', ['$scope','$rootScope','moCollegeService','$filter','RoleService','AppConfig',
+  function ($scope,$rootScope,moCollegeService,$filter,RoleService,AppConfig) {
+     
     $scope.form = {
         status:0,
         username:'',
@@ -20,35 +23,34 @@ angular.module('flatpcApp')
         jobnumber:'',
         roleid:'',
         adminid:'',
-        flats : [],
-        removeFlat:function(index){
-            this.flats.splice(index,1);
-            if(this.flats.length < 1){
-                this.addFlat();
+        classes:[],
+        removeClass:function(index){
+            this.classes.splice(index,1);
+            if(this.classes.length < 1){
+                this.addClass();
             }
         },
-        addFlat:function () {
-            var flat = {
-                campusId:$scope.media.campusid || '',
-                campusList:$rootScope.treeFlat,
-                liveAreaId:$scope.media.liveareaid || '',
-                liveAreaList:[],
-                flatId:$scope.media.flatid || '',
-                flatList:[],
+        addClass:function () {
+            var cla = {
+                collegeId:($scope.media.collegeid || '') + "",
+                collegeList:$rootScope.treeCollege[0].collegeList,
+                classId:($scope.media.classid || '') + "",
+                classList:[],
             }
-            $scope.selecter.flatSelecter(flat);
-            this.flats.push(flat);
+            $scope.selecter.classSelecter(cla);
+            console.log(cla);
+            this.classes.push(cla);
         },
-        getFlat:function(){
+        getClass:function(){
             var ids = [],check = function(id){
                 for(var i=0;i < ids.length;i++){
                     if(id.length < 1 || ids[i] == id)return false;
                 }
                 return true;
             };
-            this.flats.forEach(function (flat) {
-                if(check(flat.flatId))
-                    ids.push(flat.flatId);
+            this.classes.forEach(function (cla) {
+                if(check(cla.classId))
+                    ids.push(cla.classId);
             })
             ids = ids.length>0?ids.toString():"";
             return ids;
@@ -63,90 +65,63 @@ angular.module('flatpcApp')
         $scope.form.phone=user.phone || '';
         $scope.form.jobnumber=user.jobNumber || '';
         $scope.form.roleid= '' + (user.roleId || '');
-        $scope.form.flats = []
-        if(user.flatIds && user.flatIds.length>0){
-            user.flatIds.forEach(function (flat) {
+        $scope.form.classes = [];
+        if(user.classIds && user.classIds.length>0){
+            user.classIds.forEach(function (cla) {
                 var item = {
-                    flatId:flat.flatId
+                    classId:cla.classId
                 }
-                $scope.selecter.flatSelecter(item);
-                $scope.form.flats.push(item);
+                $scope.selecter.classSelecter(item);
+                $scope.form.classes.push(item);
             })
         }else{
-            $scope.form.addFlat();
+            $scope.form.addClass();
         }
         $scope.form.adminid=user.adminId || '';
     }
     //二级连选的select
     $scope.selecter = {
-        campusSelecter : function(flat){
-            //用campusId获取liveAreaList
-            if(flat.campusId){
-                flat.liveAreaId = '';
-                flat.flatId = '';
-                flat.flatList = [];
-                var campus = flat.campusId?$filter('filter')($rootScope.treeFlat.cmpusList,{campusId:flat.campusId}):[];
-                flat.liveAreaList = (campus.length>0 && campus[0].liveAreaList) ? campus[0].liveAreaList : [];
-            }
+        
+        collegeSelecter : function(cla){
+            //用collegeId获取classList
+            cla.classId = '';
+            var college = cla.collegeId?$filter('filter')($rootScope.treeCollege[0].collegeList,{collegeId:cla.collegeId}):[];
+            cla.classList = (college.length>0 && college[0].classList)?college[0].classList : [];
+            //console.log(this.classList);
         },
-        liveAreaSelecter : function(flat){
-            //用liveAreaId获取flatList
-            if(flat.liveAreaId){
-                flat.flatId = '';
-                var liveArea = flat.liveAreaId?$filter('filter')(flat.liveAreaList,{liveAreaId:flat.liveAreaId}):[];
-                flat.flatList = (liveArea.length>0 && liveArea[0].flatList)?liveArea[0].flatList : [];
-            }
-        },
-        flatSelecter : function(flat){
-            //用 flatId或liveAreaId 反向获取 campusId、liveAreaId、liveAreaList和flatList
-
-            for(var i=0;i < $rootScope.treeFlat.cmpusList.length;i++){
-                if($rootScope.treeFlat.cmpusList[i].liveAreaList && (flat.flatId || flat.liveAreaId))
-                    for(var j=0;j < $rootScope.treeFlat.cmpusList[i].liveAreaList.length;j++){
-                        if($rootScope.treeFlat.cmpusList[i].liveAreaList[j].flatList && flat.flatId)
-                            for(var k=0;k <$rootScope.treeFlat.cmpusList[i].liveAreaList[j].flatList.length;k++){
-                                if($rootScope.treeFlat.cmpusList[i].liveAreaList[j].flatList[k].flatId == flat.flatId){
-                                    flat.campusId = $rootScope.treeFlat.cmpusList[i].campusId;
-                                    flat.liveAreaList = $rootScope.treeFlat.cmpusList[i].liveAreaList;
-                                    flat.liveAreaId = $rootScope.treeFlat.cmpusList[i].liveAreaList[j].liveAreaId;
-                                    flat.flatList= $rootScope.treeFlat.cmpusList[i].liveAreaList[j].flatList;
-                                    return;
-                                }
-                            }
-                        else if(flat.liveAreaId && flat.liveAreaId == $rootScope.treeFlat.cmpusList[i].liveAreaList[j].liveAreaId){
-                            flat.campusId = $rootScope.treeFlat.cmpusList[i].campusId;
-                            flat.liveAreaList = $rootScope.treeFlat.cmpusList[i].liveAreaList;
-                            flat.liveAreaId = $rootScope.treeFlat.cmpusList[i].liveAreaList[j].liveAreaId;
-                            flat.flatList= $rootScope.treeFlat.cmpusList[i].liveAreaList[j].flatList;
-                            return;
-                        }
+        classSelecter : function(cla){
+            //用classId反向获取collegeId和classList
+            if(cla.classId){
+                var college = $rootScope.treeCollege[0].collegeList;
+                for(var i=0 ; i < college.length;i++){
+                    var list = cla.classId?$filter('filter')(college[i].classList,{classId:cla.classId}):[];
+                    if(list.length > 0){
+                        cla.collegeId = college[i].collegeId + "";
+                        cla.classList = college[i].classList;
+                        cla.classId = cla.classId + "";
+                        break;
                     }
-                else if(flat.campusId && flat.campusId == $rootScope.treeFlat.cmpusList[i].campusId){
-                    flat.campusId = $rootScope.treeFlat.cmpusList[i].campusId;
-                    flat.liveAreaList = $rootScope.treeFlat.cmpusList[i].liveAreaList;
-                    flat.liveAreaId = '';
-                    flat.flatList= [];
-                    return;
-                }else return;
+                }
+            }else if(cla.collegeId){
+                this.collegeSelecter(cla);
             }
-
         }
     }
     $scope.addSave = function (fun) {
-        var ids = $scope.form.getFlat();
+        var ids = $scope.form.getClass();
         if($scope.form.password.length < 1 || $scope.form.username.length < 1 || $scope.form.jobnumber.length < 1 || $scope.form.phone.length < 1 || $scope.form.roleid.length < 1 || $scope.form.useraccount.length < 1 || ids.length < 1)return;
         if($scope.form.password != $scope.form.password1){
             swal("提示", "两次密码输入不一致", "error"); 
             return;
         }
         $rootScope.loading = true;
-        FlatService.addManager({
+        moCollegeService.addManager({
             username:$scope.form.username,
             password:$scope.form.password,
             useraccount:$scope.form.useraccount,
             phone:$scope.form.phone,
             jobnumber:$scope.form.jobnumber,
-            flatids:ids,
+            classids:ids,
             roleid:$scope.form.roleid
         }).success(function (data) {
             $rootScope.loading = false;
@@ -163,13 +138,13 @@ angular.module('flatpcApp')
         })
     }
     $scope.editSave = function (fun) {
-        var ids = $scope.form.getFlat();
+        var ids = $scope.form.getClass();
         if($scope.form.username.length < 1 || $scope.form.jobnumber.length < 1 || $scope.form.phone.length < 1 || $scope.form.roleid.length < 1 || $scope.form.useraccount.length < 1 || ids.length < 1)return;
         $rootScope.loading = true;
-        FlatService.editManager({
+        moCollegeService.editManager({
             adminid:$scope.form.adminid,
             username:$scope.form.username,
-            flatids:ids,
+            classids:ids,
             phone:$scope.form.phone,
             jobnumber:$scope.form.jobnumber,
             roleid:$scope.form.roleid
@@ -200,7 +175,7 @@ angular.module('flatpcApp')
     //     }, 
     //     function(){   
     //         $rootScope.loading = true;
-    //         return FlatService.delManager({
+    //         return CollegeService.delManager({
     //             adminid:$scope.form.adminid
     //         }).success(function (data) {
     //             $rootScope.loading = false;
@@ -224,9 +199,8 @@ angular.module('flatpcApp')
         pageCount:1,
         recordCount:1,
         pagesize:10,
-        campusid:'',
-        liveareaid:'',
-        flatid:'',
+        collegeid:'',
+        classid:'',
         orderfield:'',
         ordertype:'',
         title:''
@@ -256,31 +230,28 @@ angular.module('flatpcApp')
     }
     //调整查询规则，按学院或者班级查询
     $scope.show = function(type,item){
-        $scope.media.campusid = item.campusId || '';
-        $scope.media.liveareaid = item.liveAreaId || '';
-        $scope.media.flatid = item.flatId || '';
+        $scope.media.classid = item.classId || '';
+        $scope.media.collegeid = item.collegeId || '';
         refresh();
     };
     
     
     //初始化树+列表
-    if(!$rootScope.treeFlat){
-        FlatService.getList().success(function(data){
-            $rootScope.loading = false;
+    if(!$rootScope.treeCollege){
+        moCollegeService.getList(AppConfig.schoolCode).success(function(data){
             if(data.code == 0){
-                $rootScope.treeFlat = data.data;
+                $rootScope.treeCollege = data.data;
                 getRole();
             }else if(data.code == 4037){
-                swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-                location.href="#login";$rootScope.loading = false;
-            }
+                    swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    location.href="#login";$rootScope.loading = false;
+                }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+            
+            
         });
-    }
-    else {
-        getRole();
-    }
+    }else getRole();
     function getRole() {
         RoleService.getList({
             token:AppConfig.token,
@@ -300,9 +271,9 @@ angular.module('flatpcApp')
         })
     }
     function refresh(n) {
-        if(!n)$scope.media.epage =1;
+        $scope.media.epage = n || $scope.media.epage;
         $rootScope.loading = true;
-        FlatService.getManagerList($scope.media).success(function (data) {
+        moCollegeService.getManagerList($scope.media).success(function (data) {
             if(data.code == 0){
                 $scope.list = data.list.dataList;
                 $scope.media.recordCount = data.list?data.list.recordCount:0;

@@ -1,5 +1,8 @@
 angular.module('flatpcApp')
-.factory('CollegeService',['$http', 'AppConfig',function($http, AppConfig){
+//自定义工厂
+
+//现写入写入实体类信息
+.factory('moCollegeService',['$http', 'AppConfig',function($http, AppConfig){
     var getList = function(schoolcode){
         var url = AppConfig.WEB_ROOT + 'stmessage/collegeclass/get_list/?schoolcode='+schoolcode+'&token=' + AppConfig.token;
         return $http.get(url).error(function (error) {
@@ -98,6 +101,9 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });
     }
+    //人员管理的辅导员管理
+    
+    //增加的辅导员信息的接口
     var getManagerList = function(param){
         var url = AppConfig.WEB_ROOT + 'management/instructor/get_list_instructor/?'
         + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
@@ -113,6 +119,7 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });
     }
+    //增加的接口
     var addManager = function(param){
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolCode;
@@ -128,6 +135,7 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });//.post(url,param,{'Content-Type':'application/x-www-form-urlencoded'});
     }
+    //修改辅导员信息的接口
     var editManager = function(param){
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolCode;
@@ -143,6 +151,7 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });//.post(url,param,{'Content-Type':'application/x-www-form-urlencoded'});
     }
+    //删除辅导员信息的接口
     var delManager = function(param){
         param.token = param.token || AppConfig.token;
         var url = AppConfig.WEB_ROOT + 'management/instructor/del_instructor_admin/';

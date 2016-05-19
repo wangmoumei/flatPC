@@ -2,16 +2,16 @@
 
 /**
  * @ngdoc function
- * @name flatpcApp.controller:AboutCtrl
+ * @name flatpcApp.controller:formCtrl
  * @description
- * # AboutCtrl
+ * # formCtrl
  * Controller of the flatpcApp
  */
 angular.module('flatpcApp')
-.controller('UserListCtrl', ['$scope','$rootScope',function($scope,$rootScope) {
+.controller('formCtrl', ['$scope','$rootScope',function($scope,$rootScope) {
         //存储列表头到frame.html中
     $scope.menus = [
-        '数据中心','用户中心','用户列表'
+        '系统设置','帐号管理'
     ];
     //跳转到什么地方去
     $scope.parent = "data";

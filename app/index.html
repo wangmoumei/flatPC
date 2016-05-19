@@ -16,7 +16,7 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-    <link rel="stylesheet" href="http://7xp0c4.com2.z0.glb.qiniucdn.com/iconfont-1.4.css" />
+    <link rel="stylesheet" href="http://7xp0c4.com2.z0.glb.qiniucdn.com/iconfont-1.4.3.css" />
   </head>
   <body ng-app="flatpcApp">
     <!--[if lte IE 8]>
@@ -55,7 +55,7 @@
             
         </iframe>
     </div>
-    <iframe name="test" id="login-frame" style="display:none;z-index:1000000;position:fixed;top:100px;left:100px;width:100px;height:100px;background:#f33;"></iframe>
+    <iframe name="test" id="login-frame" style="display:none;"></iframe>
     <div class="login-view" ui-view='login' ng-hide="loginSwitch"></div>
     <script src="http://7xp0c4.com2.z0.glb.qiniucdn.com/echarts.common.min.js"></script>
     <!-- build:js(.) scripts/vendor.js -->
@@ -116,6 +116,8 @@
     <script src="scripts/controllers/collect/flat.js"></script>
     <script src="scripts/controllers/setting/term.js"></script>
     <script src="scripts/controllers/center/userList.js"></script>
+    <script src="scripts/controllers/center/verify.js"></script>
+    <script src="scripts/controllers/center/form.js"></script>
     <script src="scripts/controllers/admin/user.js"></script>
     <script src="scripts/controllers/admin/admin.js"></script>
     <script src="scripts/controllers/admin/group.js"></script>

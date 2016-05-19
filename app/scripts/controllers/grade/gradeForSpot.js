@@ -107,6 +107,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             this.studentnumber = this.search?'':search;
             this.name = this.search == 1?search:'';
             this.roomname = this.search == 2?search:'';
+            // console.log(this);
             refresh();
         },
         yearIndex:0,
@@ -247,6 +248,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         }
                     else
                         swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    //console.log(data);
                 });
             }else if(this.tab == 3){
                 GradeService.downloadTopList({
@@ -271,6 +273,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         }
                     else
                         swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    //console.log(data);
                 });
             }
         }
@@ -355,6 +358,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             //打分初始化相关
             this.item = item;
             this.tab = 1;
+            // console.log(item);
             this.img = null;
             this.bed = null;
             this.room = null;
@@ -384,6 +388,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         }
                             else
                                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                            //console.log(data);
                         });
                     }
                     else{
@@ -396,6 +401,9 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         }    
                         else
                             that.room = [];
+                        
+                        // console.log(that.room);
+                        
                     }
                     break;
                 case 2:
@@ -425,7 +433,9 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                                         }    
                                         else
                                             options = [];
+                                        console.log(options);
                                         options.forEach(function (item) {
+                                            console.log(item);
                                                 bed.itemList.push({
                                                     itemId:item.itemId,
                                                     title:item.title,
@@ -527,17 +537,13 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                 if(bed && bed.itemList){
                     bed.totalScore = 0;
                     for(var i=0;i < bed.itemList.length;i++){
-                        
-                        if(bed.itemList[i].standardType==1){
-                            if(bed.itemList[i].score == -1){
-                                bed.totalScore+= 1;
-                            }
-                                
+                        if(bed.itemList[i].standardType){
+                            if(bed.itemList.score == -1)
+                            bed.totalScore+= 1;
                         }else
                             bed.totalScore+= bed.itemList[i].score;
                     }
                 }
-                
                 return bed.totalScore;
             }catch(e)
             {
@@ -592,8 +598,10 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
         },
         roomGrade:function(fun){
             var grades = "[",that = this;
+            // console.log(this.room);
             this.room.forEach(function (item,i) {
                 var list = item.itemList || item.subNodes;
+                // console.log(list);
                 for(var j = 0;j < list.length; j++){
                     grades += '{"itemid":' + (list[j].itemId) + ',"score":' + list[j].score +'},';
                 }
@@ -601,6 +609,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             if(grades.length > 2)
                 grades = grades.substring(0,grades.length-1) + ']';
             else return;
+            // console.log(grades); 
             if(grades.length > 0){
                 $rootScope.loading = true;
                 if(this.item.roomScoreId){
@@ -678,8 +687,10 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                 else if(that.rule)that.ruleSave(fun);
                 return;
             }
+            // console.log(this.room);
             this.bed.forEach(function (item,i) {
                 var list = item.itemList;
+                // console.log(list);
                 for(var j = 0;j < list.length; j++){
                     grades += '{"itemid":' + list[j].itemId + ',"studentkey":"' + item.studentKey +  '","bedid":"' + item.bedId + '","score":' + list[j].score +'},';
                 }
@@ -772,6 +783,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             })
             if(imgs.length > 0)
                 imgs = imgs.substring(0,imgs.length-1);
+            // console.log(imgs);
             $rootScope.loading = true;
             GradeService.uploadImg({
                 token:AppConfig.token,
@@ -913,6 +925,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     picUrl:data.data.serverPath,
                     fileId:data.data.fileId
                 });
+                // console.log($scope.cardMedia.img);
             }else if(data.code == 4037){
                             swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                             location.href="#login";$rootScope.loading = false;
@@ -1017,6 +1030,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     data.list.floorList.forEach(function(list,index){
                         list.roomList = list.roomList || [];
                         list.roomList =  $filter('sliceArray')(list.roomList,10,index);
+                        // console.log(index);
                     });
                     $scope.flat = data.list;
                     $scope.flat.flatName = $scope.media.campus + '-' + $scope.media.liveArea + '-' + $scope.media.title;
@@ -1027,6 +1041,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                 
+                // console.log(data);
             })
         }else if($scope.media.tab == 2){
             GradeService.getList({
@@ -1055,6 +1070,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                // console.log(data);
             })
         }else if($scope.media.tab == 3){
             GradeService.getTopList({
@@ -1083,6 +1099,8 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                         }
                 else
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                
+                // console.log(data);
             })
         }
     };
