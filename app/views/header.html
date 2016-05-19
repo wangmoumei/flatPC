@@ -11,10 +11,12 @@
             <li data-toggle="flat" ng-class="{'active':sysMenu[0]=='flat'}" ng-click="switch(0,'flat')"><a href="#index">公寓管理</a></li>
             <li data-toggle="repair" ng-class="{'active':sysMenu[0]=='repair'}"><a ng-click="switch(0,'repair')">智能报修</a></li>
             <li data-toggle="food"><a ng-click="switch(0,'food')">订餐系统</a></li>
+            <li data-toggle="water"><a ng-click="switch(0,'water')">订水系统</a></li>
             <li data-toggle="pay" ng-class="{'active':sysMenu[0]=='pay'}"  ng-click="switch(0,'pay')"><a target="page-tab">缴费中心</a></li>
             <li data-toggle="data" ng-class="{'active':sysMenu[0]=='data'}"  ng-click="switch(0,'data')"><a href="#index">数据中心</a></li>
             <li data-toggle="admin" ng-class="{'active':sysMenu[0]=='admin'}"  ng-click="switch(0,'admin')"><a href="#index">系统设置</a></li>
             <li data-toggle="message"><a ng-click="switch(0,'message')">服务监督</a></li>
+            <li data-toggle="graduate"><a ng-click="switch(0,'graduate')">毕业离校</a></li>
         </ul>
     </div>
     <div class="user-nav">
@@ -34,11 +36,13 @@
                 <li><a ng-click="switch(0,'wechat')">微信平台</a></li>
                 <li ng-class="{'active':sysMenu[0]=='flat'}" ng-click="switch(0,'flat')"><a href="#index">公寓管理</a></li>
                 <li ng-class="{'active':sysMenu[0]=='repair'}"><a ng-click="switch(0,'repair')">智能报修</a></li>
-                <li ><a ng-click="switch(0,'food')">订餐系统</a></li>
+                <li><a ng-click="switch(0,'food')">订餐系统</a></li>
+                <li<a ng-click="switch(0,'water')">订水系统</a></li>
                 <li ng-class="{'active':sysMenu[0]=='pay'}"  ng-click="switch(0,'pay')"><a target="page-tab">缴费中心</a></li>
                 <li ng-class="{'active':sysMenu[0]=='data'}"  ng-click="switch(0,'data')"><a href="#index">数据中心</a></li>
                 <li ng-class="{'active':sysMenu[0]=='admin'}"  ng-click="switch(0,'admin')"><a href="#index">系统设置</a></li>
-                <li ><a ng-click="switch(0,'message')">服务监督</a></li>
+                <li><a ng-click="switch(0,'message')">服务监督</a></li>
+                <li><a ng-click="switch(0,'graduate')">毕业离校</a></li>
             </ul>
         </div>
         <i class="page-navbar-setting ALiconfont icon-set" ng-click='showCard("#headerToggle")'></i>

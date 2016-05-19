@@ -138,7 +138,7 @@ angular
         url: "/flat",
         views: {
             "": {
-                templateUrl: 'views/flat/list-selectByFlat.html',
+                templateUrl: 'views/frame.html',
                 controller: 'FlatCtrl'
             },
             "aside": {
@@ -149,9 +149,23 @@ angular
                 templateUrl: "views/header.html",
                 controller: 'HeaderCtrl'
             }
-        },
-        data:{
-            name:'111'
+        }
+    })
+    .state('flat1', {
+        url: "/flat1",
+        views: {
+            "": {
+                templateUrl: 'views/flat/list-selectByFlat.html',
+                controller: 'Flat1Ctrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
         }
     })
     .state('college', {
@@ -262,6 +276,23 @@ angular
             "": {
                 templateUrl: 'views/flat/arrearage.html',
                 controller: 'ArrearageCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('holiday', {
+        url: "/holiday",
+        views: {
+            "": {
+                templateUrl: 'views/frame.html',
+                controller: 'HolidayCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",
@@ -409,6 +440,74 @@ angular
             }
         }
     })
+    .state('appraiseStatistics', {
+        url: "/appraiseStatistics",
+        views: {
+            "": {
+                templateUrl: 'views/frame.html',
+                controller: 'AppraiseStatisticsCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('scoreStatisticsForCollege', {
+        url: "/scoreStatisticsForCollege",
+        views: {
+            "": {
+                templateUrl: 'views/frame.html',
+                controller: 'ScoreStatisticsForCollegeCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('ruleStatisticsForCollege', {
+        url: "/ruleStatisticsForCollege",
+        views: {
+            "": {
+                templateUrl: 'views/frame.html',
+                controller: 'RuleStatisticsForCollegeCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('appraiseStatisticsForCollege', {
+        url: "/appraiseStatisticsForCollege",
+        views: {
+            "": {
+                templateUrl: 'views/frame.html',
+                controller: 'AppraiseStatisticsForCollegeCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
     .state('gradeSetting', {
         url: "/gradeSetting",
         views: {
@@ -432,6 +531,23 @@ angular
             "": {
                 templateUrl: 'views/grade/ruleSetting.html',
                 controller: 'RuleSettingCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('appraiseSetting', {
+        url: "/appraiseSetting",
+        views: {
+            "": {
+                templateUrl: 'views/frame.html',
+                controller: 'AppraiseSettingCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",

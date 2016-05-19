@@ -116,8 +116,8 @@ angular.module('flatpcApp')
                             var form = document.createElement("form");
                             form.target = "test";
                             form.method = "post";
-                            form.action = "http://www.houqinbao.com/index.php?s=/Home/User/login.html";
-                            // form.action = "/index.php?s=/Home/User/login.html";
+                            // form.action = "http://www.houqinbao.com/index.php?s=/Home/User/login.html";
+                            form.action = "/index.php?s=/Home/User/login.html";
                             var input1 = document.createElement("input"),input2 = document.createElement("input");
                             input1.name = "username";
                             input1.value = $scope.media.user;
