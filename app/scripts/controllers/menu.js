@@ -49,10 +49,17 @@ angular.module('flatpcApp')
                     }else menus.push(' ');
                 }
                 break;
+            case 'graduate':
+                if($rootScope.menuCheck(371)){
+                    menus.push('graduate');
+                    if($rootScope.menuCheck(377)){
+                        menus.push('graduate');
+                    }else menus.push(' ');
+                }
+                break;
         }
         if(menus.length>0){
             $rootScope.sysMenu = menus;
-            console.log(menus);
         }
     }
   }]);

@@ -55,5 +55,12 @@
         </a>
     </li>
 </ul>
+<ul ng-show="sysMenu[0]=='graduate'">
+    <li ng-if="menuCheck(377)" ng-class="{'active':sysMenu[1]=='graduate'}" ng-click="switch('graduate')">
+        <a href="#index" title="毕业离校">
+            <i class="ALiconfont icon-xuexiao" style="font-size:28px"></i> 毕业离校
+        </a>
+    </li>
+</ul>
 </div>
 <i class="collapse" ng-click="changeMini()"></i>

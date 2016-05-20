@@ -7,16 +7,17 @@
     </div>
     <div class="top-navigation">
         <ul>
-            <li data-toggle="wechat"><a ng-click="switch(0,'wechat')">微信平台</a></li>
+            <li data-toggle="wechat"><a ng-click="switch(1,'wechat')" target="page-tab">微信平台</a></li>
             <li data-toggle="flat" ng-class="{'active':sysMenu[0]=='flat'}" ng-click="switch(0,'flat')"><a href="#index">公寓管理</a></li>
-            <li data-toggle="repair" ng-class="{'active':sysMenu[0]=='repair'}"><a ng-click="switch(0,'repair')">智能报修</a></li>
-            <li data-toggle="food"><a ng-click="switch(0,'food')">订餐系统</a></li>
-            <li data-toggle="water"><a ng-click="switch(0,'water')">订水系统</a></li>
-            <li data-toggle="pay" ng-class="{'active':sysMenu[0]=='pay'}"  ng-click="switch(0,'pay')"><a target="page-tab">缴费中心</a></li>
+            <li data-toggle="repair" ng-class="{'active':sysMenu[0]=='repair'}"><a ng-click="switch(1,'repair')">智能报修</a></li>
+            <li data-toggle="food" ng-class="{'active':sysMenu[0]=='food'}"><a ng-click="switch(1,'food')">订餐系统</a></li>
+            <li data-toggle="water" ng-class="{'active':sysMenu[0]=='water'}"><a ng-click="switch(1,'water')" target="page-tab">订水系统</a></li>
+            <li data-toggle="pay" ng-class="{'active':sysMenu[0]=='pay'}"><a ng-click="switch(1,'pay')" target="page-tab">缴费中心</a></li>
             <li data-toggle="data" ng-class="{'active':sysMenu[0]=='data'}"  ng-click="switch(0,'data')"><a href="#index">数据中心</a></li>
             <li data-toggle="admin" ng-class="{'active':sysMenu[0]=='admin'}"  ng-click="switch(0,'admin')"><a href="#index">系统设置</a></li>
             <li data-toggle="message"><a ng-click="switch(0,'message')">服务监督</a></li>
-            <li data-toggle="graduate"><a ng-click="switch(0,'graduate')">毕业离校</a></li>
+            <li data-toggle="graduate"><a ng-click="switch(0,'graduate')" href="#index">毕业离校</a></li>
+            <li data-toggle="shower"><a ng-click="switch(1,'shower')">浴室预定</a></li>
         </ul>
     </div>
     <div class="user-nav">
@@ -33,16 +34,17 @@
     <div class="page-navbar-toggle fadeIn animated">
         <div class="top-navigation">
             <ul>
-                <li><a ng-click="switch(0,'wechat')">微信平台</a></li>
-                <li ng-class="{'active':sysMenu[0]=='flat'}" ng-click="switch(0,'flat')"><a href="#index">公寓管理</a></li>
-                <li ng-class="{'active':sysMenu[0]=='repair'}"><a ng-click="switch(0,'repair')">智能报修</a></li>
-                <li><a ng-click="switch(0,'food')">订餐系统</a></li>
-                <li<a ng-click="switch(0,'water')">订水系统</a></li>
-                <li ng-class="{'active':sysMenu[0]=='pay'}"  ng-click="switch(0,'pay')"><a target="page-tab">缴费中心</a></li>
-                <li ng-class="{'active':sysMenu[0]=='data'}"  ng-click="switch(0,'data')"><a href="#index">数据中心</a></li>
-                <li ng-class="{'active':sysMenu[0]=='admin'}"  ng-click="switch(0,'admin')"><a href="#index">系统设置</a></li>
-                <li><a ng-click="switch(0,'message')">服务监督</a></li>
-                <li><a ng-click="switch(0,'graduate')">毕业离校</a></li>
+                <li data-toggle="wechat"><a ng-click="switch(1,'wechat')" target="page-tab">微信平台</a></li>
+                <li data-toggle="flat" ng-class="{'active':sysMenu[0]=='flat'}" ng-click="switch(0,'flat')"><a href="#index">公寓管理</a></li>
+                <li data-toggle="repair" ng-class="{'active':sysMenu[0]=='repair'}"><a ng-click="switch(1,'repair')">智能报修</a></li>
+                <li data-toggle="food" ng-class="{'active':sysMenu[0]=='food'}"><a ng-click="switch(1,'food')">订餐系统</a></li>
+                <li data-toggle="water" ng-class="{'active':sysMenu[0]=='water'}"><a ng-click="switch(1,'water')" target="page-tab">订水系统</a></li>
+                <li data-toggle="pay" ng-class="{'active':sysMenu[0]=='pay'}"><a ng-click="switch(1,'pay')" target="page-tab">缴费中心</a></li>
+                <li data-toggle="data" ng-class="{'active':sysMenu[0]=='data'}"  ng-click="switch(0,'data')"><a href="#index">数据中心</a></li>
+                <li data-toggle="admin" ng-class="{'active':sysMenu[0]=='admin'}"  ng-click="switch(0,'admin')"><a href="#index">系统设置</a></li>
+                <li data-toggle="message"><a ng-click="switch(0,'message')">服务监督</a></li>
+                <li data-toggle="graduate"><a ng-click="switch(0,'graduate')" href="#index">毕业离校</a></li>
+                <li data-toggle="shower"><a ng-click="switch(1,'shower')">浴室预定</a></li>
             </ul>
         </div>
         <i class="page-navbar-setting ALiconfont icon-set" ng-click='showCard("#headerToggle")'></i>
@@ -130,6 +132,14 @@
                             </li>
                             <li>
                                 <a class="list-group-item b-l-primary">
+                                    订水系统
+                                    <div style="float:right">
+                                        <input bs-switch ng-change="toggleSave()" ng-model="media.water" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="list-group-item b-l-primary">
                                     缴费中心
                                     <div style="float:right">
                                         <input bs-switch ng-change="toggleSave()" ng-model="media.pay" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
@@ -157,6 +167,22 @@
                                     服务监督
                                     <div style="float:right">
                                         <input bs-switch ng-change="toggleSave()" ng-model="media.message" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="list-group-item b-l-primary">
+                                    毕业离校
+                                    <div style="float:right">
+                                        <input bs-switch ng-change="toggleSave()" ng-model="media.graduate" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="list-group-item b-l-primary">
+                                    浴室预定
+                                    <div style="float:right">
+                                        <input bs-switch ng-change="toggleSave()" ng-model="media.shower" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
                                     </div>
                                 </a>
                             </li>
