@@ -32,13 +32,13 @@ angular.module('flatpcApp')
                 }
                 var boxWidth = parseInt(iElement.css("width")),
                 itemWidth = parseInt(iElement.find(".top-navigation").eq(0).css("width"));
-                if(boxWidth - 370 < itemWidth){
+                if(boxWidth - 530 < itemWidth){
                     for(var i=lst1.length-1;i>=0;i--){
                         if(!$(lst1[i]).hasClass("toggle")){
                             $(lst1[i]).addClass("toggle");
                             $(lst2[i]).addClass("toggle");
                             itemWidth = parseInt(iElement.find(".top-navigation").eq(0).css("width"));
-                            if(boxWidth - 370 >= itemWidth)break;
+                            if(boxWidth - 530 >= itemWidth)break;
                         }
                     }
                 }

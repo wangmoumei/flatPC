@@ -10,7 +10,7 @@
 angular.module('flatpcApp')
   .controller('HeaderCtrl', ['$scope','$rootScope','PublicService','AppConfig',
   function($scope,$rootScope,PublicService,AppConfig) {
-        $scope.switch = function(t,name){
+        $rootScope.headerSwitch = function(t,name){
             $rootScope.frame = t?true:false;
             var a = document.createElement('a');
             a.target="page-tab";
@@ -81,7 +81,9 @@ angular.module('flatpcApp')
                         swal("提示","请联系客服电话0571-28256212 开通权限", "info"); 
                         return;
                     }
-                    location.href="/messageadmin";
+                    // location.href="/messageadmin";
+                    a.href="/messageadmin";
+                    a.click();
                     break;
                 case 'graduate':
                     if(!$rootScope.menuCheck(371)){
@@ -94,12 +96,19 @@ angular.module('flatpcApp')
                         swal("提示","请联系客服电话0571-28256212 开通权限", "info"); 
                         return;
                     }
-                    a.href="/index.php?s=/addon/WechatWater/WechatWater/lists.html";
-                    a.click();
+                    swal("提示","敬请期待", "info"); 
+                    $rootScope.frame = false;
+                    return;
+                    // a.href="/index.php?s=/addon/WechatWater/WechatWater/lists.html";
+                    // a.click();
                     break;
             }
             $rootScope.sysMenu[0] = name;
             $rootScope.sysMenu[1] = name;
+        }
+        
+        $scope.tipShow = function(str){
+            swal("提示","请联系客服电话0571-"+str+" 开通权限", "info"); 
         }
         $scope.logout = function () {
             PublicService.logout().success(function (data) {
@@ -120,7 +129,7 @@ angular.module('flatpcApp')
                         form.action = "/index.php?s=/Home/User/logout.html";
                         
                         form.submit();
-                        location.href = '#login';
+                        location.href = '/';
                         
                     }
                     else
@@ -194,5 +203,16 @@ angular.module('flatpcApp')
                 localStorage.toggles = str.substring(0,str.length-1);
             }else localStorage.toggles ="";
             if($scope.topResize)$scope.topResize();
+        }
+        
+        $scope.headerMenu = function (n) {
+            $scope.topResize();
+            return $rootScope.menuCheck(n);
+        }
+        $scope.showqq = function () {
+            var a = document.createElement('a');
+            a.target="_blank";
+            a.href="http://crm2.qq.com/page/portalpage/wpa.php?uin=800039519&ref=&f=1&ty=1&ap=&as=";
+            a.click();
         }
     }]);

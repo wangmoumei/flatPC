@@ -141,8 +141,11 @@ angular.module('flatpcApp')
                         }
                         
                     }
-                    else
+                    else{
+                        $rootScope.loading = false;
                         swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                    }
+                        
                 })
             }
             
