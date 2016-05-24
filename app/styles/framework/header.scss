@@ -67,7 +67,7 @@
 	cursor: pointer;
 	border-left:1px solid rgba(0,0,0,.2); 
 }
-.page-navbar .user-nav>div{
+.page-navbar .user-nav>div,.page-navbar .menu-nav>div{
     display: table;
         width: 100%;
 }
@@ -116,4 +116,61 @@
 }
 .page-navbar .user-nav.active ul{
 	display: block;
+}
+.page-navbar-toggle{
+    display: none;
+	position: absolute;
+	top: 50px;
+	width: 100%;
+	height: 50px;
+    background-color: rgba(21,90,186,.9);
+    border-top: 1px solid #0e4ea9;
+}
+.toggle-show .page-navbar-toggle{
+    display: block;
+}
+.page-navbar .top-navigation a.more{
+    height: 50px;
+}
+.page-navbar .top-navigation a.more::after{
+    font-family: "ALiconfont" !important;
+    font-size: 14px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\e620";
+    position: relative;
+    top: -3px;
+}
+.page-navbar.toggle-show .top-navigation a.more{
+    background-color: #0e4ea9;
+}
+.page-navbar.toggle-show .top-navigation a.more::after{
+    content: "\e621";
+    top: 0px;
+}
+.page-navbar-setting,.page-navbar-close{
+    display: block;
+    position: absolute;
+    cursor: pointer;
+}
+.page-navbar-setting{
+    right:40px;
+}
+.page-navbar-close{
+    right: 10px;
+    font-size: 13px !important;
+}
+.top-navigation li.toggle,.page-navbar-toggle .top-navigation li{
+    display: none;
+}
+.page-navbar-toggle .top-navigation li.toggle{
+    display: block;
+}
+aa .page-navbar .page-navbar-toggle .top-navigation ul{
+    display: block;
+    li{
+        float: left;
+    }
 }

@@ -49,10 +49,30 @@ angular.module('flatpcApp')
                     }else menus.push(' ');
                 }
                 break;
+            case 'graduate':
+                if($rootScope.menuCheck(371)){
+                    menus.push('graduate');
+                    if($rootScope.menuCheck(377)){
+                        menus.push('graduate');
+                    }else menus.push(' ');
+                }
+                break;
+            case 'wechat':
+            case 'repair':
+            case 'food':
+            case 'water':
+            case 'pay':
+            case 'shower':
+            case 'message':
+                menus.push($stateParams.p);
+                $rootScope.headerSwitch(1,$stateParams.p);
+                break;
+                
+                
+                
         }
         if(menus.length>0){
             $rootScope.sysMenu = menus;
-            console.log(menus);
         }
     }
   }]);

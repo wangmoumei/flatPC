@@ -97,6 +97,11 @@ angular.module('flatpcApp')
                     return ['flat','flat','arrearage'];
                 else
                     return null;
+            case 'holiday':
+                if(menuCheck(369))
+                    return ['flat','flat','holiday'];
+                else
+                    return null;
             case 'gradeForWeek':
                 if(menuCheck(60))
                     return ['flat','grade','gradeForWeek'];
@@ -161,7 +166,27 @@ angular.module('flatpcApp')
                 if(menuCheck(303))
                     return ['flat','grade','ruleStatistics'];
                 else
-                    return null;       
+                    return null;    
+            case 'appraiseStatistics':
+                if(menuCheck(304))
+                    return ['flat','grade','appraiseStatistics'];
+                else
+                    return null;  
+            case 'scoreStatisticsForCollege':
+                if(menuCheck(364))
+                    return ['flat','grade','scoreStatisticsForCollege'];
+                else
+                    return null;
+             case 'ruleStatisticsForCollege':
+                if(menuCheck(365))
+                    return ['flat','grade','ruleStatisticsForCollege'];
+                else
+                    return null;    
+            case 'appraiseStatisticsForCollege':
+                if(menuCheck(363))
+                    return ['flat','grade','appraiseStatisticsForCollege'];
+                else
+                    return null;  
             case 'gradeSetting':
                 if(menuCheck(62))
                     return ['flat','grade','gradeSetting'];
@@ -170,6 +195,11 @@ angular.module('flatpcApp')
             case 'ruleSetting':
                 if(menuCheck(266))
                     return ['flat','grade','ruleSetting'];
+                else
+                    return null;
+            case 'appraiseSetting':
+                if(menuCheck(361))
+                    return ['flat','grade','appraiseSetting'];
                 else
                     return null;
             case 'floor':

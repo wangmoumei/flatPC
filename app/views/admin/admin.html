@@ -40,7 +40,14 @@
                 <div class="from-container" style="left:225px;">
                     <table class="table-form table-bordered bg-white">
                         <tr>
-                            <td class="require" width="200">分类</td><td><input ng-disabled="media.type==2" type="text" ng-model="media.admintypename" /></td>
+                            <td class="require" width="200">分类</td>
+                            <td>
+                                <input ng-hide="media.type==2" type="text" ng-model="media.admintypename" />
+                                <select ng-model="media.admintypeid" ng-show="media.type==2" ng-disabled="media.type==2&&media.status">
+                                    <option value="">请选择</option>
+                                    <option ng-repeat="admin in admins||[]" value="{{admin.adminTypeId}}">{{admin.adminTypeName}}</option>
+                                </select>
+                            </td>
                         </tr>
                         <tr ng-show="media.type == 1">
                             <td class="require" width="200">排序</td><td><input type="text" ng-model="media.listorder" /></td>
