@@ -111,7 +111,7 @@
         </ul>
     </li>
     <li ng-if="menuCheck(300)" ng-show="sysMenu[1]=='grade'">
-        <div class="menu-title">按楼栋统计</div>
+        <div class="menu-title">统计分析</div>
         <ul class="menu-list">
             <li ng-if="menuCheck(301)">
                 <a href="#scoreStatistics">
@@ -125,45 +125,7 @@
                     违章统计
                 </a>
             </li>
-            <li ng-if="menuCheck(304)">
-                <a href="#ruleStatistics">
-                    <i class="ALiconfont icon-chart" style="background-color:#38adff;font-size:26px"></i>
-                    考核统计
-                </a>
-            </li>
         </ul>
-    </li>
-    <li ng-if="menuCheck(362)" ng-show="sysMenu[1]=='grade'">
-        <div class="menu-title">按学院统计</div>
-        <ul class="menu-list">
-            <li >
-                <a>
-                    <i class="glyphicon glyphicon-console" style="background-color:#d3d6d9;font-size:20px"></i>
-                    开发中...
-                </a>
-            </li>
-        </ul>
-        <!--<ul class="menu-list" >
-                    
-            <li ng-if="menuCheck(364)">
-                <a href="#scoreStatistics">
-                    <i class="glyphicon glyphicon-console" style="background-color:#d3d6d9;font-size:20px"></i>
-                    打分统计开发中...
-                </a>
-            </li>
-            <li ng-if="menuCheck(365)">
-                <a href="#ruleStatistics">
-                    <i class="ALiconfont icon-chart" style="background-color:#54d5eb;font-size:26px"></i>
-                    违章统计开发中...
-                </a>
-            </li>
-            <li ng-if="menuCheck(363)">
-                <a href="#ruleStatistics">
-                    <i class="ALiconfont icon-chart" style="background-color:#38adff;font-size:26px"></i>
-                    考核统计开发中...
-                </a>
-            </li>
-        </ul>-->
     </li>
     <li ng-if="menuCheck(59)" ng-show="sysMenu[1]=='grade'">
         <div class="menu-title">设置</div>
@@ -178,12 +140,6 @@
                 <a href="#ruleSetting">
                     <i class="ALiconfont icon-anquantishi" style="background-color:#fc7257;font-size:28px"></i>
                     违章设置
-                </a>
-            </li>
-            <li ng-if="menuCheck(361)">
-                <a href="#ruleSetting">
-                    <i class="ALiconfont icon-anquantishi" style="background-color:#9c59b8;font-size:28px"></i>
-                    考核设置
                 </a>
             </li>
         </ul>
@@ -277,6 +233,7 @@
             </li>
         </ul>
     </li>
+    <!--整个数据中心-->
     <li ng-if="menuCheck(103)" ng-show="sysMenu[1]=='data'">
         <div class="menu-title">基础设置</div>
         <ul class="menu-list">
@@ -293,13 +250,13 @@
         <ul class="menu-list">
             <li ng-if="menuCheck(357)">
                 <a href="#userList">
-                    <i class="ALiconfont icon-zhanghuanquan" style="background-color:#02cf97;font-size:25px"></i>
+                    <i class="ALiconfont icon-yonghubiao" style="background-color:#02cf97;font-size:25px"></i>
                     用户列表
                 </a>
             </li>
             <li ng-if="menuCheck(358)">
                 <a href="#verify">
-                    <i class="ALiconfont icon-zhanghuanquan" style="background-color:#02cf97;font-size:25px"></i>
+                    <i class="ALiconfont icon-shenhe" style="background-color:#02cf97;font-size:25px"></i>
                     实名审核
                 </a>
             </li>
@@ -309,8 +266,8 @@
         <div class="menu-title">设置</div>
         <ul class="menu-list">
             <li ng-if="menuCheck(359)">
-                <a href="#verifySetting">
-                    <i class="ALiconfont icon-zhanghuanquan" style="background-color:#02cf97;font-size:25px"></i>
+                <a href="#form">
+                    <i class="ALiconfont icon-renzheng" style="background-color:#02cf97;font-size:25px"></i>
                     认证方式
                 </a>
             </li>
