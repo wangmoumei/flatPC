@@ -65,10 +65,17 @@
     <li ng-if="menuCheck(16)" ng-show="sysMenu[1]=='flat'">
         <div class="menu-title">新生入学管理</div>
         <ul class="menu-list">
-            <li >
+            <!--<li >
                 <a>
                     <i class="glyphicon glyphicon-console" style="background-color:#d3d6d9;font-size:20px"></i>
                     开发中...
+                </a>
+            </li>-->
+            <!--注意添加check时间和a标签才能跳转-->
+            <li>
+                <a>
+                   <i class="ALiconfont icon-xueshengfenpei" style="line-height: 45px;background-color:#38adff;font-size:32px"></i>
+                  学生分配
                 </a>
             </li>
         </ul>
@@ -377,13 +384,13 @@
         <div class="menu-title">毕业离校</div>
         <ul class="menu-list">
             <li ng-if="menuCheck(379)">
-                 <a href="#graduate">
+                 <a href="#leaveschool">
                     <i class="ALiconfont icon-temple" style="background-color:#ff9c00;font-size:28px;line-height:36px"></i>
                     毕业离校
                 </a>
             </li>
             <li ng-if="menuCheck(380)">
-                  <a href="#">
+                <a href="#leaveschoolpeople">
                     <i class="ALiconfont icon-crmtubiao67" style="background-color:#38adff;font-size:28px;line-height:44px"></i>
                     各部门审批结果
                 </a>

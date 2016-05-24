@@ -919,12 +919,29 @@ angular
             }
         }
     })
-      .state('graduate', {
-        url: "/graduate",
+     .state('graduate', {
+        url: "/leaveschool",
         views: {
             "": {
                 templateUrl: 'views/grade/leaveschool.html',
                 controller: 'leaveschoolCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('graduatepeople', {
+        url: "/leaveschoolpeople",
+        views: {
+            "": {
+                templateUrl: 'views/grade/leaveschoolpeople.html',
+                controller: 'leaveschoolpeopleCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",

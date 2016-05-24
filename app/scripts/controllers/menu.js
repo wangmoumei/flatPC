@@ -50,9 +50,9 @@ angular.module('flatpcApp')
                 }
                 break;
             case 'graduate':
-                if($rootScope.menuCheck(379)){
+                if($rootScope.menuCheck(371)){
                     menus.push('graduate');
-                    if($rootScope.menuCheck(380)){
+                    if($rootScope.menuCheck(377)){
                         menus.push('graduate');
                     }else menus.push(' ');
                 }
