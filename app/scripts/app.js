@@ -919,6 +919,23 @@ angular
             }
         }
     })
+      .state('graduate', {
+        url: "/graduate",
+        views: {
+            "": {
+                templateUrl: 'views/grade/leaveschool.html',
+                controller: 'leaveschoolCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
     .state('list', {
         url: "/list",
         views: {

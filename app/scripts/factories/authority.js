@@ -282,6 +282,11 @@ angular.module('flatpcApp')
                     return ['admin','role','menu'];
                 else
                     return null;
+            case 'graduate':
+                if(menuCheck(379))
+                    return ['admin','grade','leaveschool'];
+                else
+                    return null;
         }
         return null;
     };
