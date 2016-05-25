@@ -40,7 +40,7 @@ angular.module('flatpcApp')
             sessionid:'',
             college:AppConfig.college
         }
-        PublicService.session({
+        /*PublicService.session({
             useraccount:$scope.media.user,
             password:$scope.media.pass,
             code:$scope.media.code
@@ -52,7 +52,7 @@ angular.module('flatpcApp')
             }
             else
                 swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-        })
+        })*/
         var lo = 0;
         $rootScope.loading = false;
         $scope.login = function () {
