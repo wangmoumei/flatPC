@@ -11,7 +11,7 @@ angular.module('flatpcApp')
 .controller('leaveschoolpeopleCtrl', ['$scope','$rootScope','AppConfig',function($scope,$rootScope,AppConfig) {
         //存储列表头到frame.html中
     $scope.menus = [
-        '毕业离校','各部门违欠信息'
+        '毕业离校','各部门审批结果'
     ];
     //跳转到什么地方去
     $scope.parent = "graduate";
