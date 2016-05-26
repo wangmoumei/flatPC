@@ -844,7 +844,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                 specialid:this.item.roomId+'-'+new Date($scope.media.week.year + '-' + $scope.media.week.month + '-01').Format('yyyy-MM'), 
                 adminid:AppConfig.adminId,
                 itemlist:items,
-                source:0
+                source:2
             }).success(function(data){
                 $rootScope.loading = false;
                 if(data.code == 0){
