@@ -135,12 +135,12 @@ angular
             }
         }
     })
-    .state('flat', {
-        url: "/flat",
+    .state('flats', {
+        url: "/flats",
         views: {
             "": {
-                templateUrl: 'views/frame.html',
-                controller: 'FlatCtrl'
+                templateUrl: 'views/flat/flats.html',
+                controller: 'FlatCtrls'
             },
             "aside": {
                 templateUrl: "views/aside.html",
