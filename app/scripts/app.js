@@ -953,6 +953,23 @@ angular
             }
         }
     })
+     .state('newstudent', {
+        url: "/newstudent",
+        views: {
+            "": {
+                templateUrl: 'views/grade/newStudentAllocation.html',
+                controller: 'newStudentCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
     .state('list', {
         url: "/list",
         views: {

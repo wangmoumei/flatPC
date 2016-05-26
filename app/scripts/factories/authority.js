@@ -292,6 +292,14 @@ angular.module('flatpcApp')
                     return ['graduate','graduate','leaveschoolpeople'];
                 else
                     return null;
+                    //case为在定义menu.html定义的跳转地址，return 里面flat为跳转到的头部当行条菜单，flat跳转到的左侧菜单，newstudents为自定义的规则名
+           //menu.html中的超链接名
+            case 'newstudent':
+                if(menuCheck(31))
+                //头部菜单，左侧菜单，规则名
+                    return ['flat','flat','newstudents'];
+                else
+                    return null;
                     
         }
         return null;
