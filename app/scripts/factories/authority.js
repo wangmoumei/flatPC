@@ -300,6 +300,12 @@ angular.module('flatpcApp')
                     return ['flat','flat','newstudents'];
                 else
                     return null;
+            case 'flats':
+                if(menuCheck(6))
+                //头部菜单，左侧菜单，规则名
+                    return ['flat','flat','flats'];
+                else
+                    return null;
                     
         }
         return null;
