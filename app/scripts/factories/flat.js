@@ -216,7 +216,8 @@ angular.module('flatpcApp')
     }
     var delManager = function(param){
         param.token = param.token || AppConfig.token;
-        var url = AppConfig.WEB_ROOT + 'Managerdata/school/del_Manager/';
+        param.schoolcode = param.schoolcode || AppConfig.schoolCode;
+        var url = AppConfig.WEB_ROOT + 'management/flatadmin/del_flat_admin/';
         return $http({
             url:url,
             method:"POST",
