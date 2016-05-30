@@ -804,8 +804,26 @@ angular
         url: "/form",
         views: {
             "": {
-                templateUrl: 'views/frame.html',
+                templateUrl: 'views/approve.html',
                 controller: 'formCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    //认证方式
+      .state('identity', {
+        url: "/identity",
+        views: {
+            "": {
+                templateUrl: 'views/admin/identity.html',
+                controller: 'identityCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",

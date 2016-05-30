@@ -306,6 +306,12 @@ angular.module('flatpcApp')
                     return ['flat','flat','flats'];
                 else
                     return null;
+            case 'identity':
+                if(menuCheck(360))
+                //头部菜单，左侧菜单，规则名
+                    return ['data','center','identity'];
+                else
+                    return null;
                     
         }
         return null;

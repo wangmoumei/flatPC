@@ -8,10 +8,10 @@
  * Controller of the flatpcApp
  */
 angular.module('flatpcApp')
-.controller('formCtrl', ['$scope','$rootScope',function($scope,$rootScope) {
+.controller('identityCtrl', ['$scope','$rootScope',function($scope,$rootScope) {
         //存储列表头到frame.html中
     $scope.menus = [
-        '用户中心','认证方式'
+        '数据中心','用户中心','统一身份配置'
     ];
     //跳转到什么地方去
     $scope.parent = "data";
