@@ -211,14 +211,14 @@
                                                 <td class="require">来访人证件</td>
                                                 <td>
                                                     <select ng-model="form.credentialtype">
-                                                        <option value="0" ng-selected="form.credentialtype == 0">学生证</option>
+                                                        <option value="0" ng-selected="form.credentialtype == 0">学号</option>
                                                         <option value="1" ng-selected="form.credentialtype">身份证</option>
                                                     </select>
-                                                    <input type="text" ng-model="form.credential" />
+                                                    <input type="text" ng-model="form.credential" pattern="(\d{5,12})|([0-9]{17}[0-9|xX]{1})|([0-9]{15})"  title="学号5-12位身份证15-18位"/>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="require">联系方式</td><td><input type="text" ng-model="form.phone" /></td>
+                                                <td class="require">联系方式</td><td><input type="text" ng-model="form.phone" pattern="[1]{1}[2-8]{2}\d{4}\d{4}"  maxLength="11" title="请输入正确的手机号"/></td>
                                             </tr>
                                             <tr>
                                                 <td class="require">进楼时间</td>
@@ -337,14 +337,14 @@
                                     <td class="require">来访人证件</td>
                                     <td>
                                         <select ng-model="work.credentialType">
-                                            <option value="0" ng-selected="work.credentialType == 0">学生证</option>
+                                            <option value="0" ng-selected="work.credentialType == 0">学号</option>
                                             <option value="1" ng-selected="work.credentialType">身份证</option>
                                         </select>
-                                        <input type="text" ng-model="work.credential" />
+                                        <input type="text" ng-model="work.credential" pattern="[0-9]{5-12}|[0-9]{15-18}"/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="require">联系方式</td><td><input type="text" ng-model="work.phone" /></td>
+                                    <td class="require">联系方式</td><td><input type="text" ng-model="work.phone" pattern="[1]{1}[2-8]{2}\d{4}\d{4}"  maxLength="11" title="请输入正确的手机号"/></td>
                                 </tr>
 
                                 <tr>
