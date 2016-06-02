@@ -57,7 +57,7 @@
             <li class="open">
                 <a ng-class="{'branch':treeCollege[0].collegeList,'leaf':!treeCollege[0].collegeList}" ng-click="show(0,treeCollege[0])">{{treeCollege[0].name}}</a>
                 <ul ng-show="treeCollege[0].collegeList">
-                    <li class="open" ng-repeat="college in treeCollege[0].collegeList||[]">
+                    <li class="" ng-repeat="college in treeCollege[0].collegeList||[]">
                         <a ng-click="show(1,college)" ng-class="{'branch':college.classList,'leaf':!college.classList}">{{college.collegeName}}</a>
                         <ul ng-show="college.classList">
                             <li ng-repeat="cla in college.classList||[]">
@@ -73,7 +73,7 @@
                     <li class="open" ng-repeat="campus in treeFlat.cmpusList||[]">
                         <a ng-class="{'branch':campus.liveAreaList,'leaf':!campus.liveAreaList}" ng-click="show(1,campus)">{{campus.title}}</a>
                         <ul ng-show="campus.liveAreaList">
-                            <li class="open" ng-repeat="liveArea in campus.liveAreaList||[]">
+                            <li class="" ng-repeat="liveArea in campus.liveAreaList||[]">
                                 <a ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}" ng-click="show(2,liveArea,campus)">{{liveArea.title}}</a>
                                 <ul ng-show="liveArea.flatList">
                                     <li ng-repeat="flat in liveArea.flatList||[]">

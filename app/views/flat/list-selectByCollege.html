@@ -27,7 +27,7 @@
             <li class="open">
                 <a ng-click="show(0,treeCollege[0])" ng-class="{'branch':treeCollege[0].collegeList,'leaf':!treeCollege[0].collegeList}">{{treeCollege[0].name}}</a>
                 <ul ng-show="treeCollege[0].collegeList">
-                    <li class="open" ng-repeat="college in treeCollege[0].collegeList||[]">
+                    <li class="" ng-repeat="college in treeCollege[0].collegeList||[]">
                         <a ng-click="show(1,college)" ng-class="{'branch':college.classList,'leaf':!college.classList}">{{college.collegeName}}</a>
                         <ul ng-show="college.classList">
                             <li ng-repeat="cla in college.classList||[]">

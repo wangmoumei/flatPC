@@ -30,7 +30,15 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
     
     $scope.show = function (flat,liveArea,campus) {
         $scope.media.flatid = flat.flatId;
-        $scope.media.title = campus.title + '-' + liveArea.title + '-' + flat.title;
+        var sex;
+        if(flat.sex==0){
+            sex='男'
+        }else if(flat.sex==1){
+            sex='女'
+        }else{
+            sex='混住'
+        }
+        $scope.media.title = campus.title + '-' + liveArea.title + '-' + flat.title+'-'+sex;
         refresh(flat.flatId);
     }
     

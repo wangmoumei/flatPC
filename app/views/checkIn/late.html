@@ -42,7 +42,7 @@
                     <li class="open" ng-repeat="campus in treeFlat.cmpusList||[]">
                         <a ng-class="{'branch':campus.liveAreaList,'leaf':!campus.liveAreaList}" ng-click="show(1,campus)">{{campus.title}}</a>
                         <ul ng-show="campus.liveAreaList">
-                            <li class="open" ng-repeat="liveArea in campus.liveAreaList||[]">
+                            <li class="" ng-repeat="liveArea in campus.liveAreaList||[]">
                                 <a ng-class="{'branch':liveArea.flatList,'leaf':!liveArea.flatList}" ng-click="show(2,liveArea)">{{liveArea.title}}</a>
                                 <ul ng-show="liveArea.flatList">
                                     <li ng-repeat="flat in liveArea.flatList||[]">
