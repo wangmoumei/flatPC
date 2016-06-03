@@ -46,6 +46,9 @@
             <tr ng-show="media.type>2">
                 <td class="require" width="200">楼栋</td><td><input type="text" ng-disabled="media.type == 3 && !media.menuCheck()" ng-model="media.flatTitle" /></td>
             </tr>
+            <tr ng-show="media.type>2">
+                <td class="require" width="200">楼栋性别</td><td><input type="redio"/></td>
+            </tr>
             <tr>
                 <td class="require" width="200">排序</td><td><input type="text" ng-disabled="!media.menuCheck()"  ng-model="media.listOrder" /></td>
             </tr>
