@@ -47,7 +47,12 @@
                 <td class="require" width="200">楼栋</td><td><input type="text" ng-disabled="media.type == 3 && !media.menuCheck()" ng-model="media.flatTitle" /></td>
             </tr>
             <tr ng-show="media.type>2">
-                <td class="require" width="200">楼栋性别</td><td><input type="redio"/></td>
+                <td class="require" width="200">楼栋性别</td>
+                <td>
+                    <label><input type="radio" name="sex" value="0" ng-disabled="media.type == 3 && !media.menuCheck()" ng-model="media.sex" checked=checked /> 男</label>
+                    <label><input type="radio" name="sex" value="1" ng-disabled="media.type == 3 && !media.menuCheck()" ng-model="media.sex"/> 女</label>
+                    <label><input type="radio" name="sex" value="2" ng-disabled="media.type == 3 && !media.menuCheck()" ng-model="media.sex"/> 混住</label>
+                </td>
             </tr>
             <tr>
                 <td class="require" width="200">排序</td><td><input type="text" ng-disabled="!media.menuCheck()"  ng-model="media.listOrder" /></td>

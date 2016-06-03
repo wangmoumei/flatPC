@@ -9,6 +9,7 @@ angular.module('flatpcApp')
         areaTitle:'',
         liveAreaId:'',
         flatTitle:'',
+        sex:'',
         flatId:'',
         listOrder:1,
         menuCheck : function () {
@@ -17,15 +18,17 @@ angular.module('flatpcApp')
                     //return this.status?$rootScope.menuCheck():$rootScope.menuCheck();
                     break;
                 case 1:
-                    
+                    //新增和编辑校区
                     return this.status?$rootScope.menuCheck(137):$rootScope.menuCheck(138);
-                    break;
+                     break;
                 case 2:
+                    //新增和编辑生活区
                     return this.status?$rootScope.menuCheck(224):$rootScope.menuCheck(225);
-                    break;
+                     break;
                 case 3:
+                    //新增和编辑楼栋
                     return this.status?$rootScope.menuCheck(227):$rootScope.menuCheck(228);
-                    break;
+                     break;
             }
             return false;
         }
@@ -44,7 +47,7 @@ angular.module('flatpcApp')
         
         $scope.media.flatTitle = item.title || '';
         $scope.media.flatId = item.flatId || '';
-        
+        $scope.media.sex =item.sex || '';
         $scope.media.listOrder=item.listOrder || 1;
     }
     
@@ -62,7 +65,8 @@ angular.module('flatpcApp')
         
         $scope.media.flatTitle = '';
         $scope.media.flatId = '';
-        
+        //默认选中为楼栋性别男
+        $scope.media.sex='0';
         $scope.media.listOrder= 1;
     }
     $scope.addSave = function(){
@@ -90,7 +94,8 @@ angular.module('flatpcApp')
                     campusid:$scope.media.campusId,
                     areaid:$scope.media.liveAreaId,
                     listorder:$scope.media.listOrder,
-                    title:$scope.media.flatTitle
+                    title:$scope.media.flatTitle,
+                    sex:$scope.media.sex
                 })
             }
         })().success(function(data){
@@ -128,7 +133,8 @@ angular.module('flatpcApp')
                     token:AppConfig.token,
                     flatid:$scope.media.flatId,
                     listorder:$scope.media.listOrder,
-                    title:$scope.media.flatTitle
+                    title:$scope.media.flatTitle,
+                    sex:$scope.media.sex
                 })
             }
         })().success(function(data){

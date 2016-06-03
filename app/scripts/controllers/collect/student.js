@@ -116,6 +116,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
         $scope.student.studentNumber = "";
         $scope.student.name = "";
         $scope.student.headImgurl = "";
+        //添加学生时默认选中为男
         $scope.student.sex = "男";
         $scope.student.birthDay = new Date().Format("yyyy-MM-dd");
         $scope.student.political = "";
@@ -129,6 +130,7 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
         $scope.student.currentAddress = "";
         $scope.student.memo = "";
         $scope.student.fileid = '';
+        $scope.student.status='';
         if($scope.media.classid){
             $scope.selecter.classId = $scope.media.classid;
             $scope.selecter.classSelecter(); 
@@ -183,7 +185,8 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
             readtype:$scope.student.studentType,
             homeaddress:$scope.student.homeAddress,
             phone:$scope.student.phone,
-            memo:$scope.student.memo
+            memo:$scope.student.memo,
+            status:$scope.student.status
         }).success(function(data){
             $rootScope.loading = false;
             if(data.code == 0){
@@ -221,7 +224,8 @@ function($scope,AppConfig,$rootScope,StudentService,CollegeService,$filter,Publi
             readtype:$scope.student.studentType,
             homeaddress:$scope.student.homeAddress,
             phone:$scope.student.phone,
-            memo:$scope.student.memo
+            memo:$scope.student.memo,
+            status:$scope.student.status
         }).success(function(data){
             $rootScope.loading = false;
             

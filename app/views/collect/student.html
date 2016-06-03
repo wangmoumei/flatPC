@@ -279,11 +279,24 @@
                                 <tr>
                                     <td class="require">性别</td>
                                     <td>
-                                        <label><input type="radio" name="sex" value="男" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" checked="checked"/> 男</label>
-                                        <label><input type="radio" name="sex" value="女" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" /> 女</label>
+                                        <label><input type="radio" name="sex" value="男" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.sex" checked="checked"/> 男</label>
+                                        <label><input type="radio" name="sex" value="女" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))" ng-model="student.sex"/> 女</label>
                                     </td>
                                 </tr>
                                 <tr>
+                                <td class="require">学籍状态</td>
+                                    <td>
+                                        <select ng-model="student.status" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))">
+                                            <option value="">请选择学籍状态</option>
+                                            <option value="0">在籍</option>
+                                            <option value="1">休学</option>
+                                            <option value="2">入伍</option>
+                                            <option value="3">毕业</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    
                                     <td>联系电话</td>
                                     <td>
                                         <input type="text" ng-model="student.phone" ng-disabled="(student.type && !menuCheck(216)) || (!student.type && !menuCheck(214))"/>
