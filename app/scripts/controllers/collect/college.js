@@ -8,6 +8,8 @@ angular.module('flatpcApp')
         className:'',
         listOrder:1,
         grade:'',
+        degree:'',
+        degreeYear:'',
         classId:'',
         history:0,
         menuCheck : function () {
@@ -41,17 +43,21 @@ angular.module('flatpcApp')
         $scope.media.className=item.className || '';
         $scope.media.classId=item.classId || '';
         $scope.media.grade=item.grade || '';
+        $scope.media.degree=item.degree || '';
+        $scope.media.degreeyear=item.degreeYear || '';
         $scope.media.history = item.history?true:false || false;
-        
         $scope.media.listOrder=item.listOrder || 1;
     }
     
+    //添加班级时清空缓存
     $scope.add = function(type,item){
         $scope.media.status = 1;
         $scope.media.type = type;
         $scope.media.collegeName= '';
         $scope.media.className= '';
         $scope.media.grade= '';
+        $scope.media.degree='';
+        $scope.media.degreeyear='';
         $scope.media.listOrder= 1;
         $scope.media.collegeId = item.collegeId || '';
         $scope.media.history = false;
@@ -74,6 +80,8 @@ angular.module('flatpcApp')
                     listorder:$scope.media.listOrder,
                     title:$scope.media.className,
                     grade:$scope.media.grade,
+                    degree:$scope.media.degree,
+                    degreeyear:$scope.media.degreeyear,
                     status:$scope.media.history?1:0
                 })
             }
@@ -110,7 +118,9 @@ angular.module('flatpcApp')
                     listorder:$scope.media.listOrder,
                     title:$scope.media.className,
                     status:$scope.media.history?1:0,
-                    grade:$scope.media.grade
+                    grade:$scope.media.grade,
+                    degree:$scope.media.degree,
+                    degreeyear:$scope.media.degreeyear,
                 }).success(function(){
                     $rootScope.loading = false;
                 })

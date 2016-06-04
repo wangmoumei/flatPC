@@ -46,6 +46,34 @@
                     </select>
                 </td>
             </tr>
+             <tr ng-show="media.type == 2">
+                <td class="require" width="200">学历</td>
+                <td>
+                    <select ng-model="media.degree"  ng-disabled="media.type == 2 && !media.menuCheck()">
+                        <option value="">请选择学历</option>
+                        <option value="专科">专科</option>
+                        <option value="专升本">专升本</option>
+                        <option value="本科">本科</option>
+                        <option value="硕士研究生">硕士研究生</option>
+                        <option value="博士研究生">博士研究生</option>
+                    </select>
+
+                </td>
+            </tr>
+            <tr ng-show="media.type == 2">
+                <td class="require" width="200">学年制</td>
+                <td>
+                    <select ng-model="media.degreeyear"  ng-disabled="media.type == 2 && !media.menuCheck()">
+                        <option value=""  selected="selected">请选择学年制</option>
+                        <option value="2" ng-selected="2 == media.degreeyear">二年制</option>
+                        <option value="3" ng-selected="3 == media.degreeyear">三年制</option>
+                        <option value="4" ng-selected="4 == media.degreeyear">四年制</option>
+                        <option value="5" ng-selected="5 == media.degreeyear">五年制</option>
+                        <option value="6" ng-selected="6 == media.degreeyear">六年制</option>
+                        <option value="7" ng-selected="7 == media.degreeyear">七年制</option>
+                    </select>
+                </td>
+            </tr>
             <tr ng-show="media.type == 2">
                 <td class="require" width="200">毕业</td><td><input bs-switch ng-model="media.history" type="checkbox" switch-size="mini" switch-on-text="已毕业" switch-off-text="在籍" switch-active="{{media.type == 2 && media.menuCheck()}}"></td>
             </tr>

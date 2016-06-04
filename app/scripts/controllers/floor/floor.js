@@ -72,6 +72,7 @@ angular.module('flatpcApp')
     $scope.addSave = function(){
         $rootScope.loading = true;
         (function(){
+            alert($scope.media.sex);
             if($scope.media.type == 1){
                 return FlatService.addCampus({
                     token:AppConfig.token,
@@ -96,6 +97,7 @@ angular.module('flatpcApp')
                     listorder:$scope.media.listOrder,
                     title:$scope.media.flatTitle,
                     sex:$scope.media.sex
+        
                 })
             }
         })().success(function(data){
