@@ -16,7 +16,7 @@
 </div>
 <div class="page-main">
     <div class="page-tree" tree style="top:-50px;">
-        <ul>
+        <!--<ul>
             <li class="open">
                 <a ng-class="{'branch':treeCollege[0].collegeList,'leaf':!treeCollege[0].collegeList}" ng-click="show(0,treeCollege[0])">{{treeCollege[0].name}}</a>
                 <ul ng-show="treeCollege[0].collegeList">
@@ -30,7 +30,23 @@
                     </li>
                 </ul>
             </li>
-        </ul>
+        </ul>-->
+        <ul>
+            <li class="open" ng-repeat="list in treeCollege">
+                <a ng-class="{'branch':list.collegeList,'leaf':!list.collegeList}" ng-click="show(0,list)">{{list.name}}</a>
+                <ul ng-show="list.collegeList">
+                    <li class="" ng-repeat="college in list.collegeList||[]" >
+                        <a ng-class="{'branch':college.classList,'leaf':!college.classList}" ng-click="show(1,college,list.name)">{{college.collegeName}}</a>
+                        <ul ng-show="college.classList">
+                            <li ng-repeat="cla in college.classList||[]" >
+                                <!--这里必须加上班级里要显示的在籍状态，不然显示会为空-->
+                                <a class="leaf" ng-click="show(2,cla,list.name)">{{cla.className}}</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul> 
     </div>
     <div class="page-tabs" tabs style="left:225px">
         <ul class="page-tabs-nav">
