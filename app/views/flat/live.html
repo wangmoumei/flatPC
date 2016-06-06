@@ -20,6 +20,7 @@
         <div class="btn-group">
             <button type="button" class="btn btn-info" ng-click="setStatus(-1)" ng-class="{'btn-stroke':media.status>=0}">全部</button>
             <button type="button" class="btn btn-info" ng-click="setStatus(0)" ng-class="{'btn-stroke':media.status!=0}">计划中</button>
+            <!--<button type="button" class="btn btn-info" ng-click="setStatus(4)" ng-class="{'btn-stroke':media.status!=4}">待审核</button>-->
             <button type="button" class="btn btn-info" ng-click="setStatus(1)" ng-class="{'btn-stroke':media.status!=1}">已审批</button>
             <button type="button" class="btn btn-info" ng-click="setStatus(2)" ng-class="{'btn-stroke':media.status!=2}">已取消</button>
             <button type="button" class="btn btn-info" ng-click="setStatus(3)" ng-class="{'btn-stroke':media.status!=3}">已驳回</button>
