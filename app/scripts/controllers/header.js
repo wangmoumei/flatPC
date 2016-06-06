@@ -93,14 +93,10 @@ angular.module('flatpcApp')
                     break;
                 case 'shower':
                     if(!$rootScope.menuCheck(367)){
+                        
                         swal("提示","请联系客服电话0571-28256212 开通权限", "info"); 
                         return;
                     }
-                    swal("提示","敬请期待", "info"); 
-                    $rootScope.frame = false;
-                    return;
-                    // a.href="/index.php?s=/addon/WechatWater/WechatWater/lists.html";
-                    // a.click();
                     break;
             }
             $rootScope.sysMenu[0] = name;

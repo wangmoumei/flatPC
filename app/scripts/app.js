@@ -1021,6 +1021,57 @@ angular
                 controller: 'HeaderCtrl'
             }
         }
+    })
+    .state('order', {
+        url: "/order",
+        views: {
+            "": {
+                templateUrl: 'views/shower/order.html',
+                controller: 'orderCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('showper', {
+        url: "/showper",
+        views: {
+            "": {
+                templateUrl: 'views/shower/personnel.html',
+                controller: 'personnelCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('showset', {
+        url: "/showset",
+        views: {
+            "": {
+                templateUrl: 'views/shower/setting.html',
+                controller: 'settingCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
     });
     $urlRouterProvider.otherwise('/login');
   });

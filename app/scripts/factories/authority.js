@@ -51,6 +51,15 @@ angular.module('flatpcApp')
                         }else if(menuCheck(12)){
                             menus.push('role');
                         }else menus.push(' ');
+                    }else if(menuCheck(367)){
+                         menus.push('order');
+                        if(menuCheck(382)){
+                            menus.push('order');
+                        }else if(menuCheck(383)){
+                            menus.push('personnel');
+                        }else if(menuCheck(384)){
+                            menus.push('setting');
+                        }else menus.push(' ');
                     }
                     menus.push(' ')
                     return menus;
@@ -312,6 +321,25 @@ angular.module('flatpcApp')
                     return ['data','center','identity'];
                 else
                     return null;
+            case 'order':
+                if(menuCheck(367))
+                //头部菜单，左侧菜单，规则名
+                    return ['shower','order','order'];
+                else
+                    return null;
+             case 'showper':
+                if(menuCheck(367))
+                //头部菜单，左侧菜单，规则名
+                    return ['shower','personnel','personnel'];
+                else
+                    return null;
+             case 'showset':
+                if(menuCheck(367))
+                //头部菜单，左侧菜单，规则名
+                    return ['shower','setting','setting'];
+                else
+                    return null; 
+                   
                     
         }
         return null;

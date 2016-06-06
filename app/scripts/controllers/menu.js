@@ -57,12 +57,24 @@ angular.module('flatpcApp')
                     }else menus.push(' ');
                 }
                 break;
+            case 'shower':
+            if($rootScope.menuCheck(367)){
+                    menus.push('shower');
+                    if($rootScope.menuCheck(382)){
+                        menus.push('order');
+                    }else if($rootScope.menuCheck(383)){
+                        menus.push('personnel');
+                    }else if($rootScope.menuCheck(384)){
+                        menus.push('setting');
+                    }else menus.push(' ');
+                }
+                break;
             case 'wechat':
             case 'repair':
             case 'food':
             case 'water':
             case 'pay':
-            case 'shower':
+            
             case 'message':
                 menus.push($stateParams.p);
                 $rootScope.headerSwitch(1,$stateParams.p);
