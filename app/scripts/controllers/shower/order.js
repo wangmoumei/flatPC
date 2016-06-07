@@ -20,7 +20,7 @@ angular.module('flatpcApp')
         $scope.$apply();
     }
     var a = document.createElement('a');
-    a.href = AppConfig.FRAME + "index.php?m=Order&c=Manager&a=orderSearch&token="+AppConfig.token+"&schoolcode="+AppConfig.schoolCode;
+    a.href = AppConfig.SHOWER + "index.php?m=Order&c=Manager&a=orderSearch&token="+AppConfig.token+"&schoolcode="+AppConfig.schoolCode;
     a.target="page-frame";
     a.click();
 }]);

@@ -23,6 +23,7 @@ angular
     //   WEB_ROOT:'http://ap.houqinbao.com/Geese_Apartment/',
     WEB_ROOT_MESSAGE:'http://120.55.84.193/Geese_Quality_Supervision/',
     FRAME:'http://code.houqinbao.com:3338/Apartment/',
+    SHOWER:'http://code.houqinbao.com:3338/Shower/',
       schoolCode:0,
 	  token:'',
       adminId:0,
