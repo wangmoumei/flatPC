@@ -61,7 +61,7 @@ angular.module('flatpcApp')
             if($rootScope.menuCheck(367)){
                     menus.push('shower');
                     if($rootScope.menuCheck(382)){
-                        menus.push('order');
+                        menus.push('shower');
                     }else if($rootScope.menuCheck(383)){
                         menus.push('personnel');
                     }else if($rootScope.menuCheck(384)){
