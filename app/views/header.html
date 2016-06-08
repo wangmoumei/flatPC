@@ -135,7 +135,15 @@
                             </li>
                             <li>
                                 <a class="list-group-item b-l-primary">
-                                    订餐系统
+                                    水电缴费
+                                    <div style="float:right">
+                                        <input bs-switch ng-change="toggleSave()" ng-model="media.pay" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                    </div>
+                                </a>
+                            </li>
+                              <li>
+                                <a class="list-group-item b-l-primary">
+                                    订餐
                                     <div style="float:right">
                                         <input bs-switch ng-change="toggleSave()" ng-model="media.food" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
                                     </div>
@@ -143,33 +151,9 @@
                             </li>
                             <li>
                                 <a class="list-group-item b-l-primary">
-                                    订水系统
+                                    订水
                                     <div style="float:right">
                                         <input bs-switch ng-change="toggleSave()" ng-model="media.water" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="list-group-item b-l-primary">
-                                    缴费中心
-                                    <div style="float:right">
-                                        <input bs-switch ng-change="toggleSave()" ng-model="media.pay" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="list-group-item b-l-primary">
-                                    数据中心
-                                    <div style="float:right">
-                                        <input bs-switch ng-change="toggleSave()" ng-model="media.data" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="list-group-item b-l-primary">
-                                    系统设置
-                                    <div style="float:right">
-                                        <input bs-switch ng-change="toggleSave()" ng-model="media.admin" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
                                     </div>
                                 </a>
                             </li>
@@ -181,6 +165,14 @@
                                     </div>
                                 </a>
                             </li>
+                               <li>
+                                <a class="list-group-item b-l-primary">
+                                    浴室预定
+                                    <div style="float:right">
+                                        <input bs-switch ng-change="toggleSave()" ng-model="media.shower" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                    </div>
+                                </a>
+                            </li>
                             <li>
                                 <a class="list-group-item b-l-primary">
                                     毕业离校
@@ -189,11 +181,19 @@
                                     </div>
                                 </a>
                             </li>
-                            <li>
+                             <li>
                                 <a class="list-group-item b-l-primary">
-                                    浴室预定
+                                    数据中心
                                     <div style="float:right">
-                                        <input bs-switch ng-change="toggleSave()" ng-model="media.shower" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                        <input bs-switch ng-change="toggleSave()" ng-model="media.data" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                    </div>
+                                </a>
+                            </li>
+                             <li>
+                                <a class="list-group-item b-l-primary">
+                                    系统设置
+                                    <div style="float:right">
+                                        <input bs-switch ng-change="toggleSave()" ng-model="media.admin" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
                                     </div>
                                 </a>
                             </li>
