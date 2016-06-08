@@ -1,28 +1,22 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name flatpcApp.controller:formCtrl
- * @description
- * # formCtrl
- * Controller of the flatpcApp
- */
 angular.module('flatpcApp')
-.controller('StudentCtrl', ['$scope','$rootScope',function($scope,$rootScope) {
+.controller('StudentCtrl', ['$scope','$rootScope','AppConfig',function($scope,$rootScope,AppConfig) {
         //存储列表头到frame.html中
-    // $scope.menus = [
-    //     '数据中心','师生信息','学生信息'
-    // ];
+    $scope.menus = [
+        '数据中心','师生信息','学生信息'
+    ];
     //跳转到什么地方去
     $scope.parent = "data";
-    $rootScope.loading = false;
+    $scope.loaded = function(){
+        $rootScope.loading = false;
+        $scope.$apply();
+    }
     var a = document.createElement('a');
-    // a.href = AppConfig.FRAME + "index.php?m=Apartment&c=LeavingSchool&a=search&token="+AppConfig.token+"&schoolcode="+AppConfig.schoolCode;
-    a.href = "http://baidu.com";
+    a.href = AppConfig.FRAME + "index.php?m=Coredata&c=CollegeClass&a=student&token="+AppConfig.token+"&schoolcode="+AppConfig.schoolCode;
     a.target="page-frame";
     a.click();
 }]);
-
 
 
 // angular.module('flatpcApp')

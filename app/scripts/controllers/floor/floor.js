@@ -72,7 +72,7 @@ angular.module('flatpcApp')
     $scope.addSave = function(){
         $rootScope.loading = true;
         (function(){
-            alert($scope.media.sex);
+            
             if($scope.media.type == 1){
                 return FlatService.addCampus({
                     token:AppConfig.token,
