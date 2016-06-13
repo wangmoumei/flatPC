@@ -178,7 +178,10 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     $rootScope.loading = false;
                     if(data.code == 0){
                         swal("提示", "删除成功！", "success");
-                        refresh($scope.media.flatid);
+                          if(swal!=null){
+                           location.reload();
+                        }
+                       
                     }else if(data.code == 4037){
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     location.href="#login";$rootScope.loading = false;
@@ -306,7 +309,9 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     $rootScope.loading = false;
                     if(data.code == 0){
                         swal("提示", "删除成功！", "success");
-                        refresh($scope.media.flatid);
+                         if(swal!=null){
+                            location.reload();
+                        }
                     }else if(data.code == 4037){
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     location.href="#login";$rootScope.loading = false;
