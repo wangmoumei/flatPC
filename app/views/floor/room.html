@@ -11,7 +11,7 @@
 </div>
 <div class="tool-bar" style="margin-left:225px;">
     <div style="min-width:160px">
-        {{media.title}}
+        {{media.title}}-{{sex}}
     </div>
     <!--div ng-if="menuCheck(145)"><a class="btn btn-success" ng-click="showCard('#floorAdd',floorInit(0))">新增楼层</a></div-->
     <div ng-if="menuCheck(152)" class="bar-full"><a class="btn btn-info" ng-click="showCard('#floorAdd',floorInit(2))">批量添加</a></div>
@@ -134,8 +134,8 @@
                                 <tr>
                                     <td colspan="2">
                                         <a ng-if="menuCheck(145)||menuCheck(152)" ng-hide="media.floor.type == 1" ng-click="floor.addSave()" class="btn btn-success">确认添加</a>
-                                        <a ng-if="menuCheck(146)" ng-show="media.floor.type == 1" ng-click="floor.editSave()" class="btn btn-info">确认修改</a>
-                                        <a ng-if="menuCheck(147)" ng-show="media.floor.type == 1" ng-click="floor.delete()" class="btn btn-danger">删除</a>
+                                        <a ng-if="menuCheck(146)" ng-show="media.floor.type == 1" ng-click="floor.editSave(closeCard('#floorAdd'))" class="btn btn-info">确认修改</a>
+                                        <a ng-if="menuCheck(147)" ng-show="media.floor.type == 1" ng-click="floor.delete(closeCard('#floorAdd'))" class="btn btn-danger">删除</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -189,10 +189,10 @@
                                     <td class="require">类别</td>
                                     <td>
                                         <select ng-model="media.room.roomstyle" ng-disabled="(media.room.type&&!menuCheck(149)) || (media.room.type==0&&!menuCheck(148))">
-                                            <option value="">请选择类别</option>
-                                            <option value="男">男</option>
-                                            <option value="女">女</option>
-                                            <option value="其他">其他</option>
+                                            <option ng-value="">请选择类别</option>
+                                            <option ng-value="男">男</option>
+                                            <option ng-value="女">女</option>
+                                            <option ng-value="其他">其他</option>
                                         </select>
                                     </td>
                                 </tr>
@@ -211,9 +211,9 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <a ng-if="menuCheck(148)" ng-hide="media.room.type == 1" ng-click="room.addSave()" class="btn btn-success">确认添加</a>
-                                        <a ng-if="menuCheck(149)" ng-show="media.room.type == 1" ng-click="room.editSave()" class="btn btn-info">确认修改</a>
-                                        <a ng-if="menuCheck(150)" ng-show="media.room.type == 1" ng-click="room.delete()" class="btn btn-danger">删除</a>
+                                        <a ng-if="menuCheck(148)" ng-hide="media.room.type == 1" ng-click="room.addSave(closeCard('#roomEdit'))" class="btn btn-success">确认添加</a>
+                                        <a ng-if="menuCheck(149)" ng-show="media.room.type == 1" ng-click="room.editSave(closeCard('#roomEdit'))" class="btn btn-info">确认修改</a>
+                                        <a ng-if="menuCheck(150)" ng-show="media.room.type == 1" ng-click="room.delete(closeCard('#roomEdit'))" class="btn btn-danger">删除</a>
                                     </td>
                                 </tr>
                             </tbody>
