@@ -82,7 +82,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
         typeInit();
     }
     $scope.floor = {
-        addSave:function (fun) {
+        addSave:function () {
             if($scope.media.floor.type == 0){
             
                 $rootScope.loading = true;
@@ -99,8 +99,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     // console.log(data);
                     if(data.code == 0 ){
                         swal("提示", "添加成功！", "success"); 
-                        if(fun && typeof fun == 'function') fun();
-                         refresh();
+                        refresh($scope.media.flatid);
                     }else if(data.code == 4037){
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     location.href="#login";$rootScope.loading = false;
@@ -123,8 +122,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     $rootScope.loading = false;
                     if(data.code == 0){
                         swal("提示", "添加成功！", "success");
-                        if(fun && typeof fun == 'function') fun();
-                         refresh();
+                        refresh($scope.media.flatid);
                     }else if(data.code == 4037){
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     location.href="#login";$rootScope.loading = false;
@@ -150,8 +148,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                 $rootScope.loading = false;
                 if(data.code == 0){
                     swal("提示", "修改成功！", "success");
-                    if(fun && typeof fun == 'function') fun();
-                         refresh();
+                    refresh($scope.media.flatid);
                 }else if(data.code == 4037){
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     location.href="#login";$rootScope.loading = false;
@@ -161,7 +158,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                 }
             });
         },
-        delete:function (fun) {
+        delete:function () {
             swal({   
                 title: "确认删除",   
                 text: "真的要删除吗？",   
@@ -181,9 +178,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     $rootScope.loading = false;
                     if(data.code == 0){
                         swal("提示", "删除成功！", "success");
-                         if(fun && typeof fun == 'function') fun();
-                         refresh();
-                       
+                        refresh($scope.media.flatid);
                     }else if(data.code == 4037){
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     location.href="#login";$rootScope.loading = false;
@@ -228,7 +223,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
         }
     }
     $scope.room = {
-        addSave:function (fun) {
+        addSave:function () {
             var param = {
                 token:AppConfig.token,
                 floorid:$scope.media.floor.floorid,
@@ -249,8 +244,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                 $rootScope.loading = false;
                 if(data.code == 0){
                     swal("提示", "添加成功！", "success");
-                    if(fun && typeof fun == 'function') fun();
-                         refresh();
+                    refresh($scope.media.flatid);
                 }else if(data.code == 4037){
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     location.href="#login";$rootScope.loading = false;
@@ -261,7 +255,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
             });
             
         },
-        editSave:function (fun) {
+        editSave:function () {
             var param = {
                 token:AppConfig.token,
                 roomid:$scope.media.room.roomid,
@@ -282,8 +276,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                 $rootScope.loading = false;
                 if(data.code == 0){
                     swal("提示", "修改成功！", "success"); 
-                    if(fun && typeof fun == 'function') fun();
-                         refresh();
+                    refresh($scope.media.flatid);
                 }else if(data.code == 4037){
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     location.href="#login";$rootScope.loading = false;
@@ -293,7 +286,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                 }
             });
         },
-        delete:function (fun) {
+        delete:function () {
             swal({   
                 title: "确认删除",   
                 text: "真的要删除吗？",   
@@ -313,8 +306,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     $rootScope.loading = false;
                     if(data.code == 0){
                         swal("提示", "删除成功！", "success");
-                         if(fun && typeof fun == 'function') fun();
-                         refresh();
+                        refresh($scope.media.flatid);
                     }else if(data.code == 4037){
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     location.href="#login";$rootScope.loading = false;

@@ -134,8 +134,8 @@
                                 <tr>
                                     <td colspan="2">
                                         <a ng-if="menuCheck(145)||menuCheck(152)" ng-hide="media.floor.type == 1" ng-click="floor.addSave()" class="btn btn-success">确认添加</a>
-                                        <a ng-if="menuCheck(146)" ng-show="media.floor.type == 1" ng-click="floor.editSave(closeCard('#floorAdd'))" class="btn btn-info">确认修改</a>
-                                        <a ng-if="menuCheck(147)" ng-show="media.floor.type == 1" ng-click="floor.delete(closeCard('#floorAdd'))" class="btn btn-danger">删除</a>
+                                        <a ng-if="menuCheck(146)" ng-show="media.floor.type == 1" ng-click="floor.editSave()" class="btn btn-info">确认修改</a>
+                                        <a ng-if="menuCheck(147)" ng-show="media.floor.type == 1" ng-click="floor.delete()" class="btn btn-danger">删除</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -211,9 +211,9 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <a ng-if="menuCheck(148)" ng-hide="media.room.type == 1" ng-click="room.addSave(closeCard('#roomEdit'))" class="btn btn-success">确认添加</a>
-                                        <a ng-if="menuCheck(149)" ng-show="media.room.type == 1" ng-click="room.editSave(closeCard('#roomEdit'))" class="btn btn-info">确认修改</a>
-                                        <a ng-if="menuCheck(150)" ng-show="media.room.type == 1" ng-click="room.delete(closeCard('#roomEdit'))" class="btn btn-danger">删除</a>
+                                        <a ng-if="menuCheck(148)" ng-hide="media.room.type == 1" ng-click="room.addSave()" class="btn btn-success">确认添加</a>
+                                        <a ng-if="menuCheck(149)" ng-show="media.room.type == 1" ng-click="room.editSave()" class="btn btn-info">确认修改</a>
+                                        <a ng-if="menuCheck(150)" ng-show="media.room.type == 1" ng-click="room.delete()" class="btn btn-danger">删除</a>
                                     </td>
                                 </tr>
                             </tbody>
