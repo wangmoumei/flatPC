@@ -135,7 +135,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                         if(fun && typeof fun == 'function') fun();
                          refresh($scope.media.flatid);
                     }else if(param==null){
-                     swal("提示","当前楼栋性别只能指定为："+$scope.sex,"error"); 
+                     swal("提示","与当前楼栋性别不符合","error"); 
                     }else if(data.code == 4037){
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     location.href="#login";$rootScope.loading = false;
@@ -167,7 +167,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     if(fun && typeof fun == 'function') fun();
                          refresh($scope.media.flatid);
                 }else if(param==null){
-                     swal("提示","当前楼栋性别只能指定为："+$scope.sex,"error"); 
+                     swal("提示","与当前楼栋性别不符合","error"); 
                 }else if(data.code == 4037){
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     location.href="#login";$rootScope.loading = false;
@@ -274,7 +274,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     if(fun && typeof fun == 'function') fun();
                          refresh($scope.media.flatid);
                 }else if(param==null){
-                     swal("提示","当前楼栋性别只能指定为："+$scope.sex,"error"); 
+                     swal("提示","与当前楼栋性别不符合","error"); 
                 }else if(data.code == 4037){
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     location.href="#login";$rootScope.loading = false;
@@ -312,7 +312,7 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     if(fun && typeof fun == 'function') fun();
                          refresh($scope.media.flatid);
                 }else if(param==null){
-                     swal("提示","当前楼栋性别只能指定为："+$scope.sex,"error"); 
+                     swal("提示","与当前楼栋性别不符合","error"); 
                 }else if(data.code == 4037){
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     location.href="#login";$rootScope.loading = false;
