@@ -12,8 +12,7 @@ angular.module('flatpcApp')
         $scope.$apply();
     }
     var a = document.createElement('a');
-    a.href="http://baidu.com";
-    // a.href = AppConfig.FRAME + "index.php?m=Apartment&c=LeavingSchool&a=search&token="+AppConfig.token+"&schoolcode="+AppConfig.schoolCode;
+    a.href = AppConfig.FRAME + "index.php?m=Apartment&c=Quit&a=index&token="+AppConfig.token+"&schoolcode="+AppConfig.schoolCode;
     a.target="page-frame";
     a.click();
 }]);
