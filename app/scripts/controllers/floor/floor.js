@@ -9,7 +9,7 @@ angular.module('flatpcApp')
         areaTitle:'',
         liveAreaId:'',
         flatTitle:'',
-        sex:'',
+        sex:'0',
         flatId:'',
         listOrder:1,
         menuCheck : function () {
