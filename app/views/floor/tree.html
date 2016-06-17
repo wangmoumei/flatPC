@@ -49,9 +49,9 @@
             <tr ng-show="media.type>2" >
                 <td class="require" width="200">楼栋性别</td>
                 <td>
-                    <label><input type="radio" name="sex" ng-value=0  ng-disabled="media.type == 3 && !media.menuCheck()" ng-model="media.sex"/> 男</label>
-                    <label><input type="radio" name="sex" ng-value=1  ng-disabled="media.type == 3 && !media.menuCheck()" ng-model="media.sex"/> 女</label>
-                    <label><input type="radio" name="sex" ng-value=2  ng-disabled="media.type == 3 && !media.menuCheck()" ng-model="media.sex"/> 混住</label>
+                    <label><input type="radio" name="sex" ng-value='0'  ng-disabled="media.type == 3 && !media.menuCheck()" ng-model="media.sex" ng-checked="checked"/> 男</label>
+                    <label><input type="radio" name="sex" ng-value='1'  ng-disabled="media.type == 3 && !media.menuCheck()" ng-model="media.sex"/> 女</label>
+                    <label><input type="radio" name="sex" ng-value='2' ng-disabled="media.type == 3 && !media.menuCheck()" ng-model="media.sex"/> 混住</label>
                 </td>
             </tr>
             <tr>

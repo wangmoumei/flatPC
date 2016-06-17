@@ -9,7 +9,7 @@ angular.module('flatpcApp')
         areaTitle:'',
         liveAreaId:'',
         flatTitle:'',
-        sex:'0',
+        sex:'',
         flatId:'',
         listOrder:1,
         menuCheck : function () {
@@ -47,7 +47,7 @@ angular.module('flatpcApp')
         
         $scope.media.flatTitle = item.title || '';
         $scope.media.flatId = item.flatId || '';
-        $scope.media.sex =item.sex || '';
+        $scope.media.sex =item.sex || '0';
         $scope.media.listOrder=item.listOrder || 1;
     }
     
@@ -131,13 +131,17 @@ angular.module('flatpcApp')
                     title:$scope.media.areaTitle
                 })
             }else if($scope.media.type == 3){
+               
                 return FlatService.editFlat({
                     token:AppConfig.token,
                     flatid:$scope.media.flatId,
                     listorder:$scope.media.listOrder,
-                    title:$scope.media.flatTitle,
-                    sex:$scope.media.sex
-                })
+                    sex:$scope.media.sex,
+                    title:$scope.media.flatTitle
+                   
+                }
+               
+                )
             }
         })().success(function(data){
             $rootScope.loading = false;
