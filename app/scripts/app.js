@@ -1074,6 +1074,74 @@ angular
                 controller: 'HeaderCtrl'
             }
         }
+    })
+    .state('large', {
+    url: "/large",
+    views: {
+        "": {
+            templateUrl: 'views/checkIn/large.html',
+            controller: 'largeCtrl'
+        },
+        "aside": {
+            templateUrl: "views/aside.html",
+            controller: 'AsideCtrl'
+        },
+        "header": {
+            templateUrl: "views/header.html",
+            controller: 'HeaderCtrl'
+        }
+    }
+})
+.state('weigui', {
+        url: "/weigui",
+        views: {
+            "": {
+                templateUrl: 'views/checkIn/weigui.html',
+                controller: 'weiguiCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('kuaicha', {
+        url: "/kuaicha",
+        views: {
+            "": {
+                templateUrl: 'views/flatManager/kuaicha.html',
+                controller: 'kuaichaCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('hutiao', {
+        url: "/hutiao",
+        views: {
+            "": {
+                templateUrl: 'views/flatManager/hutiao.html',
+                controller: 'hutiaoCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
     });
     $urlRouterProvider.otherwise('/login');
   });

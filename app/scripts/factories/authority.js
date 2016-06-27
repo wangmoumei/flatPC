@@ -339,6 +339,26 @@ angular.module('flatpcApp')
                     return ['shower','setting','setting'];
                 else
                     return null; 
+            case 'kuaicha':
+                if(menuCheck(386))
+                    return ['flat','flat','kuaicha'];
+                else
+                    return null;
+             case 'hutiao':
+                if(menuCheck(387))
+                    return ['flat','flat','hutiao'];
+                else
+                    return null;
+            case 'weigui':
+                if(menuCheck(388))
+                    return ['flat','check','weigui'];
+                else
+                    return null;
+            case 'large':
+                if(menuCheck(389))
+                    return ['flat','check','large'];
+                else
+                    return null;
                    
                     
         }
