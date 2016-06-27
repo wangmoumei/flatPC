@@ -14,6 +14,12 @@
                     按学院查看
                 </a>
             </li>
+            <li ng-if="menuCheck(19)">
+                <a href="#">
+                    <i class="ALiconfont icon-kuaisuchaxun" style="line-height: 45px;background-color:#FF5151;font-size:32px"></i>
+                   快速查询
+                </a>
+            </li>
         </ul>
     </li>
     <li ng-if="menuCheck(15)" ng-show="sysMenu[1]=='flat'">
@@ -29,6 +35,12 @@
                 <a href="#change">
                     <i class="ALiconfont icon-tiaosu" style="line-height: 45px;background-color:#fc7257;font-size:32px"></i>
                     调宿
+                </a>
+            </li>
+              <li ng-if="menuCheck(28)">
+                <a href="#">
+                    <i class="ALiconfont icon-duidiao" style="line-height: 45px;background-color:#0080FF;font-size:32px"></i>
+                    相互调宿
                 </a>
             </li>
             <li ng-if="menuCheck(29)">
@@ -76,7 +88,7 @@
                 <li ng-if="menuCheck(31)">
                 <a href="#newstudent">
                    <i class="ALiconfont icon-xueshengfenpei" style="line-height: 45px;background-color:#fc7257;font-size:32px"></i>
-                  新生分配
+                  新生排宿
                 </a>
             </li>
         </ul>
@@ -216,6 +228,18 @@
                 <a href="#late">
                     <i class="ALiconfont icon-iconfontkey1" style="background-color:#02cf97;font-size:25px"></i>
                     晚归
+                </a>
+            </li>
+            <li ng-if="menuCheck(75)">
+                <a href="#">
+                    <i class="ALiconfont icon-weigui" style="background-color:#AD5A5A;font-size:25px"></i>
+                    未归
+                </a>
+            </li>
+            <li ng-if="menuCheck(75)">
+                <a href="#">
+                    <i class="ALiconfont icon-chumendengji" style="background-color:#F75000;font-size:25px"></i>
+                   大宗物品出门登记
                 </a>
             </li>
         </ul>
