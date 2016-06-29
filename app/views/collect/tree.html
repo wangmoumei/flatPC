@@ -43,6 +43,7 @@
                         </ul>
                     </li>
                      <li ng-if="menuCheck(167)"><a class="add" ng-click="add(1,list)"><i class="ALiconfont icon-plus1"></i> 添加学院</a></li>
+                     <li ng-if="menuCheck(167)"><a class="add" ng-click="add(-1)"><i class="ALiconfont icon-plus1"></i>批量导入班级</a></li>
                 </ul>
             </li>
         </ul>
@@ -63,6 +64,9 @@
                 </ul>
             </li>
         </ul>
+    </div>
+    <div class="page-main" style="left:225px;top:0px" ng-show="media.type == -1">
+        <iframe name="page-frame" frameborder="0" width="100%" height="100%" frame-load></iframe>
     </div>
     <div class="from-container" style="left:225px;"  ng-show="media.type > 0 ">
         <table class="table-form table-bordered bg-white">
