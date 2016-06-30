@@ -1,5 +1,13 @@
 angular.module('flatpcApp')
 .controller('SchoolCtrl', ['$scope','AppConfig','$rootScope','CollegeService',function($scope,AppConfig,$rootScope,CollegeService) {
+   //批量导入班级，直接加载到控制器头部就行了
+    $scope.parent = "flat";
+    $rootScope.loading = false;
+    var a = document.createElement('a');
+    a.href = AppConfig.FRAME + "index.php/?m=Stmessage&c=ImportClass&a=index&token="+AppConfig.token+"&schoolcode="+AppConfig.schoolCode;
+    a.target="page-frame";
+    a.click();
+
     $scope.media = {
         status:1,
         type:1,
