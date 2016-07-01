@@ -365,7 +365,32 @@ angular.module('flatpcApp')
         return null;
     };
     var check = function () {
-        AppConfig.adminId = sessionStorage.adminId;
+        function getCookie(name){
+            var arr,reg = new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+            if(arr = document.cookie.match(reg))
+            return unescape(arr[2]);
+            else
+            return null;
+        }
+        AppConfig.adminId     = getCookie('adminId');
+        AppConfig.token       = getCookie('token');
+        AppConfig.nodeIds     = ',' + getCookie('nodeIds') + ',';
+        AppConfig.schoolCode  = getCookie('schoolCode');
+        AppConfig.userName    = getCookie('userName');
+        AppConfig.roleName    = getCookie('roleName');
+        AppConfig.roleId      = getCookie('roleId');
+        AppConfig.userAccount = getCookie('userAccount');
+        AppConfig.isOpenBed   = getCookie('isOpenBed');
+        AppConfig.week        = getCookie('week') || 1;
+        AppConfig.month       = getCookie('month') || 1;
+        AppConfig.day         = getCookie('day') || 1;
+        AppConfig.bed         = getCookie('bed') || 1;
+        AppConfig.pass        = getCookie('pass') || 1;
+        AppConfig.photo       = getCookie('photo') || 1;
+        AppConfig.role        = getCookie('role') || 1;
+        AppConfig.takephoto   = getCookie('takephoto') || 1;
+        AppConfig.check       = getCookie('check') || 1;
+        /*AppConfig.adminId = sessionStorage.adminId;
         AppConfig.token = sessionStorage.token;
         AppConfig.nodeIds = ',' + sessionStorage.nodeIds + ',';
         AppConfig.schoolCode = sessionStorage.schoolCode;
@@ -383,7 +408,7 @@ angular.module('flatpcApp')
         AppConfig.photo = sessionStorage.photo || 1;
         AppConfig.role = sessionStorage.role || 1;
         AppConfig.takephoto = sessionStorage.takephoto || 1;
-        AppConfig.check = sessionStorage.check || 1;
+        AppConfig.check = sessionStorage.check || 1;*/
         if(AppConfig.adminId && AppConfig.token && AppConfig.nodeIds && AppConfig.schoolCode && AppConfig.userName && AppConfig.roleName && AppConfig.roleId && AppConfig.userAccount){
             return true;
         }

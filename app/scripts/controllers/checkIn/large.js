@@ -15,7 +15,10 @@ angular.module('flatpcApp')
     ];
     //跳转到什么地方去
     $scope.parent = "flat";
-    $rootScope.loading = false;
+    $scope.loaded = function(){
+        $rootScope.loading = false;
+        $scope.$apply();
+    }
     var a = document.createElement('a');
     a.href = AppConfig.FRAME + "index.php?m=Register&c=BigThing&a=index&token="+AppConfig.token+"&schoolcode="+AppConfig.schoolCode;
     a.target="page-frame";
