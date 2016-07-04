@@ -65,6 +65,14 @@ function($scope,AppConfig,$rootScope,FlatService,GraduationService,$filter,Colle
         $scope.media.classid=item.classId || "";
         
         switch(type){
+            case -1:
+             $scope.selecter.campusId = "";
+                $scope.selecter.liveAreaId = "";
+                $scope.selecter.flatId = "";
+                
+                $scope.selecter.collegeId = "";
+                $scope.selecter.classId = "";
+                break;
             case 0:
                 $scope.selecter.campusId = "";
                 $scope.selecter.liveAreaId = "";
@@ -218,10 +226,23 @@ function($scope,AppConfig,$rootScope,FlatService,GraduationService,$filter,Colle
     }
     //数据导出
     $scope.downloadgraduation = function(){
+        alert($scope.media.status);
+        if($scope.media.status==-1){
             var a = document.createElement('a');
-            a.href = AppConfig.WEB_ROOT + 'register/nightout/nightdriver/?schoolcode=' + AppConfig.schoolCode
-            +'&token='+AppConfig.token+'&pagesize=0&epage=0';
+            a.href = AppConfig.WEB_ROOT + 'apartment/checkout/export/?schoolcode=' + AppConfig.schoolCode
+            +'&token='+AppConfig.token+'&collegeid='+$scope.media.collegeid+'&classid='+$scope.media.classid
+            +'&campusid='+$scope.media.campusid+'&areaname='+$scope.media.liveareaid+'&flatid='+$scope.media.flatid;
            a.click();
+        }else{
+            var a = document.createElement('a');
+            a.href = AppConfig.WEB_ROOT + 'apartment/checkout/export/?schoolcode=' + AppConfig.schoolCode
+            +'&token='+AppConfig.token+'&status='+$scope.media.status+'&collegeid='+$scope.media.collegeid+'&classid='+$scope.media.classid
+            +'&campusid='+$scope.media.campusid+'&areaname='+$scope.media.liveareaid+'&flatid='+$scope.media.flatid;
+           a.click();
+           }
+        // alert($scope.media.status);
+        // alert($scope.media.collegeid);
+        // alert($scope.media.classid);
     }
     //审批
     $scope.passWork = function(fun){

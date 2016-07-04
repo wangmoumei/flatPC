@@ -9,7 +9,7 @@ angular.module('flatpcApp')
         + (param.flatid?('&flatid='+param.flatid):'')
         + (param.collegeid?('&collegeid='+param.collegeid):'')
         + (param.classid?('&classid='+param.classid):'')
-        + (param.status>0?('&status='+param.status):'')
+        + (param.status>=0?('&status='+param.status):'')
         + (param.orderfield?('&orderfield='+param.orderfield):'')
         + (param.ordertype?('&ordertype='+param.ordertype):'');
         return $http.get(url).error(function (error) {
