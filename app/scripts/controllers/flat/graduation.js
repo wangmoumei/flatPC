@@ -220,7 +220,7 @@ function($scope,AppConfig,$rootScope,FlatService,GraduationService,$filter,Colle
     $scope.downloadgraduation = function(){
             var a = document.createElement('a');
             a.href = AppConfig.WEB_ROOT + 'register/nightout/nightdriver/?schoolcode=' + AppConfig.schoolCode
-            +'&token='+AppConfig.token;
+            +'&token='+AppConfig.token+'&pagesize=0&epage=0';
            a.click();
     }
     //审批
