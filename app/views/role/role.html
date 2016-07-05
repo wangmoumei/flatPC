@@ -85,14 +85,14 @@
             <div class="info-card-content">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        {{media.status?'修改角色':'添加角色'}}
+                        {{media.status?'添加角色':'修改角色'}}
                         <a class="info-card-close"><i class="ALiconfont icon-close"></i></a>
                     </div>
                     <div class="panel-body">
                         <table class="table-form table-bordered bg-white">
                             <tbody>
                                 <tr>
-                                    <td class="require">角色名称</td><td><input type="text" ng-model="role.title" /></td>
+                                    <td class="require">角色名称</td><td><input type="text" ng-model="role.title" pattern="^[\u4e00-\u9fa5|\w]+$" maxLength="20" title="含有非法字符"/></td>
                                 </tr>
                                 <tr>
                                     <td class="require">角色描述</td><td><input type="text" ng-model="role.remark" /></td>

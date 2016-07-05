@@ -19,8 +19,8 @@ angular
     'frapontillo.bootstrap-switch'
   ])
   .constant('AppConfig',{
-      WEB_ROOT:'http://120.55.84.193/Geese_Apartment/',
-    // WEB_ROOT:'http://localhost:8080/Geese_Apartment/',
+    //   WEB_ROOT:'http://120.55.84.193/Geese_Apartment/',
+    WEB_ROOT:'http://127.0.0.1:8080/Geese_Apartment/',
     //   WEB_ROOT:'http://ap.houqinbao.com/Geese_Apartment/',
     WEB_ROOT_MESSAGE:'http://120.55.84.193/Geese_Quality_Supervision/',
     FRAME:'http://code.houqinbao.com:3338/Apartment/',
@@ -1132,6 +1132,23 @@ angular
             "": {
                 templateUrl: 'views/flatManager/hutiao.html',
                 controller: 'hutiaoCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('latego', {
+        url: "/latego",
+        views: {
+            "": {
+                templateUrl: 'views/checkIn/latego.html',
+                controller: 'lategoCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",

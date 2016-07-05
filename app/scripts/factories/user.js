@@ -3,7 +3,9 @@ angular.module('flatpcApp')
     var getList = function(param){
         var url = AppConfig.WEB_ROOT + 'accountmanage/users/get_list/?schoolcode=' + AppConfig.schoolCode
         +'&token='+AppConfig.token
-        + (param && param.groupid?('&groupid=' + param.groupid):'');
+        + (param && param.groupid?('&groupid=' + param.groupid):'')
+        +(param.epage?'&epage='+param.epage:'')
+        +(param.pagesize?'&pagesize='+param.pagesize:'');
         return $http.get(url).error(function (error) {
             swal("提示", "网络错误！", "error"); 
         });
