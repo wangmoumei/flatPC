@@ -328,6 +328,29 @@
             </li>
         </ul>
     </li>
+    <li ng-if="menuCheck(397)" ng-show="sysMenu[1]=='report'">
+        <div class="menu-title">综合查询</div>
+        <ul class="menu-list">
+            <li ng-if="menuCheck(398)">
+                <a href="#term">
+                    <i class="ALiconfont icon-baodaominglu" style="background-color:#fc7257;font-size:25px"></i>
+                   预报到名录
+                </a>
+            </li>
+            <li ng-if="menuCheck(399)">
+                <a href="#term">
+                    <i class="ALiconfont icon-baodaotongji" style="background-color:#38adff;font-size:25px"></i>
+                    报到方式统计
+                </a>
+            </li>
+            <li ng-if="menuCheck(400)">
+                <a href="#term">
+                    <i class="ALiconfont icon-baodaoxuzhi" style="background-color:#ff9c00;font-size:25px"></i>
+                    报到须知
+                </a>
+            </li>
+        </ul>
+    </li>
     <li ng-if="menuCheck(355)" ng-show="sysMenu[1]=='center'">
         <div class="menu-title">综合查询</div>
         <ul class="menu-list">
