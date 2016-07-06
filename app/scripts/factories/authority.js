@@ -364,6 +364,21 @@ angular.module('flatpcApp')
                     return ['flat','check','latego'];
                 else
                     return null;
+            case 'repdc':
+                if(menuCheck(398))
+                    return ['data','report','repdc'];
+                else
+                    return null;
+            case 'repway':
+                if(menuCheck(399))
+                    return ['data','report','repnoe'];
+                else
+                    return null;
+            case 'repnoe':
+                if(menuCheck(400))
+                    return ['data','report','repnoe'];
+                else
+                    return null;
                    
                     
         }

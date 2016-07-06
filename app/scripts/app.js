@@ -24,6 +24,7 @@ angular
     //   WEB_ROOT:'http://ap.houqinbao.com/Geese_Apartment/',
     WEB_ROOT_MESSAGE:'http://120.55.84.193/Geese_Quality_Supervision/',
     FRAME:'http://code.houqinbao.com:3338/Apartment/',
+    REPORT:'http://test.houqinbao.com/Report/',
     SHOWER:'http://code.houqinbao.com:3338/Shower/',
       schoolCode:0,
 	  token:'',
@@ -1149,6 +1150,57 @@ angular
             "": {
                 templateUrl: 'views/checkIn/latego.html',
                 controller: 'lategoCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('repdc', {
+        url: "/repdc",
+        views: {
+            "": {
+                templateUrl: 'views/collect/reportdirectory.html',
+                controller: 'reportdirectoryCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('repway', {
+        url: "/repway",
+        views: {
+            "": {
+                templateUrl: 'views/collect/reportway.html',
+                controller: 'reportwayCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('repnoe', {
+        url: "/repnoe",
+        views: {
+            "": {
+                templateUrl: 'views/collect/reportnotice.html',
+                controller: 'reportnoticeCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",
