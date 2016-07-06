@@ -260,6 +260,25 @@ angular.module('flatpcApp')
                         sessionStorage.role = data.data.role;
                         sessionStorage.takephoto = data.data.takephoto;
                         sessionStorage.check = data.data.check;
+
+                        document.cookie = "adminId="+data.data.adminId;
+                        document.cookie = "token="+data.data.token;
+                        document.cookie = "nodeIds="+data.data.nodeIds;
+                        document.cookie = "schoolCode="+data.data.schoolCode;
+                        document.cookie = "userName="+data.data.userName;
+                        document.cookie = "roleName="+data.data.roleName;
+                        document.cookie = "roleId="+data.data.roleId;
+                        document.cookie = "userAccount="+data.data.userAccount;
+                        document.cookie = "isOpenBed="+data.data.isOpenBed;
+                        document.cookie = "week="+data.data.week;
+                        document.cookie = "month="+data.data.month;
+                        document.cookie = "day="+data.data.day;
+                        document.cookie = "bed="+data.data.bed;
+                        document.cookie = "pass="+data.data.pass;
+                        document.cookie = "photo="+data.data.photo;
+                        document.cookie = "role="+data.data.role;
+                        document.cookie = "takephoto="+data.data.takephoto;
+                        document.cookie = "check="+data.data.check;
                         if($scope.media.rem){
                             localStorage.username = $scope.media.user;
                             localStorage.remember = 1;

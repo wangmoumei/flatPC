@@ -16,7 +16,7 @@ angular.module('flatpcApp')
         epage:1,
         pageCount:1,
         recordCount:1,
-        pagesize:30
+        pagesize:10
     }
     //换页
     $scope.setPage = function(n){
@@ -88,11 +88,14 @@ angular.module('flatpcApp')
             type:1,
             schoolcode:AppConfig.schoolCode,
             status:$scope.role.status?0:1
+            
         }).success(function (data) {
             $rootScope.loading = false;
             if(data.code == 0){
                 swal("提示", "添加成功！", "success"); 
                 refresh();
+            }else if($scope.role.title ==null&&data.code!= 4037){
+                    swal("提示","含有非法字符","error"); 
             }else if(data.code == 4037){
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     location.href="#login";$rootScope.loading = false;

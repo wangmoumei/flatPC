@@ -10,6 +10,18 @@
 angular.module('flatpcApp')
   .controller('UserCtrl', ['$scope','$rootScope','UserService','$filter',
   function ($scope,$rootScope,UserService,$filter) {
+//基础的页码、排序等等选项
+    $scope.media = {
+        epage:1,
+        pageCount:1,
+        recordCount:1,
+        pagesize:10,
+        groupid:'',
+        orderfield:'',
+        ordertype:'',
+        title:''
+    }
+    
     $scope.form = {
         status:0,
         username:'',
@@ -123,17 +135,7 @@ angular.module('flatpcApp')
         });
         
     }
-    //基础的页码、排序等等选项
-    $scope.media = {
-        epage:1,
-        pageCount:1,
-        recordCount:1,
-        pagesize:10,
-        groupid:'',
-        orderfield:'',
-        ordertype:'',
-        title:''
-    }
+
     //换页
     $scope.setPage = function(n){
         if($scope.media.epage + n >0 && $scope.media.epage + n <= $scope.media.pageCount){
@@ -186,10 +188,14 @@ angular.module('flatpcApp')
     function refresh() {
         $rootScope.loading = true;
         UserService.getList({
-            groupid:$scope.media.groupid
+            groupid:$scope.media.groupid,
+            epage:$scope.media.epage,
+            pagesize:$scope.media.pagesize
         }).success(function (data) {
             if(data.code == 0){
                 $scope.list = data.list;
+                $scope.media.recordCount = data?data.recordCount:0;
+                $scope.media.pageCount = data?data.pageCount:0;
             }else if(data.code == 4037){
                             swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                             location.href="#login";$rootScope.loading = false;

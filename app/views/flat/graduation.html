@@ -24,12 +24,13 @@
     </div>
     <div class="group-tool">
         <div class="btn-group">
-            <button type="button" class="btn btn-info" ng-click="setStatus(-1)" ng-class="{'btn-stroke':media.status>=0}">全部</button>
+            <button type="button" class="btn btn-info" ng-click="setStatus(-1)" ng-class="{'btn-stroke':media.status>=-1}">全部</button>
             <button type="button" class="btn btn-info" ng-click="setStatus(0)" ng-class="{'btn-stroke':media.status!=0}">计划中</button>
             <button type="button" class="btn btn-info" ng-click="setStatus(1)" ng-class="{'btn-stroke':media.status!=1}">有欠费</button>
             <button type="button" class="btn btn-info" ng-click="setStatus(2)" ng-class="{'btn-stroke':media.status!=2}">无欠费</button>
-            <button type="button" class="btn btn-info" ng-click="setStatus(3)" ng-class="{'btn-stroke':media.status!=3}">已审批</button>
+            <button type="button" class="btn btn-info" ng-click="setStatus(3)" ng-class="{'btn-stroke':media.status!=3}">已审批</button>    
         </div>
+        <a class="btn btn-default" ng-click="downloadgraduation()">数据导出</a>
     </div>
     <!--<div class="search-option">
         <div class="btn-group">

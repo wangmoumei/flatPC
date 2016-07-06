@@ -4,7 +4,7 @@ angular.module('flatpcApp')
     $scope.parent = "flat";
     $rootScope.loading = false;
     var a = document.createElement('a');
-    a.href = AppConfig.FRAME + "index.php/?m=Stmessage&c=ImportClass&a=index&token="+AppConfig.token+"&schoolcode="+AppConfig.schoolCode;
+    a.href = AppConfig.FRAME + "index.php?m=Stmessage&c=ImportClass&a=index&token="+AppConfig.token+"&schoolcode="+AppConfig.schoolCode;
     a.target="page-frame";
     a.click();
 
