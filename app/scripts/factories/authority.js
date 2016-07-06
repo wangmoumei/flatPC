@@ -359,8 +359,11 @@ angular.module('flatpcApp')
                     return ['flat','check','large'];
                 else
                     return null;
-                   
-                    
+            case 'latego':
+                if(menuCheck(395))
+                    return ['flat','check','latego'];
+                else
+                    return null;       
         }
         return null;
     };
