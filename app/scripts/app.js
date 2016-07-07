@@ -1228,6 +1228,57 @@ angular
                 controller: 'HeaderCtrl'
             }
         }
+    })
+    .state('newstudentdiv', {
+        url: "/newstudentdiv",
+        views: {
+            "": {
+                templateUrl: 'views/grade/newStudentDivide.html',
+                controller: 'newstudentdivCtrls'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('newstudentregister', {
+        url: "/newstudentregister",
+        views: {
+            "": {
+                templateUrl: 'views/grade/newStudentRegister.html',
+                controller: 'newstudentregisterCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
+    })
+    .state('newstudentIn', {
+        url: "/newstudentIn",
+        views: {
+            "": {
+                templateUrl: 'views/grade/newStudentIn.html',
+                controller: 'newstudentInCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
     });
     $urlRouterProvider.otherwise('/login');
   });
