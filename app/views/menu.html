@@ -86,11 +86,32 @@
             <!--注意添加check时间和a标签才能跳转-->
               <!--<a href="#newstudent">-->
                 <li ng-if="menuCheck(31)">
-                <a href="#newstudent">
-                   <i class="ALiconfont icon-xueshengfenpei" style="line-height: 45px;background-color:#fc7257;font-size:32px"></i>
-                  新生排宿
-                </a>
-            </li>
+                    <a href="#newstudent">
+                    <i class="ALiconfont icon-xueshengfenpei" style="line-height: 45px;background-color:#fc7257;font-size:32px"></i>
+                    新生排宿
+                    </a>
+                </li>
+                 
+        </ul>
+        <ul class="menu-list">
+        <li ng-if="menuCheck(408)">
+                    <a href="#newstudent">
+                    <i class="ALiconfont icon-xinshenghuafen" style="line-height: 42px;background-color:#fc7257;font-size:28px"></i>
+                    新生划分
+                    </a>
+                </li>
+                 <li ng-if="menuCheck(409)">
+                    <a href="#newstudent">
+                    <i class="ALiconfont icon-xinshengbaodao" style="line-height: 40px;background-color:#38adff;font-size:26px"></i>
+                    新生报到
+                    </a>
+                </li>
+                 <li ng-if="menuCheck(410)">
+                    <a href="#newstudent">
+                    <i class="ALiconfont icon-xinshengruzhu" style="line-height: 45px;background-color:#02cf97;font-size:30px"></i>
+                    新生入住
+                    </a>
+                </li>
         </ul>
     </li>
    <li ng-if="menuCheck(368)" ng-show="sysMenu[1]=='flat'">
@@ -328,25 +349,25 @@
             </li>
         </ul>
     </li>
-    <li ng-if="menuCheck(397)" ng-show="sysMenu[1]=='report'">
-        <div class="menu-title">综合查询</div>
+    <li ng-if="menuCheck(401)" ng-show="sysMenu[1]=='report'">
+        <div class="menu-title">预报到管理</div>
         <ul class="menu-list">
-            <li ng-if="menuCheck(398)">
+            <li ng-if="menuCheck(405)">
                 <a href="#repdc">
                     <i class="ALiconfont icon-baodaominglu" style="background-color:#fc7257;font-size:25px"></i>
                    预报到名录
                 </a>
             </li>
-            <li ng-if="menuCheck(399)">
+            <li ng-if="menuCheck(406)">
                 <a href="#repway">
                     <i class="ALiconfont icon-baodaotongji" style="background-color:#38adff;font-size:25px"></i>
                     报到方式统计
                 </a>
             </li>
-            <li ng-if="menuCheck(400)">
+            <li ng-if="menuCheck(407)">
                 <a href="#repnoe">
                     <i class="ALiconfont icon-baodaoxuzhi" style="background-color:#ff9c00;font-size:25px"></i>
-                    棉被预定
+                    报到须知
                 </a>
             </li>
         </ul>

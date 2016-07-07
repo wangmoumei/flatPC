@@ -23,6 +23,8 @@ gem sources --remove https://rubygems.org/
 gem sources -a https://ruby.taobao.org/    
 gem sources -l    
 *** CURRENT SOURCES ***    
+如果不行的话可以配置成
+gem sources -a http://gems.ruby-china.org
 
 https://ruby.taobao.org    
 ```   

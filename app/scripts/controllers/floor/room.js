@@ -25,7 +25,9 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
             roomstyle:'',
             typeid:'',
             memo:''
-        }
+        },
+        msg:'',
+        msex:''
     }
     
     $scope.show = function (flat,liveArea,campus) {
@@ -100,7 +102,6 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                     floorname:$scope.media.floor.floorname,
                     memo:$scope.media.floor.memo
                 }).success(function(data){
-                    alert(0);
                     // console.log(data);
                     if(data.code == 0 ){
                         swal("提示", "添加成功！", "success"); 
@@ -131,11 +132,20 @@ function($scope,AppConfig,$rootScope,RoomService,FlatService,$filter) {
                 RoomService.multiAdd(param).success(function(data){
                     $rootScope.loading = false;
                     if(data.code == 0){
+                        $scope.media.msg='';
                         swal("提示", "添加成功！", "success");
-                        if(fun && typeof fun == 'function') fun();
+                    if(fun && typeof fun == 'function') fun();
                          refresh($scope.media.flatid);
-                    }else if(param==null){
-                     swal("提示","与当前楼栋性别不符合","error"); 
+                    }else if($scope.media.floor.floortype!= $scope.sex){
+                        $scope.media.msg=''
+                         $scope.media.msex='与当前楼栋性别不符合'
+                    }else if($scope.media.floor.floortype== $scope.sex){
+                        $scope.media.msex='';
+                        if(data.typeid==null){
+                            $scope.media.msg='请选择户型';
+                         }else{
+                             $scope.media.msg='';
+                         }
                     }else if(data.code == 4037){
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
                     location.href="#login";$rootScope.loading = false;

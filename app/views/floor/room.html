@@ -109,10 +109,11 @@
                                 <tr>
                                     <td class="require">户型</td>
                                     <td>
-                                        <select ng-model="media.floor.typeid" ng-disabled="(media.floor.type==0&&!menuCheck(145)) || (media.floor.type==1&&!menuCheck(146))||(media.floor.type==2&&!menuCheck(152))">
+                                        <select id="hx" ng-model="media.floor.typeid" ng-disabled="(media.floor.type==0&&!menuCheck(145)) || (media.floor.type==1&&!menuCheck(146))||(media.floor.type==2&&!menuCheck(152))">
                                             <option value="">户型</option>
                                             <option ng-repeat="type in treeType" ng-selected="media.floor.roomstyle == type.typeId" value="{{type.typeId}}">{{type.title}}</option>
                                         </select>
+                                        <span style="color:red">{{media.msg}}</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -124,6 +125,7 @@
                                             <option value="女">女</option>
                                             <option value="其他">其他</option>
                                         </select>
+                                         <span style="color:red">{{media.msex}}</span>
                                     </td>
                                 </tr>
                                 

@@ -17,6 +17,7 @@
             <!--<li ng-if="headerMenu(367)" data-toggle="shower" ng-class="{'active':sysMenu[0]=='shower'}"><a href="#order">浴室预定</a></li>-->
             <li ng-if="headerMenu(367)" data-toggle="pay" ng-class="{'active':sysMenu[0]=='pay'}"><a ng-click="headerSwitch(1,'pay')" target="page-tab">浴室预定</a></li>
             <li ng-if="headerMenu(371)" data-toggle="graduate" ng-class="{'active':sysMenu[0]=='graduate'}"><a ng-click="headerSwitch(0,'graduate')" href="#index">毕业离校</a></li>
+            <li ng-if="headerMenu(401)" data-toggle="report" ng-class="{'active':sysMenu[0]=='report'}"><a ng-click="headerSwitch(0,'report')" href="#index">预报到管理</a></li>
             <li ng-if="headerMenu(2)" data-toggle="data" ng-class="{'active':sysMenu[0]=='data'}"><a ng-click="headerSwitch(0,'data')" href="#index">数据中心</a></li>
             <li ng-if="headerMenu(3)" data-toggle="admin" ng-class="{'active':sysMenu[0]=='admin'}"><a ng-click="headerSwitch(0,'admin')" href="#index">系统设置</a></li>
             
@@ -56,6 +57,7 @@
                 <!--<li ng-if="headerMenu(367)" data-toggle="shower" ng-class="{'active':sysMenu[0]=='shower'}"><a  href="#order">浴室预定</a></li>-->
                 <li ng-if="headerMenu(367)" data-toggle="pay" ng-class="{'active':sysMenu[0]=='pay'}"><a ng-click="headerSwitch(1,'pay')" target="page-tab">浴室预定</a></li>
                 <li ng-if="headerMenu(371)" data-toggle="graduate" ng-class="{'active':sysMenu[0]=='graduate'}"><a ng-click="headerSwitch(0,'graduate')" href="#index">毕业离校</a></li>
+                <li ng-if="headerMenu(401)" data-toggle="report" ng-class="{'active':sysMenu[0]=='report'}"><a ng-click="headerSwitch(0,'report')" href="#index">预报到管理</a></li>
                 <li ng-if="headerMenu(2)" data-toggle="data" ng-class="{'active':sysMenu[0]=='data'}"><a ng-click="headerSwitch(0,'data')" href="#index">数据中心</a></li>
                 <li ng-if="headerMenu(3)" data-toggle="admin" ng-class="{'active':sysMenu[0]=='admin'}"><a ng-click="headerSwitch(0,'admin')" href="#index">系统设置</a></li>
             </ul>
@@ -180,6 +182,14 @@
                                     毕业离校
                                     <div style="float:right">
                                         <input bs-switch ng-change="toggleSave()" ng-model="media.graduate" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="list-group-item b-l-primary">
+                                    预报到管理
+                                    <div style="float:right">
+                                        <input bs-switch ng-change="toggleSave()" ng-model="media.report" type="checkbox" switch-size="mini"  switch-on-text="开" switch-off-text="关">
                                     </div>
                                 </a>
                             </li>
