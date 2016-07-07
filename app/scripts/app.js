@@ -1211,6 +1211,23 @@ angular
                 controller: 'HeaderCtrl'
             }
         }
+    })
+    .state('quiltse', {
+        url: "/quiltse",
+        views: {
+            "": {
+                templateUrl: 'views/collect/quiltreserve.html',
+                controller: 'quiltreserveCtrl'
+            },
+            "aside": {
+                templateUrl: "views/aside.html",
+                controller: 'AsideCtrl'
+            },
+            "header": {
+                templateUrl: "views/header.html",
+                controller: 'HeaderCtrl'
+            }
+        }
     });
     $urlRouterProvider.otherwise('/login');
   });

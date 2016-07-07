@@ -365,20 +365,26 @@ angular.module('flatpcApp')
                 else
                     return null;
             case 'repdc':
-                if(menuCheck(398))
-                    return ['data','report','repdc'];
+                if(menuCheck(405))
+                    return ['report','report','repdc'];
                 else
                     return null;
             case 'repway':
-                if(menuCheck(399))
-                    return ['data','report','repnoe'];
+                if(menuCheck(406))
+                    return ['report','report','repway'];
                 else
                     return null;
             case 'repnoe':
-                if(menuCheck(400))
-                    return ['data','report','repnoe'];
+                if(menuCheck(407))
+                    return ['report','report','repnoe'];
                 else
                     return null;
+            case 'quiltse':
+                if(menuCheck(402))
+                   return ['report','quiltreserve','quiltse'];
+                else
+                    return null;
+            
                    
                     
         }

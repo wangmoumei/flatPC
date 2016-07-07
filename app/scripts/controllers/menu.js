@@ -69,6 +69,24 @@ angular.module('flatpcApp')
                     }else menus.push(' ');
                 }
                 break;
+            case 'report':
+            if($rootScope.menuCheck(401)){
+                    menus.push('report');
+                   if($rootScope.menuCheck(403)){
+                        menus.push('report');
+                    }else if($rootScope.menuCheck(404)){
+                        menus.push('report');
+                    }else if($rootScope.menuCheck(402)){
+                        menus.push('quiltse');
+                    }else if($rootScope.menuCheck(405)){
+                        menus.push('repdc');
+                    }else if($rootScope.menuCheck(406)){
+                        menus.push('repway');
+                    }else if($rootScope.menuCheck(407)){
+                        menus.push('repnoe');
+                    }else menus.push(' ');
+                }
+                break;
             case 'wechat':
             case 'repair':
             case 'food':

@@ -50,6 +50,16 @@ function($scope,AppConfig,$rootScope,GradeService) {
                 sessionStorage.role = $scope.media.role?0:1;
                 sessionStorage.takephoto = $scope.media.takephoto?0:1;
                 sessionStorage.check = $scope.media.check?0:1;
+
+                document.cookie = "week="+sessionStorage.week;
+                document.cookie = "month="+sessionStorage.month;
+                document.cookie = "day="+sessionStorage.day;
+                document.cookie = "bed="+sessionStorage.bed;
+                document.cookie = "pass="+sessionStorage.pass;
+                document.cookie = "photo="+sessionStorage.photo;
+                document.cookie = "role="+sessionStorage.role;
+                document.cookie = "takephoto="+sessionStorage.takephoto;
+                document.cookie = "check="+sessionStorage.check;
                 
                 AppConfig.week = $scope.media.week?0:1;
                 AppConfig.month = $scope.media.month?0:1;

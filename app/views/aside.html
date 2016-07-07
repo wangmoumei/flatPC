@@ -21,17 +21,26 @@
         </a>
     </li>
 </ul>
+<!--这个地方必须写成sysMenu[0]不然authority.js这个文件就不能添加点击后的样式-->
+<ul ng-show="sysMenu[0]=='report'">
+     <li ng-if="menuCheck(403)" ng-class="{'active':sysMenu[1]=='report'}" ng-click="switch('report')">
+        <a href="#index" title="预报到管理">
+            <i class="ALiconfont icon-yubaodao"></i> 预报到管理
+        </a>
+    </li>
+     <li ng-if="menuCheck(402)" ng-class="{'active':sysMenu[1]=='quiltreserve'}" ng-click="switch('quiltreserve')">
+        <a href="#quiltse" title="棉被预定">
+            <i class="ALiconfont icon-yubaodao"></i> 棉被预定
+        </a>
+    </li>
+</ul>
 <ul ng-show="sysMenu[0]=='data'">
     <li ng-if="menuCheck(9)" ng-class="{'active':sysMenu[1]=='data'}" ng-click="switch('data')">
         <a href="#index" title="基础设置">
             <i class="ALiconfont icon-set" style="font-size:20px"></i> 基础设置
         </a>
     </li>
-    <li ng-if="menuCheck(396)" ng-class="{'active':sysMenu[1]=='report'}" ng-click="switch('report')">
-        <a href="#index" title="预报到管理">
-            <i class="ALiconfont icon-yubaodao"></i> 预报到管理
-        </a>
-    </li>
+   
     <li ng-if="menuCheck(353)" ng-class="{'active':sysMenu[1]=='center'}" ng-click="switch('center')">
         <a href="#index" title="用户中心">
             <i class="ALiconfont icon-users" style="font-size:20px"></i> 用户中心

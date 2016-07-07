@@ -4,10 +4,10 @@ angular.module('flatpcApp')
 .controller('reportwayCtrl', ['$scope','$rootScope','AppConfig',function($scope,$rootScope,AppConfig) {
         //存储列表头到frame.html中
     $scope.menus = [
-        '数据中心','预报到管理','报到方式统计'
+        '预报到管理','预报到管理','报到方式统计'
     ];
     //跳转到什么地方去
-    $scope.parent = "flat";
+    $scope.parent = "report";
     $scope.loaded = function(){
         $rootScope.loading = false;
         $scope.$apply();

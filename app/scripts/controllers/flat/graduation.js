@@ -226,7 +226,6 @@ function($scope,AppConfig,$rootScope,FlatService,GraduationService,$filter,Colle
     }
     //数据导出
     $scope.downloadgraduation = function(){
-        alert($scope.media.status);
         if($scope.media.status==-1){
             var a = document.createElement('a');
             a.href = AppConfig.WEB_ROOT + 'apartment/checkout/export/?schoolcode=' + AppConfig.schoolCode
