@@ -11,7 +11,13 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
         takephoto : AppConfig.takephoto==1?false:true,
         check : AppConfig.check==1?false:true,
         role :  AppConfig.role==1?false:true,
-    }
+    },
+    // AppConfig.token,
+    // AppConfig.schoolCode,
+    // AppConfig.fileid,
+    // AppConfig.date,
+    // AppConfig.adminid,
+    
     $scope.media = {
         source:1,
         tab:1,

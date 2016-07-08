@@ -535,6 +535,17 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });
     };
+
+    var  dayCompletion= function(param){
+        param = param || {type:0};
+        var url = AppConfig.WEB_ROOT + 'evaluation/dayscore/dayCompletion/?'
+        + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
+        + '&flatid=' + AppConfig.flatid + '&date=' + AppConfig.date + '&adminid=' + AppConfig.adminid;
+        return $http.get(url).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        });
+    };
+
     var addSetting = function (param) {
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolCode;
@@ -760,6 +771,7 @@ angular.module('flatpcApp')
         addSpot:addSpot,
         editSpot:editSpot,
         delSpot:delSpot,
-        getFlatByCheckId:getFlatByCheckId
+        getFlatByCheckId:getFlatByCheckId,
+        dayCompletion:dayCompletion
     }
 }]);
