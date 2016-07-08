@@ -71,6 +71,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
         studentnumber:'',
         name:'',
         roomname:'',
+        notRoomNumber:'',
         search:2,
         orderfield:'',
         ordertype:'',
