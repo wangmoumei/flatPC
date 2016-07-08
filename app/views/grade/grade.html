@@ -75,7 +75,7 @@
 <div class="tool-bar" style="margin-left:225px;">
     <div class="bar-full" style="min-width:160px">
         {{ media.tab == 1 ? (flat.flatName||'请选择楼栋') : (media.campus?media.campus+'-' : '') + (media.liveArea?media.liveArea+'-' : '') +  media.title }}        
-        <a href="" class="btnBq" ng-if="media.source == 1">一键补全</a>
+        <a href="" class="btn btn-default" ng-click="media.dayCompletion()" ng-if="media.source == 1">一键补全</a>
     </div>
     
     <div class="progress-box" ng-hide="media.tab == 3">

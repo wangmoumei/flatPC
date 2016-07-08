@@ -537,13 +537,17 @@ angular.module('flatpcApp')
     };
 
     var  dayCompletion= function(param){
-        param = param || {type:0};
-        var url = AppConfig.WEB_ROOT + 'evaluation/dayscore/dayCompletion/?'
-        + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
-        + '&flatid=' + AppConfig.flatid + '&date=' + AppConfig.date + '&adminid=' + AppConfig.adminid;
-        return $http.get(url).error(function (error) {
+            var url = AppConfig.WEB_ROOT +'evaluation/dayscore/dayCompletion/';
+            return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
             swal("提示", "网络错误！", "error"); 
-        });
+        }); 
     };
 
     var addSetting = function (param) {

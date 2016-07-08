@@ -26,6 +26,23 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             this.epage = 1;
             refresh();
         },
+        dayCompletion:function() {
+            GradeService.dayCompletion({
+                        token:AppConfig.token,
+                        schoolcode:AppConfig.schoolCode,
+                        flatid:$scope.media.flatid,
+                        date:new Date($scope.media.week.year + '-' + $scope.media.week.month + '-' + $scope.media.week.day).Format('yyyy-MM-dd'),
+                        adminid:AppConfig.adminId,
+                    }).success(function(data){
+                        if(data.code==0){
+                                swal("提示","一键补全成功", "success"); 
+                                refresh();
+                        }else{
+                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
+                            location.href="#login";$rootScope.loading = false;
+                        }  
+                    })
+        },
         menuCheck:function(item){
             switch(item){
                 case 1:
@@ -192,6 +209,7 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                 refresh();
             }
         },
+        
         downloadGrade:function(){
             if(this.tab == 2){
                 GradeService.download({
