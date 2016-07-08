@@ -19,6 +19,7 @@ angular
     'frapontillo.bootstrap-switch'
   ])
   .constant('AppConfig',{
+    //   
       WEB_ROOT:'http://120.55.84.193/Geese_Apartment/',
     // WEB_ROOT:'http://127.0.0.1:8080/Geese_Apartment/',
     //   WEB_ROOT:'http://ap.houqinbao.com/Geese_Apartment/',
