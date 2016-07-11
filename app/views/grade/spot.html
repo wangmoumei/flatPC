@@ -39,7 +39,7 @@
                 <tr>
                     <th class="sort" ng-class="{'sort-up':media.orderfield=='startTime' && media.ordertype=='asc','sort-down':media.orderfield=='startTime' && media.ordertype=='desc'}" ng-click="setOrder('startTime')">日期</th>
                     <th>标题</th>
-                    <th>抽查楼栋</th>
+                    <th>抽查范围</th>
                     <th>性质</th>
                     <!--<th>微信关键词</th>-->
                     <th>操作</th>
@@ -154,9 +154,22 @@
                                 <tr>
                                     <td class="require">抽查范围</td>
                                     <td>
-
+                                        <div class="form-group">
+                                        <label class="radio">
+                                        <input name="display" type="radio" value="" ng-model="institution.display" ng-checked="true" required ng-click="checkQbMenu()">
+                                            全部
+                                        </label>
+                                        <label class="radio">
+                                        <input name="display" type="radio" value="" ng-model="institution.display"  required  ng-click="checSjbMenu()">
+                                            随机生成
+                                        </label>
+                                        <label class="radio">
+                                        <input name="display" type="radio" value="" ng-model="institution.display" required ng-click="checkZdMenu()">
+                                            指定楼栋
+                                        </label> 
+                                        </div>
                                         
-                                        <ul>    
+                                        <ul ng-show="ableShow">    
                                             <li style="padding:5px 0" ng-repeat="flat in form.flats">
                                                 <select class="form-control" ng-change="selecter.campusSelecter(flat)" ng-model="flat.campusId">
                                                     <option value="">选择校区</option>
