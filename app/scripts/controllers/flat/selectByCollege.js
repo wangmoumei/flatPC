@@ -7,7 +7,7 @@ angular.module('flatpcApp')
         '公寓管理','公寓管理','按学院查看'
     ];
     //跳转到什么地方去
-    $scope.parent = "flat";
+    $scope.parent = "data";
     $scope.loaded = function(){
         $rootScope.loading = false;
         $scope.$apply();

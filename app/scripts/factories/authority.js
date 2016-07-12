@@ -384,21 +384,6 @@ angular.module('flatpcApp')
                    return ['report','quiltreserve','quiltse'];
                 else
                     return null;
-             case 'newstudentdiv':
-                if(menuCheck(408))
-                     return ['flat','flat','newstudentdiv'];
-                else
-                    return null;
-             case 'newstudentregister':
-                if(menuCheck(409))
-                    return ['flat','flat','newstudentregister'];
-                else
-                    return null;
-             case 'newstudentIn':
-                if(menuCheck(410))
-                     return ['flat','flat','newstudentIn'];
-                else
-                    return null;
             
                    
                     

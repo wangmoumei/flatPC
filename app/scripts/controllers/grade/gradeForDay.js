@@ -9,16 +9,9 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
         pass : AppConfig.pass==1?false:true,
         photo : AppConfig.photo==1?false:true,
         takephoto : AppConfig.takephoto==1?false:true,
-        wgphoto : AppConfig.wgphoto==1?false:true,
         check : AppConfig.check==1?false:true,
         role :  AppConfig.role==1?false:true,
-    },
-    // AppConfig.token,
-    // AppConfig.schoolCode,
-    // AppConfig.fileid,
-    // AppConfig.date,
-    // AppConfig.adminid,
-    
+    }
     $scope.media = {
         source:1,
         tab:1,
@@ -26,23 +19,6 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             this.tab = n;
             this.epage = 1;
             refresh();
-        },
-        dayCompletion:function() {
-            GradeService.dayCompletion({
-                        token:AppConfig.token,
-                        schoolcode:AppConfig.schoolCode,
-                        flatid:$scope.media.flatid,
-                        date:new Date($scope.media.week.year + '-' + $scope.media.week.month + '-' + $scope.media.week.day).Format('yyyy-MM-dd'),
-                        adminid:AppConfig.adminId,
-                    }).success(function(data){
-                        if(data.code==0){
-                                swal("提示","一键补全成功", "success"); 
-                                refresh();
-                        }else{
-                            swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 
-                            location.href="#login";$rootScope.loading = false;
-                        }  
-                    })
         },
         menuCheck:function(item){
             switch(item){
@@ -95,7 +71,6 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
         studentnumber:'',
         name:'',
         roomname:'',
-        notRoomNumber:'',
         search:2,
         orderfield:'',
         ordertype:'',
@@ -210,7 +185,6 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                 refresh();
             }
         },
-        
         downloadGrade:function(){
             if(this.tab == 2){
                 GradeService.download({
@@ -577,21 +551,8 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
                     });
                     return null;
                 }   
-            }else  if($scope.switch.photo && $scope.switch.wgphoto){
-                if(this.img){
-                    if(this.img.length < 1){
-                        swal("提示","违章必拍请上传图片", "error"); 
-                        return null;
-                    }                    
-                }else{
-                    //swal("提示","你还没有上传寝室实拍", "error"); 
-                    var that = this;
-                    this.getData(3,function () {
-                        that.gradeSaves(fun);
-                    });
-                    return null;
-                }   
             }
+            
             if(this.room&& this.room.length>0){
                 this.roomGrade(fun);
             }
@@ -599,26 +560,6 @@ function($scope,AppConfig,$rootScope,FlatService,TermService,$filter,GradeServic
             else if(this.img)this.gradeImg(fun);
             else if(this.rule)this.ruleSave(fun);
         },
-
-        // gradeSave:function (fun,type) {
-        //     if($scope.switch.photo && $scope.switch.wgphoto){
-        //         if(this.img){
-        //             if(this.img.length < 1){
-        //                 swal("提示","请上传图片", "error"); 
-        //                 return null;
-        //             }                    
-        //         }else{
-        //             //swal("提示","你还没有上传寝室实拍", "error"); 
-        //             var that = this;
-        //             this.getData(3,function () {
-        //                 that.gradeSaves(fun);
-        //             });
-        //             return null;
-        //         }   
-        //     }
-
-        // },
-
         roomGrade:function(fun){
             var grades = "[",that = this;
             // console.log(this.room);
