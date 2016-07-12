@@ -292,7 +292,7 @@ angular.module('flatpcApp')
                 + '&semesterid=' + (param.semesterid || "") + '&currentweek=' + (param.currentweek || "");
                 break;
             case 1:
-                url = AppConfig.WEB_ROOT + 'evaluation/dayscore/score_search/?'
+                url = AppConfig.WEB_ROOT + 'evaluation/dayscore/dayscore_search/?'
                 + 'schoolcode=' + AppConfig.schoolCode + '&token=' + AppConfig.token
                 + '&date=' + ( new Date(param.date).Format('yyyy-MM-dd') || new Date().Format('yyyy-MM-dd'));
                 break;
@@ -316,10 +316,10 @@ angular.module('flatpcApp')
         + (param.floorid?('&floorid='+param.floorid):'')
         + (param.liveareaid?('&liveareaid='+param.liveareaid):'')
         + (param.campusid?('&campusid='+param.campusid):'')
-        + (param.studentnumber?('&studentnumber='+param.studentnumber):'')
-        + (param.name?('&name='+param.name):'')
+       // + (param.studentnumber?('&studentnumber='+param.studentnumber):'')
+       // + (param.name?('&name='+param.name):'')
         + (param.roomname?('&roomname='+param.roomname):'')
-        + (param.grade?('&grade='+param.grade):'')
+       // + (param.grade?('&grade='+param.grade):'')
         + (param.orderfield?('&orderfield='+param.orderfield):'')
         + (param.ordertype?('&ordertype='+param.ordertype):'');
         return $http.get(url).error(function (error) {
@@ -535,6 +535,21 @@ angular.module('flatpcApp')
             swal("提示", "网络错误！", "error"); 
         });
     };
+
+    var  dayCompletion= function(param){
+            var url = AppConfig.WEB_ROOT +'evaluation/dayscore/dayCompletion/';
+            return $http({
+            url:url,
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            params:param
+        }).error(function (error) {
+            swal("提示", "网络错误！", "error"); 
+        }); 
+    };
+
     var addSetting = function (param) {
         param.token = param.token || AppConfig.token;
         param.schoolcode = param.schoolcode || AppConfig.schoolCode;
@@ -760,6 +775,7 @@ angular.module('flatpcApp')
         addSpot:addSpot,
         editSpot:editSpot,
         delSpot:delSpot,
-        getFlatByCheckId:getFlatByCheckId
+        getFlatByCheckId:getFlatByCheckId,
+        dayCompletion:dayCompletion
     }
 }]);

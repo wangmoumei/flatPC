@@ -74,8 +74,10 @@
 </div>
 <div class="tool-bar" style="margin-left:225px;">
     <div class="bar-full" style="min-width:160px">
-        {{ media.tab == 1 ? (flat.flatName||'请选择楼栋') : (media.campus?media.campus+'-' : '') + (media.liveArea?media.liveArea+'-' : '') +  media.title }}
+        {{ media.tab == 1 ? (flat.flatName||'请选择楼栋') : (media.campus?media.campus+'-' : '') + (media.liveArea?media.liveArea+'-' : '') +  media.title }}        
+        <a href="" class="btn btn-default" ng-click="media.dayCompletion()" ng-if="media.source == 1">一键补全</a>
     </div>
+    
     <div class="progress-box" ng-hide="media.tab == 3">
         <div class="progress progress-xs">
             <div class="progress-bar progress-bar-success" style="width:{{(media.tab == 1 ? (flat.roomNumber - flat.notRoomNumber)/flat.roomNumber : (media.tab == 2? (rooms.roomNumber - rooms.notRoomNumber)/rooms.roomNumber : 0 )) * 100}}%"></div>
@@ -177,19 +179,10 @@
                             <option>楼层</option>
                         </select>
                     </div-->
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{media.search==1?'姓名':(media.search==2?'寝室号':'学号')}} <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" style="min-width:66px">
-                            <li ng-click="media.search=2"><a>寝室号</a></li>
-                            <li ng-click="media.search=0"><a>学号</a></li>
-                            <li ng-click="media.search=1"><a>姓名</a></li>
-                        </ul>
-                    </div>
+                    
                     <div class="bar-full">
                         <form ng-submit="media.setSearch(searchText)" class="input-group search-bool">
-                            <input type="text" class="form-control" placeholder="检索" ng-model="searchText">
+                            <input type="text" class="form-control" placeholder="寝室号搜索" ng-model="searchText">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                             </span>
@@ -207,27 +200,28 @@
                                 <th class="sort">生活区</th>
                                 <th class="sort">楼栋</th>
                                 <th class="sort">宿舍号</th>
-                                <th>床号</th>
-                                <th>学生</th>
-                                <th>分数</th>
-                                <th class="sort sort-down">总分</th>
+                                <th>所属学院</th>
+                                <th>寝室分分数</th>
+                                <th>床位分</th>
+                                <th>违章数</th>
+                                <th>寝室分考核</th>
+                                <th>综合考核</th>
                                 <th>查看</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white">
                             <tr ng-repeat="room in rooms.roomList || []">
-                                <td>{{room.campusName}}</td><td>{{room.liveAreaNmae}}</td><td>{{room.flatName}}</td><td>{{room.roomName}}</td>
-                                <td class="multi"><ul>
-                                    <li ng-repeat="bed in room.bedList">{{bed.bedName}}</li>   
-                                </ul></td>
-                                <td class="multi"><ul>
-                                    <li ng-repeat="bed in room.bedList">{{bed.name + '（' + bed.studentNumber + '）'}}</li>
-                                </ul></td>
-                                <td class="multi"><ul>
-                                    <li ng-repeat="bed in room.bedList">{{bed.bedScore}}</li>  
-                                </ul></td>
-                                <td>{{room.score}}</td>
-                                <td><a class="btn btn-link btn-xs" ng-click="showCard('#gradeCard',cardMedia.dataInit(room))">详情</a></td>
+                                <td class="multi"><ul><li>{{room.campusName}}</li></ul></td>
+                                <td class="multi"><ul><li>{{room.liveAreaNmae}}</li></ul></td>
+                                <td class="multi"><ul><li>{{room.flatName}}</li></ul></td>
+                                <td class="multi"><ul><li>{{room.roomName}}</li></ul></td>
+                                <td class="multi"><ul><li>{{room.collegeName}}</li></ul></td>
+                                <td class="multi"><ul><li>{{room.roomScore}}</li></ul></td>
+                                <td class="multi"><ul><li>{{room.bedScore}}</li></ul></td>
+                                <td class="multi"><ul><li>{{room.wzCount}}</li></ul></td>
+                                <td class="multi"><ul><li>{{room.roomGrade}}</li></ul></td>
+                                <td class="multi"><ul><li>{{room.scoreDegree}}</li></ul></td>
+                                <td class="multi"><ul><li><a class="btn btn-link btn-xs" ng-click="showCard('#gradeCard',cardMedia.dataInit(room))">详情</a></li></ul></td>
                             </tr>
                             
                         </tbody>
