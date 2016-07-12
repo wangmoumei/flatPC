@@ -22,7 +22,6 @@ function($scope,AppConfig,$rootScope,GradeService) {
         pass : AppConfig.pass==1?false:true,
         photo : AppConfig.photo==1?false:true,
         takephoto : AppConfig.takephoto==1?false:true,
-        wgphoto : AppConfig.wgphoto==1?false:true,
         check : AppConfig.check==1?false:true,
         role :  AppConfig.role==1?false:true,
     };
@@ -37,7 +36,6 @@ function($scope,AppConfig,$rootScope,GradeService) {
             pass:$scope.media.pass?0:1,
             photo:$scope.media.photo?0:1,
             takephoto:$scope.media.takephoto?0:1,
-            wgphoto:$scope.media.wgphoto?0:1,
             check:$scope.media.check?0:1,
             role:$scope.media.role?0:1
         }).success(function (data) {
@@ -51,7 +49,6 @@ function($scope,AppConfig,$rootScope,GradeService) {
                 sessionStorage.photo = $scope.media.photo?0:1;
                 sessionStorage.role = $scope.media.role?0:1;
                 sessionStorage.takephoto = $scope.media.takephoto?0:1;
-                sessionStorage.wgphoto = $scope.media.wgphoto?0:1;
                 sessionStorage.check = $scope.media.check?0:1;
 
                 document.cookie = "week="+sessionStorage.week;
@@ -62,7 +59,6 @@ function($scope,AppConfig,$rootScope,GradeService) {
                 document.cookie = "photo="+sessionStorage.photo;
                 document.cookie = "role="+sessionStorage.role;
                 document.cookie = "takephoto="+sessionStorage.takephoto;
-                document.cookie = "wgphoto="+sessionStorage.wgphoto;
                 document.cookie = "check="+sessionStorage.check;
                 
                 AppConfig.week = $scope.media.week?0:1;
@@ -73,7 +69,6 @@ function($scope,AppConfig,$rootScope,GradeService) {
                 AppConfig.photo = $scope.media.photo?0:1;
                 AppConfig.role = $scope.media.role?0:1;
                 AppConfig.takephoto = $scope.media.takephoto?0:1;
-                AppConfig.wgphoto = $scope.media.wgphoto?0:1;
                 AppConfig.check = $scope.media.check?0:1;
             }else if(data.code == 4037){
                     swal("提示","错误代码："+ data.code + '，' + data.msg, "error"); 

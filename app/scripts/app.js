@@ -19,9 +19,7 @@ angular
     'frapontillo.bootstrap-switch'
   ])
   .constant('AppConfig',{
-    //   
       WEB_ROOT:'http://120.55.84.193/Geese_Apartment/',
-        // WEB_ROOT:'http://114.55.17.193/Geese_Apartment/',
     // WEB_ROOT:'http://127.0.0.1:8080/Geese_Apartment/',
     //   WEB_ROOT:'http://ap.houqinbao.com/Geese_Apartment/',
     WEB_ROOT_MESSAGE:'http://120.55.84.193/Geese_Quality_Supervision/',
@@ -1220,57 +1218,6 @@ angular
             "": {
                 templateUrl: 'views/collect/quiltreserve.html',
                 controller: 'quiltreserveCtrl'
-            },
-            "aside": {
-                templateUrl: "views/aside.html",
-                controller: 'AsideCtrl'
-            },
-            "header": {
-                templateUrl: "views/header.html",
-                controller: 'HeaderCtrl'
-            }
-        }
-    })
-    .state('newstudentdiv', {
-        url: "/newstudentdiv",
-        views: {
-            "": {
-                templateUrl: 'views/grade/newStudentDivide.html',
-                controller: 'newstudentdivCtrls'
-            },
-            "aside": {
-                templateUrl: "views/aside.html",
-                controller: 'AsideCtrl'
-            },
-            "header": {
-                templateUrl: "views/header.html",
-                controller: 'HeaderCtrl'
-            }
-        }
-    })
-    .state('newstudentregister', {
-        url: "/newstudentregister",
-        views: {
-            "": {
-                templateUrl: 'views/grade/newStudentRegister.html',
-                controller: 'newstudentregisterCtrl'
-            },
-            "aside": {
-                templateUrl: "views/aside.html",
-                controller: 'AsideCtrl'
-            },
-            "header": {
-                templateUrl: "views/header.html",
-                controller: 'HeaderCtrl'
-            }
-        }
-    })
-    .state('newstudentIn', {
-        url: "/newstudentIn",
-        views: {
-            "": {
-                templateUrl: 'views/grade/newStudentIn.html',
-                controller: 'newstudentInCtrl'
             },
             "aside": {
                 templateUrl: "views/aside.html",

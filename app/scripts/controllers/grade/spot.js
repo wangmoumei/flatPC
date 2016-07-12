@@ -26,9 +26,6 @@ angular.module('flatpcApp')
             }
         },
         addFlat:function () {
-            // for (var index = 0; index < flatis.length; index++) {
-            //     flatis[index];
-            //  } 
             var flat = {
                 campusId:$scope.media.campusid || '',
                 campusList:$rootScope.treeFlat,
@@ -191,20 +188,6 @@ angular.module('flatpcApp')
             }
         }
     }
-    
-
-	$scope.ableShow = false;
-	$scope.checkQbMenu =function(){
-	    $scope.ableShow = false;
-	}
-    $scope.checSjbMenu =function(){
-	    $scope.ableShow = false;
-	}
-    $scope.checkZdMenu =function(){
-	    $scope.ableShow = true;
-	}
-
-    
     $scope.addSave = function (fun) {
         var flatids = $scope.form.getFlat(),roleids = $scope.form.getRole();
         if(flatids.length < 0 || roleids.length < 0|| $scope.form.starttime.length < 0|| $scope.form.endtime.length < 0|| $scope.form.title.length < 0|| $scope.form.tableid.length < 0|| $scope.form.semesterid.length < 0)return;
